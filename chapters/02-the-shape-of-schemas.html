@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; The Shape of Schemas – panproto: Universal Schema Migration</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/03-what-is-a-theory.html" rel="next">
+<link href="../chapters/01-schemas-everywhere.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f1aadacce99040138bbb613f9330654f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aafb03ca45b9c5aa290c66b7a437bb31.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-67ec4aabe8467e78f93de3725ae3d67e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-aafb03ca45b9c5aa290c66b7a437bb31.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="mermaid-theme" content="neutral">
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-schemas-everywhere.html">Motivation</a></li><li class="breadcrumb-item"><a href="../chapters/02-the-shape-of-schemas.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Shape of Schemas</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">panproto: Universal Schema Migration</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/panproto/panproto/tree/main/tutorial/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Motivation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-schemas-everywhere.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Schemas Everywhere</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-the-shape-of-schemas.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Shape of Schemas</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-what-is-a-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">What Is a Theory?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-protocols-as-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Protocols as Parameters</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Migration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-migration-by-hand.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Migration by Hand</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-when-migrations-exist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Migrations Exist</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-lifting-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lifting Data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Bidirectionality &amp; Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lenses: Going Both Ways</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-breaking-changes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Breaking Changes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-building-your-own-protocol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Building Your Own Protocol</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-self-description.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Self-Description: The GAT of GATs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-shape-of-schemas" id="toc-sec-shape-of-schemas" class="nav-link active" data-scroll-target="#sec-shape-of-schemas"><span class="header-section-number">3</span> The Shape of Schemas</a>
+  <ul class="collapse">
+  <li><a href="#directed-graphs-the-simplest-case" id="toc-directed-graphs-the-simplest-case" class="nav-link" data-scroll-target="#directed-graphs-the-simplest-case"><span class="header-section-number">3.1</span> Directed Graphs: The Simplest Case</a></li>
+  <li><a href="#multigraphs-when-one-edge-isnt-enough" id="toc-multigraphs-when-one-edge-isnt-enough" class="nav-link" data-scroll-target="#multigraphs-when-one-edge-isnt-enough"><span class="header-section-number">3.2</span> Multigraphs: When One Edge Isn’t Enough</a>
+  <ul class="collapse">
+  <li><a href="#a-richer-atproto-example" id="toc-a-richer-atproto-example" class="nav-link" data-scroll-target="#a-richer-atproto-example"><span class="header-section-number">3.2.1</span> A Richer ATProto Example</a></li>
+  </ul></li>
+  <li><a href="#hypergraphs-when-edges-connect-more-than-two-things" id="toc-hypergraphs-when-edges-connect-more-than-two-things" class="nav-link" data-scroll-target="#hypergraphs-when-edges-connect-more-than-two-things"><span class="header-section-number">3.3</span> Hypergraphs: When Edges Connect More Than Two Things</a>
+  <ul class="collapse">
+  <li><a href="#why-hyperedges-matter-for-tooling" id="toc-why-hyperedges-matter-for-tooling" class="nav-link" data-scroll-target="#why-hyperedges-matter-for-tooling"><span class="header-section-number">3.3.1</span> Why Hyperedges Matter for Tooling</a></li>
+  </ul></li>
+  <li><a href="#constraints-decorating-the-graph" id="toc-constraints-decorating-the-graph" class="nav-link" data-scroll-target="#constraints-decorating-the-graph"><span class="header-section-number">3.4</span> Constraints: Decorating the Graph</a></li>
+  <li><a href="#a-taxonomy-of-schema-structures" id="toc-a-taxonomy-of-schema-structures" class="nav-link" data-scroll-target="#a-taxonomy-of-schema-structures"><span class="header-section-number">3.5</span> A Taxonomy of Schema Structures</a></li>
+  <li><a href="#why-single-protocol-tools-cant-generalize" id="toc-why-single-protocol-tools-cant-generalize" class="nav-link" data-scroll-target="#why-single-protocol-tools-cant-generalize"><span class="header-section-number">3.6</span> Why Single-Protocol Tools Can’t Generalize</a></li>
+  <li><a href="#from-graphs-to-theories" id="toc-from-graphs-to-theories" class="nav-link" data-scroll-target="#from-graphs-to-theories"><span class="header-section-number">3.7</span> From Graphs to Theories</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">3.8</span> Summary</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/02-the-shape-of-schemas.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-schemas-everywhere.html">Motivation</a></li><li class="breadcrumb-item"><a href="../chapters/02-the-shape-of-schemas.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Shape of Schemas</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Shape of Schemas</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-shape-of-schemas" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> The Shape of Schemas</h1>
+<p>In the previous chapter, we looked at a blog post schema written in five different formats and noticed that they all describe vertices connected by edges. That was a useful intuition, but it was imprecise. The word “graph” can mean many things, and the differences matter.</p>
+<p>This chapter makes the graph-theoretic structure of schemas precise. We’ll see that schema languages don’t all use the same kind of graph. Some need multigraphs. Some need hypergraphs. Some need constraints layered on top. Understanding which graph structure a schema language requires is the first step toward understanding what panproto actually parameterizes over.</p>
+<section id="directed-graphs-the-simplest-case" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="directed-graphs-the-simplest-case"><span class="header-section-number">3.1</span> Directed Graphs: The Simplest Case</h2>
+<p>A <strong>directed graph</strong> consists of:</p>
+<ul>
+<li>A set of <strong>vertices</strong> (also called nodes)</li>
+<li>A set of <strong>edges</strong> (also called arrows), where each edge has a <strong>source</strong> vertex and a <strong>target</strong> vertex</li>
+</ul>
+<p>That’s it. Two operations—<code>src</code> and <code>tgt</code>—take an edge and return its source and target vertices, respectively. This is the simplest graph structure, and it’s the one most developers picture when they hear “graph.”</p>
+<p>Consider a minimal JSON Schema:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"object"</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"properties"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"name"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span> <span class="fu">}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This describes a directed graph with two vertices (<code>object</code> and <code>string</code>) and one edge (<code>name</code>, pointing from <code>object</code> to <code>string</code>). The <code>src</code> of the edge is the object type; the <code>tgt</code> is the string type.</p>
+<p>Many simple schemas fit this pattern. A GraphQL type with scalar fields is a directed graph. A Protobuf message with only primitive-typed fields is a directed graph. The directed graph captures the most basic structural relationship: “this type has a field of that type.”</p>
+<p>Graph transformation theory provides a rigorous vocabulary for working with these structures. The foundational framework, developed in <span class="citation" data-cites="ehrig2006">(<a href="#ref-ehrig2006" role="doc-biblioref">Ehrig et al. 2006</a>)</span>, treats graphs as algebraic objects and defines operations (morphisms, pushouts, pullbacks) that let you compose, decompose, and transform graphs in principled ways. This vocabulary turns out to be exactly what we need for schema operations—migration, merging, diffing—across protocols.</p>
+<p>The origins of this approach go back further, to the graph grammars introduced by <span class="citation" data-cites="ehrig1973">(<a href="#ref-ehrig1973" role="doc-biblioref">Ehrig et al. 1973</a>)</span>. That early work established that graph-based structures could be manipulated by formal rewriting rules, much like string grammars in formal language theory. The key insight was that <em>structure-preserving transformations</em> on graphs could be characterized algebraically—an insight that panproto inherits directly.</p>
+</section>
+<section id="multigraphs-when-one-edge-isnt-enough" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="multigraphs-when-one-edge-isnt-enough"><span class="header-section-number">3.2</span> Multigraphs: When One Edge Isn’t Enough</h2>
+<p>A directed graph has a limitation: between any pair of vertices, there’s at most one edge (in each direction). For many schemas, this is fine. But some schemas need <strong>multiple distinct edges</strong> between the same pair of vertices.</p>
+<p>Consider an ATProto Lexicon record with two string fields:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"object"</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"properties"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"displayName"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span> <span class="dt">"maxLength"</span><span class="fu">:</span> <span class="dv">640</span> <span class="fu">},</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"description"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span> <span class="dt">"maxLength"</span><span class="fu">:</span> <span class="dv">2560</span> <span class="fu">}</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In graph terms, the <code>object</code> vertex has two edges pointing to the <code>string</code> vertex: one labeled <code>displayName</code> and one labeled <code>description</code>. A plain directed graph can’t represent this—it would collapse the two edges into one. We need a <strong>multigraph</strong>: a directed graph that allows parallel edges between the same pair of vertices.</p>
+<p>A <strong>directed multigraph</strong> consists of:</p>
+<ul>
+<li>A set of <strong>vertices</strong></li>
+<li>A set of <strong>edges</strong>, where each edge has a <strong>source</strong> vertex, a <strong>target</strong> vertex, and an identity distinct from other edges (even those with the same source and target)</li>
+</ul>
+<p>The distinction between a graph and a multigraph might seem pedantic, but it has real consequences for tooling. If your internal representation is a simple adjacency matrix (which can’t represent parallel edges), you’ll silently collapse distinct fields that happen to share a type. panproto uses multigraphs as its baseline representation precisely to avoid this class of bugs.</p>
+<p>Here’s what our ATProto profile schema looks like as a multigraph:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-multigraph-atproto" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multigraph-atproto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-multigraph-atproto">graph LR
+    Object((object))
+    Str((string))
+
+    Object -- "displayName&lt;br/&gt;maxLength: 640" --&gt; Str
+    Object -- "description&lt;br/&gt;maxLength: 2560" --&gt; Str
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multigraph-atproto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: An ATProto profile schema as a directed multigraph. The <code>object</code> vertex has two parallel edges to the <code>string</code> vertex, distinguished by their labels (<code>displayName</code> and <code>description</code>).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Both edges connect <code>object</code> to <code>string</code>, but they are distinct: they carry different labels and different constraints. A tool that represents schemas as simple graphs would need some workaround—perhaps making each field its own vertex, or using an adjacency list with labels. A multigraph handles this naturally.</p>
+<section id="a-richer-atproto-example" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="a-richer-atproto-example"><span class="header-section-number">3.2.1</span> A Richer ATProto Example</h3>
+<p>Real ATProto schemas are more interesting. Consider a simplified version of the Bluesky post record:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-multigraph-post" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multigraph-post-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-multigraph-post">graph LR
+    Record((record))
+    Str((string))
+    Datetime((datetime))
+    Array((array))
+    Ref((ref))
+
+    Record -- "text" --&gt; Str
+    Record -- "createdAt" --&gt; Datetime
+    Record -- "tags" --&gt; Array
+    Record -- "reply" --&gt; Ref
+    Array -- "items" --&gt; Str
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multigraph-post-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: A simplified Bluesky post schema as a directed multigraph. Multiple edges from the record vertex reflect the multiple properties of the post.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This is still a multigraph—there are no parallel edges in this particular example, but the <em>possibility</em> of parallel edges is what matters. The moment you add a second string field, you need the multigraph structure. Choosing the right graph type up front means you don’t hit a representation barrier as schemas grow more complex.</p>
+</section>
+</section>
+<section id="hypergraphs-when-edges-connect-more-than-two-things" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="hypergraphs-when-edges-connect-more-than-two-things"><span class="header-section-number">3.3</span> Hypergraphs: When Edges Connect More Than Two Things</h2>
+<p>Directed graphs (and multigraphs) have edges that connect exactly two vertices: a source and a target. But some schema constructs are inherently <strong>multi-ary</strong>— they involve relationships among three, four, or more entities simultaneously.</p>
+<p>The canonical example is a SQL <strong>foreign key</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> posts (</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>          BIGINT <span class="kw">GENERATED</span> ALWAYS <span class="kw">AS</span> IDENTITY <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    text        <span class="dt">VARCHAR</span>(<span class="dv">3000</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    author_id   BIGINT <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    created_at  TIMESTAMPTZ <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> now()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> authors (</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">id</span>          BIGINT <span class="kw">GENERATED</span> ALWAYS <span class="kw">AS</span> IDENTITY <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    name        <span class="dt">VARCHAR</span>(<span class="dv">255</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> posts</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> fk_posts_author</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (author_id) <span class="kw">REFERENCES</span> authors (<span class="kw">id</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The foreign key <code>fk_posts_author</code> doesn’t connect two things—it connects <strong>four</strong>:</p>
+<ol type="1">
+<li>The <strong>source table</strong> (<code>posts</code>)</li>
+<li>The <strong>source column</strong> (<code>author_id</code>)</li>
+<li>The <strong>referenced table</strong> (<code>authors</code>)</li>
+<li>The <strong>referenced column</strong> (<code>id</code>)</li>
+</ol>
+<p>You can’t faithfully represent this as a binary edge without losing information. If you draw an edge from <code>posts</code> to <code>authors</code>, you’ve lost the column-level detail. If you draw an edge from <code>author_id</code> to <code>id</code>, you’ve lost the table-level context. The foreign key is a single constraint that simultaneously involves all four entities.</p>
+<p>This is exactly what <strong>hypergraphs</strong> are for.</p>
+<p>A <strong>hypergraph</strong> consists of:</p>
+<ul>
+<li>A set of <strong>vertices</strong></li>
+<li>A set of <strong>hyperedges</strong>, where each hyperedge connects an ordered sequence of vertices (not just two)</li>
+</ul>
+<p>A hyperedge can connect any number of vertices—two, three, four, or more. Binary edges are a special case. This makes hypergraphs strictly more expressive than directed graphs or multigraphs.</p>
+<p>The theory of hyperedge replacement grammars, developed by <span class="citation" data-cites="drewes1997">(<a href="#ref-drewes1997" role="doc-biblioref">Drewes et al. 1997</a>)</span>, provides a formal framework for manipulating hypergraphs with the same rigor that graph grammars provide for ordinary graphs. In this framework, hyperedges can be “replaced” by more complex subhypergraphs according to production rules—a mechanism that maps naturally to schema expansion operations like denormalization or view materialization.</p>
+<p>Here’s our SQL schema with its foreign key as a hypergraph:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-hypergraph-sql" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hypergraph-sql-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-hypergraph-sql">graph TB
+    subgraph Posts ["posts (table)"]
+        P_id["id : BIGINT PK"]
+        P_text["text : VARCHAR(3000)"]
+        P_author["author_id : BIGINT"]
+        P_created["created_at : TIMESTAMPTZ"]
+    end
+
+    subgraph Authors ["authors (table)"]
+        A_id["id : BIGINT PK"]
+        A_name["name : VARCHAR(255)"]
+    end
+
+    FK{{"fk_posts_author"}}
+
+    FK -. "source table" .-&gt; Posts
+    FK -. "source column" .-&gt; P_author
+    FK -. "referenced table" .-&gt; Authors
+    FK -. "referenced column" .-&gt; A_id
+
+    style FK fill:#f9f,stroke:#333,stroke-dasharray: 5 5
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hypergraph-sql-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: A SQL schema with a foreign key represented as a hypergraph. The foreign key constraint (dashed box) connects four entities simultaneously: the source table, source column, referenced table, and referenced column.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The dashed node <code>fk_posts_author</code> is the hyperedge. It has four tentacles, each connecting to a different vertex in the schema. This can’t be reduced to binary edges without either losing information or introducing artificial intermediate vertices.</p>
+<section id="why-hyperedges-matter-for-tooling" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="why-hyperedges-matter-for-tooling"><span class="header-section-number">3.3.1</span> Why Hyperedges Matter for Tooling</h3>
+<p>If your schema representation only supports binary edges, you have two options for foreign keys:</p>
+<ol type="1">
+<li><p><strong>Lose information.</strong> Draw an edge from <code>posts</code> to <code>authors</code> and hope the column-level detail is recoverable from context. This works until you have composite foreign keys (multiple columns), at which point it breaks.</p></li>
+<li><p><strong>Introduce intermediate vertices.</strong> Create a “foreign key” vertex with binary edges to each of the four participants. This works, but it means your graph has vertices that don’t correspond to anything in the original schema. Every operation (traversal, transformation, serialization) must now handle these phantom vertices correctly.</p></li>
+</ol>
+<p>Hypergraphs avoid both problems. The foreign key is a first-class hyperedge, connecting exactly the vertices it involves. No information lost, no phantoms introduced.</p>
+<p>This isn’t just about foreign keys. Composite unique constraints in SQL, <code>oneof</code> declarations in Protobuf, union types in GraphQL—these are all multi-ary relationships that benefit from hypergraph representation.</p>
+</section>
+</section>
+<section id="constraints-decorating-the-graph" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="constraints-decorating-the-graph"><span class="header-section-number">3.4</span> Constraints: Decorating the Graph</h2>
+<p>So far we’ve talked about the <em>shape</em> of the graph: what kinds of vertices and edges exist, how they connect. But schemas carry more information than just connectivity. They have <strong>constraints</strong>: <code>maxLength</code>, <code>NOT NULL</code>, <code>DEFAULT</code>, <code>pattern</code>, <code>minimum</code>, <code>maxItems</code>, and dozens more.</p>
+<p>Constraints don’t change the graph structure—they decorate it. A <code>maxLength</code> constraint on a string property doesn’t add a new vertex or edge; it attaches metadata to an existing edge (the property edge connecting an object to a string type).</p>
+<p>We can model this cleanly by distinguishing between:</p>
+<ul>
+<li><strong>The underlying graph</strong> (vertices and edges/hyperedges), which captures the structural skeleton of the schema</li>
+<li><strong>Constraint annotations</strong> on vertices and edges, which carry the domain-specific validation rules</li>
+</ul>
+<p>This separation is useful because graph-structural operations (like merging two schemas or computing a diff) can often ignore constraints, while constraint-specific operations (like checking whether one schema is a subtype of another) can work with the graph structure as given.</p>
+<p>Different schema languages support different constraints:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 14%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 12%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Constraint</th>
+<th>JSON Schema</th>
+<th>Protobuf</th>
+<th>SQL DDL</th>
+<th>GraphQL</th>
+<th>ATProto Lexicon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>maxLength</td>
+<td>yes</td>
+<td>no</td>
+<td>VARCHAR(n)</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>pattern (regex)</td>
+<td>yes</td>
+<td>no</td>
+<td>CHECK</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td>minimum / maximum</td>
+<td>yes</td>
+<td>no</td>
+<td>CHECK</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>NOT NULL</td>
+<td>required[]</td>
+<td>(default set)</td>
+<td>NOT NULL</td>
+<td><code>!</code></td>
+<td>required[]</td>
+</tr>
+<tr class="odd">
+<td>DEFAULT</td>
+<td>default</td>
+<td>default value</td>
+<td>DEFAULT</td>
+<td>no</td>
+<td>default</td>
+</tr>
+<tr class="even">
+<td>UNIQUE</td>
+<td>no</td>
+<td>no</td>
+<td>UNIQUE</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td>PRIMARY KEY</td>
+<td>no</td>
+<td>no</td>
+<td>PRIMARY KEY</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td>format</td>
+<td>yes</td>
+<td>no</td>
+<td>data type</td>
+<td>scalar</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td>maxItems</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+<td>yes (maxLength)</td>
+</tr>
+</tbody>
+</table>
+<p>The constraint vocabulary varies wildly across schema languages, but the <em>mechanism</em>—annotations on a graph—is uniform. panproto represents constraints as typed metadata on edges and vertices, allowing protocol-specific constraints to coexist with structural information.</p>
+</section>
+<section id="a-taxonomy-of-schema-structures" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="a-taxonomy-of-schema-structures"><span class="header-section-number">3.5</span> A Taxonomy of Schema Structures</h2>
+<p>We can now classify schema languages by the graph structure they require:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 29%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Schema Language</th>
+<th>Minimum Graph Structure</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>JSON Schema</td>
+<td>Multigraph + constraints</td>
+<td>Parallel properties to same type; rich constraint set</td>
+</tr>
+<tr class="even">
+<td>Protobuf</td>
+<td>Multigraph</td>
+<td>Parallel fields to same type; few built-in constraints</td>
+</tr>
+<tr class="odd">
+<td>SQL DDL</td>
+<td>Hypergraph + constraints</td>
+<td>Foreign keys are multi-ary; CHECK, NOT NULL, etc.</td>
+</tr>
+<tr class="even">
+<td>GraphQL SDL</td>
+<td>Multigraph + constraints</td>
+<td>Parallel fields; nullability as constraint</td>
+</tr>
+<tr class="odd">
+<td>ATProto Lexicon</td>
+<td>Multigraph + constraints</td>
+<td>Parallel properties; maxLength, maxGraphemes, etc.</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that no schema language we’ve examined requires only a simple directed graph. The moment you allow two fields of the same type (which is… always), you need at least a multigraph. SQL’s foreign keys push the requirement to hypergraphs.</p>
+<p>This taxonomy explains a pattern you’ve probably noticed in the ecosystem: schema tools tend to be protocol-specific. <strong>Buf</strong> is excellent for Protobuf. <strong>Atlas</strong> is excellent for SQL. <strong>GraphQL Code Generator</strong> is excellent for GraphQL. But none of them generalize across protocols.</p>
+</section>
+<section id="why-single-protocol-tools-cant-generalize" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="why-single-protocol-tools-cant-generalize"><span class="header-section-number">3.6</span> Why Single-Protocol Tools Can’t Generalize</h2>
+<p>The reason is structural, not incidental. Each tool hardcodes a specific graph type:</p>
+<ul>
+<li><p><strong>Buf</strong> assumes a multigraph structure (messages with fields). It understands Protobuf’s field numbering, package namespaces, and options. But it has no representation for hyperedges, so it can’t natively express SQL foreign keys.</p></li>
+<li><p><strong>Atlas</strong> assumes a hypergraph structure (tables with columns and multi-ary constraints). It understands SQL’s type system, migration semantics, and constraint checking. But its vertex types are SQL-specific (tables, views, indexes), not Protobuf-specific (messages, enums, services).</p></li>
+<li><p><strong>GraphQL Code Generator</strong> assumes a multigraph with GraphQL’s specific vertex types (Object, Interface, Union, Enum, Scalar). It can’t represent Protobuf’s field numbering or SQL’s CHECK constraints.</p></li>
+</ul>
+<p>Each tool is a perfect fit for its target protocol and a poor fit for everything else. This isn’t a failure of engineering—it’s a consequence of fixing the graph structure at design time.</p>
+<p>panproto takes a different approach: it <strong>parameterizes</strong> over the graph structure. Instead of hardcoding “the schema is a multigraph with these specific vertex and edge types,” panproto lets you specify what kinds of vertices, edges, and constraints your schema language needs. The same core algorithms—diffing, merging, migration planning, code generation—work across any graph structure that fits the framework.</p>
+<p>This parameterization is not free. It requires a mathematical framework expressive enough to describe multigraphs, hypergraphs, and constrained variants in a uniform way. That framework exists: it comes from the categorical treatment of schemas developed by <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span>, who showed that database schemas can be viewed as categories (with tables as objects and foreign keys as morphisms) and that schema mappings are functors between those categories. panproto generalizes this functorial perspective beyond relational databases to arbitrary schema languages.</p>
+<p>The key insight from Spivak’s work is that once you view schemas as categorical structures, you get a rich toolkit for free: limits and colimits give you schema merging and intersection, functors give you schema mappings and translations, and natural transformations give you data migration along those mappings. These aren’t metaphors—they’re precise mathematical constructions with well-defined properties.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Parameterization Principle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Single-protocol tools fix the graph structure and optimize for a specific schema language. panproto parameterizes the graph structure and provides uniform algorithms that work across schema languages. This is the fundamental architectural difference—and it’s what makes cross-protocol schema operations possible.</p>
+</div>
+</div>
+</section>
+<section id="from-graphs-to-theories" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="from-graphs-to-theories"><span class="header-section-number">3.7</span> From Graphs to Theories</h2>
+<p>We’ve established that schema languages have graph-theoretic structure, and that different languages need different kinds of graphs. But we’ve been describing these graph structures informally—listing their components (vertices, edges, operations) in prose.</p>
+<p>There’s a precise way to describe a graph structure: you specify its <strong>sorts</strong> (the kinds of things that exist), its <strong>operations</strong> (the functions between those sorts), and its <strong>equations</strong> (the laws those operations obey). A directed graph, for instance, has two sorts (Vertex and Edge), two operations (src and tgt, both from Edge to Vertex), and no equations. A multigraph has the same description—the “multi” comes from not requiring edges to be uniquely determined by their source and target.</p>
+<p>This sort-operation-equation description is called a <strong>theory</strong>, and the things that satisfy a theory are called <strong>models</strong>. A specific ATProto schema is a model of the multigraph theory. A specific SQL schema is a model of the hypergraph-with-constraints theory.</p>
+<p>If the language of sorts, operations, and equations sounds suspiciously like an abstract algebra course, that’s because it is. The next chapter introduces the specific algebraic framework panproto uses—Generalized Algebraic Theories—and shows how the Rust implementation represents theories and models as concrete data structures. The math will earn its keep: it’s what makes panproto’s parameterization possible.</p>
+</section>
+<section id="summary" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="summary"><span class="header-section-number">3.8</span> Summary</h2>
+<p>This chapter established three ideas:</p>
+<ol type="1">
+<li><p><strong>Schema languages have graph-theoretic structure.</strong> Types are vertices; fields, columns, and properties are edges. This is not a metaphor—it’s a precise structural description.</p></li>
+<li><p><strong>Different schema languages need different kinds of graphs.</strong> Multigraphs for parallel fields (most languages). Hypergraphs for multi-ary constraints (SQL). Constraints as annotations on any of these.</p></li>
+<li><p><strong>Single-protocol tools hardcode a specific graph structure.</strong> This is why Buf can’t do SQL migrations and Atlas can’t lint Protobuf. panproto parameterizes over the graph structure instead.</p></li>
+</ol>
+<p>The question now is: how do you precisely describe a graph structure so that software can work with it generically? That’s the subject of the next chapter.</p>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-drewes1997" class="csl-entry" role="listitem">
+Drewes, Frank, Hans-Jörg Kreowski, and Annegret Habel. 1997. <span>“Hyperedge Replacement Graph Grammars.”</span> In <em>Handbook of Graph Grammars and Computing by Graph Transformation</em>, edited by Gert Rozenberg, vol. 1, 1. World Scientific. <a href="https://doi.org/10.1142/9789812384720_0002">https://doi.org/10.1142/9789812384720_0002</a>.
+</div>
+<div id="ref-ehrig2006" class="csl-entry" role="listitem">
+Ehrig, Hartmut, Karsten Ehrig, Ulrike Prange, and Gabriele Taentzer. 2006. <em>Fundamentals of Algebraic Graph Transformation</em>. Monographs in Theoretical Computer Science. Springer. <a href="https://doi.org/10.1007/3-540-31188-2">https://doi.org/10.1007/3-540-31188-2</a>.
+</div>
+<div id="ref-ehrig1973" class="csl-entry" role="listitem">
+Ehrig, Hartmut, Michael Pfender, and Hans Jürgen Schneider. 1973. <span>“Graph-Grammars: An Algebraic Approach.”</span> <em>14th Annual IEEE Symposium on Switching and Automata Theory (FOCS 1973)</em>, 167–80. <a href="https://doi.org/10.1109/SWAT.1973.11">https://doi.org/10.1109/SWAT.1973.11</a>.
+</div>
+<div id="ref-spivak2012" class="csl-entry" role="listitem">
+Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Information and Computation</em> 217: 31–51. <a href="https://doi.org/10.1016/j.ic.2012.05.001">https://doi.org/10.1016/j.ic.2012.05.001</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/panproto\.github\.io\/tutorial\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/01-schemas-everywhere.html" class="pagination-link" aria-label="Schemas Everywhere">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Schemas Everywhere</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/03-what-is-a-theory.html" class="pagination-link" aria-label="What Is a Theory?">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">What Is a Theory?</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "The Shape of Schemas"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu"># The Shape of Schemas {#sec-shape-of-schemas}</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>In the previous chapter, we looked at a blog post schema written in five</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>different formats and noticed that they all describe vertices connected by</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>edges. That was a useful intuition, but it was imprecise. The word "graph" can</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>mean many things, and the differences matter.</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>This chapter makes the graph-theoretic structure of schemas precise. We'll</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>see that schema languages don't all use the same kind of graph. Some need</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>multigraphs. Some need hypergraphs. Some need constraints layered on top.</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>Understanding which graph structure a schema language requires is the first step</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>toward understanding what panproto actually parameterizes over.</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Directed Graphs: The Simplest Case</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>A **directed graph** consists of:</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A set of **vertices** (also called nodes)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A set of **edges** (also called arrows), where each edge has a **source**</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  vertex and a **target** vertex</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>That's it. Two operations—<span class="in">`src`</span> and <span class="in">`tgt`</span>—take an edge and return its source</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>and target vertices, respectively. This is the simplest graph structure, and</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>it's the one most developers picture when they hear "graph."</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>Consider a minimal JSON Schema:</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">"type"</span><span class="op">:</span> <span class="st">"object"</span><span class="op">,</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"properties"</span><span class="op">:</span> {</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"name"</span><span class="op">:</span> { <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span> }</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>This describes a directed graph with two vertices (<span class="in">`object`</span> and <span class="in">`string`</span>) and</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>one edge (<span class="in">`name`</span>, pointing from <span class="in">`object`</span> to <span class="in">`string`</span>). The <span class="in">`src`</span> of the edge is</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>the object type; the <span class="in">`tgt`</span> is the string type.</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>Many simple schemas fit this pattern. A GraphQL type with scalar fields is a</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>directed graph. A Protobuf message with only primitive-typed fields is a</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>directed graph. The directed graph captures the most basic structural</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>relationship: "this type has a field of that type."</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>Graph transformation theory provides a rigorous vocabulary for working with</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>these structures. The foundational framework, developed in <span class="co">[</span><span class="ot">@ehrig2006</span><span class="co">]</span>, treats</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>graphs as algebraic objects and defines operations (morphisms, pushouts,</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>pullbacks) that let you compose, decompose, and transform graphs in principled</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>ways. This vocabulary turns out to be exactly what we need for schema</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>operations—migration, merging, diffing—across protocols.</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>The origins of this approach go back further, to the graph grammars introduced</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>by <span class="co">[</span><span class="ot">@ehrig1973</span><span class="co">]</span>. That early work established that graph-based structures could</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>be manipulated by formal rewriting rules, much like string grammars in formal</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>language theory. The key insight was that *structure-preserving transformations*</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>on graphs could be characterized algebraically—an insight that panproto</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>inherits directly.</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multigraphs: When One Edge Isn't Enough</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>A directed graph has a limitation: between any pair of vertices, there's at most</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>one edge (in each direction). For many schemas, this is fine. But some schemas</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>need **multiple distinct edges** between the same pair of vertices.</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>Consider an ATProto Lexicon record with two string fields:</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>  <span class="st">"type"</span><span class="op">:</span> <span class="st">"object"</span><span class="op">,</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>  <span class="st">"properties"</span><span class="op">:</span> {</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"displayName"</span><span class="op">:</span> { <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span> <span class="st">"maxLength"</span><span class="op">:</span> <span class="dv">640</span> }<span class="op">,</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"description"</span><span class="op">:</span> { <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span> <span class="st">"maxLength"</span><span class="op">:</span> <span class="dv">2560</span> }</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>In graph terms, the <span class="in">`object`</span> vertex has two edges pointing to the <span class="in">`string`</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>vertex: one labeled <span class="in">`displayName`</span> and one labeled <span class="in">`description`</span>. A plain</span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>directed graph can't represent this—it would collapse the two edges into one. We</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>need a **multigraph**: a directed graph that allows parallel edges between the</span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>same pair of vertices.</span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>A **directed multigraph** consists of:</span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A set of **vertices**</span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A set of **edges**, where each edge has a **source** vertex, a **target**</span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>  vertex, and an identity distinct from other edges (even those with the same</span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>  source and target)</span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>The distinction between a graph and a multigraph might seem pedantic, but it</span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>has real consequences for tooling. If your internal representation is a simple</span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>adjacency matrix (which can't represent parallel edges), you'll silently</span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>collapse distinct fields that happen to share a type. panproto uses multigraphs</span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>as its baseline representation precisely to avoid this class of bugs.</span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>Here's what our ATProto profile schema looks like as a multigraph:</span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>%%| label: fig-multigraph-atproto</span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>%%| fig-cap: <span class="ot">"</span><span class="st">An ATProto profile schema as a directed multigraph. The `object` vertex has two parallel edges to the `string` vertex, distinguished by their labels (`displayName` and `description`).</span><span class="ot">"</span></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>graph LR</span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>    Object((object))</span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>    Str((string))</span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>    Object -- <span class="ot">"</span><span class="st">displayName&lt;br/&gt;maxLength: 640</span><span class="ot">"</span> --&gt; Str</span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>    Object -- <span class="ot">"</span><span class="st">description&lt;br/&gt;maxLength: 2560</span><span class="ot">"</span> --&gt; Str</span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>Both edges connect <span class="in">`object`</span> to <span class="in">`string`</span>, but they are distinct: they carry</span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>different labels and different constraints. A tool that represents schemas as</span>
+<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>simple graphs would need some workaround—perhaps making each field its own</span>
+<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>vertex, or using an adjacency list with labels. A multigraph handles this</span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>naturally.</span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a><span class="fu">### A Richer ATProto Example</span></span>
+<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>Real ATProto schemas are more interesting. Consider a simplified version of the</span>
+<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a>Bluesky post record:</span>
+<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a>%%| label: fig-multigraph-post</span>
+<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a>%%| fig-cap: <span class="ot">"</span><span class="st">A simplified Bluesky post schema as a directed multigraph. Multiple edges from the record vertex reflect the multiple properties of the post.</span><span class="ot">"</span></span>
+<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a>graph LR</span>
+<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a>    Record((record))</span>
+<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a>    Str((string))</span>
+<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a>    Datetime((datetime))</span>
+<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a>    Array((array))</span>
+<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a>    Ref((<span class="fu">ref</span>))</span>
+<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a>    Record -- <span class="ot">"</span><span class="st">text</span><span class="ot">"</span> --&gt; Str</span>
+<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a>    Record -- <span class="ot">"</span><span class="st">createdAt</span><span class="ot">"</span> --&gt; Datetime</span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a>    Record -- <span class="ot">"</span><span class="st">tags</span><span class="ot">"</span> --&gt; Array</span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a>    Record -- <span class="ot">"</span><span class="st">reply</span><span class="ot">"</span> --&gt; Ref</span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a>    Array -- <span class="ot">"</span><span class="st">items</span><span class="ot">"</span> --&gt; Str</span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a>This is still a multigraph—there are no parallel edges in this particular</span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a>example, but the *possibility* of parallel edges is what matters. The moment you</span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a>add a second string field, you need the multigraph structure. Choosing the right</span>
+<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a>graph type up front means you don't hit a representation barrier as schemas grow</span>
+<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a>more complex.</span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a><span class="fu">## Hypergraphs: When Edges Connect More Than Two Things</span></span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>Directed graphs (and multigraphs) have edges that connect exactly two vertices:</span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a>a source and a target. But some schema constructs are inherently **multi-ary**—</span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a>they involve relationships among three, four, or more entities simultaneously.</span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a>The canonical example is a SQL **foreign key**.</span>
+<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a><span class="in">```sql</span></span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> posts (</span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a>    id          <span class="dt">BIGINT</span> GENERATED ALWAYS <span class="kw">AS</span> IDENTITY <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>    <span class="dt">text</span>        <span class="dt">VARCHAR</span>(<span class="dv">3000</span>) <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>    author_id   <span class="dt">BIGINT</span> <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a>    created_at  TIMESTAMPTZ <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="fu">now</span>()</span>
+<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> authors (</span>
+<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a>    id          <span class="dt">BIGINT</span> GENERATED ALWAYS <span class="kw">AS</span> IDENTITY <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a>    name        <span class="dt">VARCHAR</span>(<span class="dv">255</span>) <span class="kw">NOT</span> <span class="kw">NULL</span></span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> posts</span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>    <span class="kw">ADD</span> <span class="kw">CONSTRAINT</span> fk_posts_author</span>
+<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (author_id) <span class="kw">REFERENCES</span> authors (id);</span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>The foreign key <span class="in">`fk_posts_author`</span> doesn't connect two things—it connects</span>
+<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>**four**:</span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The **source table** (<span class="in">`posts`</span>)</span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>The **source column** (<span class="in">`author_id`</span>)</span>
+<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>The **referenced table** (<span class="in">`authors`</span>)</span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>The **referenced column** (<span class="in">`id`</span>)</span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>You can't faithfully represent this as a binary edge without losing information.</span>
+<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>If you draw an edge from <span class="in">`posts`</span> to <span class="in">`authors`</span>, you've lost the column-level</span>
+<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>detail. If you draw an edge from <span class="in">`author_id`</span> to <span class="in">`id`</span>, you've lost the</span>
+<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>table-level context. The foreign key is a single constraint that simultaneously</span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a>involves all four entities.</span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a>This is exactly what **hypergraphs** are for.</span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>A **hypergraph** consists of:</span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A set of **vertices**</span>
+<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A set of **hyperedges**, where each hyperedge connects an ordered sequence of</span>
+<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>  vertices (not just two)</span>
+<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a>A hyperedge can connect any number of vertices—two, three, four, or more. Binary</span>
+<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a>edges are a special case. This makes hypergraphs strictly more expressive than</span>
+<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a>directed graphs or multigraphs.</span>
+<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a>The theory of hyperedge replacement grammars, developed by <span class="co">[</span><span class="ot">@drewes1997</span><span class="co">]</span>,</span>
+<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a>provides a formal framework for manipulating hypergraphs with the same rigor</span>
+<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a>that graph grammars provide for ordinary graphs. In this framework, hyperedges</span>
+<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a>can be "replaced" by more complex subhypergraphs according to production</span>
+<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a>rules—a mechanism that maps naturally to schema expansion operations like</span>
+<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a>denormalization or view materialization.</span>
+<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a>Here's our SQL schema with its foreign key as a hypergraph:</span>
+<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a>%%| label: fig-hypergraph-sql</span>
+<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a>%%| fig-cap: <span class="ot">"</span><span class="st">A SQL schema with a foreign key represented as a hypergraph. The foreign key constraint (dashed box) connects four entities simultaneously: the source table, source column, referenced table, and referenced column.</span><span class="ot">"</span></span>
+<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a>graph TB</span>
+<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a>    subgraph Posts [<span class="ot">"</span><span class="st">posts (table)</span><span class="ot">"</span>]</span>
+<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a>        P_id[<span class="ot">"</span><span class="st">id : BIGINT PK</span><span class="ot">"</span>]</span>
+<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a>        P_text[<span class="ot">"</span><span class="st">text : VARCHAR(3000)</span><span class="ot">"</span>]</span>
+<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a>        P_author[<span class="ot">"</span><span class="st">author_id : BIGINT</span><span class="ot">"</span>]</span>
+<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a>        P_created[<span class="ot">"</span><span class="st">created_at : TIMESTAMPTZ</span><span class="ot">"</span>]</span>
+<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a>    end</span>
+<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a>    subgraph Authors [<span class="ot">"</span><span class="st">authors (table)</span><span class="ot">"</span>]</span>
+<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a>        A_id[<span class="ot">"</span><span class="st">id : BIGINT PK</span><span class="ot">"</span>]</span>
+<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>        A_name[<span class="ot">"</span><span class="st">name : VARCHAR(255)</span><span class="ot">"</span>]</span>
+<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a>    end</span>
+<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a>    FK{{<span class="ot">"</span><span class="st">fk_posts_author</span><span class="ot">"</span>}}</span>
+<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a>    FK -. <span class="ot">"</span><span class="st">source table</span><span class="ot">"</span> .-&gt; Posts</span>
+<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a>    FK -. <span class="ot">"</span><span class="st">source column</span><span class="ot">"</span> .-&gt; P_author</span>
+<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a>    FK -. <span class="ot">"</span><span class="st">referenced table</span><span class="ot">"</span> .-&gt; Authors</span>
+<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a>    FK -. <span class="ot">"</span><span class="st">referenced column</span><span class="ot">"</span> .-&gt; A_id</span>
+<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>    style FK fill:<span class="co">#f9f,stroke:#333,stroke-dasharray: 5 5</span></span>
+<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a>The dashed node <span class="in">`fk_posts_author`</span> is the hyperedge. It has four tentacles, each</span>
+<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a>connecting to a different vertex in the schema. This can't be reduced to binary</span>
+<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a>edges without either losing information or introducing artificial intermediate</span>
+<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a>vertices.</span>
+<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a><span class="fu">### Why Hyperedges Matter for Tooling</span></span>
+<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a>If your schema representation only supports binary edges, you have two options</span>
+<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a>for foreign keys:</span>
+<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Lose information.** Draw an edge from <span class="in">`posts`</span> to <span class="in">`authors`</span> and hope the</span>
+<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a>   column-level detail is recoverable from context. This works until you have</span>
+<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a>   composite foreign keys (multiple columns), at which point it breaks.</span>
+<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Introduce intermediate vertices.** Create a "foreign key" vertex with</span>
+<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a>   binary edges to each of the four participants. This works, but it means your</span>
+<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a>   graph has vertices that don't correspond to anything in the original schema.</span>
+<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a>   Every operation (traversal, transformation, serialization) must now handle</span>
+<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a>   these phantom vertices correctly.</span>
+<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a>Hypergraphs avoid both problems. The foreign key is a first-class hyperedge,</span>
+<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a>connecting exactly the vertices it involves. No information lost, no phantoms</span>
+<span id="cb4-266"><a href="#cb4-266" aria-hidden="true" tabindex="-1"></a>introduced.</span>
+<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-268"><a href="#cb4-268" aria-hidden="true" tabindex="-1"></a>This isn't just about foreign keys. Composite unique constraints in SQL,</span>
+<span id="cb4-269"><a href="#cb4-269" aria-hidden="true" tabindex="-1"></a><span class="in">`oneof`</span> declarations in Protobuf, union types in GraphQL—these are all</span>
+<span id="cb4-270"><a href="#cb4-270" aria-hidden="true" tabindex="-1"></a>multi-ary relationships that benefit from hypergraph representation.</span>
+<span id="cb4-271"><a href="#cb4-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-272"><a href="#cb4-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-273"><a href="#cb4-273" aria-hidden="true" tabindex="-1"></a><span class="fu">## Constraints: Decorating the Graph</span></span>
+<span id="cb4-274"><a href="#cb4-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-275"><a href="#cb4-275" aria-hidden="true" tabindex="-1"></a>So far we've talked about the *shape* of the graph: what kinds of vertices and</span>
+<span id="cb4-276"><a href="#cb4-276" aria-hidden="true" tabindex="-1"></a>edges exist, how they connect. But schemas carry more information than just</span>
+<span id="cb4-277"><a href="#cb4-277" aria-hidden="true" tabindex="-1"></a>connectivity. They have **constraints**: <span class="in">`maxLength`</span>, <span class="in">`NOT NULL`</span>, <span class="in">`DEFAULT`</span>,</span>
+<span id="cb4-278"><a href="#cb4-278" aria-hidden="true" tabindex="-1"></a><span class="in">`pattern`</span>, <span class="in">`minimum`</span>, <span class="in">`maxItems`</span>, and dozens more.</span>
+<span id="cb4-279"><a href="#cb4-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-280"><a href="#cb4-280" aria-hidden="true" tabindex="-1"></a>Constraints don't change the graph structure—they decorate it. A <span class="in">`maxLength`</span></span>
+<span id="cb4-281"><a href="#cb4-281" aria-hidden="true" tabindex="-1"></a>constraint on a string property doesn't add a new vertex or edge; it attaches</span>
+<span id="cb4-282"><a href="#cb4-282" aria-hidden="true" tabindex="-1"></a>metadata to an existing edge (the property edge connecting an object to a</span>
+<span id="cb4-283"><a href="#cb4-283" aria-hidden="true" tabindex="-1"></a>string type).</span>
+<span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a>We can model this cleanly by distinguishing between:</span>
+<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The underlying graph** (vertices and edges/hyperedges), which captures the</span>
+<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a>  structural skeleton of the schema</span>
+<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Constraint annotations** on vertices and edges, which carry the</span>
+<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a>  domain-specific validation rules</span>
+<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-292"><a href="#cb4-292" aria-hidden="true" tabindex="-1"></a>This separation is useful because graph-structural operations (like merging two</span>
+<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a>schemas or computing a diff) can often ignore constraints, while</span>
+<span id="cb4-294"><a href="#cb4-294" aria-hidden="true" tabindex="-1"></a>constraint-specific operations (like checking whether one schema is a subtype of</span>
+<span id="cb4-295"><a href="#cb4-295" aria-hidden="true" tabindex="-1"></a>another) can work with the graph structure as given.</span>
+<span id="cb4-296"><a href="#cb4-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-297"><a href="#cb4-297" aria-hidden="true" tabindex="-1"></a>Different schema languages support different constraints:</span>
+<span id="cb4-298"><a href="#cb4-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-299"><a href="#cb4-299" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constraint        <span class="pp">|</span> JSON Schema <span class="pp">|</span> Protobuf      <span class="pp">|</span> SQL DDL       <span class="pp">|</span> GraphQL   <span class="pp">|</span> ATProto Lexicon <span class="pp">|</span></span>
+<span id="cb4-300"><a href="#cb4-300" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------------|-------------|---------------|---------------|-----------|-----------------|</span></span>
+<span id="cb4-301"><a href="#cb4-301" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> maxLength         <span class="pp">|</span> yes         <span class="pp">|</span> no            <span class="pp">|</span> VARCHAR(n)    <span class="pp">|</span> no        <span class="pp">|</span> yes             <span class="pp">|</span></span>
+<span id="cb4-302"><a href="#cb4-302" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> pattern (regex)   <span class="pp">|</span> yes         <span class="pp">|</span> no            <span class="pp">|</span> CHECK         <span class="pp">|</span> no        <span class="pp">|</span> no              <span class="pp">|</span></span>
+<span id="cb4-303"><a href="#cb4-303" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> minimum / maximum <span class="pp">|</span> yes         <span class="pp">|</span> no            <span class="pp">|</span> CHECK         <span class="pp">|</span> no        <span class="pp">|</span> yes             <span class="pp">|</span></span>
+<span id="cb4-304"><a href="#cb4-304" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> NOT NULL          <span class="pp">|</span> required[]  <span class="pp">|</span> (default set) <span class="pp">|</span> NOT NULL      <span class="pp">|</span> <span class="in">`!`</span>       <span class="pp">|</span> required[]      <span class="pp">|</span></span>
+<span id="cb4-305"><a href="#cb4-305" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> DEFAULT           <span class="pp">|</span> default     <span class="pp">|</span> default value <span class="pp">|</span> DEFAULT       <span class="pp">|</span> no        <span class="pp">|</span> default         <span class="pp">|</span></span>
+<span id="cb4-306"><a href="#cb4-306" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> UNIQUE            <span class="pp">|</span> no          <span class="pp">|</span> no            <span class="pp">|</span> UNIQUE        <span class="pp">|</span> no        <span class="pp">|</span> no              <span class="pp">|</span></span>
+<span id="cb4-307"><a href="#cb4-307" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> PRIMARY KEY       <span class="pp">|</span> no          <span class="pp">|</span> no            <span class="pp">|</span> PRIMARY KEY   <span class="pp">|</span> no        <span class="pp">|</span> no              <span class="pp">|</span></span>
+<span id="cb4-308"><a href="#cb4-308" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> format            <span class="pp">|</span> yes         <span class="pp">|</span> no            <span class="pp">|</span> data type     <span class="pp">|</span> scalar    <span class="pp">|</span> yes             <span class="pp">|</span></span>
+<span id="cb4-309"><a href="#cb4-309" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> maxItems          <span class="pp">|</span> yes         <span class="pp">|</span> no            <span class="pp">|</span> no            <span class="pp">|</span> no        <span class="pp">|</span> yes (maxLength) <span class="pp">|</span></span>
+<span id="cb4-310"><a href="#cb4-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-311"><a href="#cb4-311" aria-hidden="true" tabindex="-1"></a>The constraint vocabulary varies wildly across schema languages, but the</span>
+<span id="cb4-312"><a href="#cb4-312" aria-hidden="true" tabindex="-1"></a>*mechanism*—annotations on a graph—is uniform. panproto represents constraints</span>
+<span id="cb4-313"><a href="#cb4-313" aria-hidden="true" tabindex="-1"></a>as typed metadata on edges and vertices, allowing protocol-specific constraints</span>
+<span id="cb4-314"><a href="#cb4-314" aria-hidden="true" tabindex="-1"></a>to coexist with structural information.</span>
+<span id="cb4-315"><a href="#cb4-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-316"><a href="#cb4-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-317"><a href="#cb4-317" aria-hidden="true" tabindex="-1"></a><span class="fu">## A Taxonomy of Schema Structures</span></span>
+<span id="cb4-318"><a href="#cb4-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-319"><a href="#cb4-319" aria-hidden="true" tabindex="-1"></a>We can now classify schema languages by the graph structure they require:</span>
+<span id="cb4-320"><a href="#cb4-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-321"><a href="#cb4-321" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Schema Language   <span class="pp">|</span> Minimum Graph Structure       <span class="pp">|</span> Why                                                    <span class="pp">|</span></span>
+<span id="cb4-322"><a href="#cb4-322" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------------|-------------------------------|--------------------------------------------------------|</span></span>
+<span id="cb4-323"><a href="#cb4-323" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> JSON Schema       <span class="pp">|</span> Multigraph + constraints      <span class="pp">|</span> Parallel properties to same type; rich constraint set   <span class="pp">|</span></span>
+<span id="cb4-324"><a href="#cb4-324" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Protobuf          <span class="pp">|</span> Multigraph                    <span class="pp">|</span> Parallel fields to same type; few built-in constraints  <span class="pp">|</span></span>
+<span id="cb4-325"><a href="#cb4-325" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> SQL DDL           <span class="pp">|</span> Hypergraph + constraints      <span class="pp">|</span> Foreign keys are multi-ary; CHECK, NOT NULL, etc.       <span class="pp">|</span></span>
+<span id="cb4-326"><a href="#cb4-326" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GraphQL SDL       <span class="pp">|</span> Multigraph + constraints      <span class="pp">|</span> Parallel fields; nullability as constraint              <span class="pp">|</span></span>
+<span id="cb4-327"><a href="#cb4-327" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ATProto Lexicon   <span class="pp">|</span> Multigraph + constraints      <span class="pp">|</span> Parallel properties; maxLength, maxGraphemes, etc.      <span class="pp">|</span></span>
+<span id="cb4-328"><a href="#cb4-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-329"><a href="#cb4-329" aria-hidden="true" tabindex="-1"></a>Notice that no schema language we've examined requires only a simple directed</span>
+<span id="cb4-330"><a href="#cb4-330" aria-hidden="true" tabindex="-1"></a>graph. The moment you allow two fields of the same type (which is... always),</span>
+<span id="cb4-331"><a href="#cb4-331" aria-hidden="true" tabindex="-1"></a>you need at least a multigraph. SQL's foreign keys push the requirement to</span>
+<span id="cb4-332"><a href="#cb4-332" aria-hidden="true" tabindex="-1"></a>hypergraphs.</span>
+<span id="cb4-333"><a href="#cb4-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-334"><a href="#cb4-334" aria-hidden="true" tabindex="-1"></a>This taxonomy explains a pattern you've probably noticed in the ecosystem:</span>
+<span id="cb4-335"><a href="#cb4-335" aria-hidden="true" tabindex="-1"></a>schema tools tend to be protocol-specific. **Buf** is excellent for Protobuf.</span>
+<span id="cb4-336"><a href="#cb4-336" aria-hidden="true" tabindex="-1"></a>**Atlas** is excellent for SQL. **GraphQL Code Generator** is excellent for</span>
+<span id="cb4-337"><a href="#cb4-337" aria-hidden="true" tabindex="-1"></a>GraphQL. But none of them generalize across protocols.</span>
+<span id="cb4-338"><a href="#cb4-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-339"><a href="#cb4-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-340"><a href="#cb4-340" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Single-Protocol Tools Can't Generalize</span></span>
+<span id="cb4-341"><a href="#cb4-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-342"><a href="#cb4-342" aria-hidden="true" tabindex="-1"></a>The reason is structural, not incidental. Each tool hardcodes a specific graph</span>
+<span id="cb4-343"><a href="#cb4-343" aria-hidden="true" tabindex="-1"></a>type:</span>
+<span id="cb4-344"><a href="#cb4-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-345"><a href="#cb4-345" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Buf** assumes a multigraph structure (messages with fields). It understands</span>
+<span id="cb4-346"><a href="#cb4-346" aria-hidden="true" tabindex="-1"></a>  Protobuf's field numbering, package namespaces, and options. But it has no</span>
+<span id="cb4-347"><a href="#cb4-347" aria-hidden="true" tabindex="-1"></a>  representation for hyperedges, so it can't natively express SQL foreign keys.</span>
+<span id="cb4-348"><a href="#cb4-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-349"><a href="#cb4-349" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Atlas** assumes a hypergraph structure (tables with columns and multi-ary</span>
+<span id="cb4-350"><a href="#cb4-350" aria-hidden="true" tabindex="-1"></a>  constraints). It understands SQL's type system, migration semantics, and</span>
+<span id="cb4-351"><a href="#cb4-351" aria-hidden="true" tabindex="-1"></a>  constraint checking. But its vertex types are SQL-specific (tables, views,</span>
+<span id="cb4-352"><a href="#cb4-352" aria-hidden="true" tabindex="-1"></a>  indexes), not Protobuf-specific (messages, enums, services).</span>
+<span id="cb4-353"><a href="#cb4-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-354"><a href="#cb4-354" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**GraphQL Code Generator** assumes a multigraph with GraphQL's specific</span>
+<span id="cb4-355"><a href="#cb4-355" aria-hidden="true" tabindex="-1"></a>  vertex types (Object, Interface, Union, Enum, Scalar). It can't represent</span>
+<span id="cb4-356"><a href="#cb4-356" aria-hidden="true" tabindex="-1"></a>  Protobuf's field numbering or SQL's CHECK constraints.</span>
+<span id="cb4-357"><a href="#cb4-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-358"><a href="#cb4-358" aria-hidden="true" tabindex="-1"></a>Each tool is a perfect fit for its target protocol and a poor fit for everything</span>
+<span id="cb4-359"><a href="#cb4-359" aria-hidden="true" tabindex="-1"></a>else. This isn't a failure of engineering—it's a consequence of fixing the graph</span>
+<span id="cb4-360"><a href="#cb4-360" aria-hidden="true" tabindex="-1"></a>structure at design time.</span>
+<span id="cb4-361"><a href="#cb4-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-362"><a href="#cb4-362" aria-hidden="true" tabindex="-1"></a>panproto takes a different approach: it **parameterizes** over the graph</span>
+<span id="cb4-363"><a href="#cb4-363" aria-hidden="true" tabindex="-1"></a>structure. Instead of hardcoding "the schema is a multigraph with these specific</span>
+<span id="cb4-364"><a href="#cb4-364" aria-hidden="true" tabindex="-1"></a>vertex and edge types," panproto lets you specify what kinds of vertices, edges,</span>
+<span id="cb4-365"><a href="#cb4-365" aria-hidden="true" tabindex="-1"></a>and constraints your schema language needs. The same core algorithms—diffing,</span>
+<span id="cb4-366"><a href="#cb4-366" aria-hidden="true" tabindex="-1"></a>merging, migration planning, code generation—work across any graph structure</span>
+<span id="cb4-367"><a href="#cb4-367" aria-hidden="true" tabindex="-1"></a>that fits the framework.</span>
+<span id="cb4-368"><a href="#cb4-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-369"><a href="#cb4-369" aria-hidden="true" tabindex="-1"></a>This parameterization is not free. It requires a mathematical framework</span>
+<span id="cb4-370"><a href="#cb4-370" aria-hidden="true" tabindex="-1"></a>expressive enough to describe multigraphs, hypergraphs, and constrained variants</span>
+<span id="cb4-371"><a href="#cb4-371" aria-hidden="true" tabindex="-1"></a>in a uniform way. That framework exists: it comes from the categorical treatment</span>
+<span id="cb4-372"><a href="#cb4-372" aria-hidden="true" tabindex="-1"></a>of schemas developed by <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span>, who showed that database schemas can be</span>
+<span id="cb4-373"><a href="#cb4-373" aria-hidden="true" tabindex="-1"></a>viewed as categories (with tables as objects and foreign keys as morphisms) and</span>
+<span id="cb4-374"><a href="#cb4-374" aria-hidden="true" tabindex="-1"></a>that schema mappings are functors between those categories. panproto generalizes</span>
+<span id="cb4-375"><a href="#cb4-375" aria-hidden="true" tabindex="-1"></a>this functorial perspective beyond relational databases to arbitrary schema</span>
+<span id="cb4-376"><a href="#cb4-376" aria-hidden="true" tabindex="-1"></a>languages.</span>
+<span id="cb4-377"><a href="#cb4-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-378"><a href="#cb4-378" aria-hidden="true" tabindex="-1"></a>The key insight from Spivak's work is that once you view schemas as categorical</span>
+<span id="cb4-379"><a href="#cb4-379" aria-hidden="true" tabindex="-1"></a>structures, you get a rich toolkit for free: limits and colimits give you schema</span>
+<span id="cb4-380"><a href="#cb4-380" aria-hidden="true" tabindex="-1"></a>merging and intersection, functors give you schema mappings and translations,</span>
+<span id="cb4-381"><a href="#cb4-381" aria-hidden="true" tabindex="-1"></a>and natural transformations give you data migration along those mappings. These</span>
+<span id="cb4-382"><a href="#cb4-382" aria-hidden="true" tabindex="-1"></a>aren't metaphors—they're precise mathematical constructions with well-defined</span>
+<span id="cb4-383"><a href="#cb4-383" aria-hidden="true" tabindex="-1"></a>properties.</span>
+<span id="cb4-384"><a href="#cb4-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-385"><a href="#cb4-385" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb4-386"><a href="#cb4-386" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Parameterization Principle</span></span>
+<span id="cb4-387"><a href="#cb4-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-388"><a href="#cb4-388" aria-hidden="true" tabindex="-1"></a>Single-protocol tools fix the graph structure and optimize for a specific</span>
+<span id="cb4-389"><a href="#cb4-389" aria-hidden="true" tabindex="-1"></a>schema language. panproto parameterizes the graph structure and provides uniform</span>
+<span id="cb4-390"><a href="#cb4-390" aria-hidden="true" tabindex="-1"></a>algorithms that work across schema languages. This is the fundamental</span>
+<span id="cb4-391"><a href="#cb4-391" aria-hidden="true" tabindex="-1"></a>architectural difference—and it's what makes cross-protocol schema operations</span>
+<span id="cb4-392"><a href="#cb4-392" aria-hidden="true" tabindex="-1"></a>possible.</span>
+<span id="cb4-393"><a href="#cb4-393" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-394"><a href="#cb4-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-395"><a href="#cb4-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-396"><a href="#cb4-396" aria-hidden="true" tabindex="-1"></a><span class="fu">## From Graphs to Theories</span></span>
+<span id="cb4-397"><a href="#cb4-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-398"><a href="#cb4-398" aria-hidden="true" tabindex="-1"></a>We've established that schema languages have graph-theoretic structure, and that</span>
+<span id="cb4-399"><a href="#cb4-399" aria-hidden="true" tabindex="-1"></a>different languages need different kinds of graphs. But we've been describing</span>
+<span id="cb4-400"><a href="#cb4-400" aria-hidden="true" tabindex="-1"></a>these graph structures informally—listing their components (vertices, edges,</span>
+<span id="cb4-401"><a href="#cb4-401" aria-hidden="true" tabindex="-1"></a>operations) in prose.</span>
+<span id="cb4-402"><a href="#cb4-402" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-403"><a href="#cb4-403" aria-hidden="true" tabindex="-1"></a>There's a precise way to describe a graph structure: you specify its</span>
+<span id="cb4-404"><a href="#cb4-404" aria-hidden="true" tabindex="-1"></a>**sorts** (the kinds of things that exist), its **operations** (the functions</span>
+<span id="cb4-405"><a href="#cb4-405" aria-hidden="true" tabindex="-1"></a>between those sorts), and its **equations** (the laws those operations obey). A</span>
+<span id="cb4-406"><a href="#cb4-406" aria-hidden="true" tabindex="-1"></a>directed graph, for instance, has two sorts (Vertex and Edge), two operations</span>
+<span id="cb4-407"><a href="#cb4-407" aria-hidden="true" tabindex="-1"></a>(src and tgt, both from Edge to Vertex), and no equations. A multigraph has the</span>
+<span id="cb4-408"><a href="#cb4-408" aria-hidden="true" tabindex="-1"></a>same description—the "multi" comes from not requiring edges to be uniquely</span>
+<span id="cb4-409"><a href="#cb4-409" aria-hidden="true" tabindex="-1"></a>determined by their source and target.</span>
+<span id="cb4-410"><a href="#cb4-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-411"><a href="#cb4-411" aria-hidden="true" tabindex="-1"></a>This sort-operation-equation description is called a **theory**, and the things</span>
+<span id="cb4-412"><a href="#cb4-412" aria-hidden="true" tabindex="-1"></a>that satisfy a theory are called **models**. A specific ATProto schema is a</span>
+<span id="cb4-413"><a href="#cb4-413" aria-hidden="true" tabindex="-1"></a>model of the multigraph theory. A specific SQL schema is a model of the</span>
+<span id="cb4-414"><a href="#cb4-414" aria-hidden="true" tabindex="-1"></a>hypergraph-with-constraints theory.</span>
+<span id="cb4-415"><a href="#cb4-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-416"><a href="#cb4-416" aria-hidden="true" tabindex="-1"></a>If the language of sorts, operations, and equations sounds suspiciously like an</span>
+<span id="cb4-417"><a href="#cb4-417" aria-hidden="true" tabindex="-1"></a>abstract algebra course, that's because it is. The next chapter introduces the</span>
+<span id="cb4-418"><a href="#cb4-418" aria-hidden="true" tabindex="-1"></a>specific algebraic framework panproto uses—Generalized Algebraic Theories—and</span>
+<span id="cb4-419"><a href="#cb4-419" aria-hidden="true" tabindex="-1"></a>shows how the Rust implementation represents theories and models as concrete</span>
+<span id="cb4-420"><a href="#cb4-420" aria-hidden="true" tabindex="-1"></a>data structures. The math will earn its keep: it's what makes panproto's</span>
+<span id="cb4-421"><a href="#cb4-421" aria-hidden="true" tabindex="-1"></a>parameterization possible.</span>
+<span id="cb4-422"><a href="#cb4-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-423"><a href="#cb4-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-424"><a href="#cb4-424" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb4-425"><a href="#cb4-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-426"><a href="#cb4-426" aria-hidden="true" tabindex="-1"></a>This chapter established three ideas:</span>
+<span id="cb4-427"><a href="#cb4-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-428"><a href="#cb4-428" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Schema languages have graph-theoretic structure.** Types are vertices;</span>
+<span id="cb4-429"><a href="#cb4-429" aria-hidden="true" tabindex="-1"></a>   fields, columns, and properties are edges. This is not a metaphor—it's a</span>
+<span id="cb4-430"><a href="#cb4-430" aria-hidden="true" tabindex="-1"></a>   precise structural description.</span>
+<span id="cb4-431"><a href="#cb4-431" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-432"><a href="#cb4-432" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Different schema languages need different kinds of graphs.** Multigraphs</span>
+<span id="cb4-433"><a href="#cb4-433" aria-hidden="true" tabindex="-1"></a>   for parallel fields (most languages). Hypergraphs for multi-ary constraints</span>
+<span id="cb4-434"><a href="#cb4-434" aria-hidden="true" tabindex="-1"></a>   (SQL). Constraints as annotations on any of these.</span>
+<span id="cb4-435"><a href="#cb4-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-436"><a href="#cb4-436" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Single-protocol tools hardcode a specific graph structure.** This is why</span>
+<span id="cb4-437"><a href="#cb4-437" aria-hidden="true" tabindex="-1"></a>   Buf can't do SQL migrations and Atlas can't lint Protobuf. panproto</span>
+<span id="cb4-438"><a href="#cb4-438" aria-hidden="true" tabindex="-1"></a>   parameterizes over the graph structure instead.</span>
+<span id="cb4-439"><a href="#cb4-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-440"><a href="#cb4-440" aria-hidden="true" tabindex="-1"></a>The question now is: how do you precisely describe a graph structure so that</span>
+<span id="cb4-441"><a href="#cb4-441" aria-hidden="true" tabindex="-1"></a>software can work with it generically? That's the subject of the next chapter.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/02-the-shape-of-schemas.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

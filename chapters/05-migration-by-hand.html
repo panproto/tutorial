@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Migration by Hand – panproto: Universal Schema Migration</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/06-when-migrations-exist.html" rel="next">
+<link href="../chapters/04-protocols-as-parameters.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f1aadacce99040138bbb613f9330654f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aafb03ca45b9c5aa290c66b7a437bb31.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-67ec4aabe8467e78f93de3725ae3d67e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-aafb03ca45b9c5aa290c66b7a437bb31.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="mermaid-theme" content="neutral">
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-migration-by-hand.html">Migration</a></li><li class="breadcrumb-item"><a href="../chapters/05-migration-by-hand.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Migration by Hand</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">panproto: Universal Schema Migration</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/panproto/panproto/tree/main/tutorial/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Motivation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-schemas-everywhere.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Schemas Everywhere</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-the-shape-of-schemas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Shape of Schemas</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-what-is-a-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">What Is a Theory?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-protocols-as-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Protocols as Parameters</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Migration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-migration-by-hand.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Migration by Hand</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-when-migrations-exist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Migrations Exist</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-lifting-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lifting Data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Bidirectionality &amp; Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lenses: Going Both Ways</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-breaking-changes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Breaking Changes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-building-your-own-protocol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Building Your Own Protocol</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-self-description.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Self-Description: The GAT of GATs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-setup" id="toc-the-setup" class="nav-link active" data-scroll-target="#the-setup"><span class="header-section-number">5.1</span> The Setup</a></li>
+  <li><a href="#the-migration-morphism" id="toc-the-migration-morphism" class="nav-link" data-scroll-target="#the-migration-morphism"><span class="header-section-number">5.2</span> The Migration Morphism</a></li>
+  <li><a href="#what-the-maps-mean" id="toc-what-the-maps-mean" class="nav-link" data-scroll-target="#what-the-maps-mean"><span class="header-section-number">5.3</span> What the Maps Mean</a></li>
+  <li><a href="#compiling-and-lifting" id="toc-compiling-and-lifting" class="nav-link" data-scroll-target="#compiling-and-lifting"><span class="header-section-number">5.4</span> Compiling and Lifting</a></li>
+  <li><a href="#tracing-the-lift" id="toc-tracing-the-lift" class="nav-link" data-scroll-target="#tracing-the-lift"><span class="header-section-number">5.5</span> Tracing the Lift</a>
+  <ul class="collapse">
+  <li><a href="#step-1-signature-restriction" id="toc-step-1-signature-restriction" class="nav-link" data-scroll-target="#step-1-signature-restriction"><span class="header-section-number">5.5.1</span> Step 1: Signature Restriction</a></li>
+  <li><a href="#step-2-reachability-bfs" id="toc-step-2-reachability-bfs" class="nav-link" data-scroll-target="#step-2-reachability-bfs"><span class="header-section-number">5.5.2</span> Step 2: Reachability BFS</a></li>
+  <li><a href="#step-3-ancestor-contraction" id="toc-step-3-ancestor-contraction" class="nav-link" data-scroll-target="#step-3-ancestor-contraction"><span class="header-section-number">5.5.3</span> Step 3: Ancestor Contraction</a></li>
+  <li><a href="#step-4-edge-resolution" id="toc-step-4-edge-resolution" class="nav-link" data-scroll-target="#step-4-edge-resolution"><span class="header-section-number">5.5.4</span> Step 4: Edge Resolution</a></li>
+  <li><a href="#step-5-fan-reconstruction" id="toc-step-5-fan-reconstruction" class="nav-link" data-scroll-target="#step-5-fan-reconstruction"><span class="header-section-number">5.5.5</span> Step 5: Fan Reconstruction</a></li>
+  </ul></li>
+  <li><a href="#what-happened-under-the-hood" id="toc-what-happened-under-the-hood" class="nav-link" data-scroll-target="#what-happened-under-the-hood"><span class="header-section-number">5.6</span> What Happened Under the Hood</a></li>
+  <li><a href="#the-same-pattern-in-sql" id="toc-the-same-pattern-in-sql" class="nav-link" data-scroll-target="#the-same-pattern-in-sql"><span class="header-section-number">5.7</span> The Same Pattern in SQL</a></li>
+  <li><a href="#composing-migrations" id="toc-composing-migrations" class="nav-link" data-scroll-target="#composing-migrations"><span class="header-section-number">5.8</span> Composing Migrations</a></li>
+  <li><a href="#migrations-that-do-more-than-add-fields" id="toc-migrations-that-do-more-than-add-fields" class="nav-link" data-scroll-target="#migrations-that-do-more-than-add-fields"><span class="header-section-number">5.9</span> Migrations That Do More Than Add Fields</a>
+  <ul class="collapse">
+  <li><a href="#renaming-a-field" id="toc-renaming-a-field" class="nav-link" data-scroll-target="#renaming-a-field"><span class="header-section-number">5.9.1</span> Renaming a Field</a></li>
+  <li><a href="#restructuring-extracting-a-nested-object" id="toc-restructuring-extracting-a-nested-object" class="nav-link" data-scroll-target="#restructuring-extracting-a-nested-object"><span class="header-section-number">5.9.2</span> Restructuring: Extracting a Nested Object</a></li>
+  <li><a href="#removing-a-required-field" id="toc-removing-a-required-field" class="nav-link" data-scroll-target="#removing-a-required-field"><span class="header-section-number">5.9.3</span> Removing a Required Field</a></li>
+  </ul></li>
+  <li><a href="#the-lift-as-a-natural-transformation" id="toc-the-lift-as-a-natural-transformation" class="nav-link" data-scroll-target="#the-lift-as-a-natural-transformation"><span class="header-section-number">5.10</span> The Lift as a Natural Transformation</a></li>
+  <li><a href="#a-note-on-terminology" id="toc-a-note-on-terminology" class="nav-link" data-scroll-target="#a-note-on-terminology"><span class="header-section-number">5.11</span> A Note on Terminology</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.12</span> Summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/05-migration-by-hand.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-migration-by-hand.html">Migration</a></li><li class="breadcrumb-item"><a href="../chapters/05-migration-by-hand.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Migration by Hand</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-migration-by-hand" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Migration by Hand</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The previous chapter described protocols as pairs of theories and promised that migration falls out automatically. That’s true, but abstractions are only useful if you can trace them through a concrete example. In this chapter, we will migrate a real schema change—adding a <code>tags</code> field to a Bluesky post—step by step, by hand, watching every piece of the machinery at work.</p>
+<p>By the end, you will be able to look at any schema change and predict exactly what the migration engine will do. That predictability is the whole point: migration should never be surprising.</p>
+<section id="the-setup" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="the-setup"><span class="header-section-number">5.1</span> The Setup</h2>
+<p>We start with a minimal ATProto schema for a post. Version 1 has two fields: <code>text</code> (a string containing the post body) and <code>createdAt</code> (a datetime timestamp).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-snippet="schema-v1"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { Panproto } <span class="im">from</span> <span class="st">'@panproto/core'</span><span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> panproto <span class="op">=</span> <span class="cf">await</span> Panproto<span class="op">.</span><span class="fu">init</span>()<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> atproto <span class="op">=</span> panproto<span class="op">.</span><span class="fu">protocol</span>(<span class="st">'atproto'</span>)<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet schema-v1</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> schemaV1 <span class="op">=</span> atproto<span class="op">.</span><span class="fu">schema</span>()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'record'</span><span class="op">,</span> { nsid<span class="op">:</span> <span class="st">'app.bsky.feed.post'</span> })</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'object'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'post:body'</span><span class="op">,</span> <span class="st">'record-schema'</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'text'</span> })</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'createdAt'</span> })</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">build</span>()<span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet schema-v1</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet schema-v2</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> schemaV2 <span class="op">=</span> atproto<span class="op">.</span><span class="fu">schema</span>()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'record'</span><span class="op">,</span> { nsid<span class="op">:</span> <span class="st">'app.bsky.feed.post'</span> })</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'object'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.tags'</span><span class="op">,</span> <span class="st">'array'</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.tags:item'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'post:body'</span><span class="op">,</span> <span class="st">'record-schema'</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'text'</span> })</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'createdAt'</span> })</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.tags'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'tags'</span> })</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body.tags'</span><span class="op">,</span> <span class="st">'post:body.tags:item'</span><span class="op">,</span> <span class="st">'items'</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">build</span>()<span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet schema-v2</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet migration</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> migration <span class="op">=</span> panproto<span class="op">.</span><span class="fu">migration</span>(schemaV1<span class="op">,</span> schemaV2)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'post'</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body'</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'post:body.text'</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'post:body.createdAt'</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">compile</span>()<span class="op">;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet migration</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet lift</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inputRecord <span class="op">=</span> {</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  text<span class="op">:</span> <span class="st">'Hello, world!'</span><span class="op">,</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="st">'2024-01-15T12:00:00Z'</span><span class="op">,</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> result <span class="op">=</span> migration<span class="op">.</span><span class="fu">lift</span>(inputRecord)<span class="op">;</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">// result.data: { text: 'Hello, world!', createdAt: '2024-01-15T12:00:00Z' }</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">// The tags field is absent (not mapped from v1).</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet lift</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This schema, viewed through the lens of Chapter 4, is a model of the ATProto schema theory: <code>colimit(ThGraph, ThConstraint, ThMulti)</code>. Concretely, it’s a directed graph with:</p>
+<ul>
+<li><strong>Vertices</strong>: <code>Post</code>, <code>Text</code>, <code>CreatedAt</code> (each annotated with a kind—record, string, datetime).</li>
+<li><strong>Edges</strong>: <code>text : Post → Text</code>, <code>createdAt : Post → CreatedAt</code> (each annotated with multiplicity and constraints).</li>
+</ul>
+<p>Now suppose we want version 2, which adds a <code>tags</code> field—an array of strings that let users categorize their posts.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-snippet="schema-v2"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { Panproto } <span class="im">from</span> <span class="st">'@panproto/core'</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> panproto <span class="op">=</span> <span class="cf">await</span> Panproto<span class="op">.</span><span class="fu">init</span>()<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> atproto <span class="op">=</span> panproto<span class="op">.</span><span class="fu">protocol</span>(<span class="st">'atproto'</span>)<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet schema-v1</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> schemaV1 <span class="op">=</span> atproto<span class="op">.</span><span class="fu">schema</span>()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'record'</span><span class="op">,</span> { nsid<span class="op">:</span> <span class="st">'app.bsky.feed.post'</span> })</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'object'</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'post:body'</span><span class="op">,</span> <span class="st">'record-schema'</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'text'</span> })</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'createdAt'</span> })</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">build</span>()<span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet schema-v1</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet schema-v2</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> schemaV2 <span class="op">=</span> atproto<span class="op">.</span><span class="fu">schema</span>()</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'record'</span><span class="op">,</span> { nsid<span class="op">:</span> <span class="st">'app.bsky.feed.post'</span> })</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'object'</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.tags'</span><span class="op">,</span> <span class="st">'array'</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.tags:item'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'post:body'</span><span class="op">,</span> <span class="st">'record-schema'</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'text'</span> })</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'createdAt'</span> })</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.tags'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'tags'</span> })</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body.tags'</span><span class="op">,</span> <span class="st">'post:body.tags:item'</span><span class="op">,</span> <span class="st">'items'</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">build</span>()<span class="op">;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet schema-v2</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet migration</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> migration <span class="op">=</span> panproto<span class="op">.</span><span class="fu">migration</span>(schemaV1<span class="op">,</span> schemaV2)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'post'</span>)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body'</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'post:body.text'</span>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'post:body.createdAt'</span>)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">compile</span>()<span class="op">;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet migration</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet lift</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inputRecord <span class="op">=</span> {</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  text<span class="op">:</span> <span class="st">'Hello, world!'</span><span class="op">,</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="st">'2024-01-15T12:00:00Z'</span><span class="op">,</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> result <span class="op">=</span> migration<span class="op">.</span><span class="fu">lift</span>(inputRecord)<span class="op">;</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co">// result.data: { text: 'Hello, world!', createdAt: '2024-01-15T12:00:00Z' }</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co">// The tags field is absent (not mapped from v1).</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet lift</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The v2 schema has an additional vertex (<code>Tags</code>, with kind <code>array&lt;string&gt;</code>) and an additional edge (<code>tags : Post → Tags</code>, with multiplicity <code>optional</code>). Everything else is unchanged.</p>
+<p>The question is: given a record conforming to v2, how do we produce a record conforming to v1?</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Direction of migration
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice that we are migrating <em>backward</em>: from v2 data to v1 compatibility. This is the common direction in practice. A client that only understands v1 receives a v2 record and needs to make sense of it. The forward direction (v1 data to v2) requires defaults or explicit construction of the new fields, which is a different operation (the left adjoint <span class="math inline">\(\Sigma_F\)</span> in the functor world, or a <em>fill</em> operation in the W-type world). We focus on the backward direction here.</p>
+</div>
+</div>
+</section>
+<section id="the-migration-morphism" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="the-migration-morphism"><span class="header-section-number">5.2</span> The Migration Morphism</h2>
+<p>A migration from v1 to v2 is a <em>schema morphism</em>: a structure-preserving map from the v1 schema graph to the v2 schema graph. In panproto, this means specifying a vertex map and an edge map.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-snippet="migration" data-startfrom="35"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript" style="counter-reset: source-line 34;"><span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> migration <span class="op">=</span> panproto<span class="op">.</span><span class="fu">migration</span>(schemaV1<span class="op">,</span> schemaV2)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'post'</span>)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body'</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'post:body.text'</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'post:body.createdAt'</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">compile</span>()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Let’s read this carefully:</p>
+<p><strong>Vertex map</strong>: each v1 vertex is mapped to the v2 vertex it corresponds to.</p>
+<ul>
+<li><code>Post ↦ Post</code> — the post record type is the same in both versions.</li>
+<li><code>Text ↦ Text</code> — the text type is the same.</li>
+<li><code>CreatedAt ↦ CreatedAt</code> — the datetime type is the same.</li>
+</ul>
+<p><strong>Edge map</strong>: each v1 edge is mapped to the v2 edge it corresponds to.</p>
+<ul>
+<li><code>text ↦ text</code> — the text field is the same.</li>
+<li><code>createdAt ↦ createdAt</code> — the createdAt field is the same.</li>
+</ul>
+<p>Notice what is <em>not</em> in the migration: the <code>Tags</code> vertex and the <code>tags</code> edge. They exist in v2 but have no preimage in v1. This is the structural encoding of “v2 added a new field that v1 doesn’t know about.”</p>
+<p>The migration morphism is an injection from the v1 schema into the v2 schema. Not all migrations are injections—you can merge vertices, collapse edges, remap types—but the “add a field” pattern always produces an injection.</p>
+</section>
+<section id="what-the-maps-mean" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="what-the-maps-mean"><span class="header-section-number">5.3</span> What the Maps Mean</h2>
+<p>It’s worth dwelling on the semantics of these maps, because they carry more information than they might appear to at first glance.</p>
+<p>The vertex map <span class="math inline">\(\phi_V : V_1 \to V_2\)</span> says: “for each type in the old schema, here is the corresponding type in the new schema.” If a v1 vertex maps to a v2 vertex, the engine knows that data anchored to that vertex type can survive the migration. If a v2 vertex has no preimage under <span class="math inline">\(\phi_V\)</span>, the engine knows that data anchored to that vertex type must be <em>introduced</em> (in the forward direction) or <em>discarded</em> (in the backward direction).</p>
+<p>The edge map <span class="math inline">\(\phi_E : E_1 \to E_2\)</span> says: “for each field/relationship in the old schema, here is the corresponding field/relationship in the new schema.” This map must be compatible with the vertex map: if edge <span class="math inline">\(e_1\)</span> goes from <span class="math inline">\(u_1\)</span> to <span class="math inline">\(v_1\)</span>, then <span class="math inline">\(\phi_E(e_1)\)</span> must go from <span class="math inline">\(\phi_V(u_1)\)</span> to <span class="math inline">\(\phi_V(v_1)\)</span>. This compatibility condition ensures that the migration is <em>structure-preserving</em>—it doesn’t scramble the graph topology.</p>
+<p>Together, <span class="math inline">\((\phi_V, \phi_E)\)</span> form a graph homomorphism from the v1 schema to the v2 schema. In the language of <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span>, this is a functor between the schemas viewed as categories (though for ATProto, which uses a graph rather than a category as its schema theory, the precise statement is a graph homomorphism).</p>
+</section>
+<section id="compiling-and-lifting" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="compiling-and-lifting"><span class="header-section-number">5.4</span> Compiling and Lifting</h2>
+<p>The raw migration morphism is a declaration of intent. Before it can be applied to data, it must be <em>compiled</em>: the engine pre-computes the data structures needed for efficient migration.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-snippet="lift" data-startfrom="44"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript" style="counter-reset: source-line 43;"><span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> inputRecord <span class="op">=</span> {</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>  text<span class="op">:</span> <span class="st">'Hello, world!'</span><span class="op">,</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="st">'2024-01-15T12:00:00Z'</span><span class="op">,</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> result <span class="op">=</span> migration<span class="op">.</span><span class="fu">lift</span>(inputRecord)<span class="op">;</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">// result.data: { text: 'Hello, world!', createdAt: '2024-01-15T12:00:00Z' }</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">// The tags field is absent (not mapped from v1).</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>compile</code> step analyzes the migration morphism and produces a compiled migration object. This object contains:</p>
+<ul>
+<li><strong>The surviving vertex set</strong>: the set of v2 vertices that are in the image of <span class="math inline">\(\phi_V\)</span>. In our example: <code>{Post, Text, CreatedAt}</code>.</li>
+<li><strong>The surviving edge set</strong>: the set of v2 edges that are in the image of <span class="math inline">\(\phi_E\)</span>. In our example: <code>{text, createdAt}</code>.</li>
+<li><strong>Remap tables</strong>: lookup structures mapping v2 vertices/edges back to their v1 preimages.</li>
+<li><strong>Constraint compatibility data</strong>: pre-checked results for whether constraints tighten or relax across the migration (more on this in Chapter 6).</li>
+</ul>
+<p>The <code>lift</code> function takes a compiled migration and a v2 record, and produces a v1 record. “Lift” is the term we use for applying a migration to data in the backward direction (the term comes from the lifting property in category theory, though the analogy is loose).</p>
+<p>Let’s trace through what <code>lift</code> does on a concrete record.</p>
+</section>
+<section id="tracing-the-lift" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="tracing-the-lift"><span class="header-section-number">5.5</span> Tracing the Lift</h2>
+<p>Suppose we have a v2 record:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"text"</span><span class="fu">:</span> <span class="st">"Hello, world!"</span><span class="fu">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"createdAt"</span><span class="fu">:</span> <span class="st">"2025-01-15T12:00:00Z"</span><span class="fu">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"tags"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"greeting"</span><span class="ot">,</span> <span class="st">"test"</span><span class="ot">]</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This record, viewed as a W-type instance, is a tree:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-v2-tree" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-v2-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-v2-tree">graph TD
+    R["Post (root)"]
+    T["Text: 'Hello, world!'"]
+    C["CreatedAt: '2025-01-15T12:00:00Z'"]
+    G["Tags: ['greeting', 'test']"]
+    R --&gt;|text| T
+    R --&gt;|createdAt| C
+    R --&gt;|tags| G
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-v2-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: The v2 record as a W-type tree.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The root node is anchored to the <code>Post</code> vertex. It has three children, each anchored to a different vertex and reached via a different edge.</p>
+<p>Now the engine applies the lift. Because ATProto uses W-type instances, it runs the tree surgery pipeline:</p>
+<section id="step-1-signature-restriction" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="step-1-signature-restriction"><span class="header-section-number">5.5.1</span> Step 1: Signature Restriction</h3>
+<p>Remove nodes anchored to vertices <em>not</em> in the surviving vertex set. The surviving set is <code>{Post, Text, CreatedAt}</code>. The <code>Tags</code> vertex is not in this set, so the node anchored to <code>Tags</code> is removed:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-after-restriction" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-after-restriction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-after-restriction">graph TD
+    R["Post (root)"]
+    T["Text: 'Hello, world!'"]
+    C["CreatedAt: '2025-01-15T12:00:00Z'"]
+    R --&gt;|text| T
+    R --&gt;|createdAt| C
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-after-restriction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: After signature restriction: the Tags node is removed.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-reachability-bfs" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="step-2-reachability-bfs"><span class="header-section-number">5.5.2</span> Step 2: Reachability BFS</h3>
+<p>Starting from the root, walk the tree to find all surviving nodes that are still reachable. In this simple case, both remaining children are direct children of the root, so they’re trivially reachable. No nodes are lost.</p>
+<p>In more complex migrations—where intermediate nodes are removed—this step can discover orphaned subtrees that need to be either discarded or reattached via ancestor contraction.</p>
+</section>
+<section id="step-3-ancestor-contraction" class="level3" data-number="5.5.3">
+<h3 data-number="5.5.3" class="anchored" data-anchor-id="step-3-ancestor-contraction"><span class="header-section-number">5.5.3</span> Step 3: Ancestor Contraction</h3>
+<p>When a removed node has surviving descendants, those descendants need to be reattached to the nearest surviving ancestor. In our example, the removed <code>Tags</code> node has no surviving descendants (it was a leaf), so contraction is a no-op.</p>
+<p>We will see contraction do real work in Chapter 7, where we handle nested schema changes.</p>
+</section>
+<section id="step-4-edge-resolution" class="level3" data-number="5.5.4">
+<h3 data-number="5.5.4" class="anchored" data-anchor-id="step-4-edge-resolution"><span class="header-section-number">5.5.4</span> Step 4: Edge Resolution</h3>
+<p>Relabel edges according to the migration’s edge map. Since our edge map is the identity on surviving edges (<code>text ↦ text</code>, <code>createdAt ↦ createdAt</code>), the labels don’t change.</p>
+<p>Edge resolution becomes interesting when the migration renames fields, or when ancestor contraction introduces new parent-child relationships that need to be labeled.</p>
+</section>
+<section id="step-5-fan-reconstruction" class="level3" data-number="5.5.5">
+<h3 data-number="5.5.5" class="anchored" data-anchor-id="step-5-fan-reconstruction"><span class="header-section-number">5.5.5</span> Step 5: Fan Reconstruction</h3>
+<p>Rebuild the children list for each surviving node. The root’s fan (its set of outgoing edges and their targets) is now <code>{text → Text, createdAt → CreatedAt}</code>, which is exactly the fan described by the v1 schema.</p>
+<p>The result is a v1-compatible record:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"text"</span><span class="fu">:</span> <span class="st">"Hello, world!"</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"createdAt"</span><span class="fu">:</span> <span class="st">"2025-01-15T12:00:00Z"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>tags</code> field has been cleanly removed. The surviving fields are untouched.</p>
+</section>
+</section>
+<section id="what-happened-under-the-hood" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="what-happened-under-the-hood"><span class="header-section-number">5.6</span> What Happened Under the Hood</h2>
+<p>Let’s step back and name what just occurred. The migration morphism <span class="math inline">\((\phi_V, \phi_E) : S_1 \hookrightarrow S_2\)</span> is an injection from the v1 schema into the v2 schema. The lift operation took a v2 instance (a tree) and produced a v1 instance (a smaller tree) by:</p>
+<ol type="1">
+<li>Restricting to the image of <span class="math inline">\(\phi_V\)</span> (keeping only the types that v1 knows about).</li>
+<li>Checking reachability (making sure nothing got disconnected).</li>
+<li>Contracting past removed intermediaries (not needed here).</li>
+<li>Resolving edge labels (trivial here).</li>
+<li>Rebuilding the fan structure (trivial here).</li>
+</ol>
+<p>This five-step pipeline is the <em>restriction operator</em> for W-type instances that we mentioned in Chapter 4. For this particular migration—adding a leaf field—the pipeline reduces to “delete the new node.” But the same pipeline handles arbitrarily complex schema changes: renaming fields, restructuring nested objects, collapsing hierarchies, splitting types. The steps are always the same; only the work done in each step varies.</p>
+</section>
+<section id="the-same-pattern-in-sql" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="the-same-pattern-in-sql"><span class="header-section-number">5.7</span> The Same Pattern in SQL</h2>
+<p>To build intuition across protocol boundaries, let’s see the same “add a column” migration in SQL, where the instance theory is ThFunctor instead of ThWType.</p>
+<p><strong>v1 schema</strong> (as a category):</p>
+<ul>
+<li>Objects: <code>posts</code> (a table)</li>
+<li>No non-identity morphisms (no foreign keys in this simple example)</li>
+</ul>
+<p><strong>v2 schema</strong>:</p>
+<ul>
+<li>Objects: <code>posts</code> (same table, now with an additional <code>tags</code> column)</li>
+</ul>
+<p><strong>Migration</strong>: the functor <span class="math inline">\(F : \mathcal{S}_1 \to \mathcal{S}_2\)</span> maps <code>posts ↦ posts</code>.</p>
+<p><strong>Instance</strong>: a v2 instance <span class="math inline">\(I : \mathcal{S}_2 \to \mathbf{Set}\)</span> assigns to <code>posts</code> the set of all rows:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>id</th>
+<th>text</th>
+<th>created_at</th>
+<th>tags</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>“Hello, world!”</td>
+<td>2025-01-15</td>
+<td>{“greeting”, “test”}</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>“Another post”</td>
+<td>2025-01-16</td>
+<td>{}</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lift</strong> (<span class="math inline">\(\Delta_F\)</span>): the restricted instance <span class="math inline">\(\Delta_F(I) = I \circ F\)</span> assigns to <code>posts</code> the <em>same</em> set of rows, but viewed through the v1 schema, which doesn’t include the <code>tags</code> column. The result is the projection:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>id</th>
+<th>text</th>
+<th>created_at</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>“Hello, world!”</td>
+<td>2025-01-15</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>“Another post”</td>
+<td>2025-01-16</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>tags</code> column is dropped because v1’s schema doesn’t have a morphism corresponding to it.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Same migration, different mechanics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The ATProto and SQL versions of “add a field” produce the same observable result: the new field is dropped when migrating backward. But the <em>mechanism</em> is different. ATProto prunes a tree node (W-type restriction). SQL projects away a column (functor precomposition). The migration morphism is the same kind of object in both cases—a structure-preserving map between schemas—but the restriction operator is determined by the instance theory.</p>
+<p>This is the two-parameter architecture at work: the schema morphism is protocol-independent, but the data operation is protocol-specific, derived from the instance theory.</p>
+</div>
+</div>
+</section>
+<section id="composing-migrations" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="composing-migrations"><span class="header-section-number">5.8</span> Composing Migrations</h2>
+<p>Migrations compose. If you have a migration <span class="math inline">\(m_{12} : S_1 \to S_2\)</span> and a migration <span class="math inline">\(m_{23} : S_2 \to S_3\)</span>, their composite <span class="math inline">\(m_{13} = m_{23} \circ m_{12} : S_1 \to S_3\)</span> is also a valid migration.</p>
+<p>For our running example, suppose v3 adds a <code>langs</code> field (an array of language codes) on top of v2:</p>
+<ul>
+<li><span class="math inline">\(m_{12}\)</span> : v1 → v2 (adds <code>tags</code>)</li>
+<li><span class="math inline">\(m_{23}\)</span> : v2 → v3 (adds <code>langs</code>)</li>
+<li><span class="math inline">\(m_{13} = m_{23} \circ m_{12}\)</span> : v1 → v3 (adds both <code>tags</code> and <code>langs</code>)</li>
+</ul>
+<p>The composite migration’s vertex map sends each v1 vertex through both maps: <span class="math inline">\(\phi^{13}_V(v) = \phi^{23}_V(\phi^{12}_V(v))\)</span>. The edge map composes similarly.</p>
+<p>Lifting through the composite is equivalent to lifting through each step in sequence:</p>
+<p><span class="math display">\[\text{lift}(m_{13}, \text{record}_3) = \text{lift}(m_{12}, \text{lift}(m_{23}, \text{record}_3))\]</span></p>
+<p>For functor instances, this is automatic: <span class="math inline">\(\Delta_{F \circ G} = \Delta_G \circ \Delta_F\)</span> (precomposition is contravariantly functorial). For W-type instances, the engine must verify this property for each migration pair, but in practice it holds whenever both migrations pass the existence checks of Chapter 6.</p>
+<p>Composability is what makes migration <em>scalable</em>. You don’t need a migration from every old version to every new version. You maintain a chain <span class="math inline">\(S_1 \to S_2 \to \cdots \to S_n\)</span>, and the engine composes as needed.</p>
+</section>
+<section id="migrations-that-do-more-than-add-fields" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="migrations-that-do-more-than-add-fields"><span class="header-section-number">5.9</span> Migrations That Do More Than Add Fields</h2>
+<p>Adding a field is the simplest possible migration. Let’s briefly sketch what happens for more complex schema changes, to give you a sense of the pipeline’s range.</p>
+<section id="renaming-a-field" class="level3" data-number="5.9.1">
+<h3 data-number="5.9.1" class="anchored" data-anchor-id="renaming-a-field"><span class="header-section-number">5.9.1</span> Renaming a Field</h3>
+<p>Suppose v2 renames <code>text</code> to <code>body</code>. The vertex map still sends <code>Text ↦ Text</code> (the type hasn’t changed), but the edge map sends <code>text ↦ body</code>. During edge resolution (step 4), the engine relabels the <code>body</code> edge back to <code>text</code>, producing a record that uses the old field name. The data is untouched; only the label changes.</p>
+</section>
+<section id="restructuring-extracting-a-nested-object" class="level3" data-number="5.9.2">
+<h3 data-number="5.9.2" class="anchored" data-anchor-id="restructuring-extracting-a-nested-object"><span class="header-section-number">5.9.2</span> Restructuring: Extracting a Nested Object</h3>
+<p>Suppose v1 has a flat post with <code>text</code>, <code>createdAt</code>, and <code>authorName</code>. v2 extracts <code>authorName</code> into a nested <code>author</code> object with a <code>name</code> field. The vertex map sends v1’s <code>AuthorName</code> to v2’s <code>Name</code> (inside the <code>Author</code> object). The edge map sends v1’s <code>authorName</code> to the <em>composed path</em> <code>author.name</code>.</p>
+<p>During ancestor contraction (step 3), the engine recognizes that the <code>Author</code> vertex is an intermediate node not in v1’s schema. It contracts the path <code>Post → Author → Name</code> to <code>Post → AuthorName</code>, preserving the data while flattening the structure.</p>
+</section>
+<section id="removing-a-required-field" class="level3" data-number="5.9.3">
+<h3 data-number="5.9.3" class="anchored" data-anchor-id="removing-a-required-field"><span class="header-section-number">5.9.3</span> Removing a Required Field</h3>
+<p>Suppose v2 removes the <code>createdAt</code> field entirely. The vertex map doesn’t include <code>CreatedAt</code>, and the edge map doesn’t include <code>createdAt</code>. This migration <em>might not exist</em>—if v1 requires <code>createdAt</code> (it’s not optional), then there’s no valid way to produce a v1 record without it. The engine detects this during compilation and reports an existence failure. Chapter 6 covers the precise conditions.</p>
+</section>
+</section>
+<section id="the-lift-as-a-natural-transformation" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="the-lift-as-a-natural-transformation"><span class="header-section-number">5.10</span> The Lift as a Natural Transformation</h2>
+<p>For readers with a category theory background, there is a clean way to state what <code>lift</code> does. The lift operation is the component of a natural transformation between data presheaves, induced by the migration morphism.</p>
+<p>In the functor case, this is literal. A migration <span class="math inline">\(F : \mathcal{S}_1 \to \mathcal{S}_2\)</span> induces a functor <span class="math inline">\(\Delta_F : \mathbf{Set}^{\mathcal{S}_2} \to \mathbf{Set}^{\mathcal{S}_1}\)</span> between presheaf categories. This functor sends each <span class="math inline">\(\mathcal{S}_2\)</span>-instance to an <span class="math inline">\(\mathcal{S}_1\)</span>-instance by precomposition. The lift of a single record is the action of <span class="math inline">\(\Delta_F\)</span> on a representable presheaf <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span>.</p>
+<p>In the W-type case, the connection is less direct but still meaningful. The tree surgery pipeline computes the action of a restriction functor on the polynomial functor associated with the schema. The mathematical details involve the theory of polynomial functors and their morphisms <span class="citation" data-cites="gambino2004 abbott2005">(<a href="#ref-gambino2004" role="doc-biblioref">Gambino and Hyland 2004</a>; <a href="#ref-abbott2005" role="doc-biblioref">Abbott et al. 2005</a>)</span>, which we defer to <a href="../appendices/C-guide-to-the-literature.html">Appendix C</a>.</p>
+<p>For practical purposes, you don’t need the category theory to use panproto effectively. The <code>compile</code> + <code>lift</code> API is self-contained. But if you want to verify that a complex migration is correct, the categorical perspective gives you the tools: check that the morphism is a valid graph homomorphism, and the rest follows by functoriality.</p>
+</section>
+<section id="a-note-on-terminology" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="a-note-on-terminology"><span class="header-section-number">5.11</span> A Note on Terminology</h2>
+<p>Different communities use different words for the operations we’ve described:</p>
+<div id="tbl-terminology" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-terminology-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.1: Terminology across communities.
+</figcaption>
+<div aria-describedby="tbl-terminology-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 35%">
+<col style="width: 24%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>panproto</th>
+<th>CQL / Spivak</th>
+<th>Cambria</th>
+<th>SQL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Migration morphism</td>
+<td>Schema functor</td>
+<td>Lens</td>
+<td>ALTER TABLE + mapping</td>
+</tr>
+<tr class="even">
+<td>Compile</td>
+<td>(implicit)</td>
+<td>Compile lens</td>
+<td>Query planning</td>
+</tr>
+<tr class="odd">
+<td>Lift (backward)</td>
+<td><span class="math inline">\(\Delta_F\)</span></td>
+<td>Convert</td>
+<td>View / projection</td>
+</tr>
+<tr class="even">
+<td>Fill (forward)</td>
+<td><span class="math inline">\(\Sigma_F\)</span> / <span class="math inline">\(\Pi_F\)</span></td>
+<td>(manual)</td>
+<td>INSERT with defaults</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>panproto’s terminology is closest to <span class="citation" data-cites="litt2022">Litt et al. (<a href="#ref-litt2022" role="doc-biblioref">2022</a>)</span>’s Cambria project, which was an important practical inspiration. The key difference is that Cambria hardcodes its schema language and migration semantics, while panproto parameterizes both by theories.</p>
+</section>
+<section id="summary" class="level2" data-number="5.12">
+<h2 data-number="5.12" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.12</span> Summary</h2>
+<ul>
+<li>A <strong>migration</strong> is a structure-preserving map (vertex map + edge map) from an old schema to a new schema.</li>
+<li>The migration is <strong>compiled</strong> to pre-compute surviving sets and remap tables.</li>
+<li>The <strong>lift</strong> operation applies the compiled migration to a record, producing a record conforming to the old schema.</li>
+<li>For <strong>W-type instances</strong> (ATProto, JSON, GraphQL), lift runs a 5-step tree surgery pipeline: signature restriction, reachability BFS, ancestor contraction, edge resolution, fan reconstruction.</li>
+<li>For <strong>functor instances</strong> (SQL, CQL), lift is precomposition: pull rows through the vertex map.</li>
+<li>Migrations <strong>compose</strong>: you maintain a chain of migrations, and the engine composes as needed.</li>
+<li>The same <strong>migration morphism</strong> structure works across protocols; only the <strong>lift implementation</strong> varies, determined by the instance theory.</li>
+</ul>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-abbott2005" class="csl-entry" role="listitem">
+Abbott, Michael, Thorsten Altenkirch, and Neil Ghani. 2005. <span>“Containers: Constructing Strictly Positive Types.”</span> <em>Theoretical Computer Science</em> 342 (1): 3–27. <a href="https://doi.org/10.1016/j.tcs.2005.06.002">https://doi.org/10.1016/j.tcs.2005.06.002</a>.
+</div>
+<div id="ref-gambino2004" class="csl-entry" role="listitem">
+Gambino, Nicola, and J. Martin E. Hyland. 2004. <span>“Wellfounded Trees and Dependent Polynomial Functors.”</span> <em>Types for Proofs and Programs (TYPES 2003)</em>, Lecture notes in computer science, vol. 3085: 210–25. <a href="https://doi.org/10.1007/978-3-540-24849-1_14">https://doi.org/10.1007/978-3-540-24849-1_14</a>.
+</div>
+<div id="ref-litt2022" class="csl-entry" role="listitem">
+Litt, Geoffrey, Martin Kleppmann, and Marc Shapiro. 2022. <em>Project <span>Cambria</span>: Schema Evolution for <span>CRDTs</span></em>. Ink &amp; Switch research essay. <a href="https://www.inkandswitch.com/cambria/">https://www.inkandswitch.com/cambria/</a>.
+</div>
+<div id="ref-spivak2012" class="csl-entry" role="listitem">
+Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Information and Computation</em> 217: 31–51. <a href="https://doi.org/10.1016/j.ic.2012.05.001">https://doi.org/10.1016/j.ic.2012.05.001</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/panproto\.github\.io\/tutorial\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/04-protocols-as-parameters.html" class="pagination-link" aria-label="Protocols as Parameters">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Protocols as Parameters</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/06-when-migrations-exist.html" class="pagination-link" aria-label="When Migrations Exist">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Migrations Exist</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Migration by Hand {#sec-migration-by-hand}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>The previous chapter described protocols as pairs of theories and promised that migration falls out automatically. That's true, but abstractions are only useful if you can trace them through a concrete example. In this chapter, we will migrate a real schema change---adding a <span class="in">`tags`</span> field to a Bluesky post---step by step, by hand, watching every piece of the machinery at work.</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>By the end, you will be able to look at any schema change and predict exactly what the migration engine will do. That predictability is the whole point: migration should never be surprising.</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Setup</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>We start with a minimal ATProto schema for a post. Version 1 has two fields: <span class="in">`text`</span> (a string containing the post body) and <span class="in">`createdAt`</span> (a datetime timestamp).</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{.typescript include="../code/ts/05-migration-basic.ts" snippet="schema-v1"}</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>This schema, viewed through the lens of Chapter 4, is a model of the ATProto schema theory: <span class="in">`colimit(ThGraph, ThConstraint, ThMulti)`</span>. Concretely, it's a directed graph with:</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Vertices**: <span class="in">`Post`</span>, <span class="in">`Text`</span>, <span class="in">`CreatedAt`</span> (each annotated with a kind---record, string, datetime).</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Edges**: <span class="in">`text : Post → Text`</span>, <span class="in">`createdAt : Post → CreatedAt`</span> (each annotated with multiplicity and constraints).</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>Now suppose we want version 2, which adds a <span class="in">`tags`</span> field---an array of strings that let users categorize their posts.</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{.typescript include="../code/ts/05-migration-basic.ts" snippet="schema-v2"}</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>The v2 schema has an additional vertex (<span class="in">`Tags`</span>, with kind <span class="in">`array&lt;string&gt;`</span>) and an additional edge (<span class="in">`tags : Post → Tags`</span>, with multiplicity <span class="in">`optional`</span>). Everything else is unchanged.</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>The question is: given a record conforming to v2, how do we produce a record conforming to v1?</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Direction of migration</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>Notice that we are migrating *backward*: from v2 data to v1 compatibility. This is the common direction in practice. A client that only understands v1 receives a v2 record and needs to make sense of it. The forward direction (v1 data to v2) requires defaults or explicit construction of the new fields, which is a different operation (the left adjoint $\Sigma_F$ in the functor world, or a *fill* operation in the W-type world). We focus on the backward direction here.</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Migration Morphism</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>A migration from v1 to v2 is a *schema morphism*: a structure-preserving map from the v1 schema graph to the v2 schema graph. In panproto, this means specifying a vertex map and an edge map.</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{.typescript include="../code/ts/05-migration-basic.ts" snippet="migration"}</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>Let's read this carefully:</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>**Vertex map**: each v1 vertex is mapped to the v2 vertex it corresponds to.</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Post ↦ Post`</span> — the post record type is the same in both versions.</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Text ↦ Text`</span> — the text type is the same.</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`CreatedAt ↦ CreatedAt`</span> — the datetime type is the same.</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>**Edge map**: each v1 edge is mapped to the v2 edge it corresponds to.</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`text ↦ text`</span> — the text field is the same.</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`createdAt ↦ createdAt`</span> — the createdAt field is the same.</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>Notice what is *not* in the migration: the <span class="in">`Tags`</span> vertex and the <span class="in">`tags`</span> edge. They exist in v2 but have no preimage in v1. This is the structural encoding of "v2 added a new field that v1 doesn't know about."</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>The migration morphism is an injection from the v1 schema into the v2 schema. Not all migrations are injections---you can merge vertices, collapse edges, remap types---but the "add a field" pattern always produces an injection.</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## What the Maps Mean</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>It's worth dwelling on the semantics of these maps, because they carry more information than they might appear to at first glance.</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>The vertex map $\phi_V : V_1 \to V_2$ says: "for each type in the old schema, here is the corresponding type in the new schema." If a v1 vertex maps to a v2 vertex, the engine knows that data anchored to that vertex type can survive the migration. If a v2 vertex has no preimage under $\phi_V$, the engine knows that data anchored to that vertex type must be *introduced* (in the forward direction) or *discarded* (in the backward direction).</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>The edge map $\phi_E : E_1 \to E_2$ says: "for each field/relationship in the old schema, here is the corresponding field/relationship in the new schema." This map must be compatible with the vertex map: if edge $e_1$ goes from $u_1$ to $v_1$, then $\phi_E(e_1)$ must go from $\phi_V(u_1)$ to $\phi_V(v_1)$. This compatibility condition ensures that the migration is *structure-preserving*---it doesn't scramble the graph topology.</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>Together, $(\phi_V, \phi_E)$ form a graph homomorphism from the v1 schema to the v2 schema. In the language of <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span>, this is a functor between the schemas viewed as categories (though for ATProto, which uses a graph rather than a category as its schema theory, the precise statement is a graph homomorphism).</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="fu">## Compiling and Lifting</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>The raw migration morphism is a declaration of intent. Before it can be applied to data, it must be *compiled*: the engine pre-computes the data structures needed for efficient migration.</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="in">```{.typescript include="../code/ts/05-migration-basic.ts" snippet="lift"}</span></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>The <span class="in">`compile`</span> step analyzes the migration morphism and produces a compiled migration object. This object contains:</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The surviving vertex set**: the set of v2 vertices that are in the image of $\phi_V$. In our example: <span class="in">`{Post, Text, CreatedAt}`</span>.</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The surviving edge set**: the set of v2 edges that are in the image of $\phi_E$. In our example: <span class="in">`{text, createdAt}`</span>.</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Remap tables**: lookup structures mapping v2 vertices/edges back to their v1 preimages.</span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Constraint compatibility data**: pre-checked results for whether constraints tighten or relax across the migration (more on this in Chapter 6).</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>The <span class="in">`lift`</span> function takes a compiled migration and a v2 record, and produces a v1 record. "Lift" is the term we use for applying a migration to data in the backward direction (the term comes from the lifting property in category theory, though the analogy is loose).</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>Let's trace through what <span class="in">`lift`</span> does on a concrete record.</span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## Tracing the Lift</span></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>Suppose we have a v2 record:</span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a>  <span class="st">"text"</span><span class="op">:</span> <span class="st">"Hello, world!"</span><span class="op">,</span></span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>  <span class="st">"createdAt"</span><span class="op">:</span> <span class="st">"2025-01-15T12:00:00Z"</span><span class="op">,</span></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>  <span class="st">"tags"</span><span class="op">:</span> [<span class="st">"greeting"</span><span class="op">,</span> <span class="st">"test"</span>]</span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>This record, viewed as a W-type instance, is a tree:</span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a>%%| label: fig-v2-tree</span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a>%%| fig-cap: <span class="ot">"</span><span class="st">The v2 record as a W-type tree.</span><span class="ot">"</span></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>graph TD</span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>    R[<span class="ot">"</span><span class="st">Post (root)</span><span class="ot">"</span>]</span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a>    T[<span class="ot">"</span><span class="st">Text: 'Hello, world!'</span><span class="ot">"</span>]</span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a>    C[<span class="ot">"</span><span class="st">CreatedAt: '2025-01-15T12:00:00Z'</span><span class="ot">"</span>]</span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a>    G[<span class="ot">"</span><span class="st">Tags: ['greeting', 'test']</span><span class="ot">"</span>]</span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>    R --&gt;|text| T</span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>    R --&gt;|createdAt| C</span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a>    R --&gt;|tags| G</span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a>The root node is anchored to the <span class="in">`Post`</span> vertex. It has three children, each anchored to a different vertex and reached via a different edge.</span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>Now the engine applies the lift. Because ATProto uses W-type instances, it runs the tree surgery pipeline:</span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1: Signature Restriction</span></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>Remove nodes anchored to vertices *not* in the surviving vertex set. The surviving set is <span class="in">`{Post, Text, CreatedAt}`</span>. The <span class="in">`Tags`</span> vertex is not in this set, so the node anchored to <span class="in">`Tags`</span> is removed:</span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>%%| label: fig-after-restriction</span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>%%| fig-cap: <span class="ot">"</span><span class="st">After signature restriction: the Tags node is removed.</span><span class="ot">"</span></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>graph TD</span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>    R[<span class="ot">"</span><span class="st">Post (root)</span><span class="ot">"</span>]</span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>    T[<span class="ot">"</span><span class="st">Text: 'Hello, world!'</span><span class="ot">"</span>]</span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>    C[<span class="ot">"</span><span class="st">CreatedAt: '2025-01-15T12:00:00Z'</span><span class="ot">"</span>]</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a>    R --&gt;|text| T</span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a>    R --&gt;|createdAt| C</span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 2: Reachability BFS</span></span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>Starting from the root, walk the tree to find all surviving nodes that are still reachable. In this simple case, both remaining children are direct children of the root, so they're trivially reachable. No nodes are lost.</span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a>In more complex migrations---where intermediate nodes are removed---this step can discover orphaned subtrees that need to be either discarded or reattached via ancestor contraction.</span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 3: Ancestor Contraction</span></span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a>When a removed node has surviving descendants, those descendants need to be reattached to the nearest surviving ancestor. In our example, the removed <span class="in">`Tags`</span> node has no surviving descendants (it was a leaf), so contraction is a no-op.</span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>We will see contraction do real work in Chapter 7, where we handle nested schema changes.</span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 4: Edge Resolution</span></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>Relabel edges according to the migration's edge map. Since our edge map is the identity on surviving edges (<span class="in">`text ↦ text`</span>, <span class="in">`createdAt ↦ createdAt`</span>), the labels don't change.</span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a>Edge resolution becomes interesting when the migration renames fields, or when ancestor contraction introduces new parent-child relationships that need to be labeled.</span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 5: Fan Reconstruction</span></span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>Rebuild the children list for each surviving node. The root's fan (its set of outgoing edges and their targets) is now <span class="in">`{text → Text, createdAt → CreatedAt}`</span>, which is exactly the fan described by the v1 schema.</span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>The result is a v1-compatible record:</span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a>  <span class="st">"text"</span><span class="op">:</span> <span class="st">"Hello, world!"</span><span class="op">,</span></span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a>  <span class="st">"createdAt"</span><span class="op">:</span> <span class="st">"2025-01-15T12:00:00Z"</span></span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a>The <span class="in">`tags`</span> field has been cleanly removed. The surviving fields are untouched.</span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a><span class="fu">## What Happened Under the Hood</span></span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a>Let's step back and name what just occurred. The migration morphism $(\phi_V, \phi_E) : S_1 \hookrightarrow S_2$ is an injection from the v1 schema into the v2 schema. The lift operation took a v2 instance (a tree) and produced a v1 instance (a smaller tree) by:</span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Restricting to the image of $\phi_V$ (keeping only the types that v1 knows about).</span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Checking reachability (making sure nothing got disconnected).</span>
+<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Contracting past removed intermediaries (not needed here).</span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Resolving edge labels (trivial here).</span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Rebuilding the fan structure (trivial here).</span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a>This five-step pipeline is the *restriction operator* for W-type instances that we mentioned in Chapter 4. For this particular migration---adding a leaf field---the pipeline reduces to "delete the new node." But the same pipeline handles arbitrarily complex schema changes: renaming fields, restructuring nested objects, collapsing hierarchies, splitting types. The steps are always the same; only the work done in each step varies.</span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Same Pattern in SQL</span></span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a>To build intuition across protocol boundaries, let's see the same "add a column" migration in SQL, where the instance theory is ThFunctor instead of ThWType.</span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a>**v1 schema** (as a category):</span>
+<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Objects: <span class="in">`posts`</span> (a table)</span>
+<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No non-identity morphisms (no foreign keys in this simple example)</span>
+<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a>**v2 schema**:</span>
+<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Objects: <span class="in">`posts`</span> (same table, now with an additional <span class="in">`tags`</span> column)</span>
+<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a>**Migration**: the functor $F : \mathcal{S}_1 \to \mathcal{S}_2$ maps <span class="in">`posts ↦ posts`</span>.</span>
+<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a>**Instance**: a v2 instance $I : \mathcal{S}_2 \to \mathbf{Set}$ assigns to <span class="in">`posts`</span> the set of all rows:</span>
+<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> id <span class="pp">|</span> text <span class="pp">|</span> created_at <span class="pp">|</span> tags <span class="pp">|</span></span>
+<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|------|------------|------|</span></span>
+<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> "Hello, world!" <span class="pp">|</span> 2025-01-15 <span class="pp">|</span> {"greeting", "test"} <span class="pp">|</span></span>
+<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> "Another post" <span class="pp">|</span> 2025-01-16 <span class="pp">|</span> {} <span class="pp">|</span></span>
+<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a>**Lift** ($\Delta_F$): the restricted instance $\Delta_F(I) = I \circ F$ assigns to <span class="in">`posts`</span> the *same* set of rows, but viewed through the v1 schema, which doesn't include the <span class="in">`tags`</span> column. The result is the projection:</span>
+<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> id <span class="pp">|</span> text <span class="pp">|</span> created_at <span class="pp">|</span></span>
+<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a><span class="pp">|----|------|------------|</span></span>
+<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> "Hello, world!" <span class="pp">|</span> 2025-01-15 <span class="pp">|</span></span>
+<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> "Another post" <span class="pp">|</span> 2025-01-16 <span class="pp">|</span></span>
+<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a>The <span class="in">`tags`</span> column is dropped because v1's schema doesn't have a morphism corresponding to it.</span>
+<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Same migration, different mechanics</span></span>
+<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a>The ATProto and SQL versions of "add a field" produce the same observable result: the new field is dropped when migrating backward. But the *mechanism* is different. ATProto prunes a tree node (W-type restriction). SQL projects away a column (functor precomposition). The migration morphism is the same kind of object in both cases---a structure-preserving map between schemas---but the restriction operator is determined by the instance theory.</span>
+<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a>This is the two-parameter architecture at work: the schema morphism is protocol-independent, but the data operation is protocol-specific, derived from the instance theory.</span>
+<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## Composing Migrations</span></span>
+<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a>Migrations compose. If you have a migration $m_{12} : S_1 \to S_2$ and a migration $m_{23} : S_2 \to S_3$, their composite $m_{13} = m_{23} \circ m_{12} : S_1 \to S_3$ is also a valid migration.</span>
+<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a>For our running example, suppose v3 adds a <span class="in">`langs`</span> field (an array of language codes) on top of v2:</span>
+<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$m_{12}$ : v1 → v2 (adds <span class="in">`tags`</span>)</span>
+<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$m_{23}$ : v2 → v3 (adds <span class="in">`langs`</span>)</span>
+<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$m_{13} = m_{23} \circ m_{12}$ : v1 → v3 (adds both <span class="in">`tags`</span> and <span class="in">`langs`</span>)</span>
+<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a>The composite migration's vertex map sends each v1 vertex through both maps: $\phi^{13}_V(v) = \phi^{23}_V(\phi^{12}_V(v))$. The edge map composes similarly.</span>
+<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a>Lifting through the composite is equivalent to lifting through each step in sequence:</span>
+<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a>$$\text{lift}(m_{13}, \text{record}_3) = \text{lift}(m_{12}, \text{lift}(m_{23}, \text{record}_3))$$</span>
+<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a>For functor instances, this is automatic: $\Delta_{F \circ G} = \Delta_G \circ \Delta_F$ (precomposition is contravariantly functorial). For W-type instances, the engine must verify this property for each migration pair, but in practice it holds whenever both migrations pass the existence checks of Chapter 6.</span>
+<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a>Composability is what makes migration *scalable*. You don't need a migration from every old version to every new version. You maintain a chain $S_1 \to S_2 \to \cdots \to S_n$, and the engine composes as needed.</span>
+<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Migrations That Do More Than Add Fields</span></span>
+<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a>Adding a field is the simplest possible migration. Let's briefly sketch what happens for more complex schema changes, to give you a sense of the pipeline's range.</span>
+<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a><span class="fu">### Renaming a Field</span></span>
+<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a>Suppose v2 renames <span class="in">`text`</span> to <span class="in">`body`</span>. The vertex map still sends <span class="in">`Text ↦ Text`</span> (the type hasn't changed), but the edge map sends <span class="in">`text ↦ body`</span>. During edge resolution (step 4), the engine relabels the <span class="in">`body`</span> edge back to <span class="in">`text`</span>, producing a record that uses the old field name. The data is untouched; only the label changes.</span>
+<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a><span class="fu">### Restructuring: Extracting a Nested Object</span></span>
+<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a>Suppose v1 has a flat post with <span class="in">`text`</span>, <span class="in">`createdAt`</span>, and <span class="in">`authorName`</span>. v2 extracts <span class="in">`authorName`</span> into a nested <span class="in">`author`</span> object with a <span class="in">`name`</span> field. The vertex map sends v1's <span class="in">`AuthorName`</span> to v2's <span class="in">`Name`</span> (inside the <span class="in">`Author`</span> object). The edge map sends v1's <span class="in">`authorName`</span> to the *composed path* <span class="in">`author.name`</span>.</span>
+<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a>During ancestor contraction (step 3), the engine recognizes that the <span class="in">`Author`</span> vertex is an intermediate node not in v1's schema. It contracts the path <span class="in">`Post → Author → Name`</span> to <span class="in">`Post → AuthorName`</span>, preserving the data while flattening the structure.</span>
+<span id="cb7-262"><a href="#cb7-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-263"><a href="#cb7-263" aria-hidden="true" tabindex="-1"></a><span class="fu">### Removing a Required Field</span></span>
+<span id="cb7-264"><a href="#cb7-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-265"><a href="#cb7-265" aria-hidden="true" tabindex="-1"></a>Suppose v2 removes the <span class="in">`createdAt`</span> field entirely. The vertex map doesn't include <span class="in">`CreatedAt`</span>, and the edge map doesn't include <span class="in">`createdAt`</span>. This migration *might not exist*---if v1 requires <span class="in">`createdAt`</span> (it's not optional), then there's no valid way to produce a v1 record without it. The engine detects this during compilation and reports an existence failure. Chapter 6 covers the precise conditions.</span>
+<span id="cb7-266"><a href="#cb7-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-267"><a href="#cb7-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-268"><a href="#cb7-268" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Lift as a Natural Transformation</span></span>
+<span id="cb7-269"><a href="#cb7-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-270"><a href="#cb7-270" aria-hidden="true" tabindex="-1"></a>For readers with a category theory background, there is a clean way to state what <span class="in">`lift`</span> does. The lift operation is the component of a natural transformation between data presheaves, induced by the migration morphism.</span>
+<span id="cb7-271"><a href="#cb7-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-272"><a href="#cb7-272" aria-hidden="true" tabindex="-1"></a>In the functor case, this is literal. A migration $F : \mathcal{S}_1 \to \mathcal{S}_2$ induces a functor $\Delta_F : \mathbf{Set}^{\mathcal{S}_2} \to \mathbf{Set}^{\mathcal{S}_1}$ between presheaf categories. This functor sends each $\mathcal{S}_2$-instance to an $\mathcal{S}_1$-instance by precomposition. The lift of a single record is the action of $\Delta_F$ on a representable presheaf <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span>.</span>
+<span id="cb7-273"><a href="#cb7-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-274"><a href="#cb7-274" aria-hidden="true" tabindex="-1"></a>In the W-type case, the connection is less direct but still meaningful. The tree surgery pipeline computes the action of a restriction functor on the polynomial functor associated with the schema. The mathematical details involve the theory of polynomial functors and their morphisms <span class="co">[</span><span class="ot">@gambino2004; @abbott2005</span><span class="co">]</span>, which we defer to <span class="co">[</span><span class="ot">Appendix C</span><span class="co">](../appendices/C-guide-to-the-literature.qmd)</span>.</span>
+<span id="cb7-275"><a href="#cb7-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-276"><a href="#cb7-276" aria-hidden="true" tabindex="-1"></a>For practical purposes, you don't need the category theory to use panproto effectively. The <span class="in">`compile`</span> + <span class="in">`lift`</span> API is self-contained. But if you want to verify that a complex migration is correct, the categorical perspective gives you the tools: check that the morphism is a valid graph homomorphism, and the rest follows by functoriality.</span>
+<span id="cb7-277"><a href="#cb7-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-278"><a href="#cb7-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-279"><a href="#cb7-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## A Note on Terminology</span></span>
+<span id="cb7-280"><a href="#cb7-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-281"><a href="#cb7-281" aria-hidden="true" tabindex="-1"></a>Different communities use different words for the operations we've described:</span>
+<span id="cb7-282"><a href="#cb7-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-283"><a href="#cb7-283" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> panproto <span class="pp">|</span> CQL / Spivak <span class="pp">|</span> Cambria <span class="pp">|</span> SQL <span class="pp">|</span></span>
+<span id="cb7-284"><a href="#cb7-284" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|---------|-----|</span></span>
+<span id="cb7-285"><a href="#cb7-285" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Migration morphism <span class="pp">|</span> Schema functor <span class="pp">|</span> Lens <span class="pp">|</span> ALTER TABLE + mapping <span class="pp">|</span></span>
+<span id="cb7-286"><a href="#cb7-286" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Compile <span class="pp">|</span> (implicit) <span class="pp">|</span> Compile lens <span class="pp">|</span> Query planning <span class="pp">|</span></span>
+<span id="cb7-287"><a href="#cb7-287" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Lift (backward) <span class="pp">|</span> $\Delta_F$ <span class="pp">|</span> Convert <span class="pp">|</span> View / projection <span class="pp">|</span></span>
+<span id="cb7-288"><a href="#cb7-288" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Fill (forward) <span class="pp">|</span> $\Sigma_F$ / $\Pi_F$ <span class="pp">|</span> (manual) <span class="pp">|</span> INSERT with defaults <span class="pp">|</span></span>
+<span id="cb7-289"><a href="#cb7-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-290"><a href="#cb7-290" aria-hidden="true" tabindex="-1"></a>: Terminology across communities. {#tbl-terminology}</span>
+<span id="cb7-291"><a href="#cb7-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a>panproto's terminology is closest to @litt2022's Cambria project, which was an important practical inspiration. The key difference is that Cambria hardcodes its schema language and migration semantics, while panproto parameterizes both by theories.</span>
+<span id="cb7-293"><a href="#cb7-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-294"><a href="#cb7-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-295"><a href="#cb7-295" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb7-296"><a href="#cb7-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-297"><a href="#cb7-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **migration** is a structure-preserving map (vertex map + edge map) from an old schema to a new schema.</span>
+<span id="cb7-298"><a href="#cb7-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The migration is **compiled** to pre-compute surviving sets and remap tables.</span>
+<span id="cb7-299"><a href="#cb7-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **lift** operation applies the compiled migration to a record, producing a record conforming to the old schema.</span>
+<span id="cb7-300"><a href="#cb7-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For **W-type instances** (ATProto, JSON, GraphQL), lift runs a 5-step tree surgery pipeline: signature restriction, reachability BFS, ancestor contraction, edge resolution, fan reconstruction.</span>
+<span id="cb7-301"><a href="#cb7-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For **functor instances** (SQL, CQL), lift is precomposition: pull rows through the vertex map.</span>
+<span id="cb7-302"><a href="#cb7-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Migrations **compose**: you maintain a chain of migrations, and the engine composes as needed.</span>
+<span id="cb7-303"><a href="#cb7-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The same **migration morphism** structure works across protocols; only the **lift implementation** varies, determined by the instance theory.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/05-migration-by-hand.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

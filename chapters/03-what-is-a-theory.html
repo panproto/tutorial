@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; What Is a Theory? – panproto: Universal Schema Migration</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/04-protocols-as-parameters.html" rel="next">
+<link href="../chapters/02-the-shape-of-schemas.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f1aadacce99040138bbb613f9330654f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aafb03ca45b9c5aa290c66b7a437bb31.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-67ec4aabe8467e78f93de3725ae3d67e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-aafb03ca45b9c5aa290c66b7a437bb31.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-what-is-a-theory.html">Theory</a></li><li class="breadcrumb-item"><a href="../chapters/03-what-is-a-theory.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">What Is a Theory?</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">panproto: Universal Schema Migration</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/panproto/panproto/tree/main/tutorial/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Motivation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-schemas-everywhere.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Schemas Everywhere</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-the-shape-of-schemas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Shape of Schemas</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-what-is-a-theory.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">What Is a Theory?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-protocols-as-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Protocols as Parameters</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Migration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-migration-by-hand.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Migration by Hand</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-when-migrations-exist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Migrations Exist</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-lifting-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lifting Data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Bidirectionality &amp; Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lenses: Going Both Ways</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-breaking-changes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Breaking Changes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-building-your-own-protocol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Building Your Own Protocol</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-self-description.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Self-Description: The GAT of GATs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-a-theory" id="toc-what-is-a-theory" class="nav-link active" data-scroll-target="#what-is-a-theory"><span class="header-section-number">4</span> What Is a Theory?</a>
+  <ul class="collapse">
+  <li><a href="#the-pattern-you-already-know" id="toc-the-pattern-you-already-know" class="nav-link" data-scroll-target="#the-pattern-you-already-know"><span class="header-section-number">4.1</span> The Pattern You Already Know</a></li>
+  <li><a href="#theory-of-a-monoid-the-simplest-nontrivial-example" id="toc-theory-of-a-monoid-the-simplest-nontrivial-example" class="nav-link" data-scroll-target="#theory-of-a-monoid-the-simplest-nontrivial-example"><span class="header-section-number">4.2</span> Theory of a Monoid: The Simplest Nontrivial Example</a>
+  <ul class="collapse">
+  <li><a href="#monoid-theory-in-panprotos-rust-implementation" id="toc-monoid-theory-in-panprotos-rust-implementation" class="nav-link" data-scroll-target="#monoid-theory-in-panprotos-rust-implementation"><span class="header-section-number">4.2.1</span> Monoid Theory in panproto’s Rust Implementation</a></li>
+  </ul></li>
+  <li><a href="#theory-of-a-graph-where-schemas-enter" id="toc-theory-of-a-graph-where-schemas-enter" class="nav-link" data-scroll-target="#theory-of-a-graph-where-schemas-enter"><span class="header-section-number">4.3</span> Theory of a Graph: Where Schemas Enter</a>
+  <ul class="collapse">
+  <li><a href="#sorts-in-rust" id="toc-sorts-in-rust" class="nav-link" data-scroll-target="#sorts-in-rust"><span class="header-section-number">4.3.1</span> Sorts in Rust</a></li>
+  <li><a href="#operations-in-rust" id="toc-operations-in-rust" class="nav-link" data-scroll-target="#operations-in-rust"><span class="header-section-number">4.3.2</span> Operations in Rust</a></li>
+  <li><a href="#theories-in-rust" id="toc-theories-in-rust" class="nav-link" data-scroll-target="#theories-in-rust"><span class="header-section-number">4.3.3</span> Theories in Rust</a></li>
+  </ul></li>
+  <li><a href="#from-algebraic-theories-to-gats" id="toc-from-algebraic-theories-to-gats" class="nav-link" data-scroll-target="#from-algebraic-theories-to-gats"><span class="header-section-number">4.4</span> From Algebraic Theories to GATs</a></li>
+  <li><a href="#dependent-sorts-the-key-generalization" id="toc-dependent-sorts-the-key-generalization" class="nav-link" data-scroll-target="#dependent-sorts-the-key-generalization"><span class="header-section-number">4.5</span> Dependent Sorts: The Key Generalization</a>
+  <ul class="collapse">
+  <li><a href="#sortparam-in-rust" id="toc-sortparam-in-rust" class="nav-link" data-scroll-target="#sortparam-in-rust"><span class="header-section-number">4.5.1</span> SortParam in Rust</a></li>
+  <li><a href="#building-the-schema-theory" id="toc-building-the-schema-theory" class="nav-link" data-scroll-target="#building-the-schema-theory"><span class="header-section-number">4.5.2</span> Building the Schema Theory</a></li>
+  <li><a href="#why-not-just-use-ordinary-sorts" id="toc-why-not-just-use-ordinary-sorts" class="nav-link" data-scroll-target="#why-not-just-use-ordinary-sorts"><span class="header-section-number">4.5.3</span> Why Not Just Use Ordinary Sorts?</a></li>
+  </ul></li>
+  <li><a href="#the-gat-eat-equivalence" id="toc-the-gat-eat-equivalence" class="nav-link" data-scroll-target="#the-gat-eat-equivalence"><span class="header-section-number">4.6</span> The GAT-EAT Equivalence</a></li>
+  <li><a href="#theories-for-schema-languages" id="toc-theories-for-schema-languages" class="nav-link" data-scroll-target="#theories-for-schema-languages"><span class="header-section-number">4.7</span> Theories for Schema Languages</a>
+  <ul class="collapse">
+  <li><a href="#theory-of-json-schema" id="toc-theory-of-json-schema" class="nav-link" data-scroll-target="#theory-of-json-schema"><span class="header-section-number">4.7.1</span> Theory of JSON Schema</a></li>
+  <li><a href="#theory-of-sql-ddl" id="toc-theory-of-sql-ddl" class="nav-link" data-scroll-target="#theory-of-sql-ddl"><span class="header-section-number">4.7.2</span> Theory of SQL DDL</a></li>
+  <li><a href="#theory-of-protobuf" id="toc-theory-of-protobuf" class="nav-link" data-scroll-target="#theory-of-protobuf"><span class="header-section-number">4.7.3</span> Theory of Protobuf</a></li>
+  </ul></li>
+  <li><a href="#the-functorial-view" id="toc-the-functorial-view" class="nav-link" data-scroll-target="#the-functorial-view"><span class="header-section-number">4.8</span> The Functorial View</a></li>
+  <li><a href="#the-category-theory-landscape" id="toc-the-category-theory-landscape" class="nav-link" data-scroll-target="#the-category-theory-landscape"><span class="header-section-number">4.9</span> The Category Theory Landscape</a></li>
+  <li><a href="#what-weve-built-so-far" id="toc-what-weve-built-so-far" class="nav-link" data-scroll-target="#what-weve-built-so-far"><span class="header-section-number">4.10</span> What We’ve Built So Far</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.11</span> Summary</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/03-what-is-a-theory.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-what-is-a-theory.html">Theory</a></li><li class="breadcrumb-item"><a href="../chapters/03-what-is-a-theory.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">What Is a Theory?</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">What Is a Theory?</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="what-is-a-theory" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> What Is a Theory?</h1>
+<p>The previous chapter ended with a promissory note: we’d find a precise way to describe graph structures so that panproto can parameterize over them. This chapter delivers on that promise by introducing <strong>Generalized Algebraic Theories</strong> (GATs)—the mathematical framework at the heart of panproto’s design.</p>
+<p>GATs might sound intimidating, but the core idea is one you already use every day. If you’ve ever written a TypeScript interface and then implemented it with a class, you’ve already grasped the essential pattern. A GAT theory is an interface; a model is an implementation. The rest is details—important details, but details that build on intuition you already have.</p>
+<section id="the-pattern-you-already-know" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-pattern-you-already-know"><span class="header-section-number">4.1</span> The Pattern You Already Know</h2>
+<p>Consider a TypeScript interface:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> Comparable<span class="op">&lt;</span>T<span class="op">&gt;</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compareTo</span>(other<span class="op">:</span> T)<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This interface describes a <strong>shape</strong>: anything that implements <code>Comparable&lt;T&gt;</code> must provide a <code>compareTo</code> method with a specific signature. The interface doesn’t say <em>how</em> to compare—it just says that comparison must be possible.</p>
+<p>Now consider a class that implements it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Temperature <span class="kw">implements</span> Comparable<span class="op">&lt;</span>Temperature<span class="op">&gt;</span> {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">constructor</span>(<span class="kw">private</span> celsius<span class="op">:</span> <span class="dt">number</span>) {}</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compareTo</span>(other<span class="op">:</span> Temperature)<span class="op">:</span> <span class="dt">number</span> {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="at">celsius</span> <span class="op">-</span> other<span class="op">.</span><span class="at">celsius</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The class provides a concrete implementation of the shape. It fills in the <em>how</em>: comparison is done by subtracting Celsius values.</p>
+<p>A GAT <strong>theory</strong> plays the role of the interface: it describes a shape (what sorts of things exist, what operations connect them, what equations hold). A <strong>model</strong> plays the role of the class: it provides concrete sets and functions that satisfy the theory’s requirements.</p>
+<p>This analogy is more than pedagogical. The relationship between interfaces and implementations is a special case of the relationship between theories and models—one where the “sorts” are types, the “operations” are methods, and the “equations” are whatever contracts the documentation promises but the type system can’t enforce. GATs make that last part—the equations—first-class.</p>
+</section>
+<section id="theory-of-a-monoid-the-simplest-nontrivial-example" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="theory-of-a-monoid-the-simplest-nontrivial-example"><span class="header-section-number">4.2</span> Theory of a Monoid: The Simplest Nontrivial Example</h2>
+<p>Let’s start with the simplest theory that has interesting equations: the <strong>theory of a monoid</strong>.</p>
+<p>A monoid is a set with a binary operation that is associative and has an identity element. If you’ve used string concatenation (<code>"hello" + " " + "world"</code>), you’ve used a monoid. If you’ve used <code>Array.prototype.reduce</code> with an initial value, you’ve used a monoid.</p>
+<p>The theory of a monoid specifies:</p>
+<p><strong>Sorts:</strong></p>
+<ul>
+<li><code>Carrier</code> — the set of elements</li>
+</ul>
+<p><strong>Operations:</strong></p>
+<ul>
+<li><code>mul(a: Carrier, b: Carrier) -&gt; Carrier</code> — the binary operation</li>
+<li><code>unit() -&gt; Carrier</code> — the identity element</li>
+</ul>
+<p><strong>Equations:</strong></p>
+<ul>
+<li><strong>Associativity:</strong> <code>mul(mul(a, b), c) = mul(a, mul(b, c))</code> for all <code>a</code>, <code>b</code>, <code>c</code></li>
+<li><strong>Left identity:</strong> <code>mul(unit(), a) = a</code> for all <code>a</code></li>
+<li><strong>Right identity:</strong> <code>mul(a, unit()) = a</code> for all <code>a</code></li>
+</ul>
+<p>That’s the entire theory. It doesn’t say what the elements are, or what <code>mul</code> does to them. It just says: “there’s a set, a binary operation on it, and these three laws hold.”</p>
+<p>A <strong>model</strong> of this theory assigns concrete meaning:</p>
+<ul>
+<li><p><strong>Integers under addition:</strong> <code>Carrier</code> = integers, <code>mul</code> = addition, <code>unit</code> = 0. Associativity holds: <code>(a + b) + c = a + (b + c)</code>. Identity holds: <code>0 + a = a</code> and <code>a + 0 = a</code>.</p></li>
+<li><p><strong>Strings under concatenation:</strong> <code>Carrier</code> = strings, <code>mul</code> = concatenation, <code>unit</code> = empty string. Associativity holds: <code>("a" + "b") + "c" = "a" + ("b" + "c")</code>. Identity holds: <code>"" + s = s</code> and <code>s + "" = s</code>.</p></li>
+<li><p><strong>Booleans under AND:</strong> <code>Carrier</code> = booleans, <code>mul</code> = <code>&amp;&amp;</code>, <code>unit</code> = <code>true</code>. Associativity holds. Identity holds: <code>true &amp;&amp; b = b</code> and <code>b &amp;&amp; true = b</code>.</p></li>
+</ul>
+<p>Three completely different models, all satisfying the same theory. The theory captures what they have in common—the <em>shape</em> of monoid-ness—without committing to any particular implementation.</p>
+<section id="monoid-theory-in-panprotos-rust-implementation" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="monoid-theory-in-panprotos-rust-implementation"><span class="header-section-number">4.2.1</span> Monoid Theory in panproto’s Rust Implementation</h3>
+<p>panproto represents theories as data structures—they’re values you can construct, inspect, and pass around. Here’s how the monoid theory looks as an actual Rust test from the panproto-gat crate:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-startfrom="191"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust" style="counter-reset: source-line 190;"><span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fn</span> monoid_theory() <span class="op">-&gt;</span> Theory <span class="op">{</span></span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> carrier <span class="op">=</span> <span class="pp">Sort::</span>simple(<span class="st">"Carrier"</span>)<span class="op">;</span></span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> mul <span class="op">=</span> <span class="pp">Operation::</span>new(</span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a>            <span class="st">"mul"</span><span class="op">,</span></span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a>            <span class="pp">vec!</span>[</span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a>                (<span class="st">"a"</span><span class="op">.</span>into()<span class="op">,</span> <span class="st">"Carrier"</span><span class="op">.</span>into())<span class="op">,</span></span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a>                (<span class="st">"b"</span><span class="op">.</span>into()<span class="op">,</span> <span class="st">"Carrier"</span><span class="op">.</span>into())<span class="op">,</span></span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a>            ]<span class="op">,</span></span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Carrier"</span><span class="op">,</span></span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a>        )<span class="op">;</span></span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> unit <span class="op">=</span> <span class="pp">Operation::</span>nullary(<span class="st">"unit"</span><span class="op">,</span> <span class="st">"Carrier"</span>)<span class="op">;</span></span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a>        <span class="co">// assoc: mul(a, mul(b, c)) = mul(mul(a, b), c)</span></span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> assoc <span class="op">=</span> <span class="pp">Equation::</span>new(</span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a>            <span class="st">"assoc"</span><span class="op">,</span></span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a>            <span class="pp">Term::</span>app(</span>
+<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a>                <span class="st">"mul"</span><span class="op">,</span></span>
+<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a>                <span class="pp">vec!</span>[</span>
+<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">Term::</span>var(<span class="st">"a"</span>)<span class="op">,</span></span>
+<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">Term::</span>app(<span class="st">"mul"</span><span class="op">,</span> <span class="pp">vec!</span>[<span class="pp">Term::</span>var(<span class="st">"b"</span>)<span class="op">,</span> <span class="pp">Term::</span>var(<span class="st">"c"</span>)])<span class="op">,</span></span>
+<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a>                ]<span class="op">,</span></span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a>            )<span class="op">,</span></span>
+<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a>            <span class="pp">Term::</span>app(</span>
+<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a>                <span class="st">"mul"</span><span class="op">,</span></span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a>                <span class="pp">vec!</span>[</span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">Term::</span>app(<span class="st">"mul"</span><span class="op">,</span> <span class="pp">vec!</span>[<span class="pp">Term::</span>var(<span class="st">"a"</span>)<span class="op">,</span> <span class="pp">Term::</span>var(<span class="st">"b"</span>)])<span class="op">,</span></span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a>                    <span class="pp">Term::</span>var(<span class="st">"c"</span>)<span class="op">,</span></span>
+<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a>                ]<span class="op">,</span></span>
+<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a>            )<span class="op">,</span></span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a>        )<span class="op">;</span></span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a>        <span class="co">// left_id: mul(unit(), a) = a</span></span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> left_id <span class="op">=</span> <span class="pp">Equation::</span>new(</span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a>            <span class="st">"left_id"</span><span class="op">,</span></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a>            <span class="pp">Term::</span>app(<span class="st">"mul"</span><span class="op">,</span> <span class="pp">vec!</span>[<span class="pp">Term::</span>constant(<span class="st">"unit"</span>)<span class="op">,</span> <span class="pp">Term::</span>var(<span class="st">"a"</span>)])<span class="op">,</span></span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a>            <span class="pp">Term::</span>var(<span class="st">"a"</span>)<span class="op">,</span></span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a>        )<span class="op">;</span></span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a>        <span class="co">// right_id: mul(a, unit()) = a</span></span>
+<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> right_id <span class="op">=</span> <span class="pp">Equation::</span>new(</span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a>            <span class="st">"right_id"</span><span class="op">,</span></span>
+<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a>            <span class="pp">Term::</span>app(<span class="st">"mul"</span><span class="op">,</span> <span class="pp">vec!</span>[<span class="pp">Term::</span>var(<span class="st">"a"</span>)<span class="op">,</span> <span class="pp">Term::</span>constant(<span class="st">"unit"</span>)])<span class="op">,</span></span>
+<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a>            <span class="pp">Term::</span>var(<span class="st">"a"</span>)<span class="op">,</span></span>
+<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a>        )<span class="op">;</span></span>
+<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a>        <span class="pp">Theory::</span>new(</span>
+<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Monoid"</span><span class="op">,</span></span>
+<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a>            <span class="pp">vec!</span>[carrier]<span class="op">,</span></span>
+<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a>            <span class="pp">vec!</span>[mul<span class="op">,</span> unit]<span class="op">,</span></span>
+<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a>            <span class="pp">vec!</span>[assoc<span class="op">,</span> left_id<span class="op">,</span> right_id]<span class="op">,</span></span>
+<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This isn’t pseudocode—it’s a real test that constructs the monoid theory and verifies that it has the expected components. The theory is built up from sort declarations, operation declarations, and equation declarations, just as we described above.</p>
+<p>Notice how the code mirrors the mathematical specification: sorts are declared first, then operations (with their input and output sorts), then equations (expressed as pairs of terms that must be equal). The theory is a concrete data structure that panproto’s algorithms can traverse, transform, and reason about.</p>
+</section>
+</section>
+<section id="theory-of-a-graph-where-schemas-enter" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="theory-of-a-graph-where-schemas-enter"><span class="header-section-number">4.3</span> Theory of a Graph: Where Schemas Enter</h2>
+<p>Now let’s look at a more relevant theory: the <strong>theory of a directed graph</strong>.</p>
+<p><strong>Sorts:</strong></p>
+<ul>
+<li><code>Vertex</code> — the vertices (nodes)</li>
+<li><code>Edge</code> — the edges (arrows)</li>
+</ul>
+<p><strong>Operations:</strong></p>
+<ul>
+<li><code>src(e: Edge) -&gt; Vertex</code> — the source of an edge</li>
+<li><code>tgt(e: Edge) -&gt; Vertex</code> — the target of an edge</li>
+</ul>
+<p><strong>Equations:</strong></p>
+<ul>
+<li>(none)</li>
+</ul>
+<p>That’s it. A directed graph is a pair of sets (vertices and edges) with two functions (source and target) and no equations. The absence of equations is significant: it means there are no laws governing how <code>src</code> and <code>tgt</code> relate to each other. Any assignment of source and target vertices to edges is valid.</p>
+<p>A <strong>model</strong> of this theory is a specific graph. An ATProto schema, viewed as a multigraph (from the previous chapter), is a model:</p>
+<ul>
+<li><code>Vertex</code> = the set of type nodes (<code>object</code>, <code>string</code>, <code>datetime</code>, …)</li>
+<li><code>Edge</code> = the set of property edges (<code>text</code>, <code>createdAt</code>, <code>tags</code>, …)</li>
+<li><code>src(text)</code> = <code>object</code>, <code>tgt(text)</code> = <code>string</code></li>
+<li><code>src(createdAt)</code> = <code>object</code>, <code>tgt(createdAt)</code> = <code>datetime</code></li>
+<li><code>src(tags)</code> = <code>object</code>, <code>tgt(tags)</code> = <code>array</code></li>
+</ul>
+<p>The schema <em>is</em> the model. The theory of a graph describes the structural shape that ATProto schemas, JSON Schemas, GraphQL type systems, and Protobuf message definitions all share (at their simplest).</p>
+<section id="sorts-in-rust" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="sorts-in-rust"><span class="header-section-number">4.3.1</span> Sorts in Rust</h3>
+<p>In panproto-gat, a sort is a named entity with optional parameters (we’ll get to parameters shortly):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-startfrom="30"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust" style="counter-reset: source-line 29;"><span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Debug</span><span class="op">,</span> <span class="bu">Clone</span><span class="op">,</span> <span class="bu">PartialEq</span><span class="op">,</span> <span class="bu">Eq</span><span class="op">,</span> <span class="bu">Hash</span><span class="op">,</span> <span class="pp">serde::</span>Serialize<span class="op">,</span> <span class="pp">serde::</span>Deserialize<span class="at">)]</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="kw">pub</span> <span class="kw">struct</span> Sort <span class="op">{</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// The sort name (e.g., "Vertex", "Edge", "Hom").</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> name<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// Parameters this sort depends on. Empty for simple sorts.</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> params<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span>SortParam<span class="op">&gt;,</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A <code>Sort</code> has a name and a list of parameters. For the graph theory, we’d have two sorts—<code>Vertex</code> and <code>Edge</code>—each with an empty parameter list. The parameter list becomes important when we introduce dependent sorts later in this chapter.</p>
+</section>
+<section id="operations-in-rust" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="operations-in-rust"><span class="header-section-number">4.3.2</span> Operations in Rust</h3>
+<p>An operation connects input sorts to an output sort:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-startfrom="13"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust" style="counter-reset: source-line 12;"><span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Debug</span><span class="op">,</span> <span class="bu">Clone</span><span class="op">,</span> <span class="bu">PartialEq</span><span class="op">,</span> <span class="bu">Eq</span><span class="op">,</span> <span class="bu">Hash</span><span class="op">,</span> <span class="pp">serde::</span>Serialize<span class="op">,</span> <span class="pp">serde::</span>Deserialize<span class="at">)]</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">pub</span> <span class="kw">struct</span> Operation <span class="op">{</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// The operation name (e.g., "src", "tgt", "compose").</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> name<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// Typed inputs as `(param_name, sort_name)` pairs.</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> inputs<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span>(<span class="dt">String</span><span class="op">,</span> <span class="dt">String</span>)<span class="op">&gt;,</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// The output sort name.</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> output<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>An <code>Operation</code> has a name, a list of input sorts (its parameters), and an output sort (its return type). The <code>src</code> operation of the graph theory has one input (of sort <code>Edge</code>) and returns sort <code>Vertex</code>. Similarly for <code>tgt</code>.</p>
+<p>This is directly analogous to a function signature in any typed language. The operation <code>src: Edge -&gt; Vertex</code> is the theory’s version of a method <code>src(e: Edge): Vertex</code>.</p>
+</section>
+<section id="theories-in-rust" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="theories-in-rust"><span class="header-section-number">4.3.3</span> Theories in Rust</h3>
+<p>A theory collects sorts, operations, and equations into a single structure:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-startfrom="18"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust" style="counter-reset: source-line 17;"><span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Debug</span><span class="op">,</span> <span class="bu">Clone</span><span class="op">,</span> <span class="bu">PartialEq</span><span class="op">,</span> <span class="bu">Eq</span><span class="op">,</span> <span class="pp">serde::</span>Serialize<span class="op">,</span> <span class="pp">serde::</span>Deserialize<span class="at">)]</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="kw">pub</span> <span class="kw">struct</span> Theory <span class="op">{</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// The theory name (e.g., "Monoid", "Category").</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> name<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// Names of parent theories this theory extends.</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> extends<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">String</span><span class="op">&gt;,</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// Sort declarations.</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> sorts<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span>Sort<span class="op">&gt;,</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// Operation declarations.</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> ops<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span>Operation<span class="op">&gt;,</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// Equations (axioms).</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> eqs<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span>Equation<span class="op">&gt;,</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>Theory</code> struct holds vectors of sorts, operations, and equations. It also has a name and optional metadata. This is the central data structure that panproto’s algorithms operate on: when you ask panproto to diff two schemas, or generate code from a schema, or plan a migration, it first consults the theory to understand what structural shape it’s working with.</p>
+</section>
+</section>
+<section id="from-algebraic-theories-to-gats" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="from-algebraic-theories-to-gats"><span class="header-section-number">4.4</span> From Algebraic Theories to GATs</h2>
+<p>So far, we’ve seen theories where sorts are simple named entities: <code>Carrier</code>, <code>Vertex</code>, <code>Edge</code>. These are <strong>ordinary algebraic theories</strong>, the kind studied by <span class="citation" data-cites="lawvere1963">Lawvere (<a href="#ref-lawvere1963" role="doc-biblioref">1963</a>)</span> in his foundational work on functorial semantics. Lawvere showed that algebraic theories (like the theory of a monoid, or the theory of a group) can be understood as categories with specific structure, and that models are product-preserving functors from the theory category to the category of sets.</p>
+<p>This functorial perspective is powerful—it gives you a precise notion of “structure-preserving map” between models (natural transformations between functors) and lets you use categorical machinery to construct new models from old ones. But ordinary algebraic theories have a limitation: <strong>all sorts are independent</strong>.</p>
+<p>In the theory of a graph, <code>Vertex</code> and <code>Edge</code> don’t depend on each other. You declare them separately and then connect them via operations. This is fine for graphs, but it’s not enough for the richer structures that schema languages actually need.</p>
+<p>Consider constraints. In the previous chapter, we noted that constraints like <code>maxLength</code> and <code>NOT NULL</code> are annotations on edges or vertices. But which constraints are <em>valid</em> depends on <em>which</em> vertex or edge you’re annotating:</p>
+<ul>
+<li>A <code>maxLength</code> constraint makes sense on a string-typed property edge, but not on a foreign key.</li>
+<li>A <code>CHECK</code> constraint makes sense on a SQL column, but not on a Protobuf field number.</li>
+<li>A <code>maxGraphemes</code> constraint makes sense on an ATProto string property, but not on an integer property.</li>
+</ul>
+<p>The sort of “valid constraints” <strong>depends on</strong> which vertex (or edge) you’re looking at. This is a <strong>dependent sort</strong>—a sort parameterized by a term of another sort. Ordinary algebraic theories can’t express this. GATs can.</p>
+</section>
+<section id="dependent-sorts-the-key-generalization" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="dependent-sorts-the-key-generalization"><span class="header-section-number">4.5</span> Dependent Sorts: The Key Generalization</h2>
+<p>A <strong>Generalized Algebraic Theory</strong> (GAT) extends ordinary algebraic theories by allowing sorts to depend on terms of other sorts. The foundational treatment is due to <span class="citation" data-cites="cartmell1986">Cartmell (<a href="#ref-cartmell1986" role="doc-biblioref">1986</a>)</span>, who introduced GATs as a framework for dependent type theories—type systems where the <em>type</em> of a thing can depend on the <em>value</em> of another thing.</p>
+<p>In concrete terms, a dependent sort looks like this:</p>
+<ul>
+<li><code>Vertex</code> — an ordinary sort (no dependencies)</li>
+<li><code>Edge</code> — an ordinary sort</li>
+<li><code>Constraint(v: Vertex)</code> — a <strong>dependent sort</strong>, parameterized by a vertex</li>
+</ul>
+<p>The sort <code>Constraint(v: Vertex)</code> is a <em>family</em> of sorts, one for each vertex. <code>Constraint(stringVertex)</code> is the sort of constraints that apply to string types. <code>Constraint(intVertex)</code> is the sort of constraints that apply to integer types. These might be completely different sets: string constraints include <code>maxLength</code> and <code>pattern</code>, while integer constraints include <code>minimum</code> and <code>maximum</code>.</p>
+<p>This is exactly the expressiveness we need for schema languages. The “constraint vocabulary” of a schema language isn’t a flat set—it’s a vertex-indexed family. GATs let us express this directly.</p>
+<section id="sortparam-in-rust" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="sortparam-in-rust"><span class="header-section-number">4.5.1</span> SortParam in Rust</h3>
+<p>panproto-gat represents sort parameters—the mechanism for dependent sorts—with a dedicated type:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-startfrom="10"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust" style="counter-reset: source-line 9;"><span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>derive<span class="at">(</span><span class="bu">Debug</span><span class="op">,</span> <span class="bu">Clone</span><span class="op">,</span> <span class="bu">PartialEq</span><span class="op">,</span> <span class="bu">Eq</span><span class="op">,</span> <span class="bu">Hash</span><span class="op">,</span> <span class="pp">serde::</span>Serialize<span class="op">,</span> <span class="pp">serde::</span>Deserialize<span class="at">)]</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">pub</span> <span class="kw">struct</span> SortParam <span class="op">{</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// The parameter name (e.g., "a", "b").</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> name<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">/// The sort this parameter ranges over (e.g., "Ob").</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">pub</span> sort<span class="op">:</span> <span class="dt">String</span><span class="op">,</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A <code>SortParam</code> captures the name and sort of each parameter in a dependent sort. For <code>Constraint(v: Vertex)</code>, there would be one <code>SortParam</code> with name <code>"v"</code> and sort reference pointing to the <code>Vertex</code> sort. The <code>Sort</code> struct we saw earlier holds a <code>Vec&lt;SortParam&gt;</code>, which is empty for ordinary sorts and non-empty for dependent sorts.</p>
+</section>
+<section id="building-the-schema-theory" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="building-the-schema-theory"><span class="header-section-number">4.5.2</span> Building the Schema Theory</h3>
+<p>With dependent sorts, we can describe the full structure of a schema language as a GAT. Here’s a sketch of what the “theory of an ATProto schema” looks like:</p>
+<p><strong>Sorts:</strong></p>
+<ul>
+<li><code>TypeNode</code> — the types in a schema (object, string, array, ref, …)</li>
+<li><code>PropEdge</code> — the property edges connecting types</li>
+<li><code>Constraint(t: TypeNode)</code> — constraints that apply to a specific type node</li>
+</ul>
+<p><strong>Operations:</strong></p>
+<ul>
+<li><code>src(p: PropEdge) -&gt; TypeNode</code> — source of a property edge</li>
+<li><code>tgt(p: PropEdge) -&gt; TypeNode</code> — target of a property edge</li>
+<li><code>required(p: PropEdge) -&gt; Bool</code> — whether a property is required</li>
+<li><code>maxLength(c: Constraint(stringNode)) -&gt; Nat</code> — the max length constraint (only defined for string-typed nodes)</li>
+</ul>
+<p><strong>Equations:</strong></p>
+<ul>
+<li>(domain-specific laws about constraint well-formedness)</li>
+</ul>
+<p>The dependent sort <code>Constraint(t: TypeNode)</code> is doing the heavy lifting here. It lets us express that <code>maxLength</code> is only a valid constraint on string nodes—not as a runtime check, but as a <em>structural</em> property of the theory itself. A model that tried to attach a <code>maxLength</code> to an integer node wouldn’t be a valid model, because the types wouldn’t match.</p>
+</section>
+<section id="why-not-just-use-ordinary-sorts" class="level3" data-number="4.5.3">
+<h3 data-number="4.5.3" class="anchored" data-anchor-id="why-not-just-use-ordinary-sorts"><span class="header-section-number">4.5.3</span> Why Not Just Use Ordinary Sorts?</h3>
+<p>You could represent constraints without dependent sorts. One approach: have a flat <code>Constraint</code> sort and an operation <code>appliesTo(c: Constraint) -&gt; TypeNode</code>, then check at runtime that constraints are only applied to appropriate nodes.</p>
+<p>This works, but it pushes a structural invariant into runtime validation. The theory itself doesn’t prevent ill-formed models—you need additional code to reject them. With dependent sorts, the invariant is part of the theory. The type system enforces it.</p>
+<p>This is the same tradeoff you face when choosing between <code>any</code> and a precise type in TypeScript. Both “work” in the sense that correct programs can be written with either. But precise types catch more errors at compile time, make the code more self-documenting, and enable better tooling. Dependent sorts do the same for theories.</p>
+</section>
+</section>
+<section id="the-gat-eat-equivalence" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="the-gat-eat-equivalence"><span class="header-section-number">4.6</span> The GAT-EAT Equivalence</h2>
+<p>There’s a subtlety worth addressing. GATs with dependent sorts are expressive, but they’re also complex—implementing a full dependent type checker is a significant engineering effort. panproto avoids this by leveraging a classical result from categorical logic: under suitable conditions, GATs are equivalent to <strong>Essentially Algebraic Theories</strong> (EATs).</p>
+<p>The key reference here is <span class="citation" data-cites="adamek1994">(<a href="#ref-adamek1994" role="doc-biblioref">Adámek and Rosický 1994</a>)</span>, which establishes the theory of locally presentable categories. In this framework, the categories of models of GATs and EATs coincide for a broad class of theories—precisely the class that arises in practice for schema descriptions. The practical consequence: panproto can implement dependent sorts using <em>partial operations</em> (operations that are only defined when a condition holds) rather than a full dependent type system.</p>
+<p>For the <code>Constraint(t: TypeNode)</code> example, the EAT version would have:</p>
+<ul>
+<li>An ordinary sort <code>Constraint</code> (not dependent)</li>
+<li>A total operation <code>appliesTo(c: Constraint) -&gt; TypeNode</code></li>
+<li>A <strong>partial</strong> operation <code>maxLength(c: Constraint) -&gt; Nat</code>, defined only when <code>appliesTo(c) = stringNode</code></li>
+</ul>
+<p>The partiality encodes the dependency. Mathematically, this gives the same category of models. Computationally, it’s much simpler to implement—you need partial functions, not dependent types.</p>
+<p>This is an architectural choice inherited from GATlab <span class="citation" data-cites="lynch2024">(<a href="#ref-lynch2024" role="doc-biblioref">Lynch et al. 2024</a>)</span>, a Julia framework for computational category theory that panproto adapts to Rust. GATlab demonstrated that the GAT-EAT equivalence is practical, not just theoretical: real software can exploit it to get the expressiveness of dependent sorts without the complexity of dependent type checking.</p>
+</section>
+<section id="theories-for-schema-languages" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="theories-for-schema-languages"><span class="header-section-number">4.7</span> Theories for Schema Languages</h2>
+<p>Let’s put this all together by sketching the theories for the schema languages from the previous chapters.</p>
+<section id="theory-of-json-schema" class="level3" data-number="4.7.1">
+<h3 data-number="4.7.1" class="anchored" data-anchor-id="theory-of-json-schema"><span class="header-section-number">4.7.1</span> Theory of JSON Schema</h3>
+<p><strong>Sorts:</strong></p>
+<ul>
+<li><code>SchemaNode</code> — schema objects (the things that have a <code>type</code> keyword)</li>
+<li><code>Property</code> — named properties of object schemas</li>
+<li><code>Constraint(s: SchemaNode)</code> — constraints applicable to a schema node</li>
+</ul>
+<p><strong>Operations:</strong></p>
+<ul>
+<li><code>owner(p: Property) -&gt; SchemaNode</code> — the object that owns this property</li>
+<li><code>target(p: Property) -&gt; SchemaNode</code> — the type of this property</li>
+<li><code>name(p: Property) -&gt; String</code> — the property name</li>
+<li><code>required(p: Property) -&gt; Bool</code> — whether the property is required</li>
+<li><code>schemaType(s: SchemaNode) -&gt; TypeTag</code> — the type keyword (object, string, array, …)</li>
+<li><code>maxLength(c: Constraint(stringNode)) -&gt; Nat</code></li>
+<li><code>pattern(c: Constraint(stringNode)) -&gt; Regex</code></li>
+<li><code>minimum(c: Constraint(numericNode)) -&gt; Number</code></li>
+</ul>
+<p><strong>Equations:</strong></p>
+<ul>
+<li><code>owner(p)</code> is always of type <code>object</code> (properties belong to objects)</li>
+</ul>
+</section>
+<section id="theory-of-sql-ddl" class="level3" data-number="4.7.2">
+<h3 data-number="4.7.2" class="anchored" data-anchor-id="theory-of-sql-ddl"><span class="header-section-number">4.7.2</span> Theory of SQL DDL</h3>
+<p><strong>Sorts:</strong></p>
+<ul>
+<li><code>Table</code> — database tables</li>
+<li><code>Column</code> — columns in tables</li>
+<li><code>ForeignKey</code> — foreign key constraints (a hyperedge sort)</li>
+<li><code>Constraint(c: Column)</code> — column-level constraints</li>
+</ul>
+<p><strong>Operations:</strong></p>
+<ul>
+<li><code>table(c: Column) -&gt; Table</code> — the table that owns this column</li>
+<li><code>colType(c: Column) -&gt; DataType</code> — the data type of a column</li>
+<li><code>srcTable(fk: ForeignKey) -&gt; Table</code></li>
+<li><code>srcColumn(fk: ForeignKey) -&gt; Column</code></li>
+<li><code>refTable(fk: ForeignKey) -&gt; Table</code></li>
+<li><code>refColumn(fk: ForeignKey) -&gt; Column</code></li>
+<li><code>notNull(c: Column) -&gt; Bool</code></li>
+<li><code>defaultVal(c: Column) -&gt; Option&lt;Expr&gt;</code></li>
+</ul>
+<p><strong>Equations:</strong></p>
+<ul>
+<li><code>table(srcColumn(fk)) = srcTable(fk)</code> — the source column belongs to the source table</li>
+<li><code>table(refColumn(fk)) = refTable(fk)</code> — the referenced column belongs to the referenced table</li>
+</ul>
+<p>Notice how the equations for SQL DDL express structural invariants about foreign keys: the source column must actually be in the source table. These equations are not arbitrary—they’re the well-formedness conditions that every SQL database enforces. By making them part of the theory, panproto can verify schema well-formedness before generating any SQL.</p>
+</section>
+<section id="theory-of-protobuf" class="level3" data-number="4.7.3">
+<h3 data-number="4.7.3" class="anchored" data-anchor-id="theory-of-protobuf"><span class="header-section-number">4.7.3</span> Theory of Protobuf</h3>
+<p><strong>Sorts:</strong></p>
+<ul>
+<li><code>Message</code> — protobuf messages</li>
+<li><code>Field</code> — fields within messages</li>
+<li><code>EnumType</code> — enum declarations</li>
+<li><code>EnumValue</code> — values within enums</li>
+</ul>
+<p><strong>Operations:</strong></p>
+<ul>
+<li><code>message(f: Field) -&gt; Message</code> — the message that owns this field</li>
+<li><code>fieldType(f: Field) -&gt; TypeRef</code> — the type of a field</li>
+<li><code>fieldNumber(f: Field) -&gt; Nat</code> — the wire format number</li>
+<li><code>enumType(v: EnumValue) -&gt; EnumType</code> — the enum that owns this value</li>
+<li><code>enumNumber(v: EnumValue) -&gt; Int</code> — the numeric value</li>
+</ul>
+<p><strong>Equations:</strong></p>
+<ul>
+<li>For distinct fields <code>f1</code>, <code>f2</code> in the same message: <code>fieldNumber(f1) != fieldNumber(f2)</code> — field numbers are unique within a message</li>
+</ul>
+<p>The uniqueness equation is what makes Protobuf’s wire format work: field numbers must be unique so that the binary encoder can unambiguously identify fields. This is a Protobuf-specific structural law, not shared by JSON Schema or SQL.</p>
+</section>
+</section>
+<section id="the-functorial-view" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="the-functorial-view"><span class="header-section-number">4.8</span> The Functorial View</h2>
+<p>We’ve been building up a picture: theories describe shapes, models are things with those shapes, and different schema languages correspond to models of different theories. There’s one more piece to the picture: <strong>morphisms between models</strong>.</p>
+<p>Given two models of the same theory—say, two ATProto schemas—a <strong>morphism</strong> between them is a structure-preserving map. It sends vertices to vertices, edges to edges, and respects the <code>src</code> and <code>tgt</code> operations. In schema terms, a morphism is a <strong>schema mapping</strong>: a systematic translation from one schema to another that preserves structural relationships.</p>
+<p>This is the functorial perspective that <span class="citation" data-cites="spivak2012">Spivak (<a href="#ref-spivak2012" role="doc-biblioref">2012</a>)</span> developed for database schemas and that panproto generalizes. In Spivak’s framework:</p>
+<ul>
+<li>A <strong>schema</strong> is a category (a model of the theory of categories)</li>
+<li>A <strong>schema mapping</strong> is a functor between schemas</li>
+<li>An <strong>instance</strong> (data conforming to a schema) is a functor from the schema to the category of sets</li>
+<li><strong>Data migration</strong> along a schema mapping is a composition of functors</li>
+</ul>
+<p>panproto works at one level of abstraction higher: instead of fixing the theory to be “the theory of categories” (which suffices for relational databases), it parameterizes over the theory. This lets it handle schema languages that aren’t naturally categorical—like Protobuf, where field numbers are an essential part of the structure that categories don’t capture.</p>
+<p>The general picture, combining the categorical perspective with GATs, is:</p>
+<ol type="1">
+<li>You choose a <strong>theory</strong> (e.g., the theory of SQL schemas, the theory of Protobuf schemas)</li>
+<li>A specific schema is a <strong>model</strong> of that theory</li>
+<li>A schema mapping is a <strong>morphism</strong> of models</li>
+<li>panproto’s algorithms work at the level of theories and models, so they apply uniformly across schema languages</li>
+</ol>
+<p>This is what it means for panproto to “parameterize over schema structure.” The theory is the parameter. Change the theory, and you get a different schema language—but the same algorithms.</p>
+</section>
+<section id="the-category-theory-landscape" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="the-category-theory-landscape"><span class="header-section-number">4.9</span> The Category Theory Landscape</h2>
+<p>For readers who want to go deeper, here’s how the references connect.</p>
+<p>The general framework of category theory, as presented in <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>)</span>, provides the ambient mathematical universe. Categories, functors, natural transformations, limits, and colimits are the basic vocabulary. For a gentler introduction oriented toward computer science, <span class="citation" data-cites="barr1990">(<a href="#ref-barr1990" role="doc-biblioref">Barr and Wells 1990</a>)</span> covers the same material with more attention to computational applications.</p>
+<p>Within this universe, <span class="citation" data-cites="lawvere1963">Lawvere (<a href="#ref-lawvere1963" role="doc-biblioref">1963</a>)</span> identified that algebraic theories (like the theory of monoids or groups) are themselves categories with specific structure, and that models are product-preserving functors from the theory category to the category of sets. This was a revolutionary insight: it turned “satisfying axioms” into “preserving structure,” which is something categories are designed to talk about.</p>
+<p><span class="citation" data-cites="cartmell1986">Cartmell (<a href="#ref-cartmell1986" role="doc-biblioref">1986</a>)</span> generalized Lawvere’s framework to handle dependent sorts, arriving at GATs. This is the level of generality panproto needs: schema languages have dependent structure (constraints depend on types), and ordinary algebraic theories can’t capture that.</p>
+<p><span class="citation" data-cites="adamek1994">(<a href="#ref-adamek1994" role="doc-biblioref">Adámek and Rosický 1994</a>)</span> provided the theoretical bridge between GATs and EATs through the theory of locally presentable categories. This result is what lets panproto implement dependent sorts without a full dependent type checker—a crucial engineering simplification.</p>
+<p><span class="citation" data-cites="lynch2024">Lynch et al. (<a href="#ref-lynch2024" role="doc-biblioref">2024</a>)</span> demonstrated that this entire framework can be implemented practically in a computational system (GATlab, in Julia). panproto adapts GATlab’s architecture to Rust, gaining static typing, zero-cost abstractions, and Wasm compilation while retaining the mathematical foundations.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Key Insight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A theory is a description of a shape. A model is a thing that has that shape.</p>
+<p>JSON Schema, Protobuf, SQL DDL, GraphQL SDL, ATProto Lexicon—these are all models of different theories. The theories differ (multigraphs vs.&nbsp;hypergraphs, different constraint sorts), but they’re all expressed in the same meta-framework: GATs.</p>
+<p>panproto is parameterized by the theory. That’s how it handles multiple schema languages with uniform algorithms. You don’t write a schema differ for Protobuf and a separate one for SQL. You write a schema differ that works for any theory, and then you instantiate it with the specific theory you need.</p>
+</div>
+</div>
+</section>
+<section id="what-weve-built-so-far" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="what-weve-built-so-far"><span class="header-section-number">4.10</span> What We’ve Built So Far</h2>
+<p>Let’s take stock. Over three chapters, we’ve established:</p>
+<ol type="1">
+<li><p><strong>Schemas are everywhere</strong> (Chapter 1). Different schema languages describe the same structural idea—types connected by typed relationships—in different syntaxes.</p></li>
+<li><p><strong>Schemas have graph-theoretic structure</strong> (Chapter 2). The specific kind of graph varies: multigraphs for most languages, hypergraphs for SQL. Constraints decorate the graph structure.</p></li>
+<li><p><strong>Graph structures are described by theories</strong> (this chapter). A theory specifies sorts, operations, and equations. A model is a concrete thing satisfying the theory. Dependent sorts (GATs) let theories express type-indexed constraints.</p></li>
+</ol>
+<p>Together, these three ideas form the conceptual foundation of panproto. The next chapters will build on this foundation, moving from the “what” to the “how”: how theories are implemented in Rust, how models are constructed and manipulated, and how the TypeScript SDK exposes all of this to application developers.</p>
+</section>
+<section id="summary" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.11</span> Summary</h2>
+<ul>
+<li><p>A <strong>theory</strong> consists of sorts, operations, and equations. It describes a shape without committing to a specific instance.</p></li>
+<li><p>A <strong>model</strong> assigns concrete sets and functions to a theory’s sorts and operations, satisfying its equations. A model is a thing that has the shape the theory describes.</p></li>
+<li><p><strong>Ordinary algebraic theories</strong> <span class="citation" data-cites="lawvere1963">(<a href="#ref-lawvere1963" role="doc-biblioref">Lawvere 1963</a>)</span> handle independent sorts: Carrier, Vertex, Edge.</p></li>
+<li><p><strong>Generalized Algebraic Theories</strong> <span class="citation" data-cites="cartmell1986">(<a href="#ref-cartmell1986" role="doc-biblioref">Cartmell 1986</a>)</span> handle dependent sorts: <code>Constraint(v: Vertex)</code>, where the sort of constraints depends on which vertex you’re looking at. This is the expressiveness panproto needs for schema constraints.</p></li>
+<li><p>The <strong>GAT-EAT equivalence</strong> <span class="citation" data-cites="adamek1994">(<a href="#ref-adamek1994" role="doc-biblioref">Adámek and Rosický 1994</a>)</span> lets panproto implement dependent sorts using partial operations rather than a full dependent type system.</p></li>
+<li><p><strong>GATlab</strong> <span class="citation" data-cites="lynch2024">(<a href="#ref-lynch2024" role="doc-biblioref">Lynch et al. 2024</a>)</span> demonstrated this architecture computationally in Julia. panproto adapts it to Rust.</p></li>
+<li><p><strong>Schema languages are models of different theories.</strong> panproto parameterizes over the theory, enabling uniform algorithms across schema languages.</p></li>
+</ul>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-adamek1994" class="csl-entry" role="listitem">
+Adámek, Jiří, and Jiří Rosický. 1994. <em>Locally Presentable and Accessible Categories</em>. Vol. 189. London Mathematical Society Lecture Note Series. Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511600579">https://doi.org/10.1017/CBO9780511600579</a>.
+</div>
+<div id="ref-barr1990" class="csl-entry" role="listitem">
+Barr, Michael, and Charles Wells. 1990. <em>Category Theory for Computing Science</em>. Prentice Hall.
+</div>
+<div id="ref-cartmell1986" class="csl-entry" role="listitem">
+Cartmell, John. 1986. <span>“Generalised Algebraic Theories and Contextual Categories.”</span> <em>Annals of Pure and Applied Logic</em> 32: 209–43. <a href="https://doi.org/10.1016/0168-0072(86)90053-9">https://doi.org/10.1016/0168-0072(86)90053-9</a>.
+</div>
+<div id="ref-lawvere1963" class="csl-entry" role="listitem">
+Lawvere, F. William. 1963. <span>“Functorial Semantics of Algebraic Theories.”</span> PhD thesis, Columbia University.
+</div>
+<div id="ref-lynch2024" class="csl-entry" role="listitem">
+Lynch, Owen, Kris Brown, James Fairbanks, and Evan Patterson. 2024. <span>“<span>GATlab</span>: Modeling and Programming with Generalized Algebraic Theories.”</span> <em>arXiv Preprint arXiv:2404.04837</em>, ahead of print. <a href="https://doi.org/10.48550/arXiv.2404.04837">https://doi.org/10.48550/arXiv.2404.04837</a>.
+</div>
+<div id="ref-maclane1998" class="csl-entry" role="listitem">
+Mac Lane, Saunders. 1998. <em>Categories for the Working Mathematician</em>. 2nd ed. Vol. 5. Graduate Texts in Mathematics. Springer. <a href="https://doi.org/10.1007/978-1-4757-4721-8">https://doi.org/10.1007/978-1-4757-4721-8</a>.
+</div>
+<div id="ref-spivak2012" class="csl-entry" role="listitem">
+Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Information and Computation</em> 217: 31–51. <a href="https://doi.org/10.1016/j.ic.2012.05.001">https://doi.org/10.1016/j.ic.2012.05.001</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/panproto\.github\.io\/tutorial\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/02-the-shape-of-schemas.html" class="pagination-link" aria-label="The Shape of Schemas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Shape of Schemas</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/04-protocols-as-parameters.html" class="pagination-link" aria-label="Protocols as Parameters">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Protocols as Parameters</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "What Is a Theory?"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">id:</span><span class="co"> sec-theories</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># What Is a Theory?</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>The previous chapter ended with a promissory note: we'd find a precise way to</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>describe graph structures so that panproto can parameterize over them. This</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>chapter delivers on that promise by introducing **Generalized Algebraic</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>Theories** (GATs)—the mathematical framework at the heart of panproto's design.</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>GATs might sound intimidating, but the core idea is one you already use every</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>day. If you've ever written a TypeScript interface and then implemented it with</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>a class, you've already grasped the essential pattern. A GAT theory is an</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>interface; a model is an implementation. The rest is details—important details,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>but details that build on intuition you already have.</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Pattern You Already Know</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>Consider a TypeScript interface:</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="in">```typescript</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="kw">interface</span> Comparable<span class="op">&lt;</span>T<span class="op">&gt;</span> {</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compareTo</span>(other<span class="op">:</span> T)<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>This interface describes a **shape**: anything that implements <span class="in">`Comparable&lt;T&gt;`</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>must provide a <span class="in">`compareTo`</span> method with a specific signature. The interface</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>doesn't say *how* to compare—it just says that comparison must be possible.</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>Now consider a class that implements it:</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="in">```typescript</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Temperature <span class="kw">implements</span> Comparable<span class="op">&lt;</span>Temperature<span class="op">&gt;</span> {</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>  <span class="kw">constructor</span>(<span class="kw">private</span> celsius<span class="op">:</span> <span class="dt">number</span>) {}</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compareTo</span>(other<span class="op">:</span> Temperature)<span class="op">:</span> <span class="dt">number</span> {</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="kw">this</span><span class="op">.</span><span class="at">celsius</span> <span class="op">-</span> other<span class="op">.</span><span class="at">celsius</span><span class="op">;</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>The class provides a concrete implementation of the shape. It fills in the</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>*how*: comparison is done by subtracting Celsius values.</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>A GAT **theory** plays the role of the interface: it describes a shape</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>(what sorts of things exist, what operations connect them, what equations hold).</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>A **model** plays the role of the class: it provides concrete sets and</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>functions that satisfy the theory's requirements.</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>This analogy is more than pedagogical. The relationship between interfaces and</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>implementations is a special case of the relationship between theories and</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>models—one where the "sorts" are types, the "operations" are methods, and the</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>"equations" are whatever contracts the documentation promises but the type</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>system can't enforce. GATs make that last part—the equations—first-class.</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## Theory of a Monoid: The Simplest Nontrivial Example</span></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>Let's start with the simplest theory that has interesting equations: the</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>**theory of a monoid**.</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>A monoid is a set with a binary operation that is associative and has an</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>identity element. If you've used string concatenation (<span class="in">`"hello" + " " + "world"`</span>),</span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>you've used a monoid. If you've used <span class="in">`Array.prototype.reduce`</span> with an initial</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>value, you've used a monoid.</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>The theory of a monoid specifies:</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>**Sorts:**</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Carrier`</span> — the set of elements</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>**Operations:**</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`mul(a: Carrier, b: Carrier) -&gt; Carrier`</span> — the binary operation</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`unit() -&gt; Carrier`</span> — the identity element</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>**Equations:**</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Associativity:** <span class="in">`mul(mul(a, b), c) = mul(a, mul(b, c))`</span> for all <span class="in">`a`</span>, <span class="in">`b`</span>, <span class="in">`c`</span></span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Left identity:** <span class="in">`mul(unit(), a) = a`</span> for all <span class="in">`a`</span></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Right identity:** <span class="in">`mul(a, unit()) = a`</span> for all <span class="in">`a`</span></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>That's the entire theory. It doesn't say what the elements are, or what <span class="in">`mul`</span></span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>does to them. It just says: "there's a set, a binary operation on it, and these</span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>three laws hold."</span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>A **model** of this theory assigns concrete meaning:</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Integers under addition:** <span class="in">`Carrier`</span> = integers, <span class="in">`mul`</span> = addition,</span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>  <span class="in">`unit`</span> = 0. Associativity holds: <span class="in">`(a + b) + c = a + (b + c)`</span>. Identity holds:</span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>  <span class="in">`0 + a = a`</span> and <span class="in">`a + 0 = a`</span>.</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Strings under concatenation:** <span class="in">`Carrier`</span> = strings, <span class="in">`mul`</span> = concatenation,</span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>  <span class="in">`unit`</span> = empty string. Associativity holds: <span class="in">`("a" + "b") + "c" = "a" + ("b" + "c")`</span>.</span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>  Identity holds: <span class="in">`"" + s = s`</span> and <span class="in">`s + "" = s`</span>.</span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Booleans under AND:** <span class="in">`Carrier`</span> = booleans, <span class="in">`mul`</span> = <span class="in">`&amp;&amp;`</span>, <span class="in">`unit`</span> = <span class="in">`true`</span>.</span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>  Associativity holds. Identity holds: <span class="in">`true &amp;&amp; b = b`</span> and <span class="in">`b &amp;&amp; true = b`</span>.</span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>Three completely different models, all satisfying the same theory. The theory</span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>captures what they have in common—the *shape* of monoid-ness—without committing</span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>to any particular implementation.</span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a><span class="fu">### Monoid Theory in panproto's Rust Implementation</span></span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>panproto represents theories as data structures—they're values you can construct,</span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>inspect, and pass around. Here's how the monoid theory looks as an actual Rust</span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a>test from the panproto-gat crate:</span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a><span class="in">```{.rust include="../../crates/panproto-gat/src/theory.rs" start-line=191 end-line=243}</span></span>
+<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>This isn't pseudocode—it's a real test that constructs the monoid theory and</span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>verifies that it has the expected components. The theory is built up from</span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a>sort declarations, operation declarations, and equation declarations, just as we</span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>described above.</span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>Notice how the code mirrors the mathematical specification: sorts are declared</span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>first, then operations (with their input and output sorts), then equations</span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>(expressed as pairs of terms that must be equal). The theory is a concrete data</span>
+<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>structure that panproto's algorithms can traverse, transform, and reason about.</span>
+<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a><span class="fu">## Theory of a Graph: Where Schemas Enter</span></span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>Now let's look at a more relevant theory: the **theory of a directed graph**.</span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>**Sorts:**</span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Vertex`</span> — the vertices (nodes)</span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Edge`</span> — the edges (arrows)</span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a>**Operations:**</span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`src(e: Edge) -&gt; Vertex`</span> — the source of an edge</span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`tgt(e: Edge) -&gt; Vertex`</span> — the target of an edge</span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>**Equations:**</span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>(none)</span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>That's it. A directed graph is a pair of sets (vertices and edges) with two</span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>functions (source and target) and no equations. The absence of equations is</span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a>significant: it means there are no laws governing how <span class="in">`src`</span> and <span class="in">`tgt`</span> relate to</span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a>each other. Any assignment of source and target vertices to edges is valid.</span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a>A **model** of this theory is a specific graph. An ATProto schema, viewed as a</span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>multigraph (from the previous chapter), is a model:</span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Vertex`</span> = the set of type nodes (<span class="in">`object`</span>, <span class="in">`string`</span>, <span class="in">`datetime`</span>, ...)</span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Edge`</span> = the set of property edges (<span class="in">`text`</span>, <span class="in">`createdAt`</span>, <span class="in">`tags`</span>, ...)</span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`src(text)`</span> = <span class="in">`object`</span>, <span class="in">`tgt(text)`</span> = <span class="in">`string`</span></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`src(createdAt)`</span> = <span class="in">`object`</span>, <span class="in">`tgt(createdAt)`</span> = <span class="in">`datetime`</span></span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`src(tags)`</span> = <span class="in">`object`</span>, <span class="in">`tgt(tags)`</span> = <span class="in">`array`</span></span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>The schema *is* the model. The theory of a graph describes the structural shape</span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a>that ATProto schemas, JSON Schemas, GraphQL type systems, and Protobuf message</span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>definitions all share (at their simplest).</span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sorts in Rust</span></span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>In panproto-gat, a sort is a named entity with optional parameters (we'll get</span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>to parameters shortly):</span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{.rust include="../../crates/panproto-gat/src/sort.rs" start-line=30 end-line=36}</span></span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>A <span class="in">`Sort`</span> has a name and a list of parameters. For the graph theory, we'd have</span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>two sorts—<span class="in">`Vertex`</span> and <span class="in">`Edge`</span>—each with an empty parameter list. The parameter</span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>list becomes important when we introduce dependent sorts later in this chapter.</span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a><span class="fu">### Operations in Rust</span></span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a>An operation connects input sorts to an output sort:</span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{.rust include="../../crates/panproto-gat/src/op.rs" start-line=13 end-line=21}</span></span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a>An <span class="in">`Operation`</span> has a name, a list of input sorts (its parameters), and an</span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>output sort (its return type). The <span class="in">`src`</span> operation of the graph theory has</span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a>one input (of sort <span class="in">`Edge`</span>) and returns sort <span class="in">`Vertex`</span>. Similarly for <span class="in">`tgt`</span>.</span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a>This is directly analogous to a function signature in any typed language.</span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a>The operation <span class="in">`src: Edge -&gt; Vertex`</span> is the theory's version of a method</span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a><span class="in">`src(e: Edge): Vertex`</span>.</span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a><span class="fu">### Theories in Rust</span></span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a>A theory collects sorts, operations, and equations into a single structure:</span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{.rust include="../../crates/panproto-gat/src/theory.rs" start-line=18 end-line=30}</span></span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a>The <span class="in">`Theory`</span> struct holds vectors of sorts, operations, and equations. It also</span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a>has a name and optional metadata. This is the central data structure that</span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a>panproto's algorithms operate on: when you ask panproto to diff two schemas, or</span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a>generate code from a schema, or plan a migration, it first consults the theory</span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a>to understand what structural shape it's working with.</span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="fu">## From Algebraic Theories to GATs</span></span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a>So far, we've seen theories where sorts are simple named entities: <span class="in">`Carrier`</span>,</span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="in">`Vertex`</span>, <span class="in">`Edge`</span>. These are **ordinary algebraic theories**, the kind studied by</span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a>@lawvere1963 in his foundational work on functorial semantics. Lawvere showed</span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a>that algebraic theories (like the theory of a monoid, or the theory of a group)</span>
+<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a>can be understood as categories with specific structure, and that models are</span>
+<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a>product-preserving functors from the theory category to the category of sets.</span>
+<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a>This functorial perspective is powerful—it gives you a precise notion of</span>
+<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a>"structure-preserving map" between models (natural transformations between</span>
+<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a>functors) and lets you use categorical machinery to construct new models from</span>
+<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a>old ones. But ordinary algebraic theories have a limitation: **all sorts are</span>
+<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a>independent**.</span>
+<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a>In the theory of a graph, <span class="in">`Vertex`</span> and <span class="in">`Edge`</span> don't depend on each other.</span>
+<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a>You declare them separately and then connect them via operations. This is fine</span>
+<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a>for graphs, but it's not enough for the richer structures that schema languages</span>
+<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a>actually need.</span>
+<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a>Consider constraints. In the previous chapter, we noted that constraints like</span>
+<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a><span class="in">`maxLength`</span> and <span class="in">`NOT NULL`</span> are annotations on edges or vertices. But which</span>
+<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>constraints are *valid* depends on *which* vertex or edge you're annotating:</span>
+<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A <span class="in">`maxLength`</span> constraint makes sense on a string-typed property edge, but not</span>
+<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a>  on a foreign key.</span>
+<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A <span class="in">`CHECK`</span> constraint makes sense on a SQL column, but not on a Protobuf field</span>
+<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a>  number.</span>
+<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A <span class="in">`maxGraphemes`</span> constraint makes sense on an ATProto string property, but not</span>
+<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a>  on an integer property.</span>
+<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a>The sort of "valid constraints" **depends on** which vertex (or edge) you're</span>
+<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a>looking at. This is a **dependent sort**—a sort parameterized by a term of</span>
+<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a>another sort. Ordinary algebraic theories can't express this. GATs can.</span>
+<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dependent Sorts: The Key Generalization</span></span>
+<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a>A **Generalized Algebraic Theory** (GAT) extends ordinary algebraic theories</span>
+<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>by allowing sorts to depend on terms of other sorts. The foundational treatment</span>
+<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a>is due to @cartmell1986, who introduced GATs as a framework for dependent type</span>
+<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a>theories—type systems where the *type* of a thing can depend on the *value* of</span>
+<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a>another thing.</span>
+<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>In concrete terms, a dependent sort looks like this:</span>
+<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Vertex`</span> — an ordinary sort (no dependencies)</span>
+<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Edge`</span> — an ordinary sort</span>
+<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Constraint(v: Vertex)`</span> — a **dependent sort**, parameterized by a vertex</span>
+<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a>The sort <span class="in">`Constraint(v: Vertex)`</span> is a *family* of sorts, one for each vertex.</span>
+<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a><span class="in">`Constraint(stringVertex)`</span> is the sort of constraints that apply to string</span>
+<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>types. <span class="in">`Constraint(intVertex)`</span> is the sort of constraints that apply to integer</span>
+<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>types. These might be completely different sets: string constraints include</span>
+<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a><span class="in">`maxLength`</span> and <span class="in">`pattern`</span>, while integer constraints include <span class="in">`minimum`</span> and</span>
+<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a><span class="in">`maximum`</span>.</span>
+<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>This is exactly the expressiveness we need for schema languages. The</span>
+<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>"constraint vocabulary" of a schema language isn't a flat set—it's a</span>
+<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a>vertex-indexed family. GATs let us express this directly.</span>
+<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a><span class="fu">### SortParam in Rust</span></span>
+<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a>panproto-gat represents sort parameters—the mechanism for dependent sorts—with</span>
+<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a>a dedicated type:</span>
+<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a><span class="in">```{.rust include="../../crates/panproto-gat/src/sort.rs" start-line=10 end-line=16}</span></span>
+<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a>A <span class="in">`SortParam`</span> captures the name and sort of each parameter in a dependent sort.</span>
+<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a>For <span class="in">`Constraint(v: Vertex)`</span>, there would be one <span class="in">`SortParam`</span> with name <span class="in">`"v"`</span> and</span>
+<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a>sort reference pointing to the <span class="in">`Vertex`</span> sort. The <span class="in">`Sort`</span> struct we saw earlier</span>
+<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a>holds a <span class="in">`Vec&lt;SortParam&gt;`</span>, which is empty for ordinary sorts and non-empty for</span>
+<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a>dependent sorts.</span>
+<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a><span class="fu">### Building the Schema Theory</span></span>
+<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a>With dependent sorts, we can describe the full structure of a schema language</span>
+<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a>as a GAT. Here's a sketch of what the "theory of an ATProto schema" looks like:</span>
+<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a>**Sorts:**</span>
+<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`TypeNode`</span> — the types in a schema (object, string, array, ref, ...)</span>
+<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`PropEdge`</span> — the property edges connecting types</span>
+<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Constraint(t: TypeNode)`</span> — constraints that apply to a specific type node</span>
+<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a>**Operations:**</span>
+<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`src(p: PropEdge) -&gt; TypeNode`</span> — source of a property edge</span>
+<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`tgt(p: PropEdge) -&gt; TypeNode`</span> — target of a property edge</span>
+<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`required(p: PropEdge) -&gt; Bool`</span> — whether a property is required</span>
+<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`maxLength(c: Constraint(stringNode)) -&gt; Nat`</span> — the max length constraint</span>
+<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a>  (only defined for string-typed nodes)</span>
+<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a>**Equations:**</span>
+<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>(domain-specific laws about constraint well-formedness)</span>
+<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a>The dependent sort <span class="in">`Constraint(t: TypeNode)`</span> is doing the heavy lifting here.</span>
+<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a>It lets us express that <span class="in">`maxLength`</span> is only a valid constraint on string</span>
+<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a>nodes—not as a runtime check, but as a *structural* property of the theory</span>
+<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>itself. A model that tried to attach a <span class="in">`maxLength`</span> to an integer node wouldn't</span>
+<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a>be a valid model, because the types wouldn't match.</span>
+<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a><span class="fu">### Why Not Just Use Ordinary Sorts?</span></span>
+<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a>You could represent constraints without dependent sorts. One approach: have a</span>
+<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a>flat <span class="in">`Constraint`</span> sort and an operation <span class="in">`appliesTo(c: Constraint) -&gt; TypeNode`</span>,</span>
+<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a>then check at runtime that constraints are only applied to appropriate nodes.</span>
+<span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a>This works, but it pushes a structural invariant into runtime validation. The</span>
+<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a>theory itself doesn't prevent ill-formed models—you need additional code to</span>
+<span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a>reject them. With dependent sorts, the invariant is part of the theory. The type</span>
+<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a>system enforces it.</span>
+<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a>This is the same tradeoff you face when choosing between <span class="in">`any`</span> and a precise</span>
+<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a>type in TypeScript. Both "work" in the sense that correct programs can be</span>
+<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a>written with either. But precise types catch more errors at compile time, make</span>
+<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a>the code more self-documenting, and enable better tooling. Dependent sorts do</span>
+<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a>the same for theories.</span>
+<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-328"><a href="#cb8-328" aria-hidden="true" tabindex="-1"></a><span class="fu">## The GAT-EAT Equivalence</span></span>
+<span id="cb8-329"><a href="#cb8-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-330"><a href="#cb8-330" aria-hidden="true" tabindex="-1"></a>There's a subtlety worth addressing. GATs with dependent sorts are expressive,</span>
+<span id="cb8-331"><a href="#cb8-331" aria-hidden="true" tabindex="-1"></a>but they're also complex—implementing a full dependent type checker is a</span>
+<span id="cb8-332"><a href="#cb8-332" aria-hidden="true" tabindex="-1"></a>significant engineering effort. panproto avoids this by leveraging a classical</span>
+<span id="cb8-333"><a href="#cb8-333" aria-hidden="true" tabindex="-1"></a>result from categorical logic: under suitable conditions, GATs are equivalent to</span>
+<span id="cb8-334"><a href="#cb8-334" aria-hidden="true" tabindex="-1"></a>**Essentially Algebraic Theories** (EATs).</span>
+<span id="cb8-335"><a href="#cb8-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-336"><a href="#cb8-336" aria-hidden="true" tabindex="-1"></a>The key reference here is <span class="co">[</span><span class="ot">@adamek1994</span><span class="co">]</span>, which establishes the theory of locally</span>
+<span id="cb8-337"><a href="#cb8-337" aria-hidden="true" tabindex="-1"></a>presentable categories. In this framework, the categories of models of GATs and</span>
+<span id="cb8-338"><a href="#cb8-338" aria-hidden="true" tabindex="-1"></a>EATs coincide for a broad class of theories—precisely the class that arises in</span>
+<span id="cb8-339"><a href="#cb8-339" aria-hidden="true" tabindex="-1"></a>practice for schema descriptions. The practical consequence: panproto can</span>
+<span id="cb8-340"><a href="#cb8-340" aria-hidden="true" tabindex="-1"></a>implement dependent sorts using *partial operations* (operations that are only</span>
+<span id="cb8-341"><a href="#cb8-341" aria-hidden="true" tabindex="-1"></a>defined when a condition holds) rather than a full dependent type system.</span>
+<span id="cb8-342"><a href="#cb8-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-343"><a href="#cb8-343" aria-hidden="true" tabindex="-1"></a>For the <span class="in">`Constraint(t: TypeNode)`</span> example, the EAT version would have:</span>
+<span id="cb8-344"><a href="#cb8-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-345"><a href="#cb8-345" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>An ordinary sort <span class="in">`Constraint`</span> (not dependent)</span>
+<span id="cb8-346"><a href="#cb8-346" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A total operation <span class="in">`appliesTo(c: Constraint) -&gt; TypeNode`</span></span>
+<span id="cb8-347"><a href="#cb8-347" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **partial** operation <span class="in">`maxLength(c: Constraint) -&gt; Nat`</span>, defined only when</span>
+<span id="cb8-348"><a href="#cb8-348" aria-hidden="true" tabindex="-1"></a>  <span class="in">`appliesTo(c) = stringNode`</span></span>
+<span id="cb8-349"><a href="#cb8-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-350"><a href="#cb8-350" aria-hidden="true" tabindex="-1"></a>The partiality encodes the dependency. Mathematically, this gives the same</span>
+<span id="cb8-351"><a href="#cb8-351" aria-hidden="true" tabindex="-1"></a>category of models. Computationally, it's much simpler to implement—you need</span>
+<span id="cb8-352"><a href="#cb8-352" aria-hidden="true" tabindex="-1"></a>partial functions, not dependent types.</span>
+<span id="cb8-353"><a href="#cb8-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-354"><a href="#cb8-354" aria-hidden="true" tabindex="-1"></a>This is an architectural choice inherited from GATlab <span class="co">[</span><span class="ot">@lynch2024</span><span class="co">]</span>, a Julia</span>
+<span id="cb8-355"><a href="#cb8-355" aria-hidden="true" tabindex="-1"></a>framework for computational category theory that panproto adapts to Rust.</span>
+<span id="cb8-356"><a href="#cb8-356" aria-hidden="true" tabindex="-1"></a>GATlab demonstrated that the GAT-EAT equivalence is practical, not just</span>
+<span id="cb8-357"><a href="#cb8-357" aria-hidden="true" tabindex="-1"></a>theoretical: real software can exploit it to get the expressiveness of dependent</span>
+<span id="cb8-358"><a href="#cb8-358" aria-hidden="true" tabindex="-1"></a>sorts without the complexity of dependent type checking.</span>
+<span id="cb8-359"><a href="#cb8-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-360"><a href="#cb8-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-361"><a href="#cb8-361" aria-hidden="true" tabindex="-1"></a><span class="fu">## Theories for Schema Languages</span></span>
+<span id="cb8-362"><a href="#cb8-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-363"><a href="#cb8-363" aria-hidden="true" tabindex="-1"></a>Let's put this all together by sketching the theories for the schema languages</span>
+<span id="cb8-364"><a href="#cb8-364" aria-hidden="true" tabindex="-1"></a>from the previous chapters.</span>
+<span id="cb8-365"><a href="#cb8-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-366"><a href="#cb8-366" aria-hidden="true" tabindex="-1"></a><span class="fu">### Theory of JSON Schema</span></span>
+<span id="cb8-367"><a href="#cb8-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-368"><a href="#cb8-368" aria-hidden="true" tabindex="-1"></a>**Sorts:**</span>
+<span id="cb8-369"><a href="#cb8-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-370"><a href="#cb8-370" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`SchemaNode`</span> — schema objects (the things that have a <span class="in">`type`</span> keyword)</span>
+<span id="cb8-371"><a href="#cb8-371" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Property`</span> — named properties of object schemas</span>
+<span id="cb8-372"><a href="#cb8-372" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Constraint(s: SchemaNode)`</span> — constraints applicable to a schema node</span>
+<span id="cb8-373"><a href="#cb8-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-374"><a href="#cb8-374" aria-hidden="true" tabindex="-1"></a>**Operations:**</span>
+<span id="cb8-375"><a href="#cb8-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-376"><a href="#cb8-376" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`owner(p: Property) -&gt; SchemaNode`</span> — the object that owns this property</span>
+<span id="cb8-377"><a href="#cb8-377" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`target(p: Property) -&gt; SchemaNode`</span> — the type of this property</span>
+<span id="cb8-378"><a href="#cb8-378" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`name(p: Property) -&gt; String`</span> — the property name</span>
+<span id="cb8-379"><a href="#cb8-379" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`required(p: Property) -&gt; Bool`</span> — whether the property is required</span>
+<span id="cb8-380"><a href="#cb8-380" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`schemaType(s: SchemaNode) -&gt; TypeTag`</span> — the type keyword (object, string, array, ...)</span>
+<span id="cb8-381"><a href="#cb8-381" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`maxLength(c: Constraint(stringNode)) -&gt; Nat`</span></span>
+<span id="cb8-382"><a href="#cb8-382" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pattern(c: Constraint(stringNode)) -&gt; Regex`</span></span>
+<span id="cb8-383"><a href="#cb8-383" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`minimum(c: Constraint(numericNode)) -&gt; Number`</span></span>
+<span id="cb8-384"><a href="#cb8-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-385"><a href="#cb8-385" aria-hidden="true" tabindex="-1"></a>**Equations:**</span>
+<span id="cb8-386"><a href="#cb8-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-387"><a href="#cb8-387" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`owner(p)`</span> is always of type <span class="in">`object`</span> (properties belong to objects)</span>
+<span id="cb8-388"><a href="#cb8-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-389"><a href="#cb8-389" aria-hidden="true" tabindex="-1"></a><span class="fu">### Theory of SQL DDL</span></span>
+<span id="cb8-390"><a href="#cb8-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-391"><a href="#cb8-391" aria-hidden="true" tabindex="-1"></a>**Sorts:**</span>
+<span id="cb8-392"><a href="#cb8-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-393"><a href="#cb8-393" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Table`</span> — database tables</span>
+<span id="cb8-394"><a href="#cb8-394" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Column`</span> — columns in tables</span>
+<span id="cb8-395"><a href="#cb8-395" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`ForeignKey`</span> — foreign key constraints (a hyperedge sort)</span>
+<span id="cb8-396"><a href="#cb8-396" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Constraint(c: Column)`</span> — column-level constraints</span>
+<span id="cb8-397"><a href="#cb8-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-398"><a href="#cb8-398" aria-hidden="true" tabindex="-1"></a>**Operations:**</span>
+<span id="cb8-399"><a href="#cb8-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-400"><a href="#cb8-400" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`table(c: Column) -&gt; Table`</span> — the table that owns this column</span>
+<span id="cb8-401"><a href="#cb8-401" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`colType(c: Column) -&gt; DataType`</span> — the data type of a column</span>
+<span id="cb8-402"><a href="#cb8-402" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`srcTable(fk: ForeignKey) -&gt; Table`</span></span>
+<span id="cb8-403"><a href="#cb8-403" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`srcColumn(fk: ForeignKey) -&gt; Column`</span></span>
+<span id="cb8-404"><a href="#cb8-404" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`refTable(fk: ForeignKey) -&gt; Table`</span></span>
+<span id="cb8-405"><a href="#cb8-405" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`refColumn(fk: ForeignKey) -&gt; Column`</span></span>
+<span id="cb8-406"><a href="#cb8-406" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`notNull(c: Column) -&gt; Bool`</span></span>
+<span id="cb8-407"><a href="#cb8-407" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`defaultVal(c: Column) -&gt; Option&lt;Expr&gt;`</span></span>
+<span id="cb8-408"><a href="#cb8-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-409"><a href="#cb8-409" aria-hidden="true" tabindex="-1"></a>**Equations:**</span>
+<span id="cb8-410"><a href="#cb8-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-411"><a href="#cb8-411" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`table(srcColumn(fk)) = srcTable(fk)`</span> — the source column belongs to the</span>
+<span id="cb8-412"><a href="#cb8-412" aria-hidden="true" tabindex="-1"></a>  source table</span>
+<span id="cb8-413"><a href="#cb8-413" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`table(refColumn(fk)) = refTable(fk)`</span> — the referenced column belongs to the</span>
+<span id="cb8-414"><a href="#cb8-414" aria-hidden="true" tabindex="-1"></a>  referenced table</span>
+<span id="cb8-415"><a href="#cb8-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-416"><a href="#cb8-416" aria-hidden="true" tabindex="-1"></a>Notice how the equations for SQL DDL express structural invariants about foreign</span>
+<span id="cb8-417"><a href="#cb8-417" aria-hidden="true" tabindex="-1"></a>keys: the source column must actually be in the source table. These equations</span>
+<span id="cb8-418"><a href="#cb8-418" aria-hidden="true" tabindex="-1"></a>are not arbitrary—they're the well-formedness conditions that every SQL</span>
+<span id="cb8-419"><a href="#cb8-419" aria-hidden="true" tabindex="-1"></a>database enforces. By making them part of the theory, panproto can verify</span>
+<span id="cb8-420"><a href="#cb8-420" aria-hidden="true" tabindex="-1"></a>schema well-formedness before generating any SQL.</span>
+<span id="cb8-421"><a href="#cb8-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-422"><a href="#cb8-422" aria-hidden="true" tabindex="-1"></a><span class="fu">### Theory of Protobuf</span></span>
+<span id="cb8-423"><a href="#cb8-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-424"><a href="#cb8-424" aria-hidden="true" tabindex="-1"></a>**Sorts:**</span>
+<span id="cb8-425"><a href="#cb8-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-426"><a href="#cb8-426" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Message`</span> — protobuf messages</span>
+<span id="cb8-427"><a href="#cb8-427" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`Field`</span> — fields within messages</span>
+<span id="cb8-428"><a href="#cb8-428" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`EnumType`</span> — enum declarations</span>
+<span id="cb8-429"><a href="#cb8-429" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`EnumValue`</span> — values within enums</span>
+<span id="cb8-430"><a href="#cb8-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-431"><a href="#cb8-431" aria-hidden="true" tabindex="-1"></a>**Operations:**</span>
+<span id="cb8-432"><a href="#cb8-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-433"><a href="#cb8-433" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`message(f: Field) -&gt; Message`</span> — the message that owns this field</span>
+<span id="cb8-434"><a href="#cb8-434" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`fieldType(f: Field) -&gt; TypeRef`</span> — the type of a field</span>
+<span id="cb8-435"><a href="#cb8-435" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`fieldNumber(f: Field) -&gt; Nat`</span> — the wire format number</span>
+<span id="cb8-436"><a href="#cb8-436" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`enumType(v: EnumValue) -&gt; EnumType`</span> — the enum that owns this value</span>
+<span id="cb8-437"><a href="#cb8-437" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`enumNumber(v: EnumValue) -&gt; Int`</span> — the numeric value</span>
+<span id="cb8-438"><a href="#cb8-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-439"><a href="#cb8-439" aria-hidden="true" tabindex="-1"></a>**Equations:**</span>
+<span id="cb8-440"><a href="#cb8-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-441"><a href="#cb8-441" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For distinct fields <span class="in">`f1`</span>, <span class="in">`f2`</span> in the same message:</span>
+<span id="cb8-442"><a href="#cb8-442" aria-hidden="true" tabindex="-1"></a>  <span class="in">`fieldNumber(f1) != fieldNumber(f2)`</span> — field numbers are unique within a</span>
+<span id="cb8-443"><a href="#cb8-443" aria-hidden="true" tabindex="-1"></a>  message</span>
+<span id="cb8-444"><a href="#cb8-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-445"><a href="#cb8-445" aria-hidden="true" tabindex="-1"></a>The uniqueness equation is what makes Protobuf's wire format work: field numbers</span>
+<span id="cb8-446"><a href="#cb8-446" aria-hidden="true" tabindex="-1"></a>must be unique so that the binary encoder can unambiguously identify fields.</span>
+<span id="cb8-447"><a href="#cb8-447" aria-hidden="true" tabindex="-1"></a>This is a Protobuf-specific structural law, not shared by JSON Schema or SQL.</span>
+<span id="cb8-448"><a href="#cb8-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-449"><a href="#cb8-449" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-450"><a href="#cb8-450" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Functorial View</span></span>
+<span id="cb8-451"><a href="#cb8-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-452"><a href="#cb8-452" aria-hidden="true" tabindex="-1"></a>We've been building up a picture: theories describe shapes, models are things</span>
+<span id="cb8-453"><a href="#cb8-453" aria-hidden="true" tabindex="-1"></a>with those shapes, and different schema languages correspond to models of</span>
+<span id="cb8-454"><a href="#cb8-454" aria-hidden="true" tabindex="-1"></a>different theories. There's one more piece to the picture: **morphisms between</span>
+<span id="cb8-455"><a href="#cb8-455" aria-hidden="true" tabindex="-1"></a>models**.</span>
+<span id="cb8-456"><a href="#cb8-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-457"><a href="#cb8-457" aria-hidden="true" tabindex="-1"></a>Given two models of the same theory—say, two ATProto schemas—a **morphism**</span>
+<span id="cb8-458"><a href="#cb8-458" aria-hidden="true" tabindex="-1"></a>between them is a structure-preserving map. It sends vertices to vertices, edges</span>
+<span id="cb8-459"><a href="#cb8-459" aria-hidden="true" tabindex="-1"></a>to edges, and respects the <span class="in">`src`</span> and <span class="in">`tgt`</span> operations. In schema terms, a</span>
+<span id="cb8-460"><a href="#cb8-460" aria-hidden="true" tabindex="-1"></a>morphism is a **schema mapping**: a systematic translation from one schema to</span>
+<span id="cb8-461"><a href="#cb8-461" aria-hidden="true" tabindex="-1"></a>another that preserves structural relationships.</span>
+<span id="cb8-462"><a href="#cb8-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-463"><a href="#cb8-463" aria-hidden="true" tabindex="-1"></a>This is the functorial perspective that @spivak2012 developed for database</span>
+<span id="cb8-464"><a href="#cb8-464" aria-hidden="true" tabindex="-1"></a>schemas and that panproto generalizes. In Spivak's framework:</span>
+<span id="cb8-465"><a href="#cb8-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-466"><a href="#cb8-466" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **schema** is a category (a model of the theory of categories)</span>
+<span id="cb8-467"><a href="#cb8-467" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **schema mapping** is a functor between schemas</span>
+<span id="cb8-468"><a href="#cb8-468" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>An **instance** (data conforming to a schema) is a functor from the schema</span>
+<span id="cb8-469"><a href="#cb8-469" aria-hidden="true" tabindex="-1"></a>  to the category of sets</span>
+<span id="cb8-470"><a href="#cb8-470" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Data migration** along a schema mapping is a composition of functors</span>
+<span id="cb8-471"><a href="#cb8-471" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-472"><a href="#cb8-472" aria-hidden="true" tabindex="-1"></a>panproto works at one level of abstraction higher: instead of fixing the theory</span>
+<span id="cb8-473"><a href="#cb8-473" aria-hidden="true" tabindex="-1"></a>to be "the theory of categories" (which suffices for relational databases), it</span>
+<span id="cb8-474"><a href="#cb8-474" aria-hidden="true" tabindex="-1"></a>parameterizes over the theory. This lets it handle schema languages that aren't</span>
+<span id="cb8-475"><a href="#cb8-475" aria-hidden="true" tabindex="-1"></a>naturally categorical—like Protobuf, where field numbers are an essential part</span>
+<span id="cb8-476"><a href="#cb8-476" aria-hidden="true" tabindex="-1"></a>of the structure that categories don't capture.</span>
+<span id="cb8-477"><a href="#cb8-477" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-478"><a href="#cb8-478" aria-hidden="true" tabindex="-1"></a>The general picture, combining the categorical perspective with GATs, is:</span>
+<span id="cb8-479"><a href="#cb8-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-480"><a href="#cb8-480" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>You choose a **theory** (e.g., the theory of SQL schemas, the theory of</span>
+<span id="cb8-481"><a href="#cb8-481" aria-hidden="true" tabindex="-1"></a>   Protobuf schemas)</span>
+<span id="cb8-482"><a href="#cb8-482" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>A specific schema is a **model** of that theory</span>
+<span id="cb8-483"><a href="#cb8-483" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>A schema mapping is a **morphism** of models</span>
+<span id="cb8-484"><a href="#cb8-484" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>panproto's algorithms work at the level of theories and models, so they</span>
+<span id="cb8-485"><a href="#cb8-485" aria-hidden="true" tabindex="-1"></a>   apply uniformly across schema languages</span>
+<span id="cb8-486"><a href="#cb8-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-487"><a href="#cb8-487" aria-hidden="true" tabindex="-1"></a>This is what it means for panproto to "parameterize over schema structure."</span>
+<span id="cb8-488"><a href="#cb8-488" aria-hidden="true" tabindex="-1"></a>The theory is the parameter. Change the theory, and you get a different schema</span>
+<span id="cb8-489"><a href="#cb8-489" aria-hidden="true" tabindex="-1"></a>language—but the same algorithms.</span>
+<span id="cb8-490"><a href="#cb8-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-491"><a href="#cb8-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-492"><a href="#cb8-492" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Category Theory Landscape</span></span>
+<span id="cb8-493"><a href="#cb8-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-494"><a href="#cb8-494" aria-hidden="true" tabindex="-1"></a>For readers who want to go deeper, here's how the references connect.</span>
+<span id="cb8-495"><a href="#cb8-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-496"><a href="#cb8-496" aria-hidden="true" tabindex="-1"></a>The general framework of category theory, as presented in <span class="co">[</span><span class="ot">@maclane1998</span><span class="co">]</span>,</span>
+<span id="cb8-497"><a href="#cb8-497" aria-hidden="true" tabindex="-1"></a>provides the ambient mathematical universe. Categories, functors, natural</span>
+<span id="cb8-498"><a href="#cb8-498" aria-hidden="true" tabindex="-1"></a>transformations, limits, and colimits are the basic vocabulary. For a gentler</span>
+<span id="cb8-499"><a href="#cb8-499" aria-hidden="true" tabindex="-1"></a>introduction oriented toward computer science, <span class="co">[</span><span class="ot">@barr1990</span><span class="co">]</span> covers the same</span>
+<span id="cb8-500"><a href="#cb8-500" aria-hidden="true" tabindex="-1"></a>material with more attention to computational applications.</span>
+<span id="cb8-501"><a href="#cb8-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-502"><a href="#cb8-502" aria-hidden="true" tabindex="-1"></a>Within this universe, @lawvere1963 identified that algebraic theories (like</span>
+<span id="cb8-503"><a href="#cb8-503" aria-hidden="true" tabindex="-1"></a>the theory of monoids or groups) are themselves categories with specific</span>
+<span id="cb8-504"><a href="#cb8-504" aria-hidden="true" tabindex="-1"></a>structure, and that models are product-preserving functors from the theory</span>
+<span id="cb8-505"><a href="#cb8-505" aria-hidden="true" tabindex="-1"></a>category to the category of sets. This was a revolutionary insight: it turned</span>
+<span id="cb8-506"><a href="#cb8-506" aria-hidden="true" tabindex="-1"></a>"satisfying axioms" into "preserving structure," which is something categories</span>
+<span id="cb8-507"><a href="#cb8-507" aria-hidden="true" tabindex="-1"></a>are designed to talk about.</span>
+<span id="cb8-508"><a href="#cb8-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-509"><a href="#cb8-509" aria-hidden="true" tabindex="-1"></a>@cartmell1986 generalized Lawvere's framework to handle dependent sorts,</span>
+<span id="cb8-510"><a href="#cb8-510" aria-hidden="true" tabindex="-1"></a>arriving at GATs. This is the level of generality panproto needs: schema</span>
+<span id="cb8-511"><a href="#cb8-511" aria-hidden="true" tabindex="-1"></a>languages have dependent structure (constraints depend on types), and ordinary</span>
+<span id="cb8-512"><a href="#cb8-512" aria-hidden="true" tabindex="-1"></a>algebraic theories can't capture that.</span>
+<span id="cb8-513"><a href="#cb8-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-514"><a href="#cb8-514" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@adamek1994</span><span class="co">]</span> provided the theoretical bridge between GATs and EATs through</span>
+<span id="cb8-515"><a href="#cb8-515" aria-hidden="true" tabindex="-1"></a>the theory of locally presentable categories. This result is what lets panproto</span>
+<span id="cb8-516"><a href="#cb8-516" aria-hidden="true" tabindex="-1"></a>implement dependent sorts without a full dependent type checker—a crucial</span>
+<span id="cb8-517"><a href="#cb8-517" aria-hidden="true" tabindex="-1"></a>engineering simplification.</span>
+<span id="cb8-518"><a href="#cb8-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-519"><a href="#cb8-519" aria-hidden="true" tabindex="-1"></a>@lynch2024 demonstrated that this entire framework can be implemented</span>
+<span id="cb8-520"><a href="#cb8-520" aria-hidden="true" tabindex="-1"></a>practically in a computational system (GATlab, in Julia). panproto adapts</span>
+<span id="cb8-521"><a href="#cb8-521" aria-hidden="true" tabindex="-1"></a>GATlab's architecture to Rust, gaining static typing, zero-cost abstractions,</span>
+<span id="cb8-522"><a href="#cb8-522" aria-hidden="true" tabindex="-1"></a>and Wasm compilation while retaining the mathematical foundations.</span>
+<span id="cb8-523"><a href="#cb8-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-524"><a href="#cb8-524" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb8-525"><a href="#cb8-525" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Key Insight</span></span>
+<span id="cb8-526"><a href="#cb8-526" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-527"><a href="#cb8-527" aria-hidden="true" tabindex="-1"></a>A theory is a description of a shape. A model is a thing that has that shape.</span>
+<span id="cb8-528"><a href="#cb8-528" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-529"><a href="#cb8-529" aria-hidden="true" tabindex="-1"></a>JSON Schema, Protobuf, SQL DDL, GraphQL SDL, ATProto Lexicon—these are all</span>
+<span id="cb8-530"><a href="#cb8-530" aria-hidden="true" tabindex="-1"></a>models of different theories. The theories differ (multigraphs vs. hypergraphs,</span>
+<span id="cb8-531"><a href="#cb8-531" aria-hidden="true" tabindex="-1"></a>different constraint sorts), but they're all expressed in the same</span>
+<span id="cb8-532"><a href="#cb8-532" aria-hidden="true" tabindex="-1"></a>meta-framework: GATs.</span>
+<span id="cb8-533"><a href="#cb8-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-534"><a href="#cb8-534" aria-hidden="true" tabindex="-1"></a>panproto is parameterized by the theory. That's how it handles multiple schema</span>
+<span id="cb8-535"><a href="#cb8-535" aria-hidden="true" tabindex="-1"></a>languages with uniform algorithms. You don't write a schema differ for Protobuf</span>
+<span id="cb8-536"><a href="#cb8-536" aria-hidden="true" tabindex="-1"></a>and a separate one for SQL. You write a schema differ that works for any theory,</span>
+<span id="cb8-537"><a href="#cb8-537" aria-hidden="true" tabindex="-1"></a>and then you instantiate it with the specific theory you need.</span>
+<span id="cb8-538"><a href="#cb8-538" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb8-539"><a href="#cb8-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-540"><a href="#cb8-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-541"><a href="#cb8-541" aria-hidden="true" tabindex="-1"></a><span class="fu">## What We've Built So Far</span></span>
+<span id="cb8-542"><a href="#cb8-542" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-543"><a href="#cb8-543" aria-hidden="true" tabindex="-1"></a>Let's take stock. Over three chapters, we've established:</span>
+<span id="cb8-544"><a href="#cb8-544" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-545"><a href="#cb8-545" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Schemas are everywhere** (Chapter 1). Different schema languages describe</span>
+<span id="cb8-546"><a href="#cb8-546" aria-hidden="true" tabindex="-1"></a>   the same structural idea—types connected by typed relationships—in different</span>
+<span id="cb8-547"><a href="#cb8-547" aria-hidden="true" tabindex="-1"></a>   syntaxes.</span>
+<span id="cb8-548"><a href="#cb8-548" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-549"><a href="#cb8-549" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Schemas have graph-theoretic structure** (Chapter 2). The specific kind of</span>
+<span id="cb8-550"><a href="#cb8-550" aria-hidden="true" tabindex="-1"></a>   graph varies: multigraphs for most languages, hypergraphs for SQL. Constraints</span>
+<span id="cb8-551"><a href="#cb8-551" aria-hidden="true" tabindex="-1"></a>   decorate the graph structure.</span>
+<span id="cb8-552"><a href="#cb8-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-553"><a href="#cb8-553" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Graph structures are described by theories** (this chapter). A theory</span>
+<span id="cb8-554"><a href="#cb8-554" aria-hidden="true" tabindex="-1"></a>   specifies sorts, operations, and equations. A model is a concrete thing</span>
+<span id="cb8-555"><a href="#cb8-555" aria-hidden="true" tabindex="-1"></a>   satisfying the theory. Dependent sorts (GATs) let theories express</span>
+<span id="cb8-556"><a href="#cb8-556" aria-hidden="true" tabindex="-1"></a>   type-indexed constraints.</span>
+<span id="cb8-557"><a href="#cb8-557" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-558"><a href="#cb8-558" aria-hidden="true" tabindex="-1"></a>Together, these three ideas form the conceptual foundation of panproto. The</span>
+<span id="cb8-559"><a href="#cb8-559" aria-hidden="true" tabindex="-1"></a>next chapters will build on this foundation, moving from the "what" to the</span>
+<span id="cb8-560"><a href="#cb8-560" aria-hidden="true" tabindex="-1"></a>"how": how theories are implemented in Rust, how models are constructed and</span>
+<span id="cb8-561"><a href="#cb8-561" aria-hidden="true" tabindex="-1"></a>manipulated, and how the TypeScript SDK exposes all of this to application</span>
+<span id="cb8-562"><a href="#cb8-562" aria-hidden="true" tabindex="-1"></a>developers.</span>
+<span id="cb8-563"><a href="#cb8-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-564"><a href="#cb8-564" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-565"><a href="#cb8-565" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb8-566"><a href="#cb8-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-567"><a href="#cb8-567" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **theory** consists of sorts, operations, and equations. It describes a</span>
+<span id="cb8-568"><a href="#cb8-568" aria-hidden="true" tabindex="-1"></a>  shape without committing to a specific instance.</span>
+<span id="cb8-569"><a href="#cb8-569" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-570"><a href="#cb8-570" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **model** assigns concrete sets and functions to a theory's sorts and</span>
+<span id="cb8-571"><a href="#cb8-571" aria-hidden="true" tabindex="-1"></a>  operations, satisfying its equations. A model is a thing that has the shape</span>
+<span id="cb8-572"><a href="#cb8-572" aria-hidden="true" tabindex="-1"></a>  the theory describes.</span>
+<span id="cb8-573"><a href="#cb8-573" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-574"><a href="#cb8-574" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Ordinary algebraic theories** <span class="co">[</span><span class="ot">@lawvere1963</span><span class="co">]</span> handle independent sorts:</span>
+<span id="cb8-575"><a href="#cb8-575" aria-hidden="true" tabindex="-1"></a>  Carrier, Vertex, Edge.</span>
+<span id="cb8-576"><a href="#cb8-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-577"><a href="#cb8-577" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Generalized Algebraic Theories** <span class="co">[</span><span class="ot">@cartmell1986</span><span class="co">]</span> handle dependent sorts:</span>
+<span id="cb8-578"><a href="#cb8-578" aria-hidden="true" tabindex="-1"></a>  <span class="in">`Constraint(v: Vertex)`</span>, where the sort of constraints depends on which</span>
+<span id="cb8-579"><a href="#cb8-579" aria-hidden="true" tabindex="-1"></a>  vertex you're looking at. This is the expressiveness panproto needs for</span>
+<span id="cb8-580"><a href="#cb8-580" aria-hidden="true" tabindex="-1"></a>  schema constraints.</span>
+<span id="cb8-581"><a href="#cb8-581" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-582"><a href="#cb8-582" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **GAT-EAT equivalence** <span class="co">[</span><span class="ot">@adamek1994</span><span class="co">]</span> lets panproto implement</span>
+<span id="cb8-583"><a href="#cb8-583" aria-hidden="true" tabindex="-1"></a>  dependent sorts using partial operations rather than a full dependent type</span>
+<span id="cb8-584"><a href="#cb8-584" aria-hidden="true" tabindex="-1"></a>  system.</span>
+<span id="cb8-585"><a href="#cb8-585" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-586"><a href="#cb8-586" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**GATlab** <span class="co">[</span><span class="ot">@lynch2024</span><span class="co">]</span> demonstrated this architecture computationally</span>
+<span id="cb8-587"><a href="#cb8-587" aria-hidden="true" tabindex="-1"></a>  in Julia. panproto adapts it to Rust.</span>
+<span id="cb8-588"><a href="#cb8-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-589"><a href="#cb8-589" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Schema languages are models of different theories.** panproto</span>
+<span id="cb8-590"><a href="#cb8-590" aria-hidden="true" tabindex="-1"></a>  parameterizes over the theory, enabling uniform algorithms across schema</span>
+<span id="cb8-591"><a href="#cb8-591" aria-hidden="true" tabindex="-1"></a>  languages.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/03-what-is-a-theory.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

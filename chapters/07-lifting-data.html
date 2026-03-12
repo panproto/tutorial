@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Lifting Data – panproto: Universal Schema Migration</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/08-lenses.html" rel="next">
+<link href="../chapters/06-when-migrations-exist.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f1aadacce99040138bbb613f9330654f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aafb03ca45b9c5aa290c66b7a437bb31.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-67ec4aabe8467e78f93de3725ae3d67e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-aafb03ca45b9c5aa290c66b7a437bb31.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="mermaid-theme" content="neutral">
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-migration-by-hand.html">Migration</a></li><li class="breadcrumb-item"><a href="../chapters/07-lifting-data.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lifting Data</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">panproto: Universal Schema Migration</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/panproto/panproto/tree/main/tutorial/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Motivation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-schemas-everywhere.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Schemas Everywhere</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-the-shape-of-schemas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Shape of Schemas</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-what-is-a-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">What Is a Theory?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-protocols-as-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Protocols as Parameters</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Migration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-migration-by-hand.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Migration by Hand</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-when-migrations-exist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Migrations Exist</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-lifting-data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lifting Data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Bidirectionality &amp; Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lenses: Going Both Ways</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-breaking-changes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Breaking Changes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-building-your-own-protocol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Building Your Own Protocol</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-self-description.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Self-Description: The GAT of GATs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-worked-example-threadviewpost" id="toc-a-worked-example-threadviewpost" class="nav-link active" data-scroll-target="#a-worked-example-threadviewpost"><span class="header-section-number">7.1</span> A worked example: <code>threadViewPost</code></a></li>
+  <li><a href="#w-type-restrict-the-five-step-pipeline" id="toc-w-type-restrict-the-five-step-pipeline" class="nav-link" data-scroll-target="#w-type-restrict-the-five-step-pipeline"><span class="header-section-number">7.2</span> W-type restrict: the five-step pipeline</a>
+  <ul class="collapse">
+  <li><a href="#sec-step-anchor" id="toc-sec-step-anchor" class="nav-link" data-scroll-target="#sec-step-anchor"><span class="header-section-number">7.2.1</span> Step 1: <code>anchor_surviving</code></a></li>
+  <li><a href="#sec-step-reachable" id="toc-sec-step-reachable" class="nav-link" data-scroll-target="#sec-step-reachable"><span class="header-section-number">7.2.2</span> Step 2: <code>reachable_from_root</code></a></li>
+  <li><a href="#sec-step-contraction" id="toc-sec-step-contraction" class="nav-link" data-scroll-target="#sec-step-contraction"><span class="header-section-number">7.2.3</span> Step 3: <code>ancestor_contraction</code></a></li>
+  <li><a href="#sec-step-resolve" id="toc-sec-step-resolve" class="nav-link" data-scroll-target="#sec-step-resolve"><span class="header-section-number">7.2.4</span> Step 4: <code>resolve_edge</code></a></li>
+  <li><a href="#sec-step-fans" id="toc-sec-step-fans" class="nav-link" data-scroll-target="#sec-step-fans"><span class="header-section-number">7.2.5</span> Step 5: <code>reconstruct_fans</code></a></li>
+  </ul></li>
+  <li><a href="#the-pipeline-in-sequence" id="toc-the-pipeline-in-sequence" class="nav-link" data-scroll-target="#the-pipeline-in-sequence"><span class="header-section-number">7.3</span> The pipeline in sequence</a></li>
+  <li><a href="#sec-functor-restrict" id="toc-sec-functor-restrict" class="nav-link" data-scroll-target="#sec-functor-restrict"><span class="header-section-number">7.4</span> Functor restrict (<span class="math inline">\(\Delta_F\)</span> precomposition)</a>
+  <ul class="collapse">
+  <li><a href="#adjoints-sigma_f-and-pi_f" id="toc-adjoints-sigma_f-and-pi_f" class="nav-link" data-scroll-target="#adjoints-sigma_f-and-pi_f"><span class="header-section-number">7.4.1</span> Adjoints: <span class="math inline">\(\Sigma_F\)</span> and <span class="math inline">\(\Pi_F\)</span></a></li>
+  </ul></li>
+  <li><a href="#sec-restrict-perf" id="toc-sec-restrict-perf" class="nav-link" data-scroll-target="#sec-restrict-perf"><span class="header-section-number">7.5</span> Performance</a>
+  <ul class="collapse">
+  <li><a href="#compiled-migrations" id="toc-compiled-migrations" class="nav-link" data-scroll-target="#compiled-migrations"><span class="header-section-number">7.5.1</span> Compiled migrations</a></li>
+  <li><a href="#arena-allocation" id="toc-arena-allocation" class="nav-link" data-scroll-target="#arena-allocation"><span class="header-section-number">7.5.2</span> Arena allocation</a></li>
+  <li><a href="#zero-copy-fast-path" id="toc-zero-copy-fast-path" class="nav-link" data-scroll-target="#zero-copy-fast-path"><span class="header-section-number">7.5.3</span> Zero-copy fast path</a></li>
+  <li><a href="#when-it-gets-expensive" id="toc-when-it-gets-expensive" class="nav-link" data-scroll-target="#when-it-gets-expensive"><span class="header-section-number">7.5.4</span> When it gets expensive</a></li>
+  </ul></li>
+  <li><a href="#sec-restrict-overview" id="toc-sec-restrict-overview" class="nav-link" data-scroll-target="#sec-restrict-overview"><span class="header-section-number">7.6</span> The view from 10,000 feet</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">7.7</span> Further reading</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/07-lifting-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/05-migration-by-hand.html">Migration</a></li><li class="breadcrumb-item"><a href="../chapters/07-lifting-data.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lifting Data</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-lifting" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lifting Data</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The previous chapter established <em>when</em> a migration exists. This chapter is about <em>how</em> it works: the <code>restrict</code> operation that transforms data from one schema to another. This is the algorithmic heart of panproto.</p>
+<p>There are two flavors of restriction, corresponding to the two kinds of schema that panproto supports. <strong>W-type restrict</strong> handles tree-structured data (JSON, CBOR, protocol buffers) by walking a five-step pipeline over the instance tree. <strong>Functor restrict</strong> handles tabular data (SQL) by precomposition along a schema morphism. Both are grounded in the same categorical idea—pulling data back along a map—but the concrete algorithms differ because trees and tables have different structure.</p>
+<p>We will spend most of our time on the W-type pipeline, since it is the more intricate of the two and the one that handles the recursive, nested data formats that dominate modern protocol design.</p>
+<section id="a-worked-example-threadviewpost" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="a-worked-example-threadviewpost"><span class="header-section-number">7.1</span> A worked example: <code>threadViewPost</code></h2>
+<p>To make the pipeline concrete, we need a schema that exercises every step. The ATProto <code>threadViewPost</code> type is ideal: a post that contains an array of replies, each of which is itself a post. The recursion means the instance is a tree of arbitrary depth.</p>
+<p>Suppose version 1 of the schema looks like this (simplified):</p>
+<pre><code>threadViewPost
+├── post: postView
+│   ├── uri: string
+│   ├── author: profileViewBasic
+│   │   ├── did: string
+│   │   ├── handle: string
+│   │   └── displayName: string
+│   ├── text: string
+│   └── likeCount: integer
+└── replies: array&lt;threadViewPost&gt;</code></pre>
+<p>And version 2 drops <code>likeCount</code> from <code>postView</code> and drops <code>displayName</code> from <code>profileViewBasic</code>. A migration <span class="math inline">\(m: S_2 \to S_1\)</span> exists (both changes are field removals, which are always backward-compatible). The migration’s vertex map tells us which vertices in <span class="math inline">\(S_1\)</span> survive in <span class="math inline">\(S_2\)</span>.</p>
+<p>Now consider a concrete instance—a thread with two replies, one of which has a nested reply:</p>
+<pre><code>root (threadViewPost)
+├── post (postView)
+│   ├── uri = "at://did:plc:abc/post/1"
+│   ├── author (profileViewBasic)
+│   │   ├── did = "did:plc:abc"
+│   │   ├── handle = "alice.bsky.social"
+│   │   └── displayName = "Alice"
+│   ├── text = "Hello world"
+│   └── likeCount = 42
+└── replies
+    ├── reply-1 (threadViewPost)
+    │   ├── post (postView)
+    │   │   ├── uri = "at://did:plc:def/post/2"
+    │   │   ├── author (profileViewBasic)
+    │   │   │   ├── did = "did:plc:def"
+    │   │   │   ├── handle = "bob.bsky.social"
+    │   │   │   └── displayName = "Bob"
+    │   │   ├── text = "Nice post"
+    │   │   └── likeCount = 7
+    │   └── replies
+    │       └── reply-1-1 (threadViewPost)
+    │           └── ...
+    └── reply-2 (threadViewPost)
+        └── ...</code></pre>
+<p>This is the instance we will push through the five-step pipeline.</p>
+</section>
+<section id="w-type-restrict-the-five-step-pipeline" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="w-type-restrict-the-five-step-pipeline"><span class="header-section-number">7.2</span> W-type restrict: the five-step pipeline</h2>
+<p>The W-type restrict algorithm transforms an instance tree in five sequential steps. Each step has a clear algebraic meaning, and together they implement the restriction of a polynomial functor algebra along a morphism of polynomial functors. The correspondence to the theory is not decorative—it is what guarantees correctness.</p>
+<section id="sec-step-anchor" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="sec-step-anchor"><span class="header-section-number">7.2.1</span> Step 1: <code>anchor_surviving</code></h3>
+<p>The first step is the simplest: walk every node in the instance and check whether its <strong>anchor vertex</strong> (the schema vertex that the node is an instance of) survives the migration’s vertex map. If the anchor vertex is not in the image of the vertex map, the node is marked for removal.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// Mark each node as surviving or pruned based on whether</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// its anchor vertex is in the migration's vertex map.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> anchor_surviving(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    instance<span class="op">:</span> <span class="op">&amp;</span>WTree<span class="op">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    vertex_map<span class="op">:</span> <span class="op">&amp;</span>HashMap<span class="op">&lt;</span>VertexId<span class="op">,</span> VertexId<span class="op">&gt;,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">bool</span><span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    instance<span class="op">.</span>nodes<span class="op">.</span>iter()<span class="op">.</span>map(<span class="op">|</span>node<span class="op">|</span> <span class="op">{</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        vertex_map<span class="op">.</span>values()<span class="op">.</span>any(<span class="op">|</span>v<span class="op">|</span> <span class="op">*</span>v <span class="op">==</span> node<span class="op">.</span>anchor)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span>)<span class="op">.</span>collect()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is signature restriction on polynomial algebras: given a polynomial <span class="math inline">\(P = \sum_{i \in I} y^{B_i}\)</span> and a sub-signature <span class="math inline">\(J \subseteq I\)</span>, the restricted polynomial is <span class="math inline">\(P|_J = \sum_{j \in J} y^{B_j}\)</span>. An algebra (instance) over <span class="math inline">\(P\)</span> restricts to an algebra over <span class="math inline">\(P|_J\)</span> by discarding the operations whose index falls outside <span class="math inline">\(J\)</span> <span class="citation" data-cites="abbott2005">(<a href="#ref-abbott2005" role="doc-biblioref">Abbott et al. 2005</a>)</span>.</p>
+<p>In our example, the vertices <code>likeCount</code> and <code>displayName</code> are not in the image of the vertex map (they were dropped in version 2). So every node anchored at <code>likeCount</code> or <code>displayName</code> is marked for removal:</p>
+<ul>
+<li><code>root.post.likeCount</code> — pruned</li>
+<li><code>root.post.author.displayName</code> — pruned</li>
+<li><code>reply-1.post.likeCount</code> — pruned</li>
+<li><code>reply-1.post.author.displayName</code> — pruned</li>
+<li>(and so on for every nested reply)</li>
+</ul>
+<p>Everything else survives.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why “anchor”?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the W-type formalization, each node in an instance tree sits over a vertex in the schema polynomial. The schema vertex is the node’s <em>anchor</em> because it determines the node’s shape: what children it can have, what edges connect it to its parent, and what data it carries. When we say a node’s anchor survives, we mean the schema still has a place for that kind of node.</p>
+</div>
+</div>
+</section>
+<section id="sec-step-reachable" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="sec-step-reachable"><span class="header-section-number">7.2.2</span> Step 2: <code>reachable_from_root</code></h3>
+<p>After marking survivors, some surviving nodes may be stranded: they are still marked as surviving, but they can only be reached from the root through pruned nodes. A sub-tree of a W-type is not necessarily a W-type—it may be disconnected.</p>
+<p>Step 2 runs a breadth-first search from the root, traversing only through surviving nodes. Any surviving node not visited by the BFS is marked as unreachable and will not appear in the output.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// BFS from root through surviving nodes. Returns the set of</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// node indices that are both surviving and reachable.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> reachable_from_root(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    instance<span class="op">:</span> <span class="op">&amp;</span>WTree<span class="op">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    surviving<span class="op">:</span> <span class="op">&amp;</span>[<span class="dt">bool</span>]<span class="op">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> HashSet<span class="op">&lt;</span><span class="dt">u32</span><span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> visited <span class="op">=</span> <span class="pp">HashSet::</span>new()<span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> queue <span class="op">=</span> <span class="pp">VecDeque::</span>new()<span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> surviving[instance<span class="op">.</span>root <span class="kw">as</span> <span class="dt">usize</span>] <span class="op">{</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        queue<span class="op">.</span>push_back(instance<span class="op">.</span>root)<span class="op">;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="kw">let</span> <span class="cn">Some</span>(idx) <span class="op">=</span> queue<span class="op">.</span>pop_front() <span class="op">{</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">!</span>visited<span class="op">.</span>insert(idx) <span class="op">{</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> child <span class="kw">in</span> instance<span class="op">.</span>children(idx) <span class="op">{</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> surviving[child <span class="kw">as</span> <span class="dt">usize</span>] <span class="op">{</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                queue<span class="op">.</span>push_back(child)<span class="op">;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    visited</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is standard connected-component extraction. In our example it has no effect, because removing <code>likeCount</code> and <code>displayName</code> nodes does not disconnect anything—they are leaf nodes. But consider a different migration that removes <code>postView</code> while keeping <code>text</code>. The <code>text</code> nodes would survive step 1 but become unreachable in step 2, because their parent (<code>postView</code>) was pruned and no path from the root reaches them through survivors alone.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>When does step 2 matter?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Step 2 is a no-op whenever every pruned node is a leaf or when the surviving nodes form a connected sub-tree. It becomes essential when intermediate structural nodes are removed—for example, when an entire wrapper object is dropped from a schema but some of its children are “hoisted” to a higher level in a later step.</p>
+</div>
+</div>
+</section>
+<section id="sec-step-contraction" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="sec-step-contraction"><span class="header-section-number">7.2.3</span> Step 3: <code>ancestor_contraction</code></h3>
+<p>This is the tree surgery step. When intermediate nodes are pruned, children that survived steps 1 and 2 need to be re-parented to their nearest surviving ancestor. The result is a new tree where every edge connects two surviving nodes.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// For each surviving node, find its nearest surviving ancestor.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// Returns a map from node index to new parent index.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> ancestor_contraction(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    instance<span class="op">:</span> <span class="op">&amp;</span>WTree<span class="op">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    reachable<span class="op">:</span> <span class="op">&amp;</span>HashSet<span class="op">&lt;</span><span class="dt">u32</span><span class="op">&gt;,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> HashMap<span class="op">&lt;</span><span class="dt">u32</span><span class="op">,</span> <span class="dt">u32</span><span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> new_parent <span class="op">=</span> <span class="pp">HashMap::</span>new()<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">&amp;</span>idx <span class="kw">in</span> reachable <span class="op">{</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> idx <span class="op">==</span> instance<span class="op">.</span>root <span class="op">{</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span><span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">// Walk up the original tree until we find a surviving ancestor</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> <span class="kw">mut</span> ancestor <span class="op">=</span> instance<span class="op">.</span>parent(idx)<span class="op">;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="op">!</span>reachable<span class="op">.</span>contains(<span class="op">&amp;</span>ancestor) <span class="op">{</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            ancestor <span class="op">=</span> instance<span class="op">.</span>parent(ancestor)<span class="op">;</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        new_parent<span class="op">.</span>insert(idx<span class="op">,</span> ancestor)<span class="op">;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    new_parent</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In algebraic graph transformation terms, this is computing the pushout complement <span class="citation" data-cites="ehrig2006">(<a href="#ref-ehrig2006" role="doc-biblioref">Ehrig et al. 2006, sec. 3.1</a>)</span>. We have a span <span class="math inline">\(L \hookleftarrow K \hookrightarrow R\)</span> where <span class="math inline">\(L\)</span> is the original tree, <span class="math inline">\(K\)</span> is the interface (surviving nodes with their original connectivity), and <span class="math inline">\(R\)</span> is the contracted tree. The pushout complement identifies how to glue <span class="math inline">\(R\)</span> into the surrounding context.</p>
+<p>Here is the key visual intuition:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-contraction-before" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-contraction-before-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-contraction-before">graph TD
+    A["A (root)"] --&gt; B["B (removed)"]
+    B --&gt; C["C (surviving)"]
+    B --&gt; D["D (removed)"]
+    A --&gt; E["E (surviving)"]
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-contraction-before-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.1: Before contraction: node B is marked for removal, but its child C survives.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>After contraction, C is re-parented to A:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-contraction-after" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-contraction-after-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-contraction-after">graph TD
+    A["A (root)"] --&gt; C["C (re-parented)"]
+    A --&gt; E["E (surviving)"]
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-contraction-after-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.2: After contraction: C is now a direct child of A. B and D are gone.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In our <code>threadViewPost</code> example, the pruned nodes (<code>likeCount</code>, <code>displayName</code>) are all leaves, so no contraction occurs. But imagine a migration that removes the <code>postView</code> wrapper while keeping <code>uri</code>, <code>author</code>, and <code>text</code> as direct children of <code>threadViewPost</code>. Then <code>postView</code> nodes are pruned, and their surviving children are re-parented to the <code>threadViewPost</code> node:</p>
+<pre><code>Before:                          After:
+threadViewPost                   threadViewPost
+├── postView (removed)    →     ├── uri
+│   ├── uri                      ├── author
+│   ├── author                   │   ├── did
+│   │   ├── did                  │   └── handle
+│   │   ├── handle               ├── text
+│   │   └── displayName          └── replies
+│   ├── text                         └── ...
+│   └── likeCount
+└── replies
+    └── ...</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Contraction preserves depth order
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A node’s depth in the contracted tree is always less than or equal to its depth in the original tree. Contraction never pushes nodes deeper. This is a consequence of the fact that we only re-parent to <em>ancestors</em>, never to siblings or descendants.</p>
+</div>
+</div>
+</section>
+<section id="sec-step-resolve" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="sec-step-resolve"><span class="header-section-number">7.2.4</span> Step 4: <code>resolve_edge</code></h3>
+<p>After contraction, each re-parented child has a new parent, but the edge connecting them needs a label from the target schema. In the original tree, the edge from A to C went through B: <code>A --(e1)--&gt; B --(e2)--&gt; C</code>. After removing B, we need a single edge label for the direct <code>A --&gt; C</code> connection.</p>
+<p>In a simple graph (at most one edge between any two vertices), this is trivial: there is only one choice. But schemas are often multigraphs—multiple edges can exist between the same pair of vertices (think of an object with two fields of the same type). In that case, the choice is ambiguous.</p>
+<p>The <strong>resolver table</strong> provides the deterministic choice. It is part of the migration specification and maps each contracted path <code>(source_vertex, target_vertex, intermediate_path)</code> to a specific edge in the target schema.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// Given a contracted parent-child pair, look up the correct</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// edge label from the resolver table.</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> resolve_edge(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    parent_anchor<span class="op">:</span> VertexId<span class="op">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    child_anchor<span class="op">:</span> VertexId<span class="op">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    contracted_path<span class="op">:</span> <span class="op">&amp;</span>[VertexId]<span class="op">,</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    resolver<span class="op">:</span> <span class="op">&amp;</span>ResolverTable<span class="op">,</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> EdgeId <span class="op">{</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    resolver</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>lookup(parent_anchor<span class="op">,</span> child_anchor<span class="op">,</span> contracted_path)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>expect(<span class="st">"migration guarantees a resolution exists"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is exactly the pushout complement selection problem <span class="citation" data-cites="lowe1993">(<a href="#ref-lowe1993" role="doc-biblioref">Löwe 1993</a>)</span>. When the pushout complement is not unique (which happens precisely when the interface graph has parallel edges), an additional choice is required to determine which complement to use. The resolver table encodes this choice. The existence checker from <a href="06-when-migrations-exist.html" class="quarto-xref"><span>Chapter 6</span></a> guarantees that a valid resolution exists for every contracted path, so <code>resolve_edge</code> never fails on a well-formed migration.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>When is resolution trivial?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For JSON-like schemas (which are trees, not multigraphs), resolution is always trivial: there is at most one edge between any pair of vertices in the schema. The resolver table is only needed for schemas where the same type appears in multiple positions under the same parent—protocol buffers with repeated message types, for instance.</p>
+</div>
+</div>
+</section>
+<section id="sec-step-fans" class="level3" data-number="7.2.5">
+<h3 data-number="7.2.5" class="anchored" data-anchor-id="sec-step-fans"><span class="header-section-number">7.2.5</span> Step 5: <code>reconstruct_fans</code></h3>
+<p>The final step handles <strong>hypergraph schemas</strong>—schemas where an edge can connect a vertex to multiple children simultaneously. In practice, this means SQL: a table row is a hyperedge connecting a primary key to all its column values.</p>
+<p>When some columns of a table are pruned, the surviving columns must be collected into a new, smaller hyperedge (a new “fan”). This is limit cone construction: the surviving columns form a sub-diagram, and the new fan is the limit of that sub-diagram in the category of fans <span class="citation" data-cites="barr1990">(<a href="#ref-barr1990" role="doc-biblioref">Barr and Wells 1990</a>, Ch. 4)</span>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// Reconstruct fans (hyperedges) after pruning some children.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">/// Each surviving fan keeps only its surviving children and</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">/// receives a new fan ID from the target schema.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> reconstruct_fans(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    instance<span class="op">:</span> <span class="op">&amp;</span>WTree<span class="op">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    reachable<span class="op">:</span> <span class="op">&amp;</span>HashSet<span class="op">&lt;</span><span class="dt">u32</span><span class="op">&gt;,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    fan_map<span class="op">:</span> <span class="op">&amp;</span>HashMap<span class="op">&lt;</span>FanId<span class="op">,</span> FanId<span class="op">&gt;,</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="dt">Vec</span><span class="op">&lt;</span>Fan<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    instance<span class="op">.</span>fans<span class="op">.</span>iter()<span class="op">.</span>filter_map(<span class="op">|</span>fan<span class="op">|</span> <span class="op">{</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> new_children<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">u32</span><span class="op">&gt;</span> <span class="op">=</span> fan<span class="op">.</span>children<span class="op">.</span>iter()</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>copied()</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>filter(<span class="op">|</span>c<span class="op">|</span> reachable<span class="op">.</span>contains(c))</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>            <span class="op">.</span>collect()<span class="op">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> new_children<span class="op">.</span>is_empty() <span class="op">{</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="cn">None</span><span class="op">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> new_fan_id <span class="op">=</span> fan_map<span class="op">.</span>get(<span class="op">&amp;</span>fan<span class="op">.</span>id)<span class="op">?;</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        <span class="cn">Some</span>(Fan <span class="op">{</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            id<span class="op">:</span> <span class="op">*</span>new_fan_id<span class="op">,</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            parent<span class="op">:</span> fan<span class="op">.</span>parent<span class="op">,</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            children<span class="op">:</span> new_children<span class="op">,</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span>)<span class="op">.</span>collect()</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For pure tree schemas (JSON, CBOR, protocol buffers), step 5 is a no-op: every edge connects exactly one parent to exactly one child, so there are no fans to reconstruct. The step exists because panproto’s data model is general enough to handle both trees and hypergraphs uniformly.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The five steps in summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 20%">
+<col style="width: 35%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Operation</th>
+<th>Algebraic meaning</th>
+<th>When it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><code>anchor_surviving</code></td>
+<td>Signature restriction</td>
+<td>Always</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>reachable_from_root</code></td>
+<td>Connected component</td>
+<td>Intermediate nodes pruned</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><code>ancestor_contraction</code></td>
+<td>Pushout complement</td>
+<td>Children of pruned nodes survive</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><code>resolve_edge</code></td>
+<td>Complement selection</td>
+<td>Multigraph schemas</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><code>reconstruct_fans</code></td>
+<td>Limit cone</td>
+<td>Hypergraph (SQL) schemas</td>
+</tr>
+</tbody>
+</table>
+<p>For a typical JSON schema migration (adding or removing fields), only step 1 does meaningful work. Steps 2–5 are structural no-ops. This is by design: the common case should be fast.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="the-pipeline-in-sequence" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="the-pipeline-in-sequence"><span class="header-section-number">7.3</span> The pipeline in sequence</h2>
+<p>Let us trace our <code>threadViewPost</code> example through all five steps.</p>
+<p><strong>Input:</strong> An instance tree with nodes for <code>threadViewPost</code>, <code>postView</code>, <code>profileViewBasic</code>, <code>uri</code>, <code>author</code>, <code>did</code>, <code>handle</code>, <code>displayName</code>, <code>text</code>, <code>likeCount</code>, and <code>replies</code>, recursively nested to depth 3.</p>
+<p><strong>Step 1 — <code>anchor_surviving</code>:</strong> Mark <code>likeCount</code> and <code>displayName</code> nodes as pruned. All other nodes survive. In a thread with 3 posts, this marks 6 nodes for removal (one <code>likeCount</code> and one <code>displayName</code> per post).</p>
+<p><strong>Step 2 — <code>reachable_from_root</code>:</strong> BFS from root. All surviving nodes are reachable (the pruned nodes are leaves). No additional nodes are removed.</p>
+<p><strong>Step 3 — <code>ancestor_contraction</code>:</strong> No contraction needed. Every surviving node’s parent is also surviving.</p>
+<p><strong>Step 4 — <code>resolve_edge</code>:</strong> No re-parenting occurred, so no edges need resolution. All original edges between surviving nodes carry over directly.</p>
+<p><strong>Step 5 — <code>reconstruct_fans</code>:</strong> The schema is a tree, not a hypergraph. No fans to reconstruct.</p>
+<p><strong>Output:</strong> The original instance tree, minus the <code>likeCount</code> and <code>displayName</code> leaf nodes. Every other node, edge, and value is preserved exactly.</p>
+<p>This is the common case for protocol evolution: field removal produces a simple, fast restriction that touches only the affected leaves.</p>
+</section>
+<section id="sec-functor-restrict" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="sec-functor-restrict"><span class="header-section-number">7.4</span> Functor restrict (<span class="math inline">\(\Delta_F\)</span> precomposition)</h2>
+<p>For tabular data (SQL schemas), restriction takes a different form. Given a schema morphism <span class="math inline">\(F: S_1 \to S_2\)</span> and an instance <span class="math inline">\(I: S_2 \to \mathbf{Set}\)</span>, the restricted instance is the precomposition <span class="math inline">\(\Delta_F(I) = I \circ F : S_1 \to \mathbf{Set}\)</span>.</p>
+<p>In concrete terms: if <span class="math inline">\(F\)</span> drops a table from the schema, the rows for that table vanish from the instance. If <span class="math inline">\(F\)</span> drops a column, that column disappears from every row. If <span class="math inline">\(F\)</span> renames a table, the rows are relabeled. The operation is purely structural—no data is computed, only rearranged.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">/// Functor restriction: precompose an instance along a schema morphism.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> restrict_functor<span class="op">&lt;</span>F<span class="op">,</span> I<span class="op">&gt;</span>(morphism<span class="op">:</span> <span class="op">&amp;</span>F<span class="op">,</span> instance<span class="op">:</span> <span class="op">&amp;</span>I) <span class="op">-&gt;</span> RestrictedInstance</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    F<span class="op">:</span> SchemaMorphism<span class="op">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    I<span class="op">:</span> Instance<span class="op">,</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> result <span class="op">=</span> <span class="pp">RestrictedInstance::</span>new(morphism<span class="op">.</span>source())<span class="op">;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> table <span class="kw">in</span> morphism<span class="op">.</span>source()<span class="op">.</span>tables() <span class="op">{</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> target_table <span class="op">=</span> morphism<span class="op">.</span>map_table(table)<span class="op">;</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> instance<span class="op">.</span>rows(target_table) <span class="op">{</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            <span class="kw">let</span> restricted_row <span class="op">=</span> row<span class="op">.</span>project(morphism<span class="op">.</span>column_map(table))<span class="op">;</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            result<span class="op">.</span>insert(table<span class="op">,</span> restricted_row)<span class="op">;</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    result</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Precomposition is always total: if <span class="math inline">\(F\)</span> is a well-typed schema morphism and <span class="math inline">\(I\)</span> is a well-typed instance, then <span class="math inline">\(I \circ F\)</span> is a well-typed instance over <span class="math inline">\(S_1\)</span>. There are no existence conditions to check—the operation cannot fail <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span>.</p>
+<p>This simplicity is exactly why functor restriction is the right abstraction for SQL migrations. The complexity is not in the restriction itself but in constructing the morphism <span class="math inline">\(F\)</span>, which is the job of the migration specification.</p>
+<section id="adjoints-sigma_f-and-pi_f" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="adjoints-sigma_f-and-pi_f"><span class="header-section-number">7.4.1</span> Adjoints: <span class="math inline">\(\Sigma_F\)</span> and <span class="math inline">\(\Pi_F\)</span></h3>
+<p>The restriction functor <span class="math inline">\(\Delta_F\)</span> sits in the middle of an adjoint triple:</p>
+<p><span class="math display">\[\Sigma_F \dashv \Delta_F \dashv \Pi_F\]</span></p>
+<p>The left adjoint <span class="math inline">\(\Sigma_F\)</span> (pushforward, or left Kan extension) computes the “best approximation” of an <span class="math inline">\(S_1\)</span>-instance as an <span class="math inline">\(S_2\)</span>-instance by taking colimits. In SQL terms, this is roughly <code>UNION</code> across fibers. The right adjoint <span class="math inline">\(\Pi_F\)</span> (right Kan extension) computes the “most conservative approximation” by taking limits—roughly <code>JOIN</code> across fibers <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. X)</span>.</p>
+<p>Both adjoints are computationally more expensive than <span class="math inline">\(\Delta_F\)</span> and are outside panproto’s current scope. The key point is that <span class="math inline">\(\Delta_F\)</span> alone gives us everything we need for the forward direction of a migration: projecting existing data onto a new schema.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why not <span class="math inline">\(\Sigma_F\)</span>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The pushforward <span class="math inline">\(\Sigma_F\)</span> would let us <em>add</em> data to an instance (e.g., populate a new required column with default values). This is sometimes called “data migration” in the database literature. panproto deliberately limits itself to <span class="math inline">\(\Delta_F\)</span> because restriction is lossless and reversible (via the complement—see <a href="08-lenses.html" class="quarto-xref"><span>Chapter 8</span></a>), while <span class="math inline">\(\Sigma_F\)</span> requires inventing data and is generally not reversible. When panproto needs to populate defaults, it does so through the lens complement mechanism rather than through <span class="math inline">\(\Sigma_F\)</span>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-restrict-perf" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="sec-restrict-perf"><span class="header-section-number">7.5</span> Performance</h2>
+<p>The restrict pipeline targets <strong>&gt;1 million records per second</strong> for simple projections (field additions and removals) running in WASM. Several design decisions make this possible.</p>
+<section id="compiled-migrations" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="compiled-migrations"><span class="header-section-number">7.5.1</span> Compiled migrations</h3>
+<p>When a migration is loaded, panproto pre-computes everything it can:</p>
+<ul>
+<li><strong>Surviving sets:</strong> The set of schema vertices that survive is computed once and stored as a bitset. Step 1 becomes a single bitset lookup per node.</li>
+<li><strong>Remap tables:</strong> Edge resolution (step 4) is pre-computed into a flat lookup table indexed by <code>(source_anchor, child_anchor)</code>. No hash map lookups at runtime.</li>
+<li><strong>Fan maps:</strong> Fan reconstruction (step 5) is pre-computed into a mapping from old fan IDs to new fan IDs with pre-allocated child slots.</li>
+</ul>
+<p>The migration specification is effectively compiled into a small program that the restrict pipeline executes.</p>
+</section>
+<section id="arena-allocation" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="arena-allocation"><span class="header-section-number">7.5.2</span> Arena allocation</h3>
+<p>Instance trees are allocated in a <code>bumpalo</code> arena. This has two benefits:</p>
+<ol type="1">
+<li><strong>Allocation is O(1):</strong> Bump allocation is a pointer increment. No free-list management, no fragmentation.</li>
+<li><strong>Deallocation is O(1):</strong> The entire arena is freed at once when the instance is no longer needed. No tree of destructors to walk.</li>
+</ol>
+<p>For the restrict pipeline specifically, the output tree is allocated in a fresh arena. Surviving nodes are written sequentially into the output arena, giving excellent cache locality.</p>
+</section>
+<section id="zero-copy-fast-path" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="zero-copy-fast-path"><span class="header-section-number">7.5.3</span> Zero-copy fast path</h3>
+<p>For the common case—no contraction (step 3 is a no-op), no fan reconstruction (step 5 is a no-op), and trivial edge resolution (step 4 is a no-op)—the pipeline reduces to:</p>
+<ol type="1">
+<li>Walk the input tree.</li>
+<li>For each node, check the surviving bitset.</li>
+<li>If surviving, copy the node to the output arena with a rewritten anchor field.</li>
+</ol>
+<p>The node’s payload (the actual data—strings, integers, booleans) is not copied. Only the structural metadata (anchor, parent pointer, child list) is written. The payload is referenced by pointer into the input arena. This is safe because the input arena outlives the restrict operation.</p>
+<p>In benchmarks on an M2 MacBook Air, this fast path processes ~3.2 million nodes per second for a <code>threadViewPost</code>-like schema with 8 fields per post. The WASM target is slightly slower (~1.8M nodes/sec) due to bounds checking and the lack of SIMD, but still well above the 1M target.</p>
+</section>
+<section id="when-it-gets-expensive" class="level3" data-number="7.5.4">
+<h3 data-number="7.5.4" class="anchored" data-anchor-id="when-it-gets-expensive"><span class="header-section-number">7.5.4</span> When it gets expensive</h3>
+<p>The pipeline slows down when:</p>
+<ul>
+<li><strong>Deep contraction chains</strong> (step 3): Walking up to find the nearest surviving ancestor is O(depth). For deeply nested schemas with many pruned intermediate levels, this can be significant. panproto mitigates this by pre-computing a “skip ancestor” table during migration compilation.</li>
+<li><strong>Ambiguous resolution</strong> (step 4): If the resolver table is large (many parallel edges in the schema), the lookup has higher constant factors. This is rare in practice.</li>
+<li><strong>Large fans</strong> (step 5): Reconstructing fans with hundreds of children (wide SQL tables) requires scanning and filtering each fan. The cost is linear in fan width.</li>
+</ul>
+<p>For all three cases, the pre-computation done during migration compilation amortizes the per-instance cost.</p>
+</section>
+</section>
+<section id="sec-restrict-overview" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="sec-restrict-overview"><span class="header-section-number">7.6</span> The view from 10,000 feet</h2>
+<p>The restrict operation is the point where theory meets bytes. The categorical framework—polynomial functors, W-types, pushout complements—is not an academic exercise. Each piece of theory corresponds to a concrete algorithmic step:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 39%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Theory</th>
+<th>Algorithm</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Signature restriction <span class="citation" data-cites="abbott2005">(<a href="#ref-abbott2005" role="doc-biblioref">Abbott et al. 2005</a>)</span></td>
+<td><code>anchor_surviving</code></td>
+<td>Decide which nodes to keep</td>
+</tr>
+<tr class="even">
+<td>Connected component</td>
+<td><code>reachable_from_root</code></td>
+<td>Remove disconnected survivors</td>
+</tr>
+<tr class="odd">
+<td>Pushout complement <span class="citation" data-cites="ehrig2006">(<a href="#ref-ehrig2006" role="doc-biblioref">Ehrig et al. 2006</a>)</span></td>
+<td><code>ancestor_contraction</code></td>
+<td>Re-parent orphaned nodes</td>
+</tr>
+<tr class="even">
+<td>Complement selection <span class="citation" data-cites="lowe1993">(<a href="#ref-lowe1993" role="doc-biblioref">Löwe 1993</a>)</span></td>
+<td><code>resolve_edge</code></td>
+<td>Choose edge labels after contraction</td>
+</tr>
+<tr class="odd">
+<td>Limit cone <span class="citation" data-cites="barr1990">(<a href="#ref-barr1990" role="doc-biblioref">Barr and Wells 1990</a>)</span></td>
+<td><code>reconstruct_fans</code></td>
+<td>Reconstruct hyperedges</td>
+</tr>
+<tr class="even">
+<td>Precomposition <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span></td>
+<td><span class="math inline">\(\Delta_F\)</span></td>
+<td>Restrict tabular instances</td>
+</tr>
+</tbody>
+</table>
+<p>The W-type pipeline handles the case that matters most for modern protocols: recursive, tree-structured data encoded as JSON, CBOR, or protocol buffers. The functor restrict handles the SQL case. Together, they cover the data formats that panproto targets.</p>
+<p>The algorithmic contribution of panproto is not any single step—each step is individually well-understood. The contribution is the <em>pipeline</em>: the specific sequence of steps, the compilation strategy that makes the common case fast, and the correctness argument that flows from the categorical semantics. Because each step has a precise algebraic meaning, the pipeline composes correctly by construction. There are no edge cases to discover by fuzzing (though we fuzz anyway). The edge cases are <em>classified</em> by the theory: they correspond to the conditions under which each step is non-trivial.</p>
+<p>The next chapter shows how to run the pipeline in both directions—not just forward (source to view) but backward (view back to source)—using the lens framework. The complement captured during <code>get</code> is exactly the information discarded by the restrict pipeline, and <code>put</code> uses it to reconstruct the original instance.</p>
+</section>
+<section id="further-reading" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">7.7</span> Further reading</h2>
+<p>The W-type perspective on inductive data types originates with <span class="citation" data-cites="gambino2004">Gambino and Hyland (<a href="#ref-gambino2004" role="doc-biblioref">2004</a>)</span>, who showed that W-types in locally cartesian closed categories correspond to initial algebras of polynomial functors. The container / interaction structure perspective of <span class="citation" data-cites="abbott2005">Abbott et al. (<a href="#ref-abbott2005" role="doc-biblioref">2005</a>)</span> gives the fibrational view that panproto uses for signature restriction.</p>
+<p>The graph transformation approach to steps 3 and 4 follows <span class="citation" data-cites="ehrig2006">Ehrig et al. (<a href="#ref-ehrig2006" role="doc-biblioref">2006</a>)</span>, particularly the treatment of pushout complements in adhesive categories. The non-uniqueness of pushout complements in the presence of parallel edges was first identified by <span class="citation" data-cites="lowe1993">Löwe (<a href="#ref-lowe1993" role="doc-biblioref">1993</a>)</span> in the context of graph grammars. <span class="citation" data-cites="drewes1997">Drewes et al. (<a href="#ref-drewes1997" role="doc-biblioref">1997</a>)</span> extends this to hypergraph grammars, which is the foundation for step 5.</p>
+<p>The functorial data migration framework (<span class="math inline">\(\Delta_F\)</span>, <span class="math inline">\(\Sigma_F\)</span>, <span class="math inline">\(\Pi_F\)</span>) is due to <span class="citation" data-cites="spivak2012">Spivak (<a href="#ref-spivak2012" role="doc-biblioref">2012</a>)</span>. The general theory of Kan extensions that underlies the adjoint triple is covered in <span class="citation" data-cites="maclane1998">Mac Lane (<a href="#ref-maclane1998" role="doc-biblioref">1998</a>)</span>, Chapter X.</p>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-abbott2005" class="csl-entry" role="listitem">
+Abbott, Michael, Thorsten Altenkirch, and Neil Ghani. 2005. <span>“Containers: Constructing Strictly Positive Types.”</span> <em>Theoretical Computer Science</em> 342 (1): 3–27. <a href="https://doi.org/10.1016/j.tcs.2005.06.002">https://doi.org/10.1016/j.tcs.2005.06.002</a>.
+</div>
+<div id="ref-barr1990" class="csl-entry" role="listitem">
+Barr, Michael, and Charles Wells. 1990. <em>Category Theory for Computing Science</em>. Prentice Hall.
+</div>
+<div id="ref-drewes1997" class="csl-entry" role="listitem">
+Drewes, Frank, Hans-Jörg Kreowski, and Annegret Habel. 1997. <span>“Hyperedge Replacement Graph Grammars.”</span> In <em>Handbook of Graph Grammars and Computing by Graph Transformation</em>, edited by Gert Rozenberg, vol. 1, 1. World Scientific. <a href="https://doi.org/10.1142/9789812384720_0002">https://doi.org/10.1142/9789812384720_0002</a>.
+</div>
+<div id="ref-ehrig2006" class="csl-entry" role="listitem">
+Ehrig, Hartmut, Karsten Ehrig, Ulrike Prange, and Gabriele Taentzer. 2006. <em>Fundamentals of Algebraic Graph Transformation</em>. Monographs in Theoretical Computer Science. Springer. <a href="https://doi.org/10.1007/3-540-31188-2">https://doi.org/10.1007/3-540-31188-2</a>.
+</div>
+<div id="ref-gambino2004" class="csl-entry" role="listitem">
+Gambino, Nicola, and J. Martin E. Hyland. 2004. <span>“Wellfounded Trees and Dependent Polynomial Functors.”</span> <em>Types for Proofs and Programs (TYPES 2003)</em>, Lecture notes in computer science, vol. 3085: 210–25. <a href="https://doi.org/10.1007/978-3-540-24849-1_14">https://doi.org/10.1007/978-3-540-24849-1_14</a>.
+</div>
+<div id="ref-lowe1993" class="csl-entry" role="listitem">
+Löwe, Michael. 1993. <span>“Algebraic Approach to Single-Pushout Graph Transformation.”</span> <em>Theoretical Computer Science</em> 109 (1–2): 181–224. <a href="https://doi.org/10.1016/0304-3975(93)90068-5">https://doi.org/10.1016/0304-3975(93)90068-5</a>.
+</div>
+<div id="ref-maclane1998" class="csl-entry" role="listitem">
+Mac Lane, Saunders. 1998. <em>Categories for the Working Mathematician</em>. 2nd ed. Vol. 5. Graduate Texts in Mathematics. Springer. <a href="https://doi.org/10.1007/978-1-4757-4721-8">https://doi.org/10.1007/978-1-4757-4721-8</a>.
+</div>
+<div id="ref-spivak2012" class="csl-entry" role="listitem">
+Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Information and Computation</em> 217: 31–51. <a href="https://doi.org/10.1016/j.ic.2012.05.001">https://doi.org/10.1016/j.ic.2012.05.001</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/panproto\.github\.io\/tutorial\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/06-when-migrations-exist.html" class="pagination-link" aria-label="When Migrations Exist">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Migrations Exist</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/08-lenses.html" class="pagination-link" aria-label="Lenses: Going Both Ways">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lenses: Going Both Ways</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Lifting Data {#sec-lifting}</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>The previous chapter established *when* a migration exists. This chapter is about *how* it works: the <span class="in">`restrict`</span> operation that transforms data from one schema to another. This is the algorithmic heart of panproto.</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>There are two flavors of restriction, corresponding to the two kinds of schema that panproto supports. **W-type restrict** handles tree-structured data (JSON, CBOR, protocol buffers) by walking a five-step pipeline over the instance tree. **Functor restrict** handles tabular data (SQL) by precomposition along a schema morphism. Both are grounded in the same categorical idea—pulling data back along a map—but the concrete algorithms differ because trees and tables have different structure.</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>We will spend most of our time on the W-type pipeline, since it is the more intricate of the two and the one that handles the recursive, nested data formats that dominate modern protocol design.</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">## A worked example: `threadViewPost`</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>To make the pipeline concrete, we need a schema that exercises every step. The ATProto <span class="in">`threadViewPost`</span> type is ideal: a post that contains an array of replies, each of which is itself a post. The recursion means the instance is a tree of arbitrary depth.</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>Suppose version 1 of the schema looks like this (simplified):</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="in">threadViewPost</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="in">├── post: postView</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── uri: string</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── author: profileViewBasic</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="in">│   │   ├── did: string</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="in">│   │   ├── handle: string</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="in">│   │   └── displayName: string</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── text: string</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="in">│   └── likeCount: integer</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="in">└── replies: array&lt;threadViewPost&gt;</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>And version 2 drops <span class="in">`likeCount`</span> from <span class="in">`postView`</span> and drops <span class="in">`displayName`</span> from <span class="in">`profileViewBasic`</span>. A migration $m: S_2 \to S_1$ exists (both changes are field removals, which are always backward-compatible). The migration's vertex map tells us which vertices in $S_1$ survive in $S_2$.</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>Now consider a concrete instance—a thread with two replies, one of which has a nested reply:</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="in">root (threadViewPost)</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="in">├── post (postView)</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── uri = "at://did:plc:abc/post/1"</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── author (profileViewBasic)</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="in">│   │   ├── did = "did:plc:abc"</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="in">│   │   ├── handle = "alice.bsky.social"</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="in">│   │   └── displayName = "Alice"</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── text = "Hello world"</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="in">│   └── likeCount = 42</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="in">└── replies</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="in">    ├── reply-1 (threadViewPost)</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="in">    │   ├── post (postView)</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="in">    │   │   ├── uri = "at://did:plc:def/post/2"</span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="in">    │   │   ├── author (profileViewBasic)</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="in">    │   │   │   ├── did = "did:plc:def"</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="in">    │   │   │   ├── handle = "bob.bsky.social"</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="in">    │   │   │   └── displayName = "Bob"</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="in">    │   │   ├── text = "Nice post"</span></span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="in">    │   │   └── likeCount = 7</span></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="in">    │   └── replies</span></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="in">    │       └── reply-1-1 (threadViewPost)</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="in">    │           └── ...</span></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="in">    └── reply-2 (threadViewPost)</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="in">        └── ...</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>This is the instance we will push through the five-step pipeline.</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## W-type restrict: the five-step pipeline</span></span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>The W-type restrict algorithm transforms an instance tree in five sequential steps. Each step has a clear algebraic meaning, and together they implement the restriction of a polynomial functor algebra along a morphism of polynomial functors. The correspondence to the theory is not decorative—it is what guarantees correctness.</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 1: `anchor_surviving` {#sec-step-anchor}</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>The first step is the simplest: walk every node in the instance and check whether its **anchor vertex** (the schema vertex that the node is an instance of) survives the migration's vertex map. If the anchor vertex is not in the image of the vertex map, the node is marked for removal.</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a><span class="in">```rust</span></span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">//</span> Mark each node as surviving or pruned based on whether</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">//</span> its anchor vertex is <span class="cf">in</span> the migration<span class="st">'s vertex map.</span></span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a><span class="st">fn anchor_surviving(</span></span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="st">    instance: &amp;WTree,</span></span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a><span class="st">    vertex_map: &amp;HashMap&lt;VertexId, VertexId&gt;,</span></span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a><span class="st">) -&gt; Vec&lt;bool&gt; {</span></span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a><span class="st">    instance.nodes.iter().map(|node| {</span></span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a><span class="st">        vertex_map.values().any(|v| *v == node.anchor)</span></span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a><span class="st">    }).collect()</span></span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="st">This is signature restriction on polynomial algebras: given a polynomial $P = \sum_{i \in I} y^{B_i}$ and a sub-signature $J \subseteq I$, the restricted polynomial is $P|_J = \sum_{j \in J} y^{B_j}$. An algebra (instance) over $P$ restricts to an algebra over $P|_J$ by discarding the operations whose index falls outside $J$ [@abbott2005].</span></span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="st">In our example, the vertices `likeCount` and `displayName` are not in the image of the vertex map (they were dropped in version 2). So every node anchored at `likeCount` or `displayName` is marked for removal:</span></span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a><span class="st">- `root.post.likeCount` — pruned</span></span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a><span class="st">- `root.post.author.displayName` — pruned</span></span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a><span class="st">- `reply-1.post.likeCount` — pruned</span></span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a><span class="st">- `reply-1.post.author.displayName` — pruned</span></span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a><span class="st">- (and so on for every nested reply)</span></span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a><span class="st">Everything else survives.</span></span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a><span class="st">:::{.callout-note}</span></span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a><span class="st">## Why "anchor"?</span></span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a><span class="st">In the W-type formalization, each node in an instance tree sits over a vertex in the schema polynomial. The schema vertex is the node'</span>s <span class="sc">*</span>anchor<span class="sc">*</span> because it determines the node<span class="st">'s shape: what children it can have, what edges connect it to its parent, and what data it carries. When we say a node'</span>s anchor survives, we mean the schema still has a place <span class="cf">for</span> that kind of node.</span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a><span class="sc">:::</span></span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="do">### Step 2: `reachable_from_root` {#sec-step-reachable}</span></span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>After marking survivors, some surviving nodes may be stranded<span class="sc">:</span> they are still marked as surviving, but they can only be reached from the root through pruned nodes. A sub<span class="sc">-</span>tree of a W<span class="sc">-</span>type is not necessarily a W<span class="sc">-</span>type—it may be disconnected.</span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>Step <span class="dv">2</span> runs a breadth<span class="sc">-</span>first search from the root, traversing only through surviving nodes. Any surviving node not visited by the BFS is marked as unreachable and will not appear <span class="cf">in</span> the output.</span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">rust</span></span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a><span class="at">/// BFS from root through surviving nodes. Returns the set of</span></span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a><span class="at">/// node indices that are both surviving and reachable.</span></span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a><span class="at">fn reachable_from_root(</span></span>
+<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a><span class="at">    instance: &amp;WTree,</span></span>
+<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a><span class="at">    surviving: &amp;[bool],</span></span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a><span class="at">) -&gt; HashSet&lt;u32&gt; {</span></span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a><span class="at">    let mut visited = HashSet::new();</span></span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a><span class="at">    let mut queue = VecDeque::new();</span></span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a><span class="at">    if surviving[instance.root as usize] {</span></span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a><span class="at">        queue.push_back(instance.root);</span></span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a><span class="at">    }</span></span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a><span class="at">    while let Some(idx) = queue.pop_front() {</span></span>
+<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a><span class="at">        if !visited.insert(idx) {</span></span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a><span class="at">            continue;</span></span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="at">        }</span></span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a><span class="at">        for child in instance.children(idx) {</span></span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a><span class="at">            if surviving[child as usize] {</span></span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a><span class="at">                queue.push_back(child);</span></span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a><span class="at">            }</span></span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a><span class="at">        }</span></span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a><span class="at">    }</span></span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a><span class="at">    visited</span></span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a><span class="at">}</span></span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a>This is standard connected<span class="sc">-</span>component extraction. In our example it has no effect, because removing <span class="st">`</span><span class="at">likeCount</span><span class="st">`</span> and <span class="st">`</span><span class="at">displayName</span><span class="st">`</span> nodes does not disconnect anything—they are leaf nodes. But consider a different migration that removes <span class="st">`</span><span class="at">postView</span><span class="st">`</span> <span class="cf">while</span> keeping <span class="st">`</span><span class="at">text</span><span class="st">`</span>. The <span class="st">`</span><span class="at">text</span><span class="st">`</span> nodes would survive step <span class="dv">1</span> but become unreachable <span class="cf">in</span> step <span class="dv">2</span>, because their <span class="fu">parent</span> (<span class="st">`</span><span class="at">postView</span><span class="st">`</span>) was pruned and no path from the root reaches them through survivors alone.</span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a><span class="sc">:::</span>{.callout<span class="sc">-</span>note}</span>
+<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a><span class="do">## When does step 2 matter?</span></span>
+<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a>Step <span class="dv">2</span> is a no<span class="sc">-</span>op whenever every pruned node is a leaf or when the surviving nodes form a connected sub<span class="sc">-</span>tree. It becomes essential when intermediate structural nodes are removed—for example, when an entire wrapper object is dropped from a schema but some of its children are <span class="st">"hoisted"</span> to a higher level <span class="cf">in</span> a later step.</span>
+<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="sc">:::</span></span>
+<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a><span class="do">### Step 3: `ancestor_contraction` {#sec-step-contraction}</span></span>
+<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a>This is the tree surgery step. When intermediate nodes are pruned, children that survived steps <span class="dv">1</span> and <span class="dv">2</span> need to be re<span class="sc">-</span>parented to their nearest surviving ancestor. The result is a new tree where every edge connects two surviving nodes.</span>
+<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">rust</span></span>
+<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a><span class="at">/// For each surviving node, find its nearest surviving ancestor.</span></span>
+<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a><span class="at">/// Returns a map from node index to new parent index.</span></span>
+<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a><span class="at">fn ancestor_contraction(</span></span>
+<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a><span class="at">    instance: &amp;WTree,</span></span>
+<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a><span class="at">    reachable: &amp;HashSet&lt;u32&gt;,</span></span>
+<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a><span class="at">) -&gt; HashMap&lt;u32, u32&gt; {</span></span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a><span class="at">    let mut new_parent = HashMap::new();</span></span>
+<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a><span class="at">    for &amp;idx in reachable {</span></span>
+<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a><span class="at">        if idx == instance.root {</span></span>
+<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a><span class="at">            continue;</span></span>
+<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a><span class="at">        }</span></span>
+<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a><span class="at">        // Walk up the original tree until we find a surviving ancestor</span></span>
+<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a><span class="at">        let mut ancestor = instance.parent(idx);</span></span>
+<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a><span class="at">        while !reachable.contains(&amp;ancestor) {</span></span>
+<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a><span class="at">            ancestor = instance.parent(ancestor);</span></span>
+<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a><span class="at">        }</span></span>
+<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a><span class="at">        new_parent.insert(idx, ancestor);</span></span>
+<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a><span class="at">    }</span></span>
+<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a><span class="at">    new_parent</span></span>
+<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a><span class="at">}</span></span>
+<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a>In algebraic graph transformation terms, this is computing the pushout complement [<span class="sc">@</span>ehrig2006, §<span class="fl">3.1</span>]. We have a span <span class="sc">$</span>L \hookleftarrow K \hookrightarrow R<span class="sc">$</span> where <span class="sc">$</span>L<span class="sc">$</span> is the original tree, <span class="sc">$</span>K<span class="sc">$</span> is the <span class="fu">interface</span> (surviving nodes with their original connectivity), and <span class="sc">$</span>R<span class="sc">$</span> is the contracted tree. The pushout complement identifies how to glue <span class="sc">$</span>R<span class="sc">$</span> into the surrounding context.</span>
+<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a>Here is the key visual intuition<span class="sc">:</span></span>
+<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a><span class="at">%%| label: fig-contraction-before</span></span>
+<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a><span class="at">%%| fig-cap: "Before contraction: node B is marked for removal, but its child C survives."</span></span>
+<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a><span class="at">graph TD</span></span>
+<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a><span class="at">    A["A (root)"] --&gt; B["B (removed)"]</span></span>
+<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a><span class="at">    B --&gt; C["C (surviving)"]</span></span>
+<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a><span class="at">    B --&gt; D["D (removed)"]</span></span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a><span class="at">    A --&gt; E["E (surviving)"]</span></span>
+<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a>After contraction, C is re<span class="sc">-</span>parented to A<span class="sc">:</span></span>
+<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a><span class="at">%%| label: fig-contraction-after</span></span>
+<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a><span class="at">%%| fig-cap: "After contraction: C is now a direct child of A. B and D are gone."</span></span>
+<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a><span class="at">graph TD</span></span>
+<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a><span class="at">    A["A (root)"] --&gt; C["C (re-parented)"]</span></span>
+<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a><span class="at">    A --&gt; E["E (surviving)"]</span></span>
+<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>In our <span class="st">`</span><span class="at">threadViewPost</span><span class="st">`</span> example, the pruned <span class="fu">nodes</span> (<span class="st">`</span><span class="at">likeCount</span><span class="st">`</span>, <span class="st">`</span><span class="at">displayName</span><span class="st">`</span>) are all leaves, so no contraction occurs. But imagine a migration that removes the <span class="st">`</span><span class="at">postView</span><span class="st">`</span> wrapper <span class="cf">while</span> keeping <span class="st">`</span><span class="at">uri</span><span class="st">`</span>, <span class="st">`</span><span class="at">author</span><span class="st">`</span>, and <span class="st">`</span><span class="at">text</span><span class="st">`</span> as direct children of <span class="st">`</span><span class="at">threadViewPost</span><span class="st">`</span>. Then <span class="st">`</span><span class="at">postView</span><span class="st">`</span> nodes are pruned, and their surviving children are re<span class="sc">-</span>parented to the <span class="st">`</span><span class="at">threadViewPost</span><span class="st">`</span> node<span class="sc">:</span></span>
+<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a>Before:                          After:</span>
+<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a>threadViewPost                   threadViewPost</span>
+<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a>├── postView (removed)    →     ├── uri</span>
+<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a>│   ├── uri                      ├── author</span>
+<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a>│   ├── author                   │   ├── did</span>
+<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a>│   │   ├── did                  │   └── handle</span>
+<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a>│   │   ├── handle               ├── text</span>
+<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>│   │   └── displayName          └── replies</span>
+<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a>│   ├── text                         └── ...</span>
+<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a>│   └── likeCount</span>
+<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a>└── replies</span>
+<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a>    └── ...</span>
+<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a><span class="in">:::{.callout-note}</span></span>
+<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a><span class="in">## Contraction preserves depth order</span></span>
+<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a><span class="in">A node's depth in the contracted tree is always less than or equal to its depth in the original tree. Contraction never pushes nodes deeper. This is a consequence of the fact that we only re-parent to *ancestors*, never to siblings or descendants.</span></span>
+<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a><span class="in">:::</span></span>
+<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a><span class="in">### Step 4: `resolve_edge` {#sec-step-resolve}</span></span>
+<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a><span class="in">After contraction, each re-parented child has a new parent, but the edge connecting them needs a label from the target schema. In the original tree, the edge from A to C went through B: `A --(e1)--&gt; B --(e2)--&gt; C`. After removing B, we need a single edge label for the direct `A --&gt; C` connection.</span></span>
+<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a><span class="in">In a simple graph (at most one edge between any two vertices), this is trivial: there is only one choice. But schemas are often multigraphs—multiple edges can exist between the same pair of vertices (think of an object with two fields of the same type). In that case, the choice is ambiguous.</span></span>
+<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a><span class="in">The **resolver table** provides the deterministic choice. It is part of the migration specification and maps each contracted path `(source_vertex, target_vertex, intermediate_path)` to a specific edge in the target schema.</span></span>
+<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a><span class="in">```rust</span></span>
+<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a><span class="in">/// Given a contracted parent-child pair, look up the correct</span></span>
+<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a><span class="in">/// edge label from the resolver table.</span></span>
+<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a><span class="in">fn resolve_edge(</span></span>
+<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a><span class="in">    parent_anchor: VertexId,</span></span>
+<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a><span class="in">    child_anchor: VertexId,</span></span>
+<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a><span class="in">    contracted_path: &amp;[VertexId],</span></span>
+<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a><span class="in">    resolver: &amp;ResolverTable,</span></span>
+<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="in">) -&gt; EdgeId {</span></span>
+<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a><span class="in">    resolver</span></span>
+<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a><span class="in">        .lookup(parent_anchor, child_anchor, contracted_path)</span></span>
+<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a><span class="in">        .expect("migration guarantees a resolution exists")</span></span>
+<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a>This is exactly the pushout complement selection problem <span class="co">[</span><span class="ot">@lowe1993</span><span class="co">]</span>. When the pushout complement is not unique (which happens precisely when the interface graph has parallel edges), an additional choice is required to determine which complement to use. The resolver table encodes this choice. The existence checker from @sec-existence guarantees that a valid resolution exists for every contracted path, so <span class="in">`resolve_edge`</span> never fails on a well-formed migration.</span>
+<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## When is resolution trivial?</span></span>
+<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a>For JSON-like schemas (which are trees, not multigraphs), resolution is always trivial: there is at most one edge between any pair of vertices in the schema. The resolver table is only needed for schemas where the same type appears in multiple positions under the same parent—protocol buffers with repeated message types, for instance.</span>
+<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a><span class="fu">### Step 5: `reconstruct_fans` {#sec-step-fans}</span></span>
+<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-262"><a href="#cb10-262" aria-hidden="true" tabindex="-1"></a>The final step handles **hypergraph schemas**—schemas where an edge can connect a vertex to multiple children simultaneously. In practice, this means SQL: a table row is a hyperedge connecting a primary key to all its column values.</span>
+<span id="cb10-263"><a href="#cb10-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-264"><a href="#cb10-264" aria-hidden="true" tabindex="-1"></a>When some columns of a table are pruned, the surviving columns must be collected into a new, smaller hyperedge (a new "fan"). This is limit cone construction: the surviving columns form a sub-diagram, and the new fan is the limit of that sub-diagram in the category of fans <span class="co">[</span><span class="ot">@barr1990, Ch. 4</span><span class="co">]</span>.</span>
+<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a><span class="in">```rust</span></span>
+<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">//</span> Reconstruct <span class="fu">fans</span> (hyperedges) after pruning some children.</span>
+<span id="cb10-268"><a href="#cb10-268" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">//</span> Each surviving fan keeps only its surviving children and</span>
+<span id="cb10-269"><a href="#cb10-269" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">//</span> receives a new fan ID from the target schema.</span>
+<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a>fn <span class="fu">reconstruct_fans</span>(</span>
+<span id="cb10-271"><a href="#cb10-271" aria-hidden="true" tabindex="-1"></a>    instance<span class="sc">:</span> <span class="er">&amp;</span>WTree,</span>
+<span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a>    reachable<span class="sc">:</span> <span class="er">&amp;</span>HashSet<span class="sc">&lt;</span>u32<span class="sc">&gt;</span>,</span>
+<span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a>    fan_map<span class="sc">:</span> <span class="er">&amp;</span>HashMap<span class="sc">&lt;</span>FanId, FanId<span class="sc">&gt;</span>,</span>
+<span id="cb10-274"><a href="#cb10-274" aria-hidden="true" tabindex="-1"></a>) <span class="ot">-&gt;</span> Vec<span class="sc">&lt;</span>Fan<span class="sc">&gt;</span> {</span>
+<span id="cb10-275"><a href="#cb10-275" aria-hidden="true" tabindex="-1"></a>    <span class="fu">instance.fans.iter</span>()<span class="fu">.filter_map</span>(<span class="sc">|</span>fan<span class="sc">|</span> {</span>
+<span id="cb10-276"><a href="#cb10-276" aria-hidden="true" tabindex="-1"></a>        let new_children<span class="sc">:</span> Vec<span class="sc">&lt;</span>u32<span class="sc">&gt;</span> <span class="er">=</span> <span class="fu">fan.children.iter</span>()</span>
+<span id="cb10-277"><a href="#cb10-277" aria-hidden="true" tabindex="-1"></a>            <span class="fu">.copied</span>()</span>
+<span id="cb10-278"><a href="#cb10-278" aria-hidden="true" tabindex="-1"></a>            <span class="fu">.filter</span>(<span class="sc">|</span>c<span class="sc">|</span> <span class="fu">reachable.contains</span>(c))</span>
+<span id="cb10-279"><a href="#cb10-279" aria-hidden="true" tabindex="-1"></a>            <span class="fu">.collect</span>();</span>
+<span id="cb10-280"><a href="#cb10-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-281"><a href="#cb10-281" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="fu">new_children.is_empty</span>() {</span>
+<span id="cb10-282"><a href="#cb10-282" aria-hidden="true" tabindex="-1"></a>            return None;</span>
+<span id="cb10-283"><a href="#cb10-283" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb10-284"><a href="#cb10-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-285"><a href="#cb10-285" aria-hidden="true" tabindex="-1"></a>        let new_fan_id <span class="ot">=</span> <span class="fu">fan_map.get</span>(<span class="sc">&amp;</span>fan.id)?;</span>
+<span id="cb10-286"><a href="#cb10-286" aria-hidden="true" tabindex="-1"></a>        <span class="fu">Some</span>(Fan {</span>
+<span id="cb10-287"><a href="#cb10-287" aria-hidden="true" tabindex="-1"></a>            id<span class="sc">:</span> <span class="er">*</span>new_fan_id,</span>
+<span id="cb10-288"><a href="#cb10-288" aria-hidden="true" tabindex="-1"></a>            parent<span class="sc">:</span> fan.parent,</span>
+<span id="cb10-289"><a href="#cb10-289" aria-hidden="true" tabindex="-1"></a>            children<span class="sc">:</span> new_children,</span>
+<span id="cb10-290"><a href="#cb10-290" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb10-291"><a href="#cb10-291" aria-hidden="true" tabindex="-1"></a>    })<span class="fu">.collect</span>()</span>
+<span id="cb10-292"><a href="#cb10-292" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-293"><a href="#cb10-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-294"><a href="#cb10-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-295"><a href="#cb10-295" aria-hidden="true" tabindex="-1"></a>For pure tree schemas (JSON, CBOR, protocol buffers), step 5 is a no-op: every edge connects exactly one parent to exactly one child, so there are no fans to reconstruct. The step exists because panproto's data model is general enough to handle both trees and hypergraphs uniformly.</span>
+<span id="cb10-296"><a href="#cb10-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-297"><a href="#cb10-297" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb10-298"><a href="#cb10-298" aria-hidden="true" tabindex="-1"></a><span class="fu">## The five steps in summary</span></span>
+<span id="cb10-299"><a href="#cb10-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-300"><a href="#cb10-300" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Step <span class="pp">|</span> Operation <span class="pp">|</span> Algebraic meaning <span class="pp">|</span> When it matters <span class="pp">|</span></span>
+<span id="cb10-301"><a href="#cb10-301" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-----------|-------------------|-----------------|</span></span>
+<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> <span class="in">`anchor_surviving`</span> <span class="pp">|</span> Signature restriction <span class="pp">|</span> Always <span class="pp">|</span></span>
+<span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> <span class="in">`reachable_from_root`</span> <span class="pp">|</span> Connected component <span class="pp">|</span> Intermediate nodes pruned <span class="pp">|</span></span>
+<span id="cb10-304"><a href="#cb10-304" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> <span class="in">`ancestor_contraction`</span> <span class="pp">|</span> Pushout complement <span class="pp">|</span> Children of pruned nodes survive <span class="pp">|</span></span>
+<span id="cb10-305"><a href="#cb10-305" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> <span class="in">`resolve_edge`</span> <span class="pp">|</span> Complement selection <span class="pp">|</span> Multigraph schemas <span class="pp">|</span></span>
+<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> <span class="in">`reconstruct_fans`</span> <span class="pp">|</span> Limit cone <span class="pp">|</span> Hypergraph (SQL) schemas <span class="pp">|</span></span>
+<span id="cb10-307"><a href="#cb10-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-308"><a href="#cb10-308" aria-hidden="true" tabindex="-1"></a>For a typical JSON schema migration (adding or removing fields), only step 1 does meaningful work. Steps 2–5 are structural no-ops. This is by design: the common case should be fast.</span>
+<span id="cb10-309"><a href="#cb10-309" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-310"><a href="#cb10-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-311"><a href="#cb10-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-312"><a href="#cb10-312" aria-hidden="true" tabindex="-1"></a><span class="fu">## The pipeline in sequence</span></span>
+<span id="cb10-313"><a href="#cb10-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-314"><a href="#cb10-314" aria-hidden="true" tabindex="-1"></a>Let us trace our <span class="in">`threadViewPost`</span> example through all five steps.</span>
+<span id="cb10-315"><a href="#cb10-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-316"><a href="#cb10-316" aria-hidden="true" tabindex="-1"></a>**Input:** An instance tree with nodes for <span class="in">`threadViewPost`</span>, <span class="in">`postView`</span>, <span class="in">`profileViewBasic`</span>, <span class="in">`uri`</span>, <span class="in">`author`</span>, <span class="in">`did`</span>, <span class="in">`handle`</span>, <span class="in">`displayName`</span>, <span class="in">`text`</span>, <span class="in">`likeCount`</span>, and <span class="in">`replies`</span>, recursively nested to depth 3.</span>
+<span id="cb10-317"><a href="#cb10-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-318"><a href="#cb10-318" aria-hidden="true" tabindex="-1"></a>**Step 1 — `anchor_surviving`:** Mark <span class="in">`likeCount`</span> and <span class="in">`displayName`</span> nodes as pruned. All other nodes survive. In a thread with 3 posts, this marks 6 nodes for removal (one <span class="in">`likeCount`</span> and one <span class="in">`displayName`</span> per post).</span>
+<span id="cb10-319"><a href="#cb10-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-320"><a href="#cb10-320" aria-hidden="true" tabindex="-1"></a>**Step 2 — `reachable_from_root`:** BFS from root. All surviving nodes are reachable (the pruned nodes are leaves). No additional nodes are removed.</span>
+<span id="cb10-321"><a href="#cb10-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-322"><a href="#cb10-322" aria-hidden="true" tabindex="-1"></a>**Step 3 — `ancestor_contraction`:** No contraction needed. Every surviving node's parent is also surviving.</span>
+<span id="cb10-323"><a href="#cb10-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-324"><a href="#cb10-324" aria-hidden="true" tabindex="-1"></a>**Step 4 — `resolve_edge`:** No re-parenting occurred, so no edges need resolution. All original edges between surviving nodes carry over directly.</span>
+<span id="cb10-325"><a href="#cb10-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-326"><a href="#cb10-326" aria-hidden="true" tabindex="-1"></a>**Step 5 — `reconstruct_fans`:** The schema is a tree, not a hypergraph. No fans to reconstruct.</span>
+<span id="cb10-327"><a href="#cb10-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-328"><a href="#cb10-328" aria-hidden="true" tabindex="-1"></a>**Output:** The original instance tree, minus the <span class="in">`likeCount`</span> and <span class="in">`displayName`</span> leaf nodes. Every other node, edge, and value is preserved exactly.</span>
+<span id="cb10-329"><a href="#cb10-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a>This is the common case for protocol evolution: field removal produces a simple, fast restriction that touches only the affected leaves.</span>
+<span id="cb10-331"><a href="#cb10-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-332"><a href="#cb10-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-333"><a href="#cb10-333" aria-hidden="true" tabindex="-1"></a><span class="fu">## Functor restrict ($\Delta_F$ precomposition) {#sec-functor-restrict}</span></span>
+<span id="cb10-334"><a href="#cb10-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-335"><a href="#cb10-335" aria-hidden="true" tabindex="-1"></a>For tabular data (SQL schemas), restriction takes a different form. Given a schema morphism $F: S_1 \to S_2$ and an instance $I: S_2 \to \mathbf{Set}$, the restricted instance is the precomposition $\Delta_F(I) = I \circ F : S_1 \to \mathbf{Set}$.</span>
+<span id="cb10-336"><a href="#cb10-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-337"><a href="#cb10-337" aria-hidden="true" tabindex="-1"></a>In concrete terms: if $F$ drops a table from the schema, the rows for that table vanish from the instance. If $F$ drops a column, that column disappears from every row. If $F$ renames a table, the rows are relabeled. The operation is purely structural—no data is computed, only rearranged.</span>
+<span id="cb10-338"><a href="#cb10-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-339"><a href="#cb10-339" aria-hidden="true" tabindex="-1"></a><span class="in">```rust</span></span>
+<span id="cb10-340"><a href="#cb10-340" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">//</span> Functor restriction<span class="sc">:</span> precompose an instance along a schema morphism.</span>
+<span id="cb10-341"><a href="#cb10-341" aria-hidden="true" tabindex="-1"></a>fn restrict_functor<span class="sc">&lt;</span>F, I<span class="sc">&gt;</span>(morphism<span class="sc">:</span> <span class="er">&amp;</span>F, instance<span class="sc">:</span> <span class="er">&amp;</span>I) <span class="ot">-&gt;</span> RestrictedInstance</span>
+<span id="cb10-342"><a href="#cb10-342" aria-hidden="true" tabindex="-1"></a>where</span>
+<span id="cb10-343"><a href="#cb10-343" aria-hidden="true" tabindex="-1"></a>    F<span class="sc">:</span> SchemaMorphism,</span>
+<span id="cb10-344"><a href="#cb10-344" aria-hidden="true" tabindex="-1"></a>    I<span class="sc">:</span> Instance,</span>
+<span id="cb10-345"><a href="#cb10-345" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb10-346"><a href="#cb10-346" aria-hidden="true" tabindex="-1"></a>    let mut result <span class="ot">=</span> RestrictedInstance<span class="sc">::</span><span class="fu">new</span>(<span class="fu">morphism.source</span>());</span>
+<span id="cb10-347"><a href="#cb10-347" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> table <span class="cf">in</span> <span class="fu">morphism.source</span>()<span class="fu">.tables</span>() {</span>
+<span id="cb10-348"><a href="#cb10-348" aria-hidden="true" tabindex="-1"></a>        let target_table <span class="ot">=</span> <span class="fu">morphism.map_table</span>(table);</span>
+<span id="cb10-349"><a href="#cb10-349" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="cf">in</span> <span class="fu">instance.rows</span>(target_table) {</span>
+<span id="cb10-350"><a href="#cb10-350" aria-hidden="true" tabindex="-1"></a>            let restricted_row <span class="ot">=</span> <span class="fu">row.project</span>(<span class="fu">morphism.column_map</span>(table));</span>
+<span id="cb10-351"><a href="#cb10-351" aria-hidden="true" tabindex="-1"></a>            <span class="fu">result.insert</span>(table, restricted_row);</span>
+<span id="cb10-352"><a href="#cb10-352" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb10-353"><a href="#cb10-353" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-354"><a href="#cb10-354" aria-hidden="true" tabindex="-1"></a>    result</span>
+<span id="cb10-355"><a href="#cb10-355" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-356"><a href="#cb10-356" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb10-357"><a href="#cb10-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-358"><a href="#cb10-358" aria-hidden="true" tabindex="-1"></a>Precomposition is always total: if $F$ is a well-typed schema morphism and $I$ is a well-typed instance, then $I \circ F$ is a well-typed instance over $S_1$. There are no existence conditions to check—the operation cannot fail <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span>.</span>
+<span id="cb10-359"><a href="#cb10-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-360"><a href="#cb10-360" aria-hidden="true" tabindex="-1"></a>This simplicity is exactly why functor restriction is the right abstraction for SQL migrations. The complexity is not in the restriction itself but in constructing the morphism $F$, which is the job of the migration specification.</span>
+<span id="cb10-361"><a href="#cb10-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-362"><a href="#cb10-362" aria-hidden="true" tabindex="-1"></a><span class="fu">### Adjoints: $\Sigma_F$ and $\Pi_F$</span></span>
+<span id="cb10-363"><a href="#cb10-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-364"><a href="#cb10-364" aria-hidden="true" tabindex="-1"></a>The restriction functor $\Delta_F$ sits in the middle of an adjoint triple:</span>
+<span id="cb10-365"><a href="#cb10-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-366"><a href="#cb10-366" aria-hidden="true" tabindex="-1"></a>$$\Sigma_F \dashv \Delta_F \dashv \Pi_F$$</span>
+<span id="cb10-367"><a href="#cb10-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-368"><a href="#cb10-368" aria-hidden="true" tabindex="-1"></a>The left adjoint $\Sigma_F$ (pushforward, or left Kan extension) computes the "best approximation" of an $S_1$-instance as an $S_2$-instance by taking colimits. In SQL terms, this is roughly <span class="in">`UNION`</span> across fibers. The right adjoint $\Pi_F$ (right Kan extension) computes the "most conservative approximation" by taking limits—roughly <span class="in">`JOIN`</span> across fibers <span class="co">[</span><span class="ot">@maclane1998, Ch. X</span><span class="co">]</span>.</span>
+<span id="cb10-369"><a href="#cb10-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-370"><a href="#cb10-370" aria-hidden="true" tabindex="-1"></a>Both adjoints are computationally more expensive than $\Delta_F$ and are outside panproto's current scope. The key point is that $\Delta_F$ alone gives us everything we need for the forward direction of a migration: projecting existing data onto a new schema.</span>
+<span id="cb10-371"><a href="#cb10-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-372"><a href="#cb10-372" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb10-373"><a href="#cb10-373" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why not $\Sigma_F$?</span></span>
+<span id="cb10-374"><a href="#cb10-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-375"><a href="#cb10-375" aria-hidden="true" tabindex="-1"></a>The pushforward $\Sigma_F$ would let us *add* data to an instance (e.g., populate a new required column with default values). This is sometimes called "data migration" in the database literature. panproto deliberately limits itself to $\Delta_F$ because restriction is lossless and reversible (via the complement—see @sec-lenses), while $\Sigma_F$ requires inventing data and is generally not reversible. When panproto needs to populate defaults, it does so through the lens complement mechanism rather than through $\Sigma_F$.</span>
+<span id="cb10-376"><a href="#cb10-376" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb10-377"><a href="#cb10-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-378"><a href="#cb10-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-379"><a href="#cb10-379" aria-hidden="true" tabindex="-1"></a><span class="fu">## Performance {#sec-restrict-perf}</span></span>
+<span id="cb10-380"><a href="#cb10-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-381"><a href="#cb10-381" aria-hidden="true" tabindex="-1"></a>The restrict pipeline targets **&gt;1 million records per second** for simple projections (field additions and removals) running in WASM. Several design decisions make this possible.</span>
+<span id="cb10-382"><a href="#cb10-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-383"><a href="#cb10-383" aria-hidden="true" tabindex="-1"></a><span class="fu">### Compiled migrations</span></span>
+<span id="cb10-384"><a href="#cb10-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-385"><a href="#cb10-385" aria-hidden="true" tabindex="-1"></a>When a migration is loaded, panproto pre-computes everything it can:</span>
+<span id="cb10-386"><a href="#cb10-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-387"><a href="#cb10-387" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Surviving sets:** The set of schema vertices that survive is computed once and stored as a bitset. Step 1 becomes a single bitset lookup per node.</span>
+<span id="cb10-388"><a href="#cb10-388" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Remap tables:** Edge resolution (step 4) is pre-computed into a flat lookup table indexed by <span class="in">`(source_anchor, child_anchor)`</span>. No hash map lookups at runtime.</span>
+<span id="cb10-389"><a href="#cb10-389" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Fan maps:** Fan reconstruction (step 5) is pre-computed into a mapping from old fan IDs to new fan IDs with pre-allocated child slots.</span>
+<span id="cb10-390"><a href="#cb10-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-391"><a href="#cb10-391" aria-hidden="true" tabindex="-1"></a>The migration specification is effectively compiled into a small program that the restrict pipeline executes.</span>
+<span id="cb10-392"><a href="#cb10-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-393"><a href="#cb10-393" aria-hidden="true" tabindex="-1"></a><span class="fu">### Arena allocation</span></span>
+<span id="cb10-394"><a href="#cb10-394" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-395"><a href="#cb10-395" aria-hidden="true" tabindex="-1"></a>Instance trees are allocated in a <span class="in">`bumpalo`</span> arena. This has two benefits:</span>
+<span id="cb10-396"><a href="#cb10-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-397"><a href="#cb10-397" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Allocation is O(1):** Bump allocation is a pointer increment. No free-list management, no fragmentation.</span>
+<span id="cb10-398"><a href="#cb10-398" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Deallocation is O(1):** The entire arena is freed at once when the instance is no longer needed. No tree of destructors to walk.</span>
+<span id="cb10-399"><a href="#cb10-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-400"><a href="#cb10-400" aria-hidden="true" tabindex="-1"></a>For the restrict pipeline specifically, the output tree is allocated in a fresh arena. Surviving nodes are written sequentially into the output arena, giving excellent cache locality.</span>
+<span id="cb10-401"><a href="#cb10-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-402"><a href="#cb10-402" aria-hidden="true" tabindex="-1"></a><span class="fu">### Zero-copy fast path</span></span>
+<span id="cb10-403"><a href="#cb10-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-404"><a href="#cb10-404" aria-hidden="true" tabindex="-1"></a>For the common case—no contraction (step 3 is a no-op), no fan reconstruction (step 5 is a no-op), and trivial edge resolution (step 4 is a no-op)—the pipeline reduces to:</span>
+<span id="cb10-405"><a href="#cb10-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-406"><a href="#cb10-406" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Walk the input tree.</span>
+<span id="cb10-407"><a href="#cb10-407" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>For each node, check the surviving bitset.</span>
+<span id="cb10-408"><a href="#cb10-408" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>If surviving, copy the node to the output arena with a rewritten anchor field.</span>
+<span id="cb10-409"><a href="#cb10-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-410"><a href="#cb10-410" aria-hidden="true" tabindex="-1"></a>The node's payload (the actual data—strings, integers, booleans) is not copied. Only the structural metadata (anchor, parent pointer, child list) is written. The payload is referenced by pointer into the input arena. This is safe because the input arena outlives the restrict operation.</span>
+<span id="cb10-411"><a href="#cb10-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-412"><a href="#cb10-412" aria-hidden="true" tabindex="-1"></a>In benchmarks on an M2 MacBook Air, this fast path processes ~3.2 million nodes per second for a <span class="in">`threadViewPost`</span>-like schema with 8 fields per post. The WASM target is slightly slower (~1.8M nodes/sec) due to bounds checking and the lack of SIMD, but still well above the 1M target.</span>
+<span id="cb10-413"><a href="#cb10-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-414"><a href="#cb10-414" aria-hidden="true" tabindex="-1"></a><span class="fu">### When it gets expensive</span></span>
+<span id="cb10-415"><a href="#cb10-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-416"><a href="#cb10-416" aria-hidden="true" tabindex="-1"></a>The pipeline slows down when:</span>
+<span id="cb10-417"><a href="#cb10-417" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-418"><a href="#cb10-418" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Deep contraction chains** (step 3): Walking up to find the nearest surviving ancestor is O(depth). For deeply nested schemas with many pruned intermediate levels, this can be significant. panproto mitigates this by pre-computing a "skip ancestor" table during migration compilation.</span>
+<span id="cb10-419"><a href="#cb10-419" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Ambiguous resolution** (step 4): If the resolver table is large (many parallel edges in the schema), the lookup has higher constant factors. This is rare in practice.</span>
+<span id="cb10-420"><a href="#cb10-420" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Large fans** (step 5): Reconstructing fans with hundreds of children (wide SQL tables) requires scanning and filtering each fan. The cost is linear in fan width.</span>
+<span id="cb10-421"><a href="#cb10-421" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-422"><a href="#cb10-422" aria-hidden="true" tabindex="-1"></a>For all three cases, the pre-computation done during migration compilation amortizes the per-instance cost.</span>
+<span id="cb10-423"><a href="#cb10-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-424"><a href="#cb10-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-425"><a href="#cb10-425" aria-hidden="true" tabindex="-1"></a><span class="fu">## The view from 10,000 feet {#sec-restrict-overview}</span></span>
+<span id="cb10-426"><a href="#cb10-426" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-427"><a href="#cb10-427" aria-hidden="true" tabindex="-1"></a>The restrict operation is the point where theory meets bytes. The categorical framework—polynomial functors, W-types, pushout complements—is not an academic exercise. Each piece of theory corresponds to a concrete algorithmic step:</span>
+<span id="cb10-428"><a href="#cb10-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-429"><a href="#cb10-429" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Theory <span class="pp">|</span> Algorithm <span class="pp">|</span> Purpose <span class="pp">|</span></span>
+<span id="cb10-430"><a href="#cb10-430" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|-----------|---------|</span></span>
+<span id="cb10-431"><a href="#cb10-431" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Signature restriction <span class="co">[</span><span class="ot">@abbott2005</span><span class="co">]</span> <span class="pp">|</span> <span class="in">`anchor_surviving`</span> <span class="pp">|</span> Decide which nodes to keep <span class="pp">|</span></span>
+<span id="cb10-432"><a href="#cb10-432" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Connected component <span class="pp">|</span> <span class="in">`reachable_from_root`</span> <span class="pp">|</span> Remove disconnected survivors <span class="pp">|</span></span>
+<span id="cb10-433"><a href="#cb10-433" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Pushout complement <span class="co">[</span><span class="ot">@ehrig2006</span><span class="co">]</span> <span class="pp">|</span> <span class="in">`ancestor_contraction`</span> <span class="pp">|</span> Re-parent orphaned nodes <span class="pp">|</span></span>
+<span id="cb10-434"><a href="#cb10-434" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Complement selection <span class="co">[</span><span class="ot">@lowe1993</span><span class="co">]</span> <span class="pp">|</span> <span class="in">`resolve_edge`</span> <span class="pp">|</span> Choose edge labels after contraction <span class="pp">|</span></span>
+<span id="cb10-435"><a href="#cb10-435" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Limit cone <span class="co">[</span><span class="ot">@barr1990</span><span class="co">]</span> <span class="pp">|</span> <span class="in">`reconstruct_fans`</span> <span class="pp">|</span> Reconstruct hyperedges <span class="pp">|</span></span>
+<span id="cb10-436"><a href="#cb10-436" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Precomposition <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span> <span class="pp">|</span> $\Delta_F$ <span class="pp">|</span> Restrict tabular instances <span class="pp">|</span></span>
+<span id="cb10-437"><a href="#cb10-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-438"><a href="#cb10-438" aria-hidden="true" tabindex="-1"></a>The W-type pipeline handles the case that matters most for modern protocols: recursive, tree-structured data encoded as JSON, CBOR, or protocol buffers. The functor restrict handles the SQL case. Together, they cover the data formats that panproto targets.</span>
+<span id="cb10-439"><a href="#cb10-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-440"><a href="#cb10-440" aria-hidden="true" tabindex="-1"></a>The algorithmic contribution of panproto is not any single step—each step is individually well-understood. The contribution is the *pipeline*: the specific sequence of steps, the compilation strategy that makes the common case fast, and the correctness argument that flows from the categorical semantics. Because each step has a precise algebraic meaning, the pipeline composes correctly by construction. There are no edge cases to discover by fuzzing (though we fuzz anyway). The edge cases are *classified* by the theory: they correspond to the conditions under which each step is non-trivial.</span>
+<span id="cb10-441"><a href="#cb10-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-442"><a href="#cb10-442" aria-hidden="true" tabindex="-1"></a>The next chapter shows how to run the pipeline in both directions—not just forward (source to view) but backward (view back to source)—using the lens framework. The complement captured during <span class="in">`get`</span> is exactly the information discarded by the restrict pipeline, and <span class="in">`put`</span> uses it to reconstruct the original instance.</span>
+<span id="cb10-443"><a href="#cb10-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-444"><a href="#cb10-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-445"><a href="#cb10-445" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
+<span id="cb10-446"><a href="#cb10-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-447"><a href="#cb10-447" aria-hidden="true" tabindex="-1"></a>The W-type perspective on inductive data types originates with @gambino2004, who showed that W-types in locally cartesian closed categories correspond to initial algebras of polynomial functors. The container / interaction structure perspective of @abbott2005 gives the fibrational view that panproto uses for signature restriction.</span>
+<span id="cb10-448"><a href="#cb10-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-449"><a href="#cb10-449" aria-hidden="true" tabindex="-1"></a>The graph transformation approach to steps 3 and 4 follows @ehrig2006, particularly the treatment of pushout complements in adhesive categories. The non-uniqueness of pushout complements in the presence of parallel edges was first identified by @lowe1993 in the context of graph grammars. @drewes1997 extends this to hypergraph grammars, which is the foundation for step 5.</span>
+<span id="cb10-450"><a href="#cb10-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-451"><a href="#cb10-451" aria-hidden="true" tabindex="-1"></a>The functorial data migration framework ($\Delta_F$, $\Sigma_F$, $\Pi_F$) is due to @spivak2012. The general theory of Kan extensions that underlies the adjoint triple is covered in @maclane1998, Chapter X.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/07-lifting-data.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

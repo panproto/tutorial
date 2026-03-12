@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Protocols as Parameters – panproto: Universal Schema Migration</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/05-migration-by-hand.html" rel="next">
+<link href="../chapters/03-what-is-a-theory.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-f1aadacce99040138bbb613f9330654f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aafb03ca45b9c5aa290c66b7a437bb31.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-67ec4aabe8467e78f93de3725ae3d67e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-aafb03ca45b9c5aa290c66b7a437bb31.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<meta name="mermaid-theme" content="neutral">
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-what-is-a-theory.html">Theory</a></li><li class="breadcrumb-item"><a href="../chapters/04-protocols-as-parameters.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Protocols as Parameters</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">panproto: Universal Schema Migration</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/panproto/panproto/tree/main/tutorial/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Motivation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-schemas-everywhere.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Schemas Everywhere</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-the-shape-of-schemas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Shape of Schemas</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-what-is-a-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">What Is a Theory?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-protocols-as-parameters.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Protocols as Parameters</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Migration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-migration-by-hand.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Migration by Hand</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-when-migrations-exist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Migrations Exist</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-lifting-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Lifting Data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Bidirectionality &amp; Safety</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lenses: Going Both Ways</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-breaking-changes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Breaking Changes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-building-your-own-protocol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Building Your Own Protocol</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-self-description.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Self-Description: The GAT of GATs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-two-parameter-architecture" id="toc-the-two-parameter-architecture" class="nav-link active" data-scroll-target="#the-two-parameter-architecture"><span class="header-section-number">4.1</span> The Two-Parameter Architecture</a></li>
+  <li><a href="#two-families-of-instances" id="toc-two-families-of-instances" class="nav-link" data-scroll-target="#two-families-of-instances"><span class="header-section-number">4.2</span> Two Families of Instances</a>
+  <ul class="collapse">
+  <li><a href="#sec-functor-instances" id="toc-sec-functor-instances" class="nav-link" data-scroll-target="#sec-functor-instances"><span class="header-section-number">4.2.1</span> Set-Valued Functors</a></li>
+  <li><a href="#sec-wtype-instances" id="toc-sec-wtype-instances" class="nav-link" data-scroll-target="#sec-wtype-instances"><span class="header-section-number">4.2.2</span> W-Types: Tree-Shaped Data</a></li>
+  </ul></li>
+  <li><a href="#comparing-the-two-models" id="toc-comparing-the-two-models" class="nav-link" data-scroll-target="#comparing-the-two-models"><span class="header-section-number">4.3</span> Comparing the Two Models</a></li>
+  <li><a href="#building-a-protocol-from-theories" id="toc-building-a-protocol-from-theories" class="nav-link" data-scroll-target="#building-a-protocol-from-theories"><span class="header-section-number">4.4</span> Building a Protocol from Theories</a></li>
+  <li><a href="#why-colimits-for-schema-theories" id="toc-why-colimits-for-schema-theories" class="nav-link" data-scroll-target="#why-colimits-for-schema-theories"><span class="header-section-number">4.5</span> Why Colimits for Schema Theories?</a></li>
+  <li><a href="#the-restrict-column" id="toc-the-restrict-column" class="nav-link" data-scroll-target="#the-restrict-column"><span class="header-section-number">4.6</span> The Restrict Column</a>
+  <ul class="collapse">
+  <li><a href="#precomposition-delta_f" id="toc-precomposition-delta_f" class="nav-link" data-scroll-target="#precomposition-delta_f"><span class="header-section-number">4.6.1</span> Precomposition (<span class="math inline">\(\Delta_F\)</span>)</a></li>
+  <li><a href="#signature-restriction-bfs-contraction" id="toc-signature-restriction-bfs-contraction" class="nav-link" data-scroll-target="#signature-restriction-bfs-contraction"><span class="header-section-number">4.6.2</span> Signature Restriction + BFS + Contraction</a></li>
+  <li><a href="#field-projection" id="toc-field-projection" class="nav-link" data-scroll-target="#field-projection"><span class="header-section-number">4.6.3</span> Field Projection</a></li>
+  </ul></li>
+  <li><a href="#from-table-to-engine" id="toc-from-table-to-engine" class="nav-link" data-scroll-target="#from-table-to-engine"><span class="header-section-number">4.7</span> From Table to Engine</a></li>
+  <li><a href="#protocols-as-a-design-space" id="toc-protocols-as-a-design-space" class="nav-link" data-scroll-target="#protocols-as-a-design-space"><span class="header-section-number">4.8</span> Protocols as a Design Space</a></li>
+  <li><a href="#historical-context" id="toc-historical-context" class="nav-link" data-scroll-target="#historical-context"><span class="header-section-number">4.9</span> Historical Context</a></li>
+  <li><a href="#looking-ahead" id="toc-looking-ahead" class="nav-link" data-scroll-target="#looking-ahead"><span class="header-section-number">4.10</span> Looking Ahead</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.11</span> Summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/04-protocols-as-parameters.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-what-is-a-theory.html">Theory</a></li><li class="breadcrumb-item"><a href="../chapters/04-protocols-as-parameters.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Protocols as Parameters</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Protocols as Parameters</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In the previous chapter, we saw that a <em>theory</em> defines an interface: a collection of sorts, operations, and axioms that any conforming model must satisfy. Theories let us talk about “categories,” “graphs,” “constraints,” and so on without committing to a particular representation. In this chapter, we put that machinery to work by asking a sharper question: <strong>what is a protocol?</strong></p>
+<p>The answer in panproto is surprisingly concise. A protocol is a pair of theories—one controlling the shape of schemas, and one controlling the shape of data. Everything else—migration, diffing, breaking-change detection, bidirectional lenses—is derived from that pair bymechanical reasoning. You do not write protocol-specific logic. You declare two theories and let the engine do the rest.</p>
+<section id="the-two-parameter-architecture" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-two-parameter-architecture"><span class="header-section-number">4.1</span> The Two-Parameter Architecture</h2>
+<p>Every protocol that panproto supports is described by exactly two parameters:</p>
+<ol type="1">
+<li><p><strong>Schema theory</strong>: the algebraic theory whose models are schemas. This determines what “a schema” looks like—whether it has vertices and edges (a graph), vertices and hyperedges (a hypergraph), constraints, interfaces, or some combination of these.</p></li>
+<li><p><strong>Instance theory</strong>: the algebraic theory whose models are data instances conforming to a schema. This determines what “a record” or “a row” looks like once you have a schema in hand.</p></li>
+</ol>
+<p>The following table catalogues several protocols and their decomposition into this two-parameter form. Don’t worry about parsing every entry right now; the goal is to see the <em>pattern</em>. Each row is a protocol. Each protocol is fully characterized by its schema theory, its instance theory, and a restriction operator that implements migration.</p>
+<div id="tbl-protocol-table" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-protocol-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: The protocol table. Each protocol decomposes into a schema theory, an instance theory, and a derived restriction operator.
+</figcaption>
+<div aria-describedby="tbl-protocol-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 28%">
+<col style="width: 32%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Protocol</th>
+<th>Schema Theory</th>
+<th>Instance Theory</th>
+<th>Restrict</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CQL</td>
+<td>ThCategory</td>
+<td>ThFunctor</td>
+<td><span class="math inline">\(\Delta_F\)</span> (precomposition)</td>
+</tr>
+<tr class="even">
+<td>ATProto</td>
+<td>colimit(ThGraph, ThConstraint, ThMulti)</td>
+<td>ThWType + ThMeta</td>
+<td>Sig. restriction + BFS + contraction</td>
+</tr>
+<tr class="odd">
+<td>SQL</td>
+<td>colimit(ThHypergraph, ThConstraint)</td>
+<td>ThFunctor</td>
+<td><span class="math inline">\(\Delta_F\)</span></td>
+</tr>
+<tr class="even">
+<td>Protobuf</td>
+<td>ThSimpleGraph + ThConstraint</td>
+<td>ThFlat</td>
+<td>Field projection</td>
+</tr>
+<tr class="odd">
+<td>GraphQL</td>
+<td>colimit(ThGraph, ThConstraint, ThMulti, ThInterface)</td>
+<td>ThWType</td>
+<td>Sig. restriction + BFS + contraction</td>
+</tr>
+<tr class="even">
+<td>JSON Schema</td>
+<td>colimit(ThGraph, ThConstraint, ThMulti)</td>
+<td>ThWType</td>
+<td>Sig. restriction + BFS + contraction</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>A few things to notice:</p>
+<ul>
+<li><p><strong>Schema theories are colimits.</strong> Most real-world protocols combine several concerns—graphs with constraints, multigraph structure with interfaces. The schema theory is assembled by taking a colimit (a structured union) of simpler component theories. This is exactly the colimit construction from Chapter 3.</p></li>
+<li><p><strong>Instance theories cluster into two families.</strong> There are functor-based instances (ThFunctor) and tree-based instances (ThWType). This is the deepest structural split in the table, and it determines how migration works at the data level.</p></li>
+<li><p><strong>The restriction operator is determined by the instance theory.</strong> Functor instances always migrate via precomposition (<span class="math inline">\(\Delta_F\)</span>). W-type instances always migrate via the signature-restriction pipeline. You don’t choose a migration strategy; it follows from the theory.</p></li>
+</ul>
+</section>
+<section id="two-families-of-instances" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="two-families-of-instances"><span class="header-section-number">4.2</span> Two Families of Instances</h2>
+<p>The instance theory is where the rubber meets the road. It determines what “data” means for a given schema, and therefore what “migrating data” means. Let’s look at the two families in detail.</p>
+<section id="sec-functor-instances" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="sec-functor-instances"><span class="header-section-number">4.2.1</span> Set-Valued Functors</h3>
+<p>The functor model comes from the categorical databases tradition, developed most thoroughly by <span class="citation" data-cites="spivak2012">Spivak (<a href="#ref-spivak2012" role="doc-biblioref">2012</a>)</span> and formalized in the CQL system by <span class="citation" data-cites="schultz2017">Schultz et al. (<a href="#ref-schultz2017" role="doc-biblioref">2017</a>)</span>.</p>
+<p>The idea is direct. A schema is a category <span class="math inline">\(\mathcal{C}\)</span>—objects are tables (or types), morphisms are foreign keys (or relationships). An <em>instance</em> of that schema is a functor <span class="math inline">\(I : \mathcal{C} \to \mathbf{Set}\)</span>. In concrete terms:</p>
+<ul>
+<li>Each table <span class="math inline">\(T\)</span> in the schema maps to a set <span class="math inline">\(I(T)\)</span>—the rows of that table.</li>
+<li>Each foreign key <span class="math inline">\(f : T_1 \to T_2\)</span> maps to a function <span class="math inline">\(I(f) : I(T_1) \to I(T_2)\)</span>—the lookup that sends each row of <span class="math inline">\(T_1\)</span> to its corresponding row in <span class="math inline">\(T_2\)</span>.</li>
+</ul>
+<p>This is a faithful model of relational data. The functoriality condition (<span class="math inline">\(I(g \circ f) = I(g) \circ I(f)\)</span>) ensures that following two foreign keys in sequence gives the same result whether you compose them first or chase them one at a time. Referential integrity is built into the mathematics.</p>
+<p><strong>Migration under the functor model</strong> is precomposition. Given a schema morphism <span class="math inline">\(F : \mathcal{C}_1 \to \mathcal{C}_2\)</span> (a functor mapping the old schema into the new one), and an instance <span class="math inline">\(I : \mathcal{C}_2 \to \mathbf{Set}\)</span> living over the new schema, you get an instance <span class="math inline">\(\Delta_F(I) = I \circ F : \mathcal{C}_1 \to \mathbf{Set}\)</span> over the old schema. In operational terms: for each old table <span class="math inline">\(T\)</span>, you look up which new table <span class="math inline">\(F(T)\)</span> it maps to, and pull back that table’s rows. Foreign keys compose automatically.</p>
+<p>This is the pullback migration functor <span class="math inline">\(\Delta_F\)</span> from <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span>. It has left and right adjoints (<span class="math inline">\(\Sigma_F\)</span> and <span class="math inline">\(\Pi_F\)</span>) that handle the “push data forward” direction, but for now, <span class="math inline">\(\Delta_F\)</span> is the one that matters for understanding the restriction column of the protocol table.</p>
+</section>
+<section id="sec-wtype-instances" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="sec-wtype-instances"><span class="header-section-number">4.2.2</span> W-Types: Tree-Shaped Data</h3>
+<p>The functor model works beautifully for relational data, but most modern protocols—ATProto, GraphQL, JSON Schema, Protobuf—traffic in <em>tree-shaped</em> data. A Bluesky post is not a row in a table; it is a JSON document with nested objects, arrays, and references. The right mathematical model for this kind of data is a <em>W-type</em> (wellfounded tree), studied by <span class="citation" data-cites="gambino2004">Gambino and Hyland (<a href="#ref-gambino2004" role="doc-biblioref">2004</a>)</span> in the context of dependent type theory and related to the <em>containers</em> of <span class="citation" data-cites="abbott2005">Abbott et al. (<a href="#ref-abbott2005" role="doc-biblioref">2005</a>)</span>.</p>
+<p>A W-type instance over a schema is a finitely-branching tree where:</p>
+<ul>
+<li><strong>Each node is anchored to a schema vertex.</strong> The root might be anchored to a <code>Post</code> vertex, a child to a <code>Text</code> vertex, a sibling to a <code>CreatedAt</code> vertex.</li>
+<li><strong>Each branch (parent-to-child edge) is labeled by a schema edge.</strong> The edge from <code>Post</code> to <code>Text</code> might be labeled <code>text</code>, the edge from <code>Post</code> to <code>CreatedAt</code> might be labeled <code>createdAt</code>.</li>
+<li><strong>The tree is wellfounded.</strong> No infinite descending chains. Every path from root to leaf is finite.</li>
+</ul>
+<p>This is exactly the shape of a JSON document, an ATProto record, or a GraphQL response. The schema tells you which node types exist and which edges connect them. The instance is a particular tree that conforms to those constraints.</p>
+<p><strong>Migration under the W-type model</strong> is more involved than precomposition, because you can’t just “pull back” a tree through a functor. Instead, the engine runs a multi-step pipeline:</p>
+<ol type="1">
+<li><strong>Signature restriction</strong>: remove nodes anchored to vertices not in the image of the migration map.</li>
+<li><strong>Reachability BFS</strong>: starting from the root, find all nodes still reachable after the pruning.</li>
+<li><strong>Ancestor contraction</strong>: when intermediate nodes are removed, reconnect their children to the nearest surviving ancestor.</li>
+<li><strong>Edge resolution</strong>: relabel branches according to the migration’s edge map, resolving ambiguities where necessary.</li>
+<li><strong>Fan reconstruction</strong>: rebuild the branching structure of the tree to maintain wellfoundedness.</li>
+</ol>
+<p>We will walk through this pipeline concretely in <a href="../chapters/07-lifting-data.html">Chapter 7</a>. For now, the key point is that this pipeline is <em>derived</em> from the theory pair. The engine knows it needs to do tree surgery (rather than precomposition) because the instance theory is ThWType rather than ThFunctor.</p>
+</section>
+</section>
+<section id="comparing-the-two-models" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="comparing-the-two-models"><span class="header-section-number">4.3</span> Comparing the Two Models</h2>
+<p>It’s worth pausing to see these two instance theories side by side, because the choice between them is the central architectural decision that distinguishes protocol families.</p>
+<div id="tbl-instance-comparison" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-instance-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.2: Comparing the two instance theory families.
+</figcaption>
+<div aria-describedby="tbl-instance-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 43%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Functor (ThFunctor)</th>
+<th>W-Type (ThWType)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data shape</td>
+<td>Flat tables of rows</td>
+<td>Nested trees of nodes</td>
+</tr>
+<tr class="even">
+<td>Schema role</td>
+<td>Category (objects + morphisms)</td>
+<td>Graph (vertices + edges)</td>
+</tr>
+<tr class="odd">
+<td>Instance role</td>
+<td>Functor to <strong>Set</strong></td>
+<td>Wellfounded tree</td>
+</tr>
+<tr class="even">
+<td>Migration</td>
+<td>Precomposition (<span class="math inline">\(\Delta_F\)</span>)</td>
+<td>Tree surgery pipeline</td>
+</tr>
+<tr class="odd">
+<td>Canonical users</td>
+<td>SQL, CQL</td>
+<td>ATProto, GraphQL, JSON Schema</td>
+</tr>
+<tr class="even">
+<td>Compositionality</td>
+<td>Functorial (automatic)</td>
+<td>Requires reachability analysis</td>
+</tr>
+<tr class="odd">
+<td>Adjoints available</td>
+<td>Yes (<span class="math inline">\(\Sigma_F\)</span>, <span class="math inline">\(\Pi_F\)</span>)</td>
+<td>Not in general</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Neither model is “better” in the abstract. The functor model has superior compositional properties—migration functors compose, and the adjoint triple gives you round-tripping for free. But the functor model demands that your data is tabular, which is a poor fit for document-oriented protocols. The W-type model handles trees natively, at the cost of more complex migration logic and fewer automatic guarantees.</p>
+<p>panproto’s contribution is that you don’t have to choose one model for all protocols. Each protocol declares its own instance theory, and the engine adapts accordingly. SQL gets precomposition. ATProto gets tree surgery. The outer framework—schema morphisms, existence checks, breaking-change detection—works uniformly across both.</p>
+</section>
+<section id="building-a-protocol-from-theories" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="building-a-protocol-from-theories"><span class="header-section-number">4.4</span> Building a Protocol from Theories</h2>
+<p>To make this concrete, let’s look at how a protocol is actually defined in panproto’s TypeScript API.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-snippet="define-protocol"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { Panproto } <span class="im">from</span> <span class="st">'@panproto/core'</span><span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> panproto <span class="op">=</span> <span class="cf">await</span> Panproto<span class="op">.</span><span class="fu">init</span>()<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet define-protocol</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tomlConfig <span class="op">=</span> panproto<span class="op">.</span><span class="fu">defineProtocol</span>({</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  name<span class="op">:</span> <span class="st">'toml-config'</span><span class="op">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  schemaTheory<span class="op">:</span> <span class="st">'ThConstrainedGraph'</span><span class="op">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  instanceTheory<span class="op">:</span> <span class="st">'ThWType'</span><span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  edgeRules<span class="op">:</span> [</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    { edgeKind<span class="op">:</span> <span class="st">'key'</span><span class="op">,</span> srcKinds<span class="op">:</span> [<span class="st">'section'</span>]<span class="op">,</span> tgtKinds<span class="op">:</span> [] }<span class="op">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    { edgeKind<span class="op">:</span> <span class="st">'subsection'</span><span class="op">,</span> srcKinds<span class="op">:</span> [<span class="st">'section'</span>]<span class="op">,</span> tgtKinds<span class="op">:</span> [<span class="st">'section'</span>] }<span class="op">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  objKinds<span class="op">:</span> [<span class="st">'section'</span>]<span class="op">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  constraintSorts<span class="op">:</span> [<span class="st">'required'</span><span class="op">,</span> <span class="st">'deprecated'</span>]<span class="op">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet define-protocol</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet use-protocol</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> configSchema <span class="op">=</span> tomlConfig<span class="op">.</span><span class="fu">schema</span>()</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'root'</span><span class="op">,</span> <span class="st">'section'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'root.database'</span><span class="op">,</span> <span class="st">'section'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'root.database.host'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'root.database.port'</span><span class="op">,</span> <span class="st">'integer'</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'root'</span><span class="op">,</span> <span class="st">'root.database'</span><span class="op">,</span> <span class="st">'subsection'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'database'</span> })</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'root.database'</span><span class="op">,</span> <span class="st">'root.database.host'</span><span class="op">,</span> <span class="st">'key'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'host'</span> })</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'root.database'</span><span class="op">,</span> <span class="st">'root.database.port'</span><span class="op">,</span> <span class="st">'key'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'port'</span> })</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">constraint</span>(<span class="st">'root.database.host'</span><span class="op">,</span> <span class="st">'required'</span><span class="op">,</span> <span class="st">'true'</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">build</span>()<span class="op">;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet use-protocol</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That’s it. A protocol is a record with two fields: a schema theory and an instance theory. The engine reads the theory structure—what sorts exist, what operations connect them, what axioms constrain them—and derives:</p>
+<ul>
+<li><strong>The migration type</strong>: what data a migration must carry (vertex map, edge map, constraint map, …).</li>
+<li><strong>The restriction operator</strong>: how to apply a migration to an instance (precomposition or tree surgery).</li>
+<li><strong>The existence checks</strong>: which conditions a proposed migration must satisfy to be valid (Chapter 6).</li>
+<li><strong>The breaking-change classifier</strong>: which migrations are safe and which are breaking (Chapter 9).</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The key insight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Adding a new schema language to panproto means writing a few lines of data. You are not writing a parser, a differ, a migration engine, or a breaking-change detector. You declare two theories, and the engine derives everything else.</p>
+</div>
+</div>
+</section>
+<section id="why-colimits-for-schema-theories" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="why-colimits-for-schema-theories"><span class="header-section-number">4.5</span> Why Colimits for Schema Theories?</h2>
+<p>You may have noticed that most schema theories in <a href="#tbl-protocol-table" class="quarto-xref">Table&nbsp;<span>4.1</span></a> are colimits of simpler theories. This is not an accident. Real-world protocols are assembled from orthogonal concerns:</p>
+<ul>
+<li><strong>Graph structure</strong>: vertices and directed edges (ThGraph).</li>
+<li><strong>Constraint structure</strong>: invariants on vertex/edge data (ThConstraint).</li>
+<li><strong>Multiplicity structure</strong>: arrays, optional fields, repeated edges (ThMulti).</li>
+<li><strong>Interface structure</strong>: abstract types implemented by concrete ones (ThInterface).</li>
+<li><strong>Hyperedge structure</strong>: edges connecting more than two vertices simultaneously (ThHyperEdge).</li>
+</ul>
+<p>These concerns are largely independent of one another. A protocol might need graphs and constraints but not interfaces (ATProto). Another might need graphs, constraints, multiplicity, <em>and</em> interfaces (GraphQL). The colimit construction lets you assemble exactly the combination you need, with the categorical machinery ensuring that the pieces fit together coherently.</p>
+<p>For example, ATProto’s schema theory is:</p>
+<p><span class="math display">\[\text{ThATProtoSchema} = \text{colim}(\text{ThGraph}, \text{ThConstraint}, \text{ThMulti})\]</span></p>
+<p>This says: an ATProto schema is a structure that is simultaneously a graph, a constrained structure, and a multiplicity-aware structure, with the overlapping parts (the shared sorts and operations) identified. The colimit handles the identification automatically.</p>
+<p>SQL’s schema theory replaces ThGraph with ThHypergraph (because SQL tables have multi-column keys and compound foreign keys) and drops ThMulti (because SQL doesn’t have native array columns in the same sense):</p>
+<p><span class="math display">\[\text{ThSQLSchema} = \text{colim}(\text{ThHypergraph}, \text{ThConstraint})\]</span></p>
+<p>GraphQL adds ThInterface on top of ATProto’s combination:</p>
+<p><span class="math display">\[\text{ThGraphQLSchema} = \text{colim}(\text{ThGraph}, \text{ThConstraint}, \text{ThMulti}, \text{ThInterface})\]</span></p>
+<p>The pattern is modular and extensible. If tomorrow a new protocol emerges that needs graph structure, constraints, and some novel “versioning” concern, you write ThVersioning as a new theory and take the colimit with the existing pieces. The engine will derive migration, existence checks, and breaking-change detection for the new combination without any protocol-specific code.</p>
+</section>
+<section id="the-restrict-column" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="the-restrict-column"><span class="header-section-number">4.6</span> The Restrict Column</h2>
+<p>The rightmost column of <a href="#tbl-protocol-table" class="quarto-xref">Table&nbsp;<span>4.1</span></a>, labeled “Restrict,” names the operation that applies a migration to data. This column is <em>determined by</em> the instance theory—you never choose it independently.</p>
+<section id="precomposition-delta_f" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="precomposition-delta_f"><span class="header-section-number">4.6.1</span> Precomposition (<span class="math inline">\(\Delta_F\)</span>)</h3>
+<p>When the instance theory is ThFunctor, the restriction operator is precomposition. Given:</p>
+<ul>
+<li>A schema morphism <span class="math inline">\(F : \mathcal{S}_1 \to \mathcal{S}_2\)</span></li>
+<li>An instance <span class="math inline">\(I : \mathcal{S}_2 \to \mathbf{Set}\)</span></li>
+</ul>
+<p>the restricted instance is <span class="math inline">\(\Delta_F(I) = I \circ F\)</span>. This is the pullback functor from <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span>.</p>
+<p>In practice, precomposition is almost trivially simple to implement. For each vertex <span class="math inline">\(v\)</span> in <span class="math inline">\(\mathcal{S}_1\)</span>, look up <span class="math inline">\(F(v)\)</span> in <span class="math inline">\(\mathcal{S}_2\)</span> and take the data from that vertex. For each edge <span class="math inline">\(e\)</span> in <span class="math inline">\(\mathcal{S}_1\)</span>, look up <span class="math inline">\(F(e)\)</span> and use that function to chase foreign keys. The functoriality of <span class="math inline">\(F\)</span> guarantees that everything is consistent.</p>
+</section>
+<section id="signature-restriction-bfs-contraction" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="signature-restriction-bfs-contraction"><span class="header-section-number">4.6.2</span> Signature Restriction + BFS + Contraction</h3>
+<p>When the instance theory is ThWType, the restriction operator is a multi-step pipeline. We gave a brief overview in <a href="#sec-wtype-instances" class="quarto-xref"><span>Section 4.2.2</span></a>; <a href="../chapters/07-lifting-data.html">Chapter 7</a> provides the full algorithmic detail. The key steps are:</p>
+<ol type="1">
+<li><strong>Signature restriction</strong>: discard tree nodes whose anchor vertex is not in the image of the migration’s vertex map.</li>
+<li><strong>Reachability BFS</strong>: from the root, walk the tree to find which surviving nodes are still connected.</li>
+<li><strong>Ancestor contraction</strong>: if a removed node had children that survived, reattach those children to the nearest surviving ancestor.</li>
+<li><strong>Edge resolution</strong>: relabel parent-child edges according to the migration’s edge map. If the schema allows parallel edges (multigraphs), this step may require resolver data to disambiguate.</li>
+<li><strong>Fan reconstruction</strong>: rebuild the node’s children list to reflect the new edge labels and ordering.</li>
+</ol>
+<p>This pipeline is more expensive than precomposition, but it handles the structural complexity of tree-shaped data. Every step is necessary: skip reachability and you’ll keep orphaned subtrees; skip contraction and you’ll lose data that should survive; skip resolution and you’ll have ambiguous edge labels.</p>
+</section>
+<section id="field-projection" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="field-projection"><span class="header-section-number">4.6.3</span> Field Projection</h3>
+<p>Protobuf uses a simpler variant. Because Protobuf schemas are simple graphs (no parallel edges, no deep nesting beyond <code>message</code> containment) and instances are flat (each field maps to a single value or a repeated list), the restriction operator reduces to field projection: keep the fields that the migration maps, drop the rest. This is a special case of the W-type pipeline where the tree has depth at most 2 and no contraction is ever needed.</p>
+</section>
+</section>
+<section id="from-table-to-engine" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="from-table-to-engine"><span class="header-section-number">4.7</span> From Table to Engine</h2>
+<p>The protocol table is not just a reference chart. It is a <em>specification</em> that the engine reads at startup. When you instantiate panproto for a particular protocol, the engine:</p>
+<ol type="1">
+<li><strong>Parses the schema theory</strong> to determine what sorts (Vertex, Edge, Constraint, …) exist and what operations connect them.</li>
+<li><strong>Parses the instance theory</strong> to determine the data representation (functor or W-type).</li>
+<li><strong>Derives the migration type</strong> from the schema theory’s sorts and operations. A migration must carry a map for each sort in the schema theory.</li>
+<li><strong>Derives the restriction operator</strong> from the instance theory. Functor → precomposition. W-type → tree surgery.</li>
+<li><strong>Derives existence checks</strong> from the schema theory’s axioms (Chapter 6).</li>
+<li><strong>Derives the breaking-change classifier</strong> from the interaction of schema theory and instance theory (Chapter 9).</li>
+</ol>
+<p>Steps 3–6 are fully automatic. The protocol author provides the two theories; the engine provides the rest.</p>
+<p>This is the sense in which panproto is <em>protocol-parametric</em>. The protocol is a parameter—literally, a pair of theory values passed to the engine. Swap the parameter, and you get a different protocol’s migration system, with correct semantics, for free.</p>
+</section>
+<section id="protocols-as-a-design-space" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="protocols-as-a-design-space"><span class="header-section-number">4.8</span> Protocols as a Design Space</h2>
+<p>The two-parameter architecture also gives us a way to think about the <em>design space</em> of protocols. Each point in the space is a (schema theory, instance theory) pair. Existing protocols occupy specific points:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-design-space" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-design-space-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-design-space">graph LR
+    subgraph "Functor Instances"
+        CQL["CQL&lt;br/&gt;(ThCategory, ThFunctor)"]
+        SQL["SQL&lt;br/&gt;(ThHypergraph+ThConstraint, ThFunctor)"]
+    end
+    subgraph "W-Type Instances"
+        Proto["Protobuf&lt;br/&gt;(ThSimpleGraph+ThConstraint, ThFlat)"]
+        AT["ATProto&lt;br/&gt;(ThGraph+ThConstraint+ThMulti, ThWType+ThMeta)"]
+        GQL["GraphQL&lt;br/&gt;(ThGraph+ThConstraint+ThMulti+ThInterface, ThWType)"]
+        JSON["JSON Schema&lt;br/&gt;(ThGraph+ThConstraint+ThMulti, ThWType)"]
+    end
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-design-space-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.1: The protocol design space. Horizontal axis: schema theory complexity. Vertical axis: instance theory family.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This framing surfaces some natural questions:</p>
+<ul>
+<li><strong>What lives between SQL and ATProto?</strong> A protocol with hypergraph schemas but W-type instances—perhaps a document database with compound keys.</li>
+<li><strong>What lives beyond GraphQL?</strong> Add a ThVersioning theory to the schema colimit, and you get a protocol with built-in schema versioning at the theory level.</li>
+<li><strong>Can you mix instance theories?</strong> In principle, a protocol could use functor instances for some schema sorts and W-type instances for others. panproto doesn’t support this yet, but the theory permits it.</li>
+</ul>
+<p>The design space is open. panproto gives you the coordinates.</p>
+</section>
+<section id="historical-context" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="historical-context"><span class="header-section-number">4.9</span> Historical Context</h2>
+<p>The idea that data migration can be parameterized by algebraic structure has roots in several traditions.</p>
+<p><span class="citation" data-cites="spivak2012">Spivak (<a href="#ref-spivak2012" role="doc-biblioref">2012</a>)</span> showed that functorial data migration—using functors between categories as schema morphisms—gives a clean, compositional account of SQL-style migration. The CQL project <span class="citation" data-cites="schultz2017">(<a href="#ref-schultz2017" role="doc-biblioref">Schultz et al. 2017</a>)</span> turned this into a practical tool for relational databases, demonstrating that the category-theoretic framework could handle real workloads.</p>
+<p>The W-type perspective comes from dependent type theory. <span class="citation" data-cites="gambino2004">Gambino and Hyland (<a href="#ref-gambino2004" role="doc-biblioref">2004</a>)</span> showed that wellfounded trees (W-types) are the natural inductive types in categories with dependent products. <span class="citation" data-cites="abbott2005">Abbott et al. (<a href="#ref-abbott2005" role="doc-biblioref">2005</a>)</span> connected this to the theory of containers, which views tree-shaped data as polynomial functors. panproto uses this connection: a W-type instance is a section of a polynomial functor determined by the schema.</p>
+<p>The insight that these two traditions can be unified under a common framework—that both functor instances and W-type instances arise as models of different instance theories, with migration derived from the theory structure—is, as far as we know, original to panproto.</p>
+</section>
+<section id="looking-ahead" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="looking-ahead"><span class="header-section-number">4.10</span> Looking Ahead</h2>
+<p>We now have the vocabulary to describe any protocol as a point in a two-dimensional space. In the next chapter, we’ll use this vocabulary to do something concrete: migrate data by hand, step by step, watching the restriction operator at work on a real schema change. This will ground the abstractions of this chapter in the specifics of ATProto records and SQL rows.</p>
+</section>
+<section id="summary" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.11</span> Summary</h2>
+<ul>
+<li>A <strong>protocol</strong> in panproto is a pair: (schema theory, instance theory).</li>
+<li><strong>Schema theories</strong> are assembled as colimits of simpler theories capturing orthogonal concerns (graph structure, constraints, multiplicity, interfaces).</li>
+<li><strong>Instance theories</strong> fall into two families: <strong>set-valued functors</strong> (for tabular data) and <strong>W-types</strong> (for tree-shaped data).</li>
+<li>The <strong>restriction operator</strong>—how migration acts on data—is determined by the instance theory. Functors use precomposition (<span class="math inline">\(\Delta_F\)</span>). W-types use a multi-step tree surgery pipeline.</li>
+<li><strong>Everything else is derived.</strong> Migration types, existence checks, and breaking-change classifiers are mechanically produced from the two theories.</li>
+<li>The protocol is a <em>parameter</em>, not hardcoded logic. Adding a new protocol means declaring two theories, not writing an engine.</li>
+</ul>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-abbott2005" class="csl-entry" role="listitem">
+Abbott, Michael, Thorsten Altenkirch, and Neil Ghani. 2005. <span>“Containers: Constructing Strictly Positive Types.”</span> <em>Theoretical Computer Science</em> 342 (1): 3–27. <a href="https://doi.org/10.1016/j.tcs.2005.06.002">https://doi.org/10.1016/j.tcs.2005.06.002</a>.
+</div>
+<div id="ref-gambino2004" class="csl-entry" role="listitem">
+Gambino, Nicola, and J. Martin E. Hyland. 2004. <span>“Wellfounded Trees and Dependent Polynomial Functors.”</span> <em>Types for Proofs and Programs (TYPES 2003)</em>, Lecture notes in computer science, vol. 3085: 210–25. <a href="https://doi.org/10.1007/978-3-540-24849-1_14">https://doi.org/10.1007/978-3-540-24849-1_14</a>.
+</div>
+<div id="ref-schultz2017" class="csl-entry" role="listitem">
+Schultz, Patrick, David I. Spivak, Christina Vasilakopoulou, and Ryan Wisnesky. 2017. <span>“Algebraic Databases.”</span> <em>Theory and Applications of Categories</em> 32 (16): 547–619. <a href="http://www.tac.mta.ca/tac/volumes/32/16/32-16abs.html">http://www.tac.mta.ca/tac/volumes/32/16/32-16abs.html</a>.
+</div>
+<div id="ref-spivak2012" class="csl-entry" role="listitem">
+Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Information and Computation</em> 217: 31–51. <a href="https://doi.org/10.1016/j.ic.2012.05.001">https://doi.org/10.1016/j.ic.2012.05.001</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/panproto\.github\.io\/tutorial\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/03-what-is-a-theory.html" class="pagination-link" aria-label="What Is a Theory?">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">What Is a Theory?</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/05-migration-by-hand.html" class="pagination-link" aria-label="Migration by Hand">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Migration by Hand</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Protocols as Parameters</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>In the previous chapter, we saw that a *theory* defines an interface: a collection of sorts, operations, and axioms that any conforming model must satisfy. Theories let us talk about "categories," "graphs," "constraints," and so on without committing to a particular representation. In this chapter, we put that machinery to work by asking a sharper question: **what is a protocol?**</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>The answer in panproto is surprisingly concise. A protocol is a pair of theories---one controlling the shape of schemas, and one controlling the shape of data. Everything else---migration, diffing, breaking-change detection, bidirectional lenses---is derived from that pair bymechanical reasoning. You do not write protocol-specific logic. You declare two theories and let the engine do the rest.</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Two-Parameter Architecture</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>Every protocol that panproto supports is described by exactly two parameters:</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Schema theory**: the algebraic theory whose models are schemas. This determines what "a schema" looks like---whether it has vertices and edges (a graph), vertices and hyperedges (a hypergraph), constraints, interfaces, or some combination of these.</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Instance theory**: the algebraic theory whose models are data instances conforming to a schema. This determines what "a record" or "a row" looks like once you have a schema in hand.</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>The following table catalogues several protocols and their decomposition into this two-parameter form. Don't worry about parsing every entry right now; the goal is to see the *pattern*. Each row is a protocol. Each protocol is fully characterized by its schema theory, its instance theory, and a restriction operator that implements migration.</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Protocol <span class="pp">|</span> Schema Theory <span class="pp">|</span> Instance Theory <span class="pp">|</span> Restrict <span class="pp">|</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|--------------|----------------|----------|</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> CQL <span class="pp">|</span> ThCategory <span class="pp">|</span> ThFunctor <span class="pp">|</span> $\Delta_F$ (precomposition) <span class="pp">|</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ATProto <span class="pp">|</span> colimit(ThGraph, ThConstraint, ThMulti) <span class="pp">|</span> ThWType + ThMeta <span class="pp">|</span> Sig. restriction + BFS + contraction <span class="pp">|</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> SQL <span class="pp">|</span> colimit(ThHypergraph, ThConstraint) <span class="pp">|</span> ThFunctor <span class="pp">|</span> $\Delta_F$ <span class="pp">|</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Protobuf <span class="pp">|</span> ThSimpleGraph + ThConstraint <span class="pp">|</span> ThFlat <span class="pp">|</span> Field projection <span class="pp">|</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GraphQL <span class="pp">|</span> colimit(ThGraph, ThConstraint, ThMulti, ThInterface) <span class="pp">|</span> ThWType <span class="pp">|</span> Sig. restriction + BFS + contraction <span class="pp">|</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> JSON Schema <span class="pp">|</span> colimit(ThGraph, ThConstraint, ThMulti) <span class="pp">|</span> ThWType <span class="pp">|</span> Sig. restriction + BFS + contraction <span class="pp">|</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>: The protocol table. Each protocol decomposes into a schema theory, an instance theory, and a derived restriction operator. {#tbl-protocol-table}</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>A few things to notice:</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Schema theories are colimits.** Most real-world protocols combine several concerns---graphs with constraints, multigraph structure with interfaces. The schema theory is assembled by taking a colimit (a structured union) of simpler component theories. This is exactly the colimit construction from Chapter 3.</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Instance theories cluster into two families.** There are functor-based instances (ThFunctor) and tree-based instances (ThWType). This is the deepest structural split in the table, and it determines how migration works at the data level.</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The restriction operator is determined by the instance theory.** Functor instances always migrate via precomposition ($\Delta_F$). W-type instances always migrate via the signature-restriction pipeline. You don't choose a migration strategy; it follows from the theory.</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two Families of Instances</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>The instance theory is where the rubber meets the road. It determines what "data" means for a given schema, and therefore what "migrating data" means. Let's look at the two families in detail.</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">### Set-Valued Functors {#sec-functor-instances}</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>The functor model comes from the categorical databases tradition, developed most thoroughly by @spivak2012 and formalized in the CQL system by @schultz2017.</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>The idea is direct. A schema is a category $\mathcal{C}$---objects are tables (or types), morphisms are foreign keys (or relationships). An *instance* of that schema is a functor $I : \mathcal{C} \to \mathbf{Set}$. In concrete terms:</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each table $T$ in the schema maps to a set $I(T)$---the rows of that table.</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Each foreign key $f : T_1 \to T_2$ maps to a function $I(f) : I(T_1) \to I(T_2)$---the lookup that sends each row of $T_1$ to its corresponding row in $T_2$.</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>This is a faithful model of relational data. The functoriality condition ($I(g \circ f) = I(g) \circ I(f)$) ensures that following two foreign keys in sequence gives the same result whether you compose them first or chase them one at a time. Referential integrity is built into the mathematics.</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>**Migration under the functor model** is precomposition. Given a schema morphism $F : \mathcal{C}_1 \to \mathcal{C}_2$ (a functor mapping the old schema into the new one), and an instance $I : \mathcal{C}_2 \to \mathbf{Set}$ living over the new schema, you get an instance $\Delta_F(I) = I \circ F : \mathcal{C}_1 \to \mathbf{Set}$ over the old schema. In operational terms: for each old table $T$, you look up which new table $F(T)$ it maps to, and pull back that table's rows. Foreign keys compose automatically.</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>This is the pullback migration functor $\Delta_F$ from <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span>. It has left and right adjoints ($\Sigma_F$ and $\Pi_F$) that handle the "push data forward" direction, but for now, $\Delta_F$ is the one that matters for understanding the restriction column of the protocol table.</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="fu">### W-Types: Tree-Shaped Data {#sec-wtype-instances}</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>The functor model works beautifully for relational data, but most modern protocols---ATProto, GraphQL, JSON Schema, Protobuf---traffic in *tree-shaped* data. A Bluesky post is not a row in a table; it is a JSON document with nested objects, arrays, and references. The right mathematical model for this kind of data is a *W-type* (wellfounded tree), studied by @gambino2004 in the context of dependent type theory and related to the *containers* of @abbott2005.</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>A W-type instance over a schema is a finitely-branching tree where:</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Each node is anchored to a schema vertex.** The root might be anchored to a <span class="in">`Post`</span> vertex, a child to a <span class="in">`Text`</span> vertex, a sibling to a <span class="in">`CreatedAt`</span> vertex.</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Each branch (parent-to-child edge) is labeled by a schema edge.** The edge from <span class="in">`Post`</span> to <span class="in">`Text`</span> might be labeled <span class="in">`text`</span>, the edge from <span class="in">`Post`</span> to <span class="in">`CreatedAt`</span> might be labeled <span class="in">`createdAt`</span>.</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The tree is wellfounded.** No infinite descending chains. Every path from root to leaf is finite.</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>This is exactly the shape of a JSON document, an ATProto record, or a GraphQL response. The schema tells you which node types exist and which edges connect them. The instance is a particular tree that conforms to those constraints.</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>**Migration under the W-type model** is more involved than precomposition, because you can't just "pull back" a tree through a functor. Instead, the engine runs a multi-step pipeline:</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Signature restriction**: remove nodes anchored to vertices not in the image of the migration map.</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Reachability BFS**: starting from the root, find all nodes still reachable after the pruning.</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Ancestor contraction**: when intermediate nodes are removed, reconnect their children to the nearest surviving ancestor.</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Edge resolution**: relabel branches according to the migration's edge map, resolving ambiguities where necessary.</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Fan reconstruction**: rebuild the branching structure of the tree to maintain wellfoundedness.</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>We will walk through this pipeline concretely in <span class="co">[</span><span class="ot">Chapter 7</span><span class="co">](07-lifting-data.qmd)</span>. For now, the key point is that this pipeline is *derived* from the theory pair. The engine knows it needs to do tree surgery (rather than precomposition) because the instance theory is ThWType rather than ThFunctor.</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparing the Two Models</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>It's worth pausing to see these two instance theories side by side, because the choice between them is the central architectural decision that distinguishes protocol families.</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Aspect <span class="pp">|</span> Functor (ThFunctor) <span class="pp">|</span> W-Type (ThWType) <span class="pp">|</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|---------------------|-------------------|</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Data shape <span class="pp">|</span> Flat tables of rows <span class="pp">|</span> Nested trees of nodes <span class="pp">|</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Schema role <span class="pp">|</span> Category (objects + morphisms) <span class="pp">|</span> Graph (vertices + edges) <span class="pp">|</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Instance role <span class="pp">|</span> Functor to **Set** <span class="pp">|</span> Wellfounded tree <span class="pp">|</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Migration <span class="pp">|</span> Precomposition ($\Delta_F$) <span class="pp">|</span> Tree surgery pipeline <span class="pp">|</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Canonical users <span class="pp">|</span> SQL, CQL <span class="pp">|</span> ATProto, GraphQL, JSON Schema <span class="pp">|</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Compositionality <span class="pp">|</span> Functorial (automatic) <span class="pp">|</span> Requires reachability analysis <span class="pp">|</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Adjoints available <span class="pp">|</span> Yes ($\Sigma_F$, $\Pi_F$) <span class="pp">|</span> Not in general <span class="pp">|</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>: Comparing the two instance theory families. {#tbl-instance-comparison}</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>Neither model is "better" in the abstract. The functor model has superior compositional properties---migration functors compose, and the adjoint triple gives you round-tripping for free. But the functor model demands that your data is tabular, which is a poor fit for document-oriented protocols. The W-type model handles trees natively, at the cost of more complex migration logic and fewer automatic guarantees.</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>panproto's contribution is that you don't have to choose one model for all protocols. Each protocol declares its own instance theory, and the engine adapts accordingly. SQL gets precomposition. ATProto gets tree surgery. The outer framework---schema morphisms, existence checks, breaking-change detection---works uniformly across both.</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="fu">## Building a Protocol from Theories</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>To make this concrete, let's look at how a protocol is actually defined in panproto's TypeScript API.</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{.typescript include="../code/ts/10-custom-protocol.ts" snippet="define-protocol"}</span></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>That's it. A protocol is a record with two fields: a schema theory and an instance theory. The engine reads the theory structure---what sorts exist, what operations connect them, what axioms constrain them---and derives:</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The migration type**: what data a migration must carry (vertex map, edge map, constraint map, ...).</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The restriction operator**: how to apply a migration to an instance (precomposition or tree surgery).</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The existence checks**: which conditions a proposed migration must satisfy to be valid (Chapter 6).</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**The breaking-change classifier**: which migrations are safe and which are breaking (Chapter 9).</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## The key insight</span></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>Adding a new schema language to panproto means writing a few lines of data. You are not writing a parser, a differ, a migration engine, or a breaking-change detector. You declare two theories, and the engine derives everything else.</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Colimits for Schema Theories?</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>You may have noticed that most schema theories in @tbl-protocol-table are colimits of simpler theories. This is not an accident. Real-world protocols are assembled from orthogonal concerns:</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Graph structure**: vertices and directed edges (ThGraph).</span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Constraint structure**: invariants on vertex/edge data (ThConstraint).</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Multiplicity structure**: arrays, optional fields, repeated edges (ThMulti).</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Interface structure**: abstract types implemented by concrete ones (ThInterface).</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Hyperedge structure**: edges connecting more than two vertices simultaneously (ThHyperEdge).</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>These concerns are largely independent of one another. A protocol might need graphs and constraints but not interfaces (ATProto). Another might need graphs, constraints, multiplicity, *and* interfaces (GraphQL). The colimit construction lets you assemble exactly the combination you need, with the categorical machinery ensuring that the pieces fit together coherently.</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>For example, ATProto's schema theory is:</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>$$\text{ThATProtoSchema} = \text{colim}(\text{ThGraph}, \text{ThConstraint}, \text{ThMulti})$$</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>This says: an ATProto schema is a structure that is simultaneously a graph, a constrained structure, and a multiplicity-aware structure, with the overlapping parts (the shared sorts and operations) identified. The colimit handles the identification automatically.</span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>SQL's schema theory replaces ThGraph with ThHypergraph (because SQL tables have multi-column keys and compound foreign keys) and drops ThMulti (because SQL doesn't have native array columns in the same sense):</span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>$$\text{ThSQLSchema} = \text{colim}(\text{ThHypergraph}, \text{ThConstraint})$$</span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>GraphQL adds ThInterface on top of ATProto's combination:</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>$$\text{ThGraphQLSchema} = \text{colim}(\text{ThGraph}, \text{ThConstraint}, \text{ThMulti}, \text{ThInterface})$$</span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>The pattern is modular and extensible. If tomorrow a new protocol emerges that needs graph structure, constraints, and some novel "versioning" concern, you write ThVersioning as a new theory and take the colimit with the existing pieces. The engine will derive migration, existence checks, and breaking-change detection for the new combination without any protocol-specific code.</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Restrict Column</span></span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>The rightmost column of @tbl-protocol-table, labeled "Restrict," names the operation that applies a migration to data. This column is *determined by* the instance theory---you never choose it independently.</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a><span class="fu">### Precomposition ($\Delta_F$)</span></span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>When the instance theory is ThFunctor, the restriction operator is precomposition. Given:</span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A schema morphism $F : \mathcal{S}_1 \to \mathcal{S}_2$</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>An instance $I : \mathcal{S}_2 \to \mathbf{Set}$</span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a>the restricted instance is $\Delta_F(I) = I \circ F$. This is the pullback functor from <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span>.</span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>In practice, precomposition is almost trivially simple to implement. For each vertex $v$ in $\mathcal{S}_1$, look up $F(v)$ in $\mathcal{S}_2$ and take the data from that vertex. For each edge $e$ in $\mathcal{S}_1$, look up $F(e)$ and use that function to chase foreign keys. The functoriality of $F$ guarantees that everything is consistent.</span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a><span class="fu">### Signature Restriction + BFS + Contraction</span></span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>When the instance theory is ThWType, the restriction operator is a multi-step pipeline. We gave a brief overview in @sec-wtype-instances; <span class="co">[</span><span class="ot">Chapter 7</span><span class="co">](07-lifting-data.qmd)</span> provides the full algorithmic detail. The key steps are:</span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Signature restriction**: discard tree nodes whose anchor vertex is not in the image of the migration's vertex map.</span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Reachability BFS**: from the root, walk the tree to find which surviving nodes are still connected.</span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Ancestor contraction**: if a removed node had children that survived, reattach those children to the nearest surviving ancestor.</span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Edge resolution**: relabel parent-child edges according to the migration's edge map. If the schema allows parallel edges (multigraphs), this step may require resolver data to disambiguate.</span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Fan reconstruction**: rebuild the node's children list to reflect the new edge labels and ordering.</span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a>This pipeline is more expensive than precomposition, but it handles the structural complexity of tree-shaped data. Every step is necessary: skip reachability and you'll keep orphaned subtrees; skip contraction and you'll lose data that should survive; skip resolution and you'll have ambiguous edge labels.</span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### Field Projection</span></span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a>Protobuf uses a simpler variant. Because Protobuf schemas are simple graphs (no parallel edges, no deep nesting beyond <span class="in">`message`</span> containment) and instances are flat (each field maps to a single value or a repeated list), the restriction operator reduces to field projection: keep the fields that the migration maps, drop the rest. This is a special case of the W-type pipeline where the tree has depth at most 2 and no contraction is ever needed.</span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## From Table to Engine</span></span>
+<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a>The protocol table is not just a reference chart. It is a *specification* that the engine reads at startup. When you instantiate panproto for a particular protocol, the engine:</span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Parses the schema theory** to determine what sorts (Vertex, Edge, Constraint, ...) exist and what operations connect them.</span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Parses the instance theory** to determine the data representation (functor or W-type).</span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Derives the migration type** from the schema theory's sorts and operations. A migration must carry a map for each sort in the schema theory.</span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Derives the restriction operator** from the instance theory. Functor → precomposition. W-type → tree surgery.</span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Derives existence checks** from the schema theory's axioms (Chapter 6).</span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Derives the breaking-change classifier** from the interaction of schema theory and instance theory (Chapter 9).</span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>Steps 3--6 are fully automatic. The protocol author provides the two theories; the engine provides the rest.</span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>This is the sense in which panproto is *protocol-parametric*. The protocol is a parameter---literally, a pair of theory values passed to the engine. Swap the parameter, and you get a different protocol's migration system, with correct semantics, for free.</span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## Protocols as a Design Space</span></span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a>The two-parameter architecture also gives us a way to think about the *design space* of protocols. Each point in the space is a (schema theory, instance theory) pair. Existing protocols occupy specific points:</span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{mermaid}</span></span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a>%%| label: fig-design-space</span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a>%%| fig-cap: <span class="ot">"</span><span class="st">The protocol design space. Horizontal axis: schema theory complexity. Vertical axis: instance theory family.</span><span class="ot">"</span></span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a>graph LR</span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a>    subgraph <span class="ot">"</span><span class="st">Functor Instances</span><span class="ot">"</span></span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>        CQL[<span class="ot">"</span><span class="st">CQL&lt;br/&gt;(ThCategory, ThFunctor)</span><span class="ot">"</span>]</span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>        SQL[<span class="ot">"</span><span class="st">SQL&lt;br/&gt;(ThHypergraph+ThConstraint, ThFunctor)</span><span class="ot">"</span>]</span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a>    end</span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>    subgraph <span class="ot">"</span><span class="st">W-Type Instances</span><span class="ot">"</span></span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a>        Proto[<span class="ot">"</span><span class="st">Protobuf&lt;br/&gt;(ThSimpleGraph+ThConstraint, ThFlat)</span><span class="ot">"</span>]</span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a>        AT[<span class="ot">"</span><span class="st">ATProto&lt;br/&gt;(ThGraph+ThConstraint+ThMulti, ThWType+ThMeta)</span><span class="ot">"</span>]</span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a>        GQL[<span class="ot">"</span><span class="st">GraphQL&lt;br/&gt;(ThGraph+ThConstraint+ThMulti+ThInterface, ThWType)</span><span class="ot">"</span>]</span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>        JSON[<span class="ot">"</span><span class="st">JSON Schema&lt;br/&gt;(ThGraph+ThConstraint+ThMulti, ThWType)</span><span class="ot">"</span>]</span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a>    end</span>
+<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>This framing surfaces some natural questions:</span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**What lives between SQL and ATProto?** A protocol with hypergraph schemas but W-type instances---perhaps a document database with compound keys.</span>
+<span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**What lives beyond GraphQL?** Add a ThVersioning theory to the schema colimit, and you get a protocol with built-in schema versioning at the theory level.</span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Can you mix instance theories?** In principle, a protocol could use functor instances for some schema sorts and W-type instances for others. panproto doesn't support this yet, but the theory permits it.</span>
+<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a>The design space is open. panproto gives you the coordinates.</span>
+<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## Historical Context</span></span>
+<span id="cb2-231"><a href="#cb2-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a>The idea that data migration can be parameterized by algebraic structure has roots in several traditions.</span>
+<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-234"><a href="#cb2-234" aria-hidden="true" tabindex="-1"></a>@spivak2012 showed that functorial data migration---using functors between categories as schema morphisms---gives a clean, compositional account of SQL-style migration. The CQL project <span class="co">[</span><span class="ot">@schultz2017</span><span class="co">]</span> turned this into a practical tool for relational databases, demonstrating that the category-theoretic framework could handle real workloads.</span>
+<span id="cb2-235"><a href="#cb2-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-236"><a href="#cb2-236" aria-hidden="true" tabindex="-1"></a>The W-type perspective comes from dependent type theory. @gambino2004 showed that wellfounded trees (W-types) are the natural inductive types in categories with dependent products. @abbott2005 connected this to the theory of containers, which views tree-shaped data as polynomial functors. panproto uses this connection: a W-type instance is a section of a polynomial functor determined by the schema.</span>
+<span id="cb2-237"><a href="#cb2-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-238"><a href="#cb2-238" aria-hidden="true" tabindex="-1"></a>The insight that these two traditions can be unified under a common framework---that both functor instances and W-type instances arise as models of different instance theories, with migration derived from the theory structure---is, as far as we know, original to panproto.</span>
+<span id="cb2-239"><a href="#cb2-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-240"><a href="#cb2-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-241"><a href="#cb2-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## Looking Ahead</span></span>
+<span id="cb2-242"><a href="#cb2-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-243"><a href="#cb2-243" aria-hidden="true" tabindex="-1"></a>We now have the vocabulary to describe any protocol as a point in a two-dimensional space. In the next chapter, we'll use this vocabulary to do something concrete: migrate data by hand, step by step, watching the restriction operator at work on a real schema change. This will ground the abstractions of this chapter in the specifics of ATProto records and SQL rows.</span>
+<span id="cb2-244"><a href="#cb2-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-245"><a href="#cb2-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-246"><a href="#cb2-246" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb2-247"><a href="#cb2-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-248"><a href="#cb2-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **protocol** in panproto is a pair: (schema theory, instance theory).</span>
+<span id="cb2-249"><a href="#cb2-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Schema theories** are assembled as colimits of simpler theories capturing orthogonal concerns (graph structure, constraints, multiplicity, interfaces).</span>
+<span id="cb2-250"><a href="#cb2-250" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Instance theories** fall into two families: **set-valued functors** (for tabular data) and **W-types** (for tree-shaped data).</span>
+<span id="cb2-251"><a href="#cb2-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **restriction operator**---how migration acts on data---is determined by the instance theory. Functors use precomposition ($\Delta_F$). W-types use a multi-step tree surgery pipeline.</span>
+<span id="cb2-252"><a href="#cb2-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Everything else is derived.** Migration types, existence checks, and breaking-change classifiers are mechanically produced from the two theories.</span>
+<span id="cb2-253"><a href="#cb2-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The protocol is a *parameter*, not hardcoded logic. Adding a new protocol means declaring two theories, not writing an engine.</span>
+</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/04-protocols-as-parameters.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
