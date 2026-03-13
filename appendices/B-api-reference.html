@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>13&nbsp; API Reference – panproto: Universal Schema Migration</title>
+<title>14&nbsp; API Reference – panproto: Universal Schema Migration</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -285,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/B-api-reference.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/B-api-reference.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -439,6 +439,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Self-Description: The GAT of GATs</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-format-conversion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Format Conversion</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -453,19 +459,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/D-protocol-catalog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
   </div>
 </li>
       </ul>
@@ -480,22 +492,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#typescript-sdk-panprotocore" id="toc-typescript-sdk-panprotocore" class="nav-link active" data-scroll-target="#typescript-sdk-panprotocore"><span class="header-section-number">13.1</span> TypeScript SDK (<code>@panproto/core</code>)</a>
+  <li><a href="#typescript-sdk-panprotocore" id="toc-typescript-sdk-panprotocore" class="nav-link active" data-scroll-target="#typescript-sdk-panprotocore"><span class="header-section-number">14.1</span> TypeScript SDK (<code>@panproto/core</code>)</a>
   <ul class="collapse">
-  <li><a href="#initialization" id="toc-initialization" class="nav-link" data-scroll-target="#initialization"><span class="header-section-number">13.1.1</span> Initialization</a></li>
-  <li><a href="#schema-construction" id="toc-schema-construction" class="nav-link" data-scroll-target="#schema-construction"><span class="header-section-number">13.1.2</span> Schema Construction</a></li>
-  <li><a href="#migration" id="toc-migration" class="nav-link" data-scroll-target="#migration"><span class="header-section-number">13.1.3</span> Migration</a></li>
-  <li><a href="#diff-and-existence" id="toc-diff-and-existence" class="nav-link" data-scroll-target="#diff-and-existence"><span class="header-section-number">13.1.4</span> Diff and Existence</a></li>
-  <li><a href="#lens-combinators" id="toc-lens-combinators" class="nav-link" data-scroll-target="#lens-combinators"><span class="header-section-number">13.1.5</span> Lens Combinators</a></li>
-  <li><a href="#built-in-protocol-specs" id="toc-built-in-protocol-specs" class="nav-link" data-scroll-target="#built-in-protocol-specs"><span class="header-section-number">13.1.6</span> Built-in Protocol Specs</a></li>
+  <li><a href="#initialization" id="toc-initialization" class="nav-link" data-scroll-target="#initialization"><span class="header-section-number">14.1.1</span> Initialization</a></li>
+  <li><a href="#schema-construction" id="toc-schema-construction" class="nav-link" data-scroll-target="#schema-construction"><span class="header-section-number">14.1.2</span> Schema Construction</a></li>
+  <li><a href="#migration" id="toc-migration" class="nav-link" data-scroll-target="#migration"><span class="header-section-number">14.1.3</span> Migration</a></li>
+  <li><a href="#diff-and-existence" id="toc-diff-and-existence" class="nav-link" data-scroll-target="#diff-and-existence"><span class="header-section-number">14.1.4</span> Diff and Existence</a></li>
+  <li><a href="#lens-combinators" id="toc-lens-combinators" class="nav-link" data-scroll-target="#lens-combinators"><span class="header-section-number">14.1.5</span> Lens Combinators</a></li>
+  <li><a href="#built-in-protocol-specs" id="toc-built-in-protocol-specs" class="nav-link" data-scroll-target="#built-in-protocol-specs"><span class="header-section-number">14.1.6</span> Built-in Protocol Specs</a></li>
   </ul></li>
-  <li><a href="#rust-panproto-core" id="toc-rust-panproto-core" class="nav-link" data-scroll-target="#rust-panproto-core"><span class="header-section-number">13.2</span> Rust (<code>panproto-core</code>)</a>
+  <li><a href="#rust-panproto-core" id="toc-rust-panproto-core" class="nav-link" data-scroll-target="#rust-panproto-core"><span class="header-section-number">14.2</span> Rust (<code>panproto-core</code>)</a>
   <ul class="collapse">
-  <li><a href="#panproto_gat-theory-engine" id="toc-panproto_gat-theory-engine" class="nav-link" data-scroll-target="#panproto_gat-theory-engine"><span class="header-section-number">13.2.1</span> <code>panproto_gat</code> — Theory Engine</a></li>
-  <li><a href="#panproto_schema-schema-layer" id="toc-panproto_schema-schema-layer" class="nav-link" data-scroll-target="#panproto_schema-schema-layer"><span class="header-section-number">13.2.2</span> <code>panproto_schema</code> — Schema Layer</a></li>
-  <li><a href="#panproto_inst-instance-layer" id="toc-panproto_inst-instance-layer" class="nav-link" data-scroll-target="#panproto_inst-instance-layer"><span class="header-section-number">13.2.3</span> <code>panproto_inst</code> — Instance Layer</a></li>
-  <li><a href="#panproto_mig-migration-engine" id="toc-panproto_mig-migration-engine" class="nav-link" data-scroll-target="#panproto_mig-migration-engine"><span class="header-section-number">13.2.4</span> <code>panproto_mig</code> — Migration Engine</a></li>
-  <li><a href="#panproto_lens-lens-layer" id="toc-panproto_lens-lens-layer" class="nav-link" data-scroll-target="#panproto_lens-lens-layer"><span class="header-section-number">13.2.5</span> <code>panproto_lens</code> — Lens Layer</a></li>
+  <li><a href="#panproto_gat-theory-engine" id="toc-panproto_gat-theory-engine" class="nav-link" data-scroll-target="#panproto_gat-theory-engine"><span class="header-section-number">14.2.1</span> <code>panproto_gat</code> — Theory Engine</a></li>
+  <li><a href="#panproto_schema-schema-layer" id="toc-panproto_schema-schema-layer" class="nav-link" data-scroll-target="#panproto_schema-schema-layer"><span class="header-section-number">14.2.2</span> <code>panproto_schema</code> — Schema Layer</a></li>
+  <li><a href="#panproto_inst-instance-layer" id="toc-panproto_inst-instance-layer" class="nav-link" data-scroll-target="#panproto_inst-instance-layer"><span class="header-section-number">14.2.3</span> <code>panproto_inst</code> — Instance Layer</a></li>
+  <li><a href="#panproto_mig-migration-engine" id="toc-panproto_mig-migration-engine" class="nav-link" data-scroll-target="#panproto_mig-migration-engine"><span class="header-section-number">14.2.4</span> <code>panproto_mig</code> — Migration Engine</a></li>
+  <li><a href="#panproto_lens-lens-layer" id="toc-panproto_lens-lens-layer" class="nav-link" data-scroll-target="#panproto_lens-lens-layer"><span class="header-section-number">14.2.5</span> <code>panproto_lens</code> — Lens Layer</a></li>
+  <li><a href="#panproto_emit-emit-helpers" id="toc-panproto_emit-emit-helpers" class="nav-link" data-scroll-target="#panproto_emit-emit-helpers"><span class="header-section-number">14.2.6</span> <code>panproto_emit</code> — Emit Helpers</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/appendices/B-api-reference.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -504,9 +517,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/B-api-reference.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/B-api-reference.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -524,10 +537,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>An annotated summary of the public API surface. For full documentation, see the generated API docs shipped with each package.</p>
-<section id="typescript-sdk-panprotocore" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="typescript-sdk-panprotocore"><span class="header-section-number">13.1</span> TypeScript SDK (<code>@panproto/core</code>)</h2>
-<section id="initialization" class="level3" data-number="13.1.1">
-<h3 data-number="13.1.1" class="anchored" data-anchor-id="initialization"><span class="header-section-number">13.1.1</span> Initialization</h3>
+<section id="typescript-sdk-panprotocore" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="typescript-sdk-panprotocore"><span class="header-section-number">14.1</span> TypeScript SDK (<code>@panproto/core</code>)</h2>
+<section id="initialization" class="level3" data-number="14.1.1">
+<h3 data-number="14.1.1" class="anchored" data-anchor-id="initialization"><span class="header-section-number">14.1.1</span> Initialization</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 45%">
@@ -551,8 +564,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="schema-construction" class="level3" data-number="13.1.2">
-<h3 data-number="13.1.2" class="anchored" data-anchor-id="schema-construction"><span class="header-section-number">13.1.2</span> Schema Construction</h3>
+<section id="schema-construction" class="level3" data-number="14.1.2">
+<h3 data-number="14.1.2" class="anchored" data-anchor-id="schema-construction"><span class="header-section-number">14.1.2</span> Schema Construction</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 45%">
@@ -584,8 +597,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="migration" class="level3" data-number="13.1.3">
-<h3 data-number="13.1.3" class="anchored" data-anchor-id="migration"><span class="header-section-number">13.1.3</span> Migration</h3>
+<section id="migration" class="level3" data-number="14.1.3">
+<h3 data-number="14.1.3" class="anchored" data-anchor-id="migration"><span class="header-section-number">14.1.3</span> Migration</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 45%">
@@ -629,8 +642,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="diff-and-existence" class="level3" data-number="13.1.4">
-<h3 data-number="13.1.4" class="anchored" data-anchor-id="diff-and-existence"><span class="header-section-number">13.1.4</span> Diff and Existence</h3>
+<section id="diff-and-existence" class="level3" data-number="14.1.4">
+<h3 data-number="14.1.4" class="anchored" data-anchor-id="diff-and-existence"><span class="header-section-number">14.1.4</span> Diff and Existence</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 45%">
@@ -654,8 +667,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="lens-combinators" class="level3" data-number="13.1.5">
-<h3 data-number="13.1.5" class="anchored" data-anchor-id="lens-combinators"><span class="header-section-number">13.1.5</span> Lens Combinators</h3>
+<section id="lens-combinators" class="level3" data-number="14.1.5">
+<h3 data-number="14.1.5" class="anchored" data-anchor-id="lens-combinators"><span class="header-section-number">14.1.5</span> Lens Combinators</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 48%">
@@ -703,44 +716,438 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="built-in-protocol-specs" class="level3" data-number="13.1.6">
-<h3 data-number="13.1.6" class="anchored" data-anchor-id="built-in-protocol-specs"><span class="header-section-number">13.1.6</span> Built-in Protocol Specs</h3>
+<section id="built-in-protocol-specs" class="level3" data-number="14.1.6">
+<h3 data-number="14.1.6" class="anchored" data-anchor-id="built-in-protocol-specs"><span class="header-section-number">14.1.6</span> Built-in Protocol Specs</h3>
+<p>All 54 built-in protocols are accessible via named constants. Every protocol supports bidirectional conversion: a <code>parse_*</code> function reads a source document into a panproto schema, and a matching <code>emit_*</code> function writes a panproto schema back out to that format. The emit functions are new — all protocols now have full parse + emit support.</p>
+<p><strong>Serialization</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 29%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Constant</th>
+<th>Protocol</th>
+<th>Parse / Emit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>PROTOBUF_SPEC</code></td>
+<td>Protocol Buffers</td>
+<td><code>parse_proto</code> / <code>emit_proto</code></td>
+</tr>
+<tr class="even">
+<td><code>AVRO_SPEC</code></td>
+<td>Apache Avro</td>
+<td><code>parse_avsc</code> / <code>emit_avsc</code></td>
+</tr>
+<tr class="odd">
+<td><code>THRIFT_SPEC</code></td>
+<td>Apache Thrift</td>
+<td><code>parse_thrift</code> / <code>emit_thrift</code></td>
+</tr>
+<tr class="even">
+<td><code>CAPNPROTO_SPEC</code></td>
+<td>Cap’n Proto</td>
+<td><code>parse_capnp</code> / <code>emit_capnp</code></td>
+</tr>
+<tr class="odd">
+<td><code>FLATBUFFERS_SPEC</code></td>
+<td>FlatBuffers</td>
+<td><code>parse_fbs</code> / <code>emit_fbs</code></td>
+</tr>
+<tr class="even">
+<td><code>ASN1_SPEC</code></td>
+<td>ASN.1</td>
+<td><code>parse_asn1</code> / <code>emit_asn1</code></td>
+</tr>
+<tr class="odd">
+<td><code>BOND_SPEC</code></td>
+<td>Microsoft Bond</td>
+<td><code>parse_bond</code> / <code>emit_bond</code></td>
+</tr>
+<tr class="even">
+<td><code>MSGPACK_SPEC</code></td>
+<td>MsgPack Schema</td>
+<td><code>parse_msgpack_schema</code> / <code>emit_msgpack_schema</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Data Schema</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 29%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Constant</th>
+<th>Protocol</th>
+<th>Parse / Emit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>JSON_SCHEMA_SPEC</code></td>
+<td>JSON Schema</td>
+<td><code>parse_json_schema</code> / <code>emit_json_schema</code></td>
+</tr>
+<tr class="even">
+<td><code>XML_SCHEMA_SPEC</code></td>
+<td>XML / XSD</td>
+<td><code>parse_xsd</code> / <code>emit_xsd</code></td>
+</tr>
+<tr class="odd">
+<td><code>CSV_SCHEMA_SPEC</code></td>
+<td>CSV / Table Schema</td>
+<td><code>parse_tableschema</code> / <code>emit_tableschema</code></td>
+</tr>
+<tr class="even">
+<td><code>YAML_SCHEMA_SPEC</code></td>
+<td>YAML Schema</td>
+<td><code>parse_yaml_schema</code> / <code>emit_yaml_schema</code></td>
+</tr>
+<tr class="odd">
+<td><code>TOML_SCHEMA_SPEC</code></td>
+<td>TOML Schema</td>
+<td><code>parse_toml_schema</code> / <code>emit_toml_schema</code></td>
+</tr>
+<tr class="even">
+<td><code>CDDL_SPEC</code></td>
+<td>CDDL</td>
+<td><code>parse_cddl</code> / <code>emit_cddl</code></td>
+</tr>
+<tr class="odd">
+<td><code>INI_SCHEMA_SPEC</code></td>
+<td>INI Schema</td>
+<td><code>parse_ini_schema</code> / <code>emit_ini_schema</code></td>
+</tr>
+<tr class="even">
+<td><code>BSON_SCHEMA_SPEC</code></td>
+<td>BSON Schema</td>
+<td><code>parse_bson_schema</code> / <code>emit_bson_schema</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>API</strong></p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Constant</th>
 <th>Protocol</th>
+<th>Parse / Emit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>GRAPHQL_SPEC</code></td>
+<td>GraphQL SDL</td>
+<td><code>parse_graphql</code> / <code>emit_graphql</code></td>
+</tr>
+<tr class="even">
+<td><code>OPENAPI_SPEC</code></td>
+<td>OpenAPI</td>
+<td><code>parse_openapi</code> / <code>emit_openapi</code></td>
+</tr>
+<tr class="odd">
+<td><code>ASYNCAPI_SPEC</code></td>
+<td>AsyncAPI</td>
+<td><code>parse_asyncapi</code> / <code>emit_asyncapi</code></td>
+</tr>
+<tr class="even">
+<td><code>RAML_SPEC</code></td>
+<td>RAML</td>
+<td><code>parse_raml</code> / <code>emit_raml</code></td>
+</tr>
+<tr class="odd">
+<td><code>JSONAPI_SPEC</code></td>
+<td>JSON:API</td>
+<td><code>parse_jsonapi</code> / <code>emit_jsonapi</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Database</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Constant</th>
+<th>Protocol</th>
+<th>Parse / Emit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SQL_SPEC</code></td>
+<td>SQL DDL</td>
+<td><code>parse_sql</code> / <code>emit_sql</code></td>
+</tr>
+<tr class="even">
+<td><code>MONGODB_SPEC</code></td>
+<td>MongoDB</td>
+<td><code>parse_mongo</code> / <code>emit_mongo</code></td>
+</tr>
+<tr class="odd">
+<td><code>CASSANDRA_SPEC</code></td>
+<td>Cassandra</td>
+<td><code>parse_cassandra</code> / <code>emit_cassandra</code></td>
+</tr>
+<tr class="even">
+<td><code>DYNAMODB_SPEC</code></td>
+<td>DynamoDB</td>
+<td><code>parse_dynamo</code> / <code>emit_dynamo</code></td>
+</tr>
+<tr class="odd">
+<td><code>NEO4J_SPEC</code></td>
+<td>Neo4j</td>
+<td><code>parse_neo4j</code> / <code>emit_neo4j</code></td>
+</tr>
+<tr class="even">
+<td><code>REDIS_SPEC</code></td>
+<td>Redis</td>
+<td><code>parse_redis</code> / <code>emit_redis</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Type Systems</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 29%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Constant</th>
+<th>Protocol</th>
+<th>Parse / Emit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>TYPESCRIPT_SPEC</code></td>
+<td>TypeScript</td>
+<td><code>parse_typescript</code> / <code>emit_typescript</code></td>
+</tr>
+<tr class="even">
+<td><code>PYTHON_SPEC</code></td>
+<td>Python</td>
+<td><code>parse_python</code> / <code>emit_python</code></td>
+</tr>
+<tr class="odd">
+<td><code>RUST_SERDE_SPEC</code></td>
+<td>Rust Serde</td>
+<td><code>parse_rust_serde</code> / <code>emit_rust_serde</code></td>
+</tr>
+<tr class="even">
+<td><code>JAVA_SPEC</code></td>
+<td>Java</td>
+<td><code>parse_java</code> / <code>emit_java</code></td>
+</tr>
+<tr class="odd">
+<td><code>GO_SPEC</code></td>
+<td>Go</td>
+<td><code>parse_go</code> / <code>emit_go</code></td>
+</tr>
+<tr class="even">
+<td><code>SWIFT_SPEC</code></td>
+<td>Swift</td>
+<td><code>parse_swift</code> / <code>emit_swift</code></td>
+</tr>
+<tr class="odd">
+<td><code>KOTLIN_SPEC</code></td>
+<td>Kotlin</td>
+<td><code>parse_kotlin</code> / <code>emit_kotlin</code></td>
+</tr>
+<tr class="even">
+<td><code>CSHARP_SPEC</code></td>
+<td>C#</td>
+<td><code>parse_csharp</code> / <code>emit_csharp</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Web / Document</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 29%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Constant</th>
+<th>Protocol</th>
+<th>Parse / Emit</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><code>ATPROTO_SPEC</code></td>
 <td>AT Protocol (Bluesky Lexicon)</td>
+<td><code>parse_atproto</code> / <code>emit_atproto</code></td>
 </tr>
 <tr class="even">
-<td><code>SQL_SPEC</code></td>
-<td>SQL DDL (relational schemas)</td>
+<td><code>HTML_SPEC</code></td>
+<td>HTML</td>
+<td><code>parse_html</code> / <code>emit_html</code></td>
 </tr>
 <tr class="odd">
-<td><code>PROTOBUF_SPEC</code></td>
-<td>Protocol Buffers</td>
+<td><code>CSS_SPEC</code></td>
+<td>CSS</td>
+<td><code>parse_css</code> / <code>emit_css</code></td>
 </tr>
 <tr class="even">
-<td><code>GRAPHQL_SPEC</code></td>
-<td>GraphQL SDL</td>
+<td><code>DOCX_SPEC</code></td>
+<td>DOCX</td>
+<td><code>parse_docx</code> / <code>emit_docx</code></td>
 </tr>
 <tr class="odd">
-<td><code>JSON_SCHEMA_SPEC</code></td>
-<td>JSON Schema</td>
+<td><code>ODF_SPEC</code></td>
+<td>ODF</td>
+<td><code>parse_odf</code> / <code>emit_odf</code></td>
+</tr>
+<tr class="even">
+<td><code>MARKDOWN_SPEC</code></td>
+<td>Markdown</td>
+<td><code>parse_markdown</code> / <code>emit_markdown</code></td>
+</tr>
+<tr class="odd">
+<td><code>JSX_SPEC</code></td>
+<td>JSX / React</td>
+<td><code>parse_jsx</code> / <code>emit_jsx</code></td>
+</tr>
+<tr class="even">
+<td><code>VUE_SPEC</code></td>
+<td>Vue</td>
+<td><code>parse_vue</code> / <code>emit_vue</code></td>
+</tr>
+<tr class="odd">
+<td><code>SVELTE_SPEC</code></td>
+<td>Svelte</td>
+<td><code>parse_svelte</code> / <code>emit_svelte</code></td>
+</tr>
+<tr class="even">
+<td><code>XML_SPEC</code></td>
+<td>XML / XSD</td>
+<td><code>parse_xml</code> / <code>emit_xml</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Data Science</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Constant</th>
+<th>Protocol</th>
+<th>Parse / Emit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>PARQUET_SPEC</code></td>
+<td>Parquet</td>
+<td><code>parse_parquet</code> / <code>emit_parquet</code></td>
+</tr>
+<tr class="even">
+<td><code>ARROW_SPEC</code></td>
+<td>Arrow</td>
+<td><code>parse_arrow</code> / <code>emit_arrow</code></td>
+</tr>
+<tr class="odd">
+<td><code>DATAFRAME_SPEC</code></td>
+<td>DataFrame</td>
+<td><code>parse_dataframe</code> / <code>emit_dataframe</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Domain</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Constant</th>
+<th>Protocol</th>
+<th>Parse / Emit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>GEOJSON_SPEC</code></td>
+<td>GeoJSON</td>
+<td><code>parse_geojson</code> / <code>emit_geojson</code></td>
+</tr>
+<tr class="even">
+<td><code>FHIR_SPEC</code></td>
+<td>FHIR</td>
+<td><code>parse_fhir</code> / <code>emit_fhir</code></td>
+</tr>
+<tr class="odd">
+<td><code>RSS_SPEC</code></td>
+<td>RSS / Atom</td>
+<td><code>parse_rss</code> / <code>emit_rss</code></td>
+</tr>
+<tr class="even">
+<td><code>VCARD_SPEC</code></td>
+<td>vCard / iCal</td>
+<td><code>parse_vcard</code> / <code>emit_vcard</code></td>
+</tr>
+<tr class="odd">
+<td><code>EDI_X12_SPEC</code></td>
+<td>EDI X12</td>
+<td><code>parse_edi_x12</code> / <code>emit_edi_x12</code></td>
+</tr>
+<tr class="even">
+<td><code>SWIFT_MT_SPEC</code></td>
+<td>SWIFT MT</td>
+<td><code>parse_swift_mt</code> / <code>emit_swift_mt</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Config</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 29%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Constant</th>
+<th>Protocol</th>
+<th>Parse / Emit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>HCL_SPEC</code></td>
+<td>HCL</td>
+<td><code>parse_hcl</code> / <code>emit_hcl</code></td>
+</tr>
+<tr class="even">
+<td><code>K8S_CRD_SPEC</code></td>
+<td>Kubernetes CRD</td>
+<td><code>parse_k8s_crd</code> / <code>emit_k8s_crd</code></td>
+</tr>
+<tr class="odd">
+<td><code>CLOUDFORMATION_SPEC</code></td>
+<td>CloudFormation</td>
+<td><code>parse_cloudformation</code> / <code>emit_cloudformation</code></td>
+</tr>
+<tr class="even">
+<td><code>ANSIBLE_SPEC</code></td>
+<td>Ansible</td>
+<td><code>parse_ansible</code> / <code>emit_ansible</code></td>
 </tr>
 </tbody>
 </table>
 </section>
 </section>
-<section id="rust-panproto-core" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="rust-panproto-core"><span class="header-section-number">13.2</span> Rust (<code>panproto-core</code>)</h2>
-<section id="panproto_gat-theory-engine" class="level3" data-number="13.2.1">
-<h3 data-number="13.2.1" class="anchored" data-anchor-id="panproto_gat-theory-engine"><span class="header-section-number">13.2.1</span> <code>panproto_gat</code> — Theory Engine</h3>
+<section id="rust-panproto-core" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="rust-panproto-core"><span class="header-section-number">14.2</span> Rust (<code>panproto-core</code>)</h2>
+<section id="panproto_gat-theory-engine" class="level3" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="panproto_gat-theory-engine"><span class="header-section-number">14.2.1</span> <code>panproto_gat</code> — Theory Engine</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 31%">
@@ -780,8 +1187,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="panproto_schema-schema-layer" class="level3" data-number="13.2.2">
-<h3 data-number="13.2.2" class="anchored" data-anchor-id="panproto_schema-schema-layer"><span class="header-section-number">13.2.2</span> <code>panproto_schema</code> — Schema Layer</h3>
+<section id="panproto_schema-schema-layer" class="level3" data-number="14.2.2">
+<h3 data-number="14.2.2" class="anchored" data-anchor-id="panproto_schema-schema-layer"><span class="header-section-number">14.2.2</span> <code>panproto_schema</code> — Schema Layer</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 31%">
@@ -817,8 +1224,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="panproto_inst-instance-layer" class="level3" data-number="13.2.3">
-<h3 data-number="13.2.3" class="anchored" data-anchor-id="panproto_inst-instance-layer"><span class="header-section-number">13.2.3</span> <code>panproto_inst</code> — Instance Layer</h3>
+<section id="panproto_inst-instance-layer" class="level3" data-number="14.2.3">
+<h3 data-number="14.2.3" class="anchored" data-anchor-id="panproto_inst-instance-layer"><span class="header-section-number">14.2.3</span> <code>panproto_inst</code> — Instance Layer</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 31%">
@@ -858,8 +1265,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="panproto_mig-migration-engine" class="level3" data-number="13.2.4">
-<h3 data-number="13.2.4" class="anchored" data-anchor-id="panproto_mig-migration-engine"><span class="header-section-number">13.2.4</span> <code>panproto_mig</code> — Migration Engine</h3>
+<section id="panproto_mig-migration-engine" class="level3" data-number="14.2.4">
+<h3 data-number="14.2.4" class="anchored" data-anchor-id="panproto_mig-migration-engine"><span class="header-section-number">14.2.4</span> <code>panproto_mig</code> — Migration Engine</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 31%">
@@ -903,8 +1310,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="panproto_lens-lens-layer" class="level3" data-number="13.2.5">
-<h3 data-number="13.2.5" class="anchored" data-anchor-id="panproto_lens-lens-layer"><span class="header-section-number">13.2.5</span> <code>panproto_lens</code> — Lens Layer</h3>
+<section id="panproto_lens-lens-layer" class="level3" data-number="14.2.5">
+<h3 data-number="14.2.5" class="anchored" data-anchor-id="panproto_lens-lens-layer"><span class="header-section-number">14.2.5</span> <code>panproto_lens</code> — Lens Layer</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 31%">
@@ -944,6 +1351,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>check_laws(lens)</code> → <code>LawReport</code></td>
 <td>Verify that a lens satisfies the get-put and put-get laws.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="panproto_emit-emit-helpers" class="level3" data-number="14.2.6">
+<h3 data-number="14.2.6" class="anchored" data-anchor-id="panproto_emit-emit-helpers"><span class="header-section-number">14.2.6</span> <code>panproto_emit</code> — Emit Helpers</h3>
+<p>The shared <code>emit</code> module provides utilities used by all <code>emit_*</code> functions. Protocol authors implementing a custom emitter should build on these primitives.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>find_roots(schema)</code> → <code>Vec&lt;VertexId&gt;</code></td>
+<td>Return all vertices with no incoming edges — the natural entry points for top-down emission.</td>
+</tr>
+<tr class="even">
+<td><code>children_by_edge(schema, vertex)</code> → <code>Vec&lt;(EdgeId, VertexId)&gt;</code></td>
+<td>List the outgoing edges and their target vertices for a given vertex, in declaration order.</td>
+</tr>
+<tr class="odd">
+<td><code>constraint_value(schema, edge, key)</code> → <code>Option&lt;Value&gt;</code></td>
+<td>Look up a named constraint on an edge (e.g.&nbsp;a field’s default value or cardinality bound).</td>
+</tr>
+<tr class="even">
+<td><code>IndentWriter</code></td>
+<td>A write adapter that tracks indentation depth and inserts consistent leading whitespace, suitable for text-based emitters.</td>
 </tr>
 </tbody>
 </table>
@@ -1422,12 +1863,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../appendices/A-category-theory-cheatsheet.html" class="pagination-link" aria-label="Category Theory Cheatsheet">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../appendices/C-guide-to-the-literature.html" class="pagination-link" aria-label="Guide to the Literature">
-        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1487,71 +1928,179 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### Built-in Protocol Specs</span></span>
 <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constant <span class="pp">|</span> Protocol <span class="pp">|</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------|</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ATPROTO_SPEC`</span> <span class="pp">|</span> AT Protocol (Bluesky Lexicon) <span class="pp">|</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`SQL_SPEC`</span> <span class="pp">|</span> SQL DDL (relational schemas) <span class="pp">|</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`PROTOBUF_SPEC`</span> <span class="pp">|</span> Protocol Buffers <span class="pp">|</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`GRAPHQL_SPEC`</span> <span class="pp">|</span> GraphQL SDL <span class="pp">|</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`JSON_SCHEMA_SPEC`</span> <span class="pp">|</span> JSON Schema <span class="pp">|</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Rust (`panproto-core`)</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_gat` — Theory Engine</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Theory`</span> <span class="pp">|</span> A generalized algebraic theory: sorts, operations, equations. <span class="pp">|</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Sort`</span> <span class="pp">|</span> A sort declaration within a theory. <span class="pp">|</span></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Operation`</span> <span class="pp">|</span> An operation declaration with input sorts and output sort. <span class="pp">|</span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Equation`</span> <span class="pp">|</span> An equational axiom between terms. <span class="pp">|</span></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`TheoryMorphism`</span> <span class="pp">|</span> A structure-preserving map between theories. <span class="pp">|</span></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`colimit(t1, t2, shared)`</span> → <span class="in">`Result&lt;Theory, GatError&gt;`</span> <span class="pp">|</span> Compute the pushout of two theories over a shared base. <span class="pp">|</span></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_schema` — Schema Layer</span></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Schema`</span> <span class="pp">|</span> A model of a protocol theory: vertices, edges, and their relationships. <span class="pp">|</span></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`SchemaBuilder`</span> <span class="pp">|</span> Builder for constructing schemas incrementally. <span class="pp">|</span></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Protocol`</span> <span class="pp">|</span> A named theory that defines a schema language. <span class="pp">|</span></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Vertex`</span> <span class="pp">|</span> A vertex in a schema (instance of a sort). <span class="pp">|</span></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Edge`</span> <span class="pp">|</span> An edge in a schema (instance of an operation). <span class="pp">|</span></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_inst` — Instance Layer</span></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`WInstance`</span> <span class="pp">|</span> An instance encoded as a W-type (tree-structured data). <span class="pp">|</span></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`FInstance`</span> <span class="pp">|</span> An instance encoded as a functor (relational data). <span class="pp">|</span></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`wtype_restrict(inst, morph)`</span> → <span class="in">`WInstance`</span> <span class="pp">|</span> Migrate a W-type instance along a schema morphism. <span class="pp">|</span></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`functor_restrict(inst, morph)`</span> → <span class="in">`FInstance`</span> <span class="pp">|</span> Migrate a functor instance along a schema morphism. <span class="pp">|</span></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`parse_json(json, schema)`</span> → <span class="in">`Result&lt;WInstance, ParseError&gt;`</span> <span class="pp">|</span> Parse JSON into a typed instance. <span class="pp">|</span></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`to_json(inst)`</span> → <span class="in">`Value`</span> <span class="pp">|</span> Serialize an instance back to JSON. <span class="pp">|</span></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_mig` — Migration Engine</span></span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Migration`</span> <span class="pp">|</span> A compiled migration between two schemas. <span class="pp">|</span></span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`compile(builder)`</span> → <span class="in">`Result&lt;Migration, MigError&gt;`</span> <span class="pp">|</span> Compile a migration specification. <span class="pp">|</span></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lift_wtype(migration, inst)`</span> → <span class="in">`WInstance`</span> <span class="pp">|</span> Lift a W-type instance through a migration. <span class="pp">|</span></span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lift_functor(migration, inst)`</span> → <span class="in">`FInstance`</span> <span class="pp">|</span> Lift a functor instance through a migration. <span class="pp">|</span></span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`check_existence(old, new)`</span> → <span class="in">`ExistenceReport`</span> <span class="pp">|</span> Check whether a migration between two schemas exists. <span class="pp">|</span></span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`compose(m1, m2)`</span> → <span class="in">`Result&lt;Migration, MigError&gt;`</span> <span class="pp">|</span> Compose two migrations sequentially. <span class="pp">|</span></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`invert(m)`</span> → <span class="in">`Result&lt;Migration, MigError&gt;`</span> <span class="pp">|</span> Invert a migration (when the underlying lens is an isomorphism). <span class="pp">|</span></span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_lens` — Lens Layer</span></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Lens`</span> <span class="pp">|</span> A bidirectional transformation between two schemas. <span class="pp">|</span></span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Complement`</span> <span class="pp">|</span> The data discarded by the forward direction (needed for <span class="in">`put`</span>). <span class="pp">|</span></span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Combinator`</span> <span class="pp">|</span> A single lens-building step (rename, add, remove, etc.). <span class="pp">|</span></span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`get(lens, source)`</span> → <span class="in">`View`</span> <span class="pp">|</span> Apply the forward direction of a lens. <span class="pp">|</span></span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`put(lens, view, complement)`</span> → <span class="in">`Source`</span> <span class="pp">|</span> Apply the backward direction, restoring the source. <span class="pp">|</span></span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`from_combinators(steps)`</span> → <span class="in">`Result&lt;Lens, LensError&gt;`</span> <span class="pp">|</span> Build a lens from a sequence of combinators. <span class="pp">|</span></span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`check_laws(lens)`</span> → <span class="in">`LawReport`</span> <span class="pp">|</span> Verify that a lens satisfies the get-put and put-get laws. <span class="pp">|</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>All 54 built-in protocols are accessible via named constants. Every protocol supports bidirectional conversion: a <span class="in">`parse_*`</span> function reads a source document into a panproto schema, and a matching <span class="in">`emit_*`</span> function writes a panproto schema back out to that format. The emit functions are new — all protocols now have full parse + emit support.</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>**Serialization**</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constant <span class="pp">|</span> Protocol <span class="pp">|</span> Parse / Emit <span class="pp">|</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------|--------------|</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`PROTOBUF_SPEC`</span> <span class="pp">|</span> Protocol Buffers <span class="pp">|</span> <span class="in">`parse_proto`</span> / <span class="in">`emit_proto`</span> <span class="pp">|</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`AVRO_SPEC`</span> <span class="pp">|</span> Apache Avro <span class="pp">|</span> <span class="in">`parse_avsc`</span> / <span class="in">`emit_avsc`</span> <span class="pp">|</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`THRIFT_SPEC`</span> <span class="pp">|</span> Apache Thrift <span class="pp">|</span> <span class="in">`parse_thrift`</span> / <span class="in">`emit_thrift`</span> <span class="pp">|</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`CAPNPROTO_SPEC`</span> <span class="pp">|</span> Cap'n Proto <span class="pp">|</span> <span class="in">`parse_capnp`</span> / <span class="in">`emit_capnp`</span> <span class="pp">|</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`FLATBUFFERS_SPEC`</span> <span class="pp">|</span> FlatBuffers <span class="pp">|</span> <span class="in">`parse_fbs`</span> / <span class="in">`emit_fbs`</span> <span class="pp">|</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ASN1_SPEC`</span> <span class="pp">|</span> ASN.1 <span class="pp">|</span> <span class="in">`parse_asn1`</span> / <span class="in">`emit_asn1`</span> <span class="pp">|</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`BOND_SPEC`</span> <span class="pp">|</span> Microsoft Bond <span class="pp">|</span> <span class="in">`parse_bond`</span> / <span class="in">`emit_bond`</span> <span class="pp">|</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`MSGPACK_SPEC`</span> <span class="pp">|</span> MsgPack Schema <span class="pp">|</span> <span class="in">`parse_msgpack_schema`</span> / <span class="in">`emit_msgpack_schema`</span> <span class="pp">|</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>**Data Schema**</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constant <span class="pp">|</span> Protocol <span class="pp">|</span> Parse / Emit <span class="pp">|</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------|--------------|</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`JSON_SCHEMA_SPEC`</span> <span class="pp">|</span> JSON Schema <span class="pp">|</span> <span class="in">`parse_json_schema`</span> / <span class="in">`emit_json_schema`</span> <span class="pp">|</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`XML_SCHEMA_SPEC`</span> <span class="pp">|</span> XML / XSD <span class="pp">|</span> <span class="in">`parse_xsd`</span> / <span class="in">`emit_xsd`</span> <span class="pp">|</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`CSV_SCHEMA_SPEC`</span> <span class="pp">|</span> CSV / Table Schema <span class="pp">|</span> <span class="in">`parse_tableschema`</span> / <span class="in">`emit_tableschema`</span> <span class="pp">|</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`YAML_SCHEMA_SPEC`</span> <span class="pp">|</span> YAML Schema <span class="pp">|</span> <span class="in">`parse_yaml_schema`</span> / <span class="in">`emit_yaml_schema`</span> <span class="pp">|</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`TOML_SCHEMA_SPEC`</span> <span class="pp">|</span> TOML Schema <span class="pp">|</span> <span class="in">`parse_toml_schema`</span> / <span class="in">`emit_toml_schema`</span> <span class="pp">|</span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`CDDL_SPEC`</span> <span class="pp">|</span> CDDL <span class="pp">|</span> <span class="in">`parse_cddl`</span> / <span class="in">`emit_cddl`</span> <span class="pp">|</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`INI_SCHEMA_SPEC`</span> <span class="pp">|</span> INI Schema <span class="pp">|</span> <span class="in">`parse_ini_schema`</span> / <span class="in">`emit_ini_schema`</span> <span class="pp">|</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`BSON_SCHEMA_SPEC`</span> <span class="pp">|</span> BSON Schema <span class="pp">|</span> <span class="in">`parse_bson_schema`</span> / <span class="in">`emit_bson_schema`</span> <span class="pp">|</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>**API**</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constant <span class="pp">|</span> Protocol <span class="pp">|</span> Parse / Emit <span class="pp">|</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------|--------------|</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`GRAPHQL_SPEC`</span> <span class="pp">|</span> GraphQL SDL <span class="pp">|</span> <span class="in">`parse_graphql`</span> / <span class="in">`emit_graphql`</span> <span class="pp">|</span></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`OPENAPI_SPEC`</span> <span class="pp">|</span> OpenAPI <span class="pp">|</span> <span class="in">`parse_openapi`</span> / <span class="in">`emit_openapi`</span> <span class="pp">|</span></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ASYNCAPI_SPEC`</span> <span class="pp">|</span> AsyncAPI <span class="pp">|</span> <span class="in">`parse_asyncapi`</span> / <span class="in">`emit_asyncapi`</span> <span class="pp">|</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`RAML_SPEC`</span> <span class="pp">|</span> RAML <span class="pp">|</span> <span class="in">`parse_raml`</span> / <span class="in">`emit_raml`</span> <span class="pp">|</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`JSONAPI_SPEC`</span> <span class="pp">|</span> JSON:API <span class="pp">|</span> <span class="in">`parse_jsonapi`</span> / <span class="in">`emit_jsonapi`</span> <span class="pp">|</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>**Database**</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constant <span class="pp">|</span> Protocol <span class="pp">|</span> Parse / Emit <span class="pp">|</span></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------|--------------|</span></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`SQL_SPEC`</span> <span class="pp">|</span> SQL DDL <span class="pp">|</span> <span class="in">`parse_sql`</span> / <span class="in">`emit_sql`</span> <span class="pp">|</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`MONGODB_SPEC`</span> <span class="pp">|</span> MongoDB <span class="pp">|</span> <span class="in">`parse_mongo`</span> / <span class="in">`emit_mongo`</span> <span class="pp">|</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`CASSANDRA_SPEC`</span> <span class="pp">|</span> Cassandra <span class="pp">|</span> <span class="in">`parse_cassandra`</span> / <span class="in">`emit_cassandra`</span> <span class="pp">|</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`DYNAMODB_SPEC`</span> <span class="pp">|</span> DynamoDB <span class="pp">|</span> <span class="in">`parse_dynamo`</span> / <span class="in">`emit_dynamo`</span> <span class="pp">|</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`NEO4J_SPEC`</span> <span class="pp">|</span> Neo4j <span class="pp">|</span> <span class="in">`parse_neo4j`</span> / <span class="in">`emit_neo4j`</span> <span class="pp">|</span></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`REDIS_SPEC`</span> <span class="pp">|</span> Redis <span class="pp">|</span> <span class="in">`parse_redis`</span> / <span class="in">`emit_redis`</span> <span class="pp">|</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>**Type Systems**</span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constant <span class="pp">|</span> Protocol <span class="pp">|</span> Parse / Emit <span class="pp">|</span></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------|--------------|</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`TYPESCRIPT_SPEC`</span> <span class="pp">|</span> TypeScript <span class="pp">|</span> <span class="in">`parse_typescript`</span> / <span class="in">`emit_typescript`</span> <span class="pp">|</span></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`PYTHON_SPEC`</span> <span class="pp">|</span> Python <span class="pp">|</span> <span class="in">`parse_python`</span> / <span class="in">`emit_python`</span> <span class="pp">|</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`RUST_SERDE_SPEC`</span> <span class="pp">|</span> Rust Serde <span class="pp">|</span> <span class="in">`parse_rust_serde`</span> / <span class="in">`emit_rust_serde`</span> <span class="pp">|</span></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`JAVA_SPEC`</span> <span class="pp">|</span> Java <span class="pp">|</span> <span class="in">`parse_java`</span> / <span class="in">`emit_java`</span> <span class="pp">|</span></span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`GO_SPEC`</span> <span class="pp">|</span> Go <span class="pp">|</span> <span class="in">`parse_go`</span> / <span class="in">`emit_go`</span> <span class="pp">|</span></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`SWIFT_SPEC`</span> <span class="pp">|</span> Swift <span class="pp">|</span> <span class="in">`parse_swift`</span> / <span class="in">`emit_swift`</span> <span class="pp">|</span></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`KOTLIN_SPEC`</span> <span class="pp">|</span> Kotlin <span class="pp">|</span> <span class="in">`parse_kotlin`</span> / <span class="in">`emit_kotlin`</span> <span class="pp">|</span></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`CSHARP_SPEC`</span> <span class="pp">|</span> C# <span class="pp">|</span> <span class="in">`parse_csharp`</span> / <span class="in">`emit_csharp`</span> <span class="pp">|</span></span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>**Web / Document**</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constant <span class="pp">|</span> Protocol <span class="pp">|</span> Parse / Emit <span class="pp">|</span></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------|--------------|</span></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ATPROTO_SPEC`</span> <span class="pp">|</span> AT Protocol (Bluesky Lexicon) <span class="pp">|</span> <span class="in">`parse_atproto`</span> / <span class="in">`emit_atproto`</span> <span class="pp">|</span></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`HTML_SPEC`</span> <span class="pp">|</span> HTML <span class="pp">|</span> <span class="in">`parse_html`</span> / <span class="in">`emit_html`</span> <span class="pp">|</span></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`CSS_SPEC`</span> <span class="pp">|</span> CSS <span class="pp">|</span> <span class="in">`parse_css`</span> / <span class="in">`emit_css`</span> <span class="pp">|</span></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`DOCX_SPEC`</span> <span class="pp">|</span> DOCX <span class="pp">|</span> <span class="in">`parse_docx`</span> / <span class="in">`emit_docx`</span> <span class="pp">|</span></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ODF_SPEC`</span> <span class="pp">|</span> ODF <span class="pp">|</span> <span class="in">`parse_odf`</span> / <span class="in">`emit_odf`</span> <span class="pp">|</span></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`MARKDOWN_SPEC`</span> <span class="pp">|</span> Markdown <span class="pp">|</span> <span class="in">`parse_markdown`</span> / <span class="in">`emit_markdown`</span> <span class="pp">|</span></span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`JSX_SPEC`</span> <span class="pp">|</span> JSX / React <span class="pp">|</span> <span class="in">`parse_jsx`</span> / <span class="in">`emit_jsx`</span> <span class="pp">|</span></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`VUE_SPEC`</span> <span class="pp">|</span> Vue <span class="pp">|</span> <span class="in">`parse_vue`</span> / <span class="in">`emit_vue`</span> <span class="pp">|</span></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`SVELTE_SPEC`</span> <span class="pp">|</span> Svelte <span class="pp">|</span> <span class="in">`parse_svelte`</span> / <span class="in">`emit_svelte`</span> <span class="pp">|</span></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`XML_SPEC`</span> <span class="pp">|</span> XML / XSD <span class="pp">|</span> <span class="in">`parse_xml`</span> / <span class="in">`emit_xml`</span> <span class="pp">|</span></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>**Data Science**</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constant <span class="pp">|</span> Protocol <span class="pp">|</span> Parse / Emit <span class="pp">|</span></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------|--------------|</span></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`PARQUET_SPEC`</span> <span class="pp">|</span> Parquet <span class="pp">|</span> <span class="in">`parse_parquet`</span> / <span class="in">`emit_parquet`</span> <span class="pp">|</span></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ARROW_SPEC`</span> <span class="pp">|</span> Arrow <span class="pp">|</span> <span class="in">`parse_arrow`</span> / <span class="in">`emit_arrow`</span> <span class="pp">|</span></span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`DATAFRAME_SPEC`</span> <span class="pp">|</span> DataFrame <span class="pp">|</span> <span class="in">`parse_dataframe`</span> / <span class="in">`emit_dataframe`</span> <span class="pp">|</span></span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>**Domain**</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constant <span class="pp">|</span> Protocol <span class="pp">|</span> Parse / Emit <span class="pp">|</span></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------|--------------|</span></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`GEOJSON_SPEC`</span> <span class="pp">|</span> GeoJSON <span class="pp">|</span> <span class="in">`parse_geojson`</span> / <span class="in">`emit_geojson`</span> <span class="pp">|</span></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`FHIR_SPEC`</span> <span class="pp">|</span> FHIR <span class="pp">|</span> <span class="in">`parse_fhir`</span> / <span class="in">`emit_fhir`</span> <span class="pp">|</span></span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`RSS_SPEC`</span> <span class="pp">|</span> RSS / Atom <span class="pp">|</span> <span class="in">`parse_rss`</span> / <span class="in">`emit_rss`</span> <span class="pp">|</span></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`VCARD_SPEC`</span> <span class="pp">|</span> vCard / iCal <span class="pp">|</span> <span class="in">`parse_vcard`</span> / <span class="in">`emit_vcard`</span> <span class="pp">|</span></span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`EDI_X12_SPEC`</span> <span class="pp">|</span> EDI X12 <span class="pp">|</span> <span class="in">`parse_edi_x12`</span> / <span class="in">`emit_edi_x12`</span> <span class="pp">|</span></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`SWIFT_MT_SPEC`</span> <span class="pp">|</span> SWIFT MT <span class="pp">|</span> <span class="in">`parse_swift_mt`</span> / <span class="in">`emit_swift_mt`</span> <span class="pp">|</span></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>**Config**</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Constant <span class="pp">|</span> Protocol <span class="pp">|</span> Parse / Emit <span class="pp">|</span></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|----------|--------------|</span></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`HCL_SPEC`</span> <span class="pp">|</span> HCL <span class="pp">|</span> <span class="in">`parse_hcl`</span> / <span class="in">`emit_hcl`</span> <span class="pp">|</span></span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`K8S_CRD_SPEC`</span> <span class="pp">|</span> Kubernetes CRD <span class="pp">|</span> <span class="in">`parse_k8s_crd`</span> / <span class="in">`emit_k8s_crd`</span> <span class="pp">|</span></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`CLOUDFORMATION_SPEC`</span> <span class="pp">|</span> CloudFormation <span class="pp">|</span> <span class="in">`parse_cloudformation`</span> / <span class="in">`emit_cloudformation`</span> <span class="pp">|</span></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ANSIBLE_SPEC`</span> <span class="pp">|</span> Ansible <span class="pp">|</span> <span class="in">`parse_ansible`</span> / <span class="in">`emit_ansible`</span> <span class="pp">|</span></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## Rust (`panproto-core`)</span></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_gat` — Theory Engine</span></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Theory`</span> <span class="pp">|</span> A generalized algebraic theory: sorts, operations, equations. <span class="pp">|</span></span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Sort`</span> <span class="pp">|</span> A sort declaration within a theory. <span class="pp">|</span></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Operation`</span> <span class="pp">|</span> An operation declaration with input sorts and output sort. <span class="pp">|</span></span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Equation`</span> <span class="pp">|</span> An equational axiom between terms. <span class="pp">|</span></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`TheoryMorphism`</span> <span class="pp">|</span> A structure-preserving map between theories. <span class="pp">|</span></span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`colimit(t1, t2, shared)`</span> → <span class="in">`Result&lt;Theory, GatError&gt;`</span> <span class="pp">|</span> Compute the pushout of two theories over a shared base. <span class="pp">|</span></span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_schema` — Schema Layer</span></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Schema`</span> <span class="pp">|</span> A model of a protocol theory: vertices, edges, and their relationships. <span class="pp">|</span></span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`SchemaBuilder`</span> <span class="pp">|</span> Builder for constructing schemas incrementally. <span class="pp">|</span></span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Protocol`</span> <span class="pp">|</span> A named theory that defines a schema language. <span class="pp">|</span></span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Vertex`</span> <span class="pp">|</span> A vertex in a schema (instance of a sort). <span class="pp">|</span></span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Edge`</span> <span class="pp">|</span> An edge in a schema (instance of an operation). <span class="pp">|</span></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_inst` — Instance Layer</span></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`WInstance`</span> <span class="pp">|</span> An instance encoded as a W-type (tree-structured data). <span class="pp">|</span></span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`FInstance`</span> <span class="pp">|</span> An instance encoded as a functor (relational data). <span class="pp">|</span></span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`wtype_restrict(inst, morph)`</span> → <span class="in">`WInstance`</span> <span class="pp">|</span> Migrate a W-type instance along a schema morphism. <span class="pp">|</span></span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`functor_restrict(inst, morph)`</span> → <span class="in">`FInstance`</span> <span class="pp">|</span> Migrate a functor instance along a schema morphism. <span class="pp">|</span></span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`parse_json(json, schema)`</span> → <span class="in">`Result&lt;WInstance, ParseError&gt;`</span> <span class="pp">|</span> Parse JSON into a typed instance. <span class="pp">|</span></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`to_json(inst)`</span> → <span class="in">`Value`</span> <span class="pp">|</span> Serialize an instance back to JSON. <span class="pp">|</span></span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_mig` — Migration Engine</span></span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Migration`</span> <span class="pp">|</span> A compiled migration between two schemas. <span class="pp">|</span></span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`compile(builder)`</span> → <span class="in">`Result&lt;Migration, MigError&gt;`</span> <span class="pp">|</span> Compile a migration specification. <span class="pp">|</span></span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lift_wtype(migration, inst)`</span> → <span class="in">`WInstance`</span> <span class="pp">|</span> Lift a W-type instance through a migration. <span class="pp">|</span></span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`lift_functor(migration, inst)`</span> → <span class="in">`FInstance`</span> <span class="pp">|</span> Lift a functor instance through a migration. <span class="pp">|</span></span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`check_existence(old, new)`</span> → <span class="in">`ExistenceReport`</span> <span class="pp">|</span> Check whether a migration between two schemas exists. <span class="pp">|</span></span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`compose(m1, m2)`</span> → <span class="in">`Result&lt;Migration, MigError&gt;`</span> <span class="pp">|</span> Compose two migrations sequentially. <span class="pp">|</span></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`invert(m)`</span> → <span class="in">`Result&lt;Migration, MigError&gt;`</span> <span class="pp">|</span> Invert a migration (when the underlying lens is an isomorphism). <span class="pp">|</span></span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_lens` — Lens Layer</span></span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Lens`</span> <span class="pp">|</span> A bidirectional transformation between two schemas. <span class="pp">|</span></span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Complement`</span> <span class="pp">|</span> The data discarded by the forward direction (needed for <span class="in">`put`</span>). <span class="pp">|</span></span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Combinator`</span> <span class="pp">|</span> A single lens-building step (rename, add, remove, etc.). <span class="pp">|</span></span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`get(lens, source)`</span> → <span class="in">`View`</span> <span class="pp">|</span> Apply the forward direction of a lens. <span class="pp">|</span></span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`put(lens, view, complement)`</span> → <span class="in">`Source`</span> <span class="pp">|</span> Apply the backward direction, restoring the source. <span class="pp">|</span></span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`from_combinators(steps)`</span> → <span class="in">`Result&lt;Lens, LensError&gt;`</span> <span class="pp">|</span> Build a lens from a sequence of combinators. <span class="pp">|</span></span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`check_laws(lens)`</span> → <span class="in">`LawReport`</span> <span class="pp">|</span> Verify that a lens satisfies the get-put and put-get laws. <span class="pp">|</span></span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a><span class="fu">### `panproto_emit` — Emit Helpers</span></span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>The shared <span class="in">`emit`</span> module provides utilities used by all <span class="in">`emit_*`</span> functions. Protocol authors implementing a custom emitter should build on these primitives.</span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Item <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|-------------|</span></span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`find_roots(schema)`</span> → <span class="in">`Vec&lt;VertexId&gt;`</span> <span class="pp">|</span> Return all vertices with no incoming edges — the natural entry points for top-down emission. <span class="pp">|</span></span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`children_by_edge(schema, vertex)`</span> → <span class="in">`Vec&lt;(EdgeId, VertexId)&gt;`</span> <span class="pp">|</span> List the outgoing edges and their target vertices for a given vertex, in declaration order. <span class="pp">|</span></span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`constraint_value(schema, edge, key)`</span> → <span class="in">`Option&lt;Value&gt;`</span> <span class="pp">|</span> Look up a named constraint on an edge (e.g. a field's default value or cardinality bound). <span class="pp">|</span></span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`IndentWriter`</span> <span class="pp">|</span> A write adapter that tracks indentation depth and inserts consistent leading whitespace, suitable for text-based emitters. <span class="pp">|</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

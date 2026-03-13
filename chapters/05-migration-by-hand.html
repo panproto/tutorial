@@ -491,6 +491,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Self-Description: The GAT of GATs</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-format-conversion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Format Conversion</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -505,19 +511,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/D-protocol-catalog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
   </div>
 </li>
       </ul>
@@ -555,7 +567,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#the-lift-as-a-natural-transformation" id="toc-the-lift-as-a-natural-transformation" class="nav-link" data-scroll-target="#the-lift-as-a-natural-transformation"><span class="header-section-number">5.10</span> The Lift as a Natural Transformation</a></li>
   <li><a href="#a-note-on-terminology" id="toc-a-note-on-terminology" class="nav-link" data-scroll-target="#a-note-on-terminology"><span class="header-section-number">5.11</span> A Note on Terminology</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.12</span> Summary</a></li>
+  <li><a href="#cross-format-migration-parse-migrate-emit" id="toc-cross-format-migration-parse-migrate-emit" class="nav-link" data-scroll-target="#cross-format-migration-parse-migrate-emit"><span class="header-section-number">5.12</span> Cross-Format Migration: Parse, Migrate, Emit</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.13</span> Summary</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/05-migration-by-hand.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -1035,8 +1048,20 @@ Table&nbsp;5.1: Terminology across communities.
 </div>
 <p>panproto’s terminology is closest to <span class="citation" data-cites="litt2022">Litt et al. (<a href="#ref-litt2022" role="doc-biblioref">2022</a>)</span>’s Cambria project, which was an important practical inspiration. The key difference is that Cambria hardcodes its schema language and migration semantics, while panproto parameterizes both by theories.</p>
 </section>
-<section id="summary" class="level2" data-number="5.12">
-<h2 data-number="5.12" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.12</span> Summary</h2>
+<section id="cross-format-migration-parse-migrate-emit" class="level2" data-number="5.12">
+<h2 data-number="5.12" class="anchored" data-anchor-id="cross-format-migration-parse-migrate-emit"><span class="header-section-number">5.12</span> Cross-Format Migration: Parse, Migrate, Emit</h2>
+<p>Everything in this chapter has focused on migration <em>within</em> a single protocol: a v1 ATProto schema to a v2 ATProto schema, or a v1 SQL schema to a v2 SQL schema. But the same machinery supports migration <em>across</em> protocols.</p>
+<p>Because panproto represents every schema as a graph regardless of its origin format, you can migrate between formats by composing three steps:</p>
+<ol type="1">
+<li><strong>Parse</strong> a Protobuf schema into a schema graph (a model of the Protobuf theory, <code>colimit(ThSimpleGraph, ThConstraint)</code>).</li>
+<li><strong>Build a migration morphism</strong> that maps Protobuf concepts to Avro concepts—vertex by vertex and edge by edge—producing a graph homomorphism from the Protobuf schema theory into the Avro schema theory.</li>
+<li><strong>Emit</strong> the result as an Avro schema by applying the Avro emitter to the target graph.</li>
+</ol>
+<p>The migration morphism in step 2 is the same kind of object as the intra-protocol migrations we’ve been building throughout this chapter. What differs is that the source and target schemas now belong to <em>different</em> protocols. panproto validates that the morphism respects both theories and that any constraints present in the source are satisfiable in the target.</p>
+<p>See <a href="12-format-conversion.html" class="quarto-xref"><span>Chapter 13</span></a> for a comprehensive treatment of cross-format conversion.</p>
+</section>
+<section id="summary" class="level2" data-number="5.13">
+<h2 data-number="5.13" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.13</span> Summary</h2>
 <ul>
 <li>A <strong>migration</strong> is a structure-preserving map (vertex map + edge map) from an old schema to a new schema.</li>
 <li>The migration is <strong>compiled</strong> to pre-compute surviving sets and remap tables.</li>
@@ -1833,15 +1858,42 @@ Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Informa
 <span id="cb7-292"><a href="#cb7-292" aria-hidden="true" tabindex="-1"></a>panproto's terminology is closest to @litt2022's Cambria project, which was an important practical inspiration. The key difference is that Cambria hardcodes its schema language and migration semantics, while panproto parameterizes both by theories.</span>
 <span id="cb7-293"><a href="#cb7-293" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-294"><a href="#cb7-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-295"><a href="#cb7-295" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb7-295"><a href="#cb7-295" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cross-Format Migration: Parse, Migrate, Emit</span></span>
 <span id="cb7-296"><a href="#cb7-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-297"><a href="#cb7-297" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **migration** is a structure-preserving map (vertex map + edge map) from an old schema to a new schema.</span>
-<span id="cb7-298"><a href="#cb7-298" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The migration is **compiled** to pre-compute surviving sets and remap tables.</span>
-<span id="cb7-299"><a href="#cb7-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **lift** operation applies the compiled migration to a record, producing a record conforming to the old schema.</span>
-<span id="cb7-300"><a href="#cb7-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For **W-type instances** (ATProto, JSON, GraphQL), lift runs a 5-step tree surgery pipeline: signature restriction, reachability BFS, ancestor contraction, edge resolution, fan reconstruction.</span>
-<span id="cb7-301"><a href="#cb7-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For **functor instances** (SQL, CQL), lift is precomposition: pull rows through the vertex map.</span>
-<span id="cb7-302"><a href="#cb7-302" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Migrations **compose**: you maintain a chain of migrations, and the engine composes as needed.</span>
-<span id="cb7-303"><a href="#cb7-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The same **migration morphism** structure works across protocols; only the **lift implementation** varies, determined by the instance theory.</span>
+<span id="cb7-297"><a href="#cb7-297" aria-hidden="true" tabindex="-1"></a>Everything in this chapter has focused on migration *within* a single protocol:</span>
+<span id="cb7-298"><a href="#cb7-298" aria-hidden="true" tabindex="-1"></a>a v1 ATProto schema to a v2 ATProto schema, or a v1 SQL schema to a v2 SQL</span>
+<span id="cb7-299"><a href="#cb7-299" aria-hidden="true" tabindex="-1"></a>schema. But the same machinery supports migration *across* protocols.</span>
+<span id="cb7-300"><a href="#cb7-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-301"><a href="#cb7-301" aria-hidden="true" tabindex="-1"></a>Because panproto represents every schema as a graph regardless of its origin</span>
+<span id="cb7-302"><a href="#cb7-302" aria-hidden="true" tabindex="-1"></a>format, you can migrate between formats by composing three steps:</span>
+<span id="cb7-303"><a href="#cb7-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-304"><a href="#cb7-304" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Parse** a Protobuf schema into a schema graph (a model of the Protobuf</span>
+<span id="cb7-305"><a href="#cb7-305" aria-hidden="true" tabindex="-1"></a>   theory, <span class="in">`colimit(ThSimpleGraph, ThConstraint)`</span>).</span>
+<span id="cb7-306"><a href="#cb7-306" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Build a migration morphism** that maps Protobuf concepts to Avro</span>
+<span id="cb7-307"><a href="#cb7-307" aria-hidden="true" tabindex="-1"></a>   concepts—vertex by vertex and edge by edge—producing a graph homomorphism</span>
+<span id="cb7-308"><a href="#cb7-308" aria-hidden="true" tabindex="-1"></a>   from the Protobuf schema theory into the Avro schema theory.</span>
+<span id="cb7-309"><a href="#cb7-309" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Emit** the result as an Avro schema by applying the Avro emitter to the</span>
+<span id="cb7-310"><a href="#cb7-310" aria-hidden="true" tabindex="-1"></a>   target graph.</span>
+<span id="cb7-311"><a href="#cb7-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-312"><a href="#cb7-312" aria-hidden="true" tabindex="-1"></a>The migration morphism in step 2 is the same kind of object as the</span>
+<span id="cb7-313"><a href="#cb7-313" aria-hidden="true" tabindex="-1"></a>intra-protocol migrations we've been building throughout this chapter. What</span>
+<span id="cb7-314"><a href="#cb7-314" aria-hidden="true" tabindex="-1"></a>differs is that the source and target schemas now belong to *different*</span>
+<span id="cb7-315"><a href="#cb7-315" aria-hidden="true" tabindex="-1"></a>protocols. panproto validates that the morphism respects both theories and that</span>
+<span id="cb7-316"><a href="#cb7-316" aria-hidden="true" tabindex="-1"></a>any constraints present in the source are satisfiable in the target.</span>
+<span id="cb7-317"><a href="#cb7-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-318"><a href="#cb7-318" aria-hidden="true" tabindex="-1"></a>See @sec-format-conversion for a comprehensive treatment of cross-format</span>
+<span id="cb7-319"><a href="#cb7-319" aria-hidden="true" tabindex="-1"></a>conversion.</span>
+<span id="cb7-320"><a href="#cb7-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-321"><a href="#cb7-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-322"><a href="#cb7-322" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb7-323"><a href="#cb7-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-324"><a href="#cb7-324" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A **migration** is a structure-preserving map (vertex map + edge map) from an old schema to a new schema.</span>
+<span id="cb7-325"><a href="#cb7-325" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The migration is **compiled** to pre-compute surviving sets and remap tables.</span>
+<span id="cb7-326"><a href="#cb7-326" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **lift** operation applies the compiled migration to a record, producing a record conforming to the old schema.</span>
+<span id="cb7-327"><a href="#cb7-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For **W-type instances** (ATProto, JSON, GraphQL), lift runs a 5-step tree surgery pipeline: signature restriction, reachability BFS, ancestor contraction, edge resolution, fan reconstruction.</span>
+<span id="cb7-328"><a href="#cb7-328" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For **functor instances** (SQL, CQL), lift is precomposition: pull rows through the vertex map.</span>
+<span id="cb7-329"><a href="#cb7-329" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Migrations **compose**: you maintain a chain of migrations, and the engine composes as needed.</span>
+<span id="cb7-330"><a href="#cb7-330" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The same **migration morphism** structure works across protocols; only the **lift implementation** varies, determined by the instance theory.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

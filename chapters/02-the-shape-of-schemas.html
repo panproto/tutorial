@@ -462,6 +462,12 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Self-Description: The GAT of GATs</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-format-conversion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Format Conversion</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -476,19 +482,25 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/D-protocol-catalog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
   </div>
 </li>
       </ul>
@@ -843,14 +855,16 @@ Figure&nbsp;3.3: A SQL schema with a foreign key represented as a hypergraph. Th
 <p>We can now classify schema languages by the graph structure they require:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 17%">
-<col style="width: 29%">
-<col style="width: 52%">
+<col style="width: 14%">
+<col style="width: 28%">
+<col style="width: 10%">
+<col style="width: 46%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Schema Language</th>
 <th>Minimum Graph Structure</th>
+<th>Theory Group</th>
 <th>Why</th>
 </tr>
 </thead>
@@ -858,31 +872,67 @@ Figure&nbsp;3.3: A SQL schema with a foreign key represented as a hypergraph. Th
 <tr class="odd">
 <td>JSON Schema</td>
 <td>Multigraph + constraints</td>
+<td>A</td>
 <td>Parallel properties to same type; rich constraint set</td>
 </tr>
 <tr class="even">
 <td>Protobuf</td>
-<td>Multigraph</td>
+<td>Simple graph (Multigraph)</td>
+<td>C</td>
 <td>Parallel fields to same type; few built-in constraints</td>
 </tr>
 <tr class="odd">
 <td>SQL DDL</td>
 <td>Hypergraph + constraints</td>
+<td>B</td>
 <td>Foreign keys are multi-ary; CHECK, NOT NULL, etc.</td>
 </tr>
 <tr class="even">
 <td>GraphQL SDL</td>
 <td>Multigraph + constraints</td>
+<td>D</td>
 <td>Parallel fields; nullability as constraint</td>
 </tr>
 <tr class="odd">
 <td>ATProto Lexicon</td>
 <td>Multigraph + constraints</td>
+<td>A</td>
 <td>Parallel properties; maxLength, maxGraphemes, etc.</td>
+</tr>
+<tr class="even">
+<td>Avro</td>
+<td>Simple graph (Multigraph)</td>
+<td>C</td>
+<td>Parallel fields; Group C simple graph</td>
+</tr>
+<tr class="odd">
+<td>TypeScript</td>
+<td>Multigraph + constraints</td>
+<td>D</td>
+<td>Interfaces, generics; typed graph</td>
+</tr>
+<tr class="even">
+<td>Cassandra CQL</td>
+<td>Hypergraph + constraints</td>
+<td>B</td>
+<td>Compound partition keys; multi-ary key structure</td>
+</tr>
+<tr class="odd">
+<td>XML/XSD</td>
+<td>Multigraph + constraints + metadata</td>
+<td>E</td>
+<td>Element/attribute duality; meta-level annotations</td>
+</tr>
+<tr class="even">
+<td>OpenAPI</td>
+<td>Multigraph + constraints</td>
+<td>A</td>
+<td>Path parameters, schemas; rich constraint vocabulary</td>
 </tr>
 </tbody>
 </table>
-<p>Notice that no schema language we’ve examined requires only a simple directed graph. The moment you allow two fields of the same type (which is… always), you need at least a multigraph. SQL’s foreign keys push the requirement to hypergraphs.</p>
+<p>Notice that no schema language we’ve examined requires only a simple directed graph. The moment you allow two fields of the same type (which is… always), you need at least a multigraph. SQL’s and Cassandra’s compound keys push the requirement to hypergraphs. XML/XSD’s element-attribute duality introduces a meta-level that requires annotations beyond ordinary constraints.</p>
+<p>These ten protocols are a representative sample. panproto organizes its full set of 54 protocols into 5 theory groups based on the graph structure they require—from Group C (simple multigraphs, e.g.&nbsp;Protobuf, Avro, Thrift) through Group E (multigraphs with constraint and metadata layers, e.g.&nbsp;XML/XSD, HTML). The taxonomy extends uniformly to all 54 protocols; see <span class="quarto-unresolved-ref">?sec-protocol-catalog</span> for the complete catalog with theory group assignments.</p>
 <p>This taxonomy explains a pattern you’ve probably noticed in the ecosystem: schema tools tend to be protocol-specific. <strong>Buf</strong> is excellent for Protobuf. <strong>Atlas</strong> is excellent for SQL. <strong>GraphQL Code Generator</strong> is excellent for GraphQL. But none of them generalize across protocols.</p>
 </section>
 <section id="why-single-protocol-tools-cant-generalize" class="level2" data-number="3.6">
@@ -1739,127 +1789,140 @@ Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Informa
 <span id="cb4-318"><a href="#cb4-318" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-319"><a href="#cb4-319" aria-hidden="true" tabindex="-1"></a>We can now classify schema languages by the graph structure they require:</span>
 <span id="cb4-320"><a href="#cb4-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-321"><a href="#cb4-321" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Schema Language   <span class="pp">|</span> Minimum Graph Structure       <span class="pp">|</span> Why                                                    <span class="pp">|</span></span>
-<span id="cb4-322"><a href="#cb4-322" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------------|-------------------------------|--------------------------------------------------------|</span></span>
-<span id="cb4-323"><a href="#cb4-323" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> JSON Schema       <span class="pp">|</span> Multigraph + constraints      <span class="pp">|</span> Parallel properties to same type; rich constraint set   <span class="pp">|</span></span>
-<span id="cb4-324"><a href="#cb4-324" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Protobuf          <span class="pp">|</span> Multigraph                    <span class="pp">|</span> Parallel fields to same type; few built-in constraints  <span class="pp">|</span></span>
-<span id="cb4-325"><a href="#cb4-325" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> SQL DDL           <span class="pp">|</span> Hypergraph + constraints      <span class="pp">|</span> Foreign keys are multi-ary; CHECK, NOT NULL, etc.       <span class="pp">|</span></span>
-<span id="cb4-326"><a href="#cb4-326" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GraphQL SDL       <span class="pp">|</span> Multigraph + constraints      <span class="pp">|</span> Parallel fields; nullability as constraint              <span class="pp">|</span></span>
-<span id="cb4-327"><a href="#cb4-327" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ATProto Lexicon   <span class="pp">|</span> Multigraph + constraints      <span class="pp">|</span> Parallel properties; maxLength, maxGraphemes, etc.      <span class="pp">|</span></span>
-<span id="cb4-328"><a href="#cb4-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-329"><a href="#cb4-329" aria-hidden="true" tabindex="-1"></a>Notice that no schema language we've examined requires only a simple directed</span>
-<span id="cb4-330"><a href="#cb4-330" aria-hidden="true" tabindex="-1"></a>graph. The moment you allow two fields of the same type (which is... always),</span>
-<span id="cb4-331"><a href="#cb4-331" aria-hidden="true" tabindex="-1"></a>you need at least a multigraph. SQL's foreign keys push the requirement to</span>
-<span id="cb4-332"><a href="#cb4-332" aria-hidden="true" tabindex="-1"></a>hypergraphs.</span>
+<span id="cb4-321"><a href="#cb4-321" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Schema Language   <span class="pp">|</span> Minimum Graph Structure              <span class="pp">|</span> Theory Group <span class="pp">|</span> Why                                                          <span class="pp">|</span></span>
+<span id="cb4-322"><a href="#cb4-322" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------------|--------------------------------------|--------------|--------------------------------------------------------------|</span></span>
+<span id="cb4-323"><a href="#cb4-323" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> JSON Schema       <span class="pp">|</span> Multigraph + constraints             <span class="pp">|</span> A            <span class="pp">|</span> Parallel properties to same type; rich constraint set        <span class="pp">|</span></span>
+<span id="cb4-324"><a href="#cb4-324" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Protobuf          <span class="pp">|</span> Simple graph (Multigraph)            <span class="pp">|</span> C            <span class="pp">|</span> Parallel fields to same type; few built-in constraints       <span class="pp">|</span></span>
+<span id="cb4-325"><a href="#cb4-325" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> SQL DDL           <span class="pp">|</span> Hypergraph + constraints             <span class="pp">|</span> B            <span class="pp">|</span> Foreign keys are multi-ary; CHECK, NOT NULL, etc.            <span class="pp">|</span></span>
+<span id="cb4-326"><a href="#cb4-326" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> GraphQL SDL       <span class="pp">|</span> Multigraph + constraints             <span class="pp">|</span> D            <span class="pp">|</span> Parallel fields; nullability as constraint                   <span class="pp">|</span></span>
+<span id="cb4-327"><a href="#cb4-327" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ATProto Lexicon   <span class="pp">|</span> Multigraph + constraints             <span class="pp">|</span> A            <span class="pp">|</span> Parallel properties; maxLength, maxGraphemes, etc.           <span class="pp">|</span></span>
+<span id="cb4-328"><a href="#cb4-328" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Avro              <span class="pp">|</span> Simple graph (Multigraph)            <span class="pp">|</span> C            <span class="pp">|</span> Parallel fields; Group C simple graph                        <span class="pp">|</span></span>
+<span id="cb4-329"><a href="#cb4-329" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> TypeScript        <span class="pp">|</span> Multigraph + constraints             <span class="pp">|</span> D            <span class="pp">|</span> Interfaces, generics; typed graph                            <span class="pp">|</span></span>
+<span id="cb4-330"><a href="#cb4-330" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Cassandra CQL     <span class="pp">|</span> Hypergraph + constraints             <span class="pp">|</span> B            <span class="pp">|</span> Compound partition keys; multi-ary key structure             <span class="pp">|</span></span>
+<span id="cb4-331"><a href="#cb4-331" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> XML/XSD           <span class="pp">|</span> Multigraph + constraints + metadata  <span class="pp">|</span> E            <span class="pp">|</span> Element/attribute duality; meta-level annotations            <span class="pp">|</span></span>
+<span id="cb4-332"><a href="#cb4-332" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> OpenAPI           <span class="pp">|</span> Multigraph + constraints             <span class="pp">|</span> A            <span class="pp">|</span> Path parameters, schemas; rich constraint vocabulary         <span class="pp">|</span></span>
 <span id="cb4-333"><a href="#cb4-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-334"><a href="#cb4-334" aria-hidden="true" tabindex="-1"></a>This taxonomy explains a pattern you've probably noticed in the ecosystem:</span>
-<span id="cb4-335"><a href="#cb4-335" aria-hidden="true" tabindex="-1"></a>schema tools tend to be protocol-specific. **Buf** is excellent for Protobuf.</span>
-<span id="cb4-336"><a href="#cb4-336" aria-hidden="true" tabindex="-1"></a>**Atlas** is excellent for SQL. **GraphQL Code Generator** is excellent for</span>
-<span id="cb4-337"><a href="#cb4-337" aria-hidden="true" tabindex="-1"></a>GraphQL. But none of them generalize across protocols.</span>
-<span id="cb4-338"><a href="#cb4-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-334"><a href="#cb4-334" aria-hidden="true" tabindex="-1"></a>Notice that no schema language we've examined requires only a simple directed</span>
+<span id="cb4-335"><a href="#cb4-335" aria-hidden="true" tabindex="-1"></a>graph. The moment you allow two fields of the same type (which is... always),</span>
+<span id="cb4-336"><a href="#cb4-336" aria-hidden="true" tabindex="-1"></a>you need at least a multigraph. SQL's and Cassandra's compound keys push the</span>
+<span id="cb4-337"><a href="#cb4-337" aria-hidden="true" tabindex="-1"></a>requirement to hypergraphs. XML/XSD's element-attribute duality introduces a</span>
+<span id="cb4-338"><a href="#cb4-338" aria-hidden="true" tabindex="-1"></a>meta-level that requires annotations beyond ordinary constraints.</span>
 <span id="cb4-339"><a href="#cb4-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-340"><a href="#cb4-340" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Single-Protocol Tools Can't Generalize</span></span>
-<span id="cb4-341"><a href="#cb4-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-342"><a href="#cb4-342" aria-hidden="true" tabindex="-1"></a>The reason is structural, not incidental. Each tool hardcodes a specific graph</span>
-<span id="cb4-343"><a href="#cb4-343" aria-hidden="true" tabindex="-1"></a>type:</span>
-<span id="cb4-344"><a href="#cb4-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-345"><a href="#cb4-345" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Buf** assumes a multigraph structure (messages with fields). It understands</span>
-<span id="cb4-346"><a href="#cb4-346" aria-hidden="true" tabindex="-1"></a>  Protobuf's field numbering, package namespaces, and options. But it has no</span>
-<span id="cb4-347"><a href="#cb4-347" aria-hidden="true" tabindex="-1"></a>  representation for hyperedges, so it can't natively express SQL foreign keys.</span>
-<span id="cb4-348"><a href="#cb4-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-349"><a href="#cb4-349" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Atlas** assumes a hypergraph structure (tables with columns and multi-ary</span>
-<span id="cb4-350"><a href="#cb4-350" aria-hidden="true" tabindex="-1"></a>  constraints). It understands SQL's type system, migration semantics, and</span>
-<span id="cb4-351"><a href="#cb4-351" aria-hidden="true" tabindex="-1"></a>  constraint checking. But its vertex types are SQL-specific (tables, views,</span>
-<span id="cb4-352"><a href="#cb4-352" aria-hidden="true" tabindex="-1"></a>  indexes), not Protobuf-specific (messages, enums, services).</span>
-<span id="cb4-353"><a href="#cb4-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-354"><a href="#cb4-354" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**GraphQL Code Generator** assumes a multigraph with GraphQL's specific</span>
-<span id="cb4-355"><a href="#cb4-355" aria-hidden="true" tabindex="-1"></a>  vertex types (Object, Interface, Union, Enum, Scalar). It can't represent</span>
-<span id="cb4-356"><a href="#cb4-356" aria-hidden="true" tabindex="-1"></a>  Protobuf's field numbering or SQL's CHECK constraints.</span>
+<span id="cb4-340"><a href="#cb4-340" aria-hidden="true" tabindex="-1"></a>These ten protocols are a representative sample. panproto organizes its full</span>
+<span id="cb4-341"><a href="#cb4-341" aria-hidden="true" tabindex="-1"></a>set of 54 protocols into 5 theory groups based on the graph structure they</span>
+<span id="cb4-342"><a href="#cb4-342" aria-hidden="true" tabindex="-1"></a>require—from Group C (simple multigraphs, e.g. Protobuf, Avro, Thrift) through</span>
+<span id="cb4-343"><a href="#cb4-343" aria-hidden="true" tabindex="-1"></a>Group E (multigraphs with constraint and metadata layers, e.g. XML/XSD, HTML).</span>
+<span id="cb4-344"><a href="#cb4-344" aria-hidden="true" tabindex="-1"></a>The taxonomy extends uniformly to all 54 protocols; see</span>
+<span id="cb4-345"><a href="#cb4-345" aria-hidden="true" tabindex="-1"></a>@sec-protocol-catalog for the complete catalog with theory group assignments.</span>
+<span id="cb4-346"><a href="#cb4-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-347"><a href="#cb4-347" aria-hidden="true" tabindex="-1"></a>This taxonomy explains a pattern you've probably noticed in the ecosystem:</span>
+<span id="cb4-348"><a href="#cb4-348" aria-hidden="true" tabindex="-1"></a>schema tools tend to be protocol-specific. **Buf** is excellent for Protobuf.</span>
+<span id="cb4-349"><a href="#cb4-349" aria-hidden="true" tabindex="-1"></a>**Atlas** is excellent for SQL. **GraphQL Code Generator** is excellent for</span>
+<span id="cb4-350"><a href="#cb4-350" aria-hidden="true" tabindex="-1"></a>GraphQL. But none of them generalize across protocols.</span>
+<span id="cb4-351"><a href="#cb4-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-352"><a href="#cb4-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-353"><a href="#cb4-353" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Single-Protocol Tools Can't Generalize</span></span>
+<span id="cb4-354"><a href="#cb4-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-355"><a href="#cb4-355" aria-hidden="true" tabindex="-1"></a>The reason is structural, not incidental. Each tool hardcodes a specific graph</span>
+<span id="cb4-356"><a href="#cb4-356" aria-hidden="true" tabindex="-1"></a>type:</span>
 <span id="cb4-357"><a href="#cb4-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-358"><a href="#cb4-358" aria-hidden="true" tabindex="-1"></a>Each tool is a perfect fit for its target protocol and a poor fit for everything</span>
-<span id="cb4-359"><a href="#cb4-359" aria-hidden="true" tabindex="-1"></a>else. This isn't a failure of engineering—it's a consequence of fixing the graph</span>
-<span id="cb4-360"><a href="#cb4-360" aria-hidden="true" tabindex="-1"></a>structure at design time.</span>
+<span id="cb4-358"><a href="#cb4-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Buf** assumes a multigraph structure (messages with fields). It understands</span>
+<span id="cb4-359"><a href="#cb4-359" aria-hidden="true" tabindex="-1"></a>  Protobuf's field numbering, package namespaces, and options. But it has no</span>
+<span id="cb4-360"><a href="#cb4-360" aria-hidden="true" tabindex="-1"></a>  representation for hyperedges, so it can't natively express SQL foreign keys.</span>
 <span id="cb4-361"><a href="#cb4-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-362"><a href="#cb4-362" aria-hidden="true" tabindex="-1"></a>panproto takes a different approach: it **parameterizes** over the graph</span>
-<span id="cb4-363"><a href="#cb4-363" aria-hidden="true" tabindex="-1"></a>structure. Instead of hardcoding "the schema is a multigraph with these specific</span>
-<span id="cb4-364"><a href="#cb4-364" aria-hidden="true" tabindex="-1"></a>vertex and edge types," panproto lets you specify what kinds of vertices, edges,</span>
-<span id="cb4-365"><a href="#cb4-365" aria-hidden="true" tabindex="-1"></a>and constraints your schema language needs. The same core algorithms—diffing,</span>
-<span id="cb4-366"><a href="#cb4-366" aria-hidden="true" tabindex="-1"></a>merging, migration planning, code generation—work across any graph structure</span>
-<span id="cb4-367"><a href="#cb4-367" aria-hidden="true" tabindex="-1"></a>that fits the framework.</span>
-<span id="cb4-368"><a href="#cb4-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-369"><a href="#cb4-369" aria-hidden="true" tabindex="-1"></a>This parameterization is not free. It requires a mathematical framework</span>
-<span id="cb4-370"><a href="#cb4-370" aria-hidden="true" tabindex="-1"></a>expressive enough to describe multigraphs, hypergraphs, and constrained variants</span>
-<span id="cb4-371"><a href="#cb4-371" aria-hidden="true" tabindex="-1"></a>in a uniform way. That framework exists: it comes from the categorical treatment</span>
-<span id="cb4-372"><a href="#cb4-372" aria-hidden="true" tabindex="-1"></a>of schemas developed by <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span>, who showed that database schemas can be</span>
-<span id="cb4-373"><a href="#cb4-373" aria-hidden="true" tabindex="-1"></a>viewed as categories (with tables as objects and foreign keys as morphisms) and</span>
-<span id="cb4-374"><a href="#cb4-374" aria-hidden="true" tabindex="-1"></a>that schema mappings are functors between those categories. panproto generalizes</span>
-<span id="cb4-375"><a href="#cb4-375" aria-hidden="true" tabindex="-1"></a>this functorial perspective beyond relational databases to arbitrary schema</span>
-<span id="cb4-376"><a href="#cb4-376" aria-hidden="true" tabindex="-1"></a>languages.</span>
-<span id="cb4-377"><a href="#cb4-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-378"><a href="#cb4-378" aria-hidden="true" tabindex="-1"></a>The key insight from Spivak's work is that once you view schemas as categorical</span>
-<span id="cb4-379"><a href="#cb4-379" aria-hidden="true" tabindex="-1"></a>structures, you get a rich toolkit for free: limits and colimits give you schema</span>
-<span id="cb4-380"><a href="#cb4-380" aria-hidden="true" tabindex="-1"></a>merging and intersection, functors give you schema mappings and translations,</span>
-<span id="cb4-381"><a href="#cb4-381" aria-hidden="true" tabindex="-1"></a>and natural transformations give you data migration along those mappings. These</span>
-<span id="cb4-382"><a href="#cb4-382" aria-hidden="true" tabindex="-1"></a>aren't metaphors—they're precise mathematical constructions with well-defined</span>
-<span id="cb4-383"><a href="#cb4-383" aria-hidden="true" tabindex="-1"></a>properties.</span>
-<span id="cb4-384"><a href="#cb4-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-385"><a href="#cb4-385" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
-<span id="cb4-386"><a href="#cb4-386" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Parameterization Principle</span></span>
-<span id="cb4-387"><a href="#cb4-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-388"><a href="#cb4-388" aria-hidden="true" tabindex="-1"></a>Single-protocol tools fix the graph structure and optimize for a specific</span>
-<span id="cb4-389"><a href="#cb4-389" aria-hidden="true" tabindex="-1"></a>schema language. panproto parameterizes the graph structure and provides uniform</span>
-<span id="cb4-390"><a href="#cb4-390" aria-hidden="true" tabindex="-1"></a>algorithms that work across schema languages. This is the fundamental</span>
-<span id="cb4-391"><a href="#cb4-391" aria-hidden="true" tabindex="-1"></a>architectural difference—and it's what makes cross-protocol schema operations</span>
-<span id="cb4-392"><a href="#cb4-392" aria-hidden="true" tabindex="-1"></a>possible.</span>
-<span id="cb4-393"><a href="#cb4-393" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb4-394"><a href="#cb4-394" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-395"><a href="#cb4-395" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-396"><a href="#cb4-396" aria-hidden="true" tabindex="-1"></a><span class="fu">## From Graphs to Theories</span></span>
+<span id="cb4-362"><a href="#cb4-362" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Atlas** assumes a hypergraph structure (tables with columns and multi-ary</span>
+<span id="cb4-363"><a href="#cb4-363" aria-hidden="true" tabindex="-1"></a>  constraints). It understands SQL's type system, migration semantics, and</span>
+<span id="cb4-364"><a href="#cb4-364" aria-hidden="true" tabindex="-1"></a>  constraint checking. But its vertex types are SQL-specific (tables, views,</span>
+<span id="cb4-365"><a href="#cb4-365" aria-hidden="true" tabindex="-1"></a>  indexes), not Protobuf-specific (messages, enums, services).</span>
+<span id="cb4-366"><a href="#cb4-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-367"><a href="#cb4-367" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**GraphQL Code Generator** assumes a multigraph with GraphQL's specific</span>
+<span id="cb4-368"><a href="#cb4-368" aria-hidden="true" tabindex="-1"></a>  vertex types (Object, Interface, Union, Enum, Scalar). It can't represent</span>
+<span id="cb4-369"><a href="#cb4-369" aria-hidden="true" tabindex="-1"></a>  Protobuf's field numbering or SQL's CHECK constraints.</span>
+<span id="cb4-370"><a href="#cb4-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-371"><a href="#cb4-371" aria-hidden="true" tabindex="-1"></a>Each tool is a perfect fit for its target protocol and a poor fit for everything</span>
+<span id="cb4-372"><a href="#cb4-372" aria-hidden="true" tabindex="-1"></a>else. This isn't a failure of engineering—it's a consequence of fixing the graph</span>
+<span id="cb4-373"><a href="#cb4-373" aria-hidden="true" tabindex="-1"></a>structure at design time.</span>
+<span id="cb4-374"><a href="#cb4-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-375"><a href="#cb4-375" aria-hidden="true" tabindex="-1"></a>panproto takes a different approach: it **parameterizes** over the graph</span>
+<span id="cb4-376"><a href="#cb4-376" aria-hidden="true" tabindex="-1"></a>structure. Instead of hardcoding "the schema is a multigraph with these specific</span>
+<span id="cb4-377"><a href="#cb4-377" aria-hidden="true" tabindex="-1"></a>vertex and edge types," panproto lets you specify what kinds of vertices, edges,</span>
+<span id="cb4-378"><a href="#cb4-378" aria-hidden="true" tabindex="-1"></a>and constraints your schema language needs. The same core algorithms—diffing,</span>
+<span id="cb4-379"><a href="#cb4-379" aria-hidden="true" tabindex="-1"></a>merging, migration planning, code generation—work across any graph structure</span>
+<span id="cb4-380"><a href="#cb4-380" aria-hidden="true" tabindex="-1"></a>that fits the framework.</span>
+<span id="cb4-381"><a href="#cb4-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-382"><a href="#cb4-382" aria-hidden="true" tabindex="-1"></a>This parameterization is not free. It requires a mathematical framework</span>
+<span id="cb4-383"><a href="#cb4-383" aria-hidden="true" tabindex="-1"></a>expressive enough to describe multigraphs, hypergraphs, and constrained variants</span>
+<span id="cb4-384"><a href="#cb4-384" aria-hidden="true" tabindex="-1"></a>in a uniform way. That framework exists: it comes from the categorical treatment</span>
+<span id="cb4-385"><a href="#cb4-385" aria-hidden="true" tabindex="-1"></a>of schemas developed by <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span>, who showed that database schemas can be</span>
+<span id="cb4-386"><a href="#cb4-386" aria-hidden="true" tabindex="-1"></a>viewed as categories (with tables as objects and foreign keys as morphisms) and</span>
+<span id="cb4-387"><a href="#cb4-387" aria-hidden="true" tabindex="-1"></a>that schema mappings are functors between those categories. panproto generalizes</span>
+<span id="cb4-388"><a href="#cb4-388" aria-hidden="true" tabindex="-1"></a>this functorial perspective beyond relational databases to arbitrary schema</span>
+<span id="cb4-389"><a href="#cb4-389" aria-hidden="true" tabindex="-1"></a>languages.</span>
+<span id="cb4-390"><a href="#cb4-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-391"><a href="#cb4-391" aria-hidden="true" tabindex="-1"></a>The key insight from Spivak's work is that once you view schemas as categorical</span>
+<span id="cb4-392"><a href="#cb4-392" aria-hidden="true" tabindex="-1"></a>structures, you get a rich toolkit for free: limits and colimits give you schema</span>
+<span id="cb4-393"><a href="#cb4-393" aria-hidden="true" tabindex="-1"></a>merging and intersection, functors give you schema mappings and translations,</span>
+<span id="cb4-394"><a href="#cb4-394" aria-hidden="true" tabindex="-1"></a>and natural transformations give you data migration along those mappings. These</span>
+<span id="cb4-395"><a href="#cb4-395" aria-hidden="true" tabindex="-1"></a>aren't metaphors—they're precise mathematical constructions with well-defined</span>
+<span id="cb4-396"><a href="#cb4-396" aria-hidden="true" tabindex="-1"></a>properties.</span>
 <span id="cb4-397"><a href="#cb4-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-398"><a href="#cb4-398" aria-hidden="true" tabindex="-1"></a>We've established that schema languages have graph-theoretic structure, and that</span>
-<span id="cb4-399"><a href="#cb4-399" aria-hidden="true" tabindex="-1"></a>different languages need different kinds of graphs. But we've been describing</span>
-<span id="cb4-400"><a href="#cb4-400" aria-hidden="true" tabindex="-1"></a>these graph structures informally—listing their components (vertices, edges,</span>
-<span id="cb4-401"><a href="#cb4-401" aria-hidden="true" tabindex="-1"></a>operations) in prose.</span>
-<span id="cb4-402"><a href="#cb4-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-403"><a href="#cb4-403" aria-hidden="true" tabindex="-1"></a>There's a precise way to describe a graph structure: you specify its</span>
-<span id="cb4-404"><a href="#cb4-404" aria-hidden="true" tabindex="-1"></a>**sorts** (the kinds of things that exist), its **operations** (the functions</span>
-<span id="cb4-405"><a href="#cb4-405" aria-hidden="true" tabindex="-1"></a>between those sorts), and its **equations** (the laws those operations obey). A</span>
-<span id="cb4-406"><a href="#cb4-406" aria-hidden="true" tabindex="-1"></a>directed graph, for instance, has two sorts (Vertex and Edge), two operations</span>
-<span id="cb4-407"><a href="#cb4-407" aria-hidden="true" tabindex="-1"></a>(src and tgt, both from Edge to Vertex), and no equations. A multigraph has the</span>
-<span id="cb4-408"><a href="#cb4-408" aria-hidden="true" tabindex="-1"></a>same description—the "multi" comes from not requiring edges to be uniquely</span>
-<span id="cb4-409"><a href="#cb4-409" aria-hidden="true" tabindex="-1"></a>determined by their source and target.</span>
+<span id="cb4-398"><a href="#cb4-398" aria-hidden="true" tabindex="-1"></a>:::{.callout-note}</span>
+<span id="cb4-399"><a href="#cb4-399" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Parameterization Principle</span></span>
+<span id="cb4-400"><a href="#cb4-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-401"><a href="#cb4-401" aria-hidden="true" tabindex="-1"></a>Single-protocol tools fix the graph structure and optimize for a specific</span>
+<span id="cb4-402"><a href="#cb4-402" aria-hidden="true" tabindex="-1"></a>schema language. panproto parameterizes the graph structure and provides uniform</span>
+<span id="cb4-403"><a href="#cb4-403" aria-hidden="true" tabindex="-1"></a>algorithms that work across schema languages. This is the fundamental</span>
+<span id="cb4-404"><a href="#cb4-404" aria-hidden="true" tabindex="-1"></a>architectural difference—and it's what makes cross-protocol schema operations</span>
+<span id="cb4-405"><a href="#cb4-405" aria-hidden="true" tabindex="-1"></a>possible.</span>
+<span id="cb4-406"><a href="#cb4-406" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb4-407"><a href="#cb4-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-408"><a href="#cb4-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-409"><a href="#cb4-409" aria-hidden="true" tabindex="-1"></a><span class="fu">## From Graphs to Theories</span></span>
 <span id="cb4-410"><a href="#cb4-410" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-411"><a href="#cb4-411" aria-hidden="true" tabindex="-1"></a>This sort-operation-equation description is called a **theory**, and the things</span>
-<span id="cb4-412"><a href="#cb4-412" aria-hidden="true" tabindex="-1"></a>that satisfy a theory are called **models**. A specific ATProto schema is a</span>
-<span id="cb4-413"><a href="#cb4-413" aria-hidden="true" tabindex="-1"></a>model of the multigraph theory. A specific SQL schema is a model of the</span>
-<span id="cb4-414"><a href="#cb4-414" aria-hidden="true" tabindex="-1"></a>hypergraph-with-constraints theory.</span>
+<span id="cb4-411"><a href="#cb4-411" aria-hidden="true" tabindex="-1"></a>We've established that schema languages have graph-theoretic structure, and that</span>
+<span id="cb4-412"><a href="#cb4-412" aria-hidden="true" tabindex="-1"></a>different languages need different kinds of graphs. But we've been describing</span>
+<span id="cb4-413"><a href="#cb4-413" aria-hidden="true" tabindex="-1"></a>these graph structures informally—listing their components (vertices, edges,</span>
+<span id="cb4-414"><a href="#cb4-414" aria-hidden="true" tabindex="-1"></a>operations) in prose.</span>
 <span id="cb4-415"><a href="#cb4-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-416"><a href="#cb4-416" aria-hidden="true" tabindex="-1"></a>If the language of sorts, operations, and equations sounds suspiciously like an</span>
-<span id="cb4-417"><a href="#cb4-417" aria-hidden="true" tabindex="-1"></a>abstract algebra course, that's because it is. The next chapter introduces the</span>
-<span id="cb4-418"><a href="#cb4-418" aria-hidden="true" tabindex="-1"></a>specific algebraic framework panproto uses—Generalized Algebraic Theories—and</span>
-<span id="cb4-419"><a href="#cb4-419" aria-hidden="true" tabindex="-1"></a>shows how the Rust implementation represents theories and models as concrete</span>
-<span id="cb4-420"><a href="#cb4-420" aria-hidden="true" tabindex="-1"></a>data structures. The math will earn its keep: it's what makes panproto's</span>
-<span id="cb4-421"><a href="#cb4-421" aria-hidden="true" tabindex="-1"></a>parameterization possible.</span>
-<span id="cb4-422"><a href="#cb4-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-416"><a href="#cb4-416" aria-hidden="true" tabindex="-1"></a>There's a precise way to describe a graph structure: you specify its</span>
+<span id="cb4-417"><a href="#cb4-417" aria-hidden="true" tabindex="-1"></a>**sorts** (the kinds of things that exist), its **operations** (the functions</span>
+<span id="cb4-418"><a href="#cb4-418" aria-hidden="true" tabindex="-1"></a>between those sorts), and its **equations** (the laws those operations obey). A</span>
+<span id="cb4-419"><a href="#cb4-419" aria-hidden="true" tabindex="-1"></a>directed graph, for instance, has two sorts (Vertex and Edge), two operations</span>
+<span id="cb4-420"><a href="#cb4-420" aria-hidden="true" tabindex="-1"></a>(src and tgt, both from Edge to Vertex), and no equations. A multigraph has the</span>
+<span id="cb4-421"><a href="#cb4-421" aria-hidden="true" tabindex="-1"></a>same description—the "multi" comes from not requiring edges to be uniquely</span>
+<span id="cb4-422"><a href="#cb4-422" aria-hidden="true" tabindex="-1"></a>determined by their source and target.</span>
 <span id="cb4-423"><a href="#cb4-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-424"><a href="#cb4-424" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb4-425"><a href="#cb4-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-426"><a href="#cb4-426" aria-hidden="true" tabindex="-1"></a>This chapter established three ideas:</span>
-<span id="cb4-427"><a href="#cb4-427" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-428"><a href="#cb4-428" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Schema languages have graph-theoretic structure.** Types are vertices;</span>
-<span id="cb4-429"><a href="#cb4-429" aria-hidden="true" tabindex="-1"></a>   fields, columns, and properties are edges. This is not a metaphor—it's a</span>
-<span id="cb4-430"><a href="#cb4-430" aria-hidden="true" tabindex="-1"></a>   precise structural description.</span>
-<span id="cb4-431"><a href="#cb4-431" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-432"><a href="#cb4-432" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Different schema languages need different kinds of graphs.** Multigraphs</span>
-<span id="cb4-433"><a href="#cb4-433" aria-hidden="true" tabindex="-1"></a>   for parallel fields (most languages). Hypergraphs for multi-ary constraints</span>
-<span id="cb4-434"><a href="#cb4-434" aria-hidden="true" tabindex="-1"></a>   (SQL). Constraints as annotations on any of these.</span>
+<span id="cb4-424"><a href="#cb4-424" aria-hidden="true" tabindex="-1"></a>This sort-operation-equation description is called a **theory**, and the things</span>
+<span id="cb4-425"><a href="#cb4-425" aria-hidden="true" tabindex="-1"></a>that satisfy a theory are called **models**. A specific ATProto schema is a</span>
+<span id="cb4-426"><a href="#cb4-426" aria-hidden="true" tabindex="-1"></a>model of the multigraph theory. A specific SQL schema is a model of the</span>
+<span id="cb4-427"><a href="#cb4-427" aria-hidden="true" tabindex="-1"></a>hypergraph-with-constraints theory.</span>
+<span id="cb4-428"><a href="#cb4-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-429"><a href="#cb4-429" aria-hidden="true" tabindex="-1"></a>If the language of sorts, operations, and equations sounds suspiciously like an</span>
+<span id="cb4-430"><a href="#cb4-430" aria-hidden="true" tabindex="-1"></a>abstract algebra course, that's because it is. The next chapter introduces the</span>
+<span id="cb4-431"><a href="#cb4-431" aria-hidden="true" tabindex="-1"></a>specific algebraic framework panproto uses—Generalized Algebraic Theories—and</span>
+<span id="cb4-432"><a href="#cb4-432" aria-hidden="true" tabindex="-1"></a>shows how the Rust implementation represents theories and models as concrete</span>
+<span id="cb4-433"><a href="#cb4-433" aria-hidden="true" tabindex="-1"></a>data structures. The math will earn its keep: it's what makes panproto's</span>
+<span id="cb4-434"><a href="#cb4-434" aria-hidden="true" tabindex="-1"></a>parameterization possible.</span>
 <span id="cb4-435"><a href="#cb4-435" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-436"><a href="#cb4-436" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Single-protocol tools hardcode a specific graph structure.** This is why</span>
-<span id="cb4-437"><a href="#cb4-437" aria-hidden="true" tabindex="-1"></a>   Buf can't do SQL migrations and Atlas can't lint Protobuf. panproto</span>
-<span id="cb4-438"><a href="#cb4-438" aria-hidden="true" tabindex="-1"></a>   parameterizes over the graph structure instead.</span>
-<span id="cb4-439"><a href="#cb4-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-440"><a href="#cb4-440" aria-hidden="true" tabindex="-1"></a>The question now is: how do you precisely describe a graph structure so that</span>
-<span id="cb4-441"><a href="#cb4-441" aria-hidden="true" tabindex="-1"></a>software can work with it generically? That's the subject of the next chapter.</span>
+<span id="cb4-436"><a href="#cb4-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-437"><a href="#cb4-437" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb4-438"><a href="#cb4-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-439"><a href="#cb4-439" aria-hidden="true" tabindex="-1"></a>This chapter established three ideas:</span>
+<span id="cb4-440"><a href="#cb4-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-441"><a href="#cb4-441" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Schema languages have graph-theoretic structure.** Types are vertices;</span>
+<span id="cb4-442"><a href="#cb4-442" aria-hidden="true" tabindex="-1"></a>   fields, columns, and properties are edges. This is not a metaphor—it's a</span>
+<span id="cb4-443"><a href="#cb4-443" aria-hidden="true" tabindex="-1"></a>   precise structural description.</span>
+<span id="cb4-444"><a href="#cb4-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-445"><a href="#cb4-445" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Different schema languages need different kinds of graphs.** Multigraphs</span>
+<span id="cb4-446"><a href="#cb4-446" aria-hidden="true" tabindex="-1"></a>   for parallel fields (most languages). Hypergraphs for multi-ary constraints</span>
+<span id="cb4-447"><a href="#cb4-447" aria-hidden="true" tabindex="-1"></a>   (SQL). Constraints as annotations on any of these.</span>
+<span id="cb4-448"><a href="#cb4-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-449"><a href="#cb4-449" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Single-protocol tools hardcode a specific graph structure.** This is why</span>
+<span id="cb4-450"><a href="#cb4-450" aria-hidden="true" tabindex="-1"></a>   Buf can't do SQL migrations and Atlas can't lint Protobuf. panproto</span>
+<span id="cb4-451"><a href="#cb4-451" aria-hidden="true" tabindex="-1"></a>   parameterizes over the graph structure instead.</span>
+<span id="cb4-452"><a href="#cb4-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-453"><a href="#cb4-453" aria-hidden="true" tabindex="-1"></a>The question now is: how do you precisely describe a graph structure so that</span>
+<span id="cb4-454"><a href="#cb4-454" aria-hidden="true" tabindex="-1"></a>software can work with it generically? That's the subject of the next chapter.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -439,6 +439,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Self-Description: The GAT of GATs</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-format-conversion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Format Conversion</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -453,19 +459,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../appendices/D-protocol-catalog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
   </div>
 </li>
       </ul>
@@ -491,15 +503,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#graphql-sdl" id="toc-graphql-sdl" class="nav-link" data-scroll-target="#graphql-sdl"><span class="header-section-number">2.2.4</span> GraphQL SDL</a></li>
   <li><a href="#atproto-lexicon" id="toc-atproto-lexicon" class="nav-link" data-scroll-target="#atproto-lexicon"><span class="header-section-number">2.2.5</span> ATProto Lexicon</a></li>
   </ul></li>
-  <li><a href="#the-structural-rhyme" id="toc-the-structural-rhyme" class="nav-link" data-scroll-target="#the-structural-rhyme"><span class="header-section-number">2.3</span> The Structural Rhyme</a></li>
-  <li><a href="#building-schemas-with-panproto" id="toc-building-schemas-with-panproto" class="nav-link" data-scroll-target="#building-schemas-with-panproto"><span class="header-section-number">2.4</span> Building Schemas with panproto</a>
+  <li><a href="#beyond-five-the-full-spectrum" id="toc-beyond-five-the-full-spectrum" class="nav-link" data-scroll-target="#beyond-five-the-full-spectrum"><span class="header-section-number">2.3</span> Beyond Five: The Full Spectrum</a>
   <ul class="collapse">
-  <li><a href="#atproto" id="toc-atproto" class="nav-link" data-scroll-target="#atproto"><span class="header-section-number">2.4.1</span> ATProto</a></li>
-  <li><a href="#sql" id="toc-sql" class="nav-link" data-scroll-target="#sql"><span class="header-section-number">2.4.2</span> SQL</a></li>
-  <li><a href="#what-changed-what-didnt" id="toc-what-changed-what-didnt" class="nav-link" data-scroll-target="#what-changed-what-didnt"><span class="header-section-number">2.4.3</span> What Changed, What Didn’t</a></li>
+  <li><a href="#avro" id="toc-avro" class="nav-link" data-scroll-target="#avro"><span class="header-section-number">2.3.1</span> Avro</a></li>
+  <li><a href="#typescript" id="toc-typescript" class="nav-link" data-scroll-target="#typescript"><span class="header-section-number">2.3.2</span> TypeScript</a></li>
+  <li><a href="#openapi" id="toc-openapi" class="nav-link" data-scroll-target="#openapi"><span class="header-section-number">2.3.3</span> OpenAPI</a></li>
+  <li><a href="#xml-schema-definition-xsd" id="toc-xml-schema-definition-xsd" class="nav-link" data-scroll-target="#xml-schema-definition-xsd"><span class="header-section-number">2.3.4</span> XML Schema Definition (XSD)</a></li>
   </ul></li>
-  <li><a href="#what-were-looking-at" id="toc-what-were-looking-at" class="nav-link" data-scroll-target="#what-were-looking-at"><span class="header-section-number">2.5</span> What We’re Looking At</a></li>
-  <li><a href="#looking-ahead" id="toc-looking-ahead" class="nav-link" data-scroll-target="#looking-ahead"><span class="header-section-number">2.6</span> Looking Ahead</a></li>
+  <li><a href="#the-structural-rhyme" id="toc-the-structural-rhyme" class="nav-link" data-scroll-target="#the-structural-rhyme"><span class="header-section-number">2.4</span> The Structural Rhyme</a></li>
+  <li><a href="#building-schemas-with-panproto" id="toc-building-schemas-with-panproto" class="nav-link" data-scroll-target="#building-schemas-with-panproto"><span class="header-section-number">2.5</span> Building Schemas with panproto</a>
+  <ul class="collapse">
+  <li><a href="#atproto" id="toc-atproto" class="nav-link" data-scroll-target="#atproto"><span class="header-section-number">2.5.1</span> ATProto</a></li>
+  <li><a href="#sql" id="toc-sql" class="nav-link" data-scroll-target="#sql"><span class="header-section-number">2.5.2</span> SQL</a></li>
+  <li><a href="#what-changed-what-didnt" id="toc-what-changed-what-didnt" class="nav-link" data-scroll-target="#what-changed-what-didnt"><span class="header-section-number">2.5.3</span> What Changed, What Didn’t</a></li>
+  </ul></li>
+  <li><a href="#what-were-looking-at" id="toc-what-were-looking-at" class="nav-link" data-scroll-target="#what-were-looking-at"><span class="header-section-number">2.6</span> What We’re Looking At</a></li>
+  <li><a href="#looking-ahead" id="toc-looking-ahead" class="nav-link" data-scroll-target="#looking-ahead"><span class="header-section-number">2.7</span> Looking Ahead</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/01-schemas-everywhere.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -530,7 +549,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="schemas-everywhere" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Schemas Everywhere</h1>
 <p>You already know what a schema is. You write them constantly—every time you define a database table, declare a protobuf message, or sketch out a GraphQL type. Schemas are the skeletons of structured data: they say what fields exist, what types those fields carry, and (sometimes) what constraints hold.</p>
-<p>What you might not have noticed is how <em>many</em> schema languages there are, and how eerily similar they look once you squint past the syntax. This chapter makes that observation concrete. We’ll take a single, deliberately boring entity—a blog post—and write its schema in five different formats. Then we’ll show how panproto can construct the same schema using its TypeScript SDK, regardless of which protocol you’re targeting.</p>
+<p>What you might not have noticed is how <em>many</em> schema languages there are, and how eerily similar they look once you squint past the syntax. This chapter makes that observation concrete. We’ll take a single, deliberately boring entity—a blog post—and write its schema in nine different formats drawn from panproto’s coverage of 54 protocols. Then we’ll show how panproto can construct the same schema using its TypeScript SDK, regardless of which protocol you’re targeting.</p>
 <section id="the-running-example-a-blog-post" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="the-running-example-a-blog-post"><span class="header-section-number">2.1</span> The Running Example: A Blog Post</h2>
 <p>Our blog post has three fields:</p>
@@ -672,17 +691,144 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Lexicon looks a lot like JSON Schema, and that’s intentional—it was designed to be familiar. But notice the differences: there’s a <strong>record</strong> wrapper with a <code>key</code> strategy (<code>tid</code> means “timestamp-based ID”). The NSID (<code>com.example.blog.post</code>) serves as both an identifier and a namespace. <code>maxGraphemes</code> is an ATProto-specific constraint that counts Unicode grapheme clusters rather than code points.</p>
 </section>
 </section>
-<section id="the-structural-rhyme" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="the-structural-rhyme"><span class="header-section-number">2.3</span> The Structural Rhyme</h2>
-<p>Step back and look at these five representations side by side. Despite the syntactic differences, they share a common anatomy:</p>
+<section id="beyond-five-the-full-spectrum" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="beyond-five-the-full-spectrum"><span class="header-section-number">2.3</span> Beyond Five: The Full Spectrum</h2>
+<p>Five formats illustrate the pattern, but panproto covers 54 protocols. To give a sense of the breadth, here are four more representations of the same blog post—drawn from serialization, type system, API specification, and document-exchange traditions respectively.</p>
+<section id="avro" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="avro"><span class="header-section-number">2.3.1</span> Avro</h3>
+<p>Apache Avro is the schema language of the Hadoop ecosystem and a common choice for Kafka message contracts. Schemas are themselves JSON documents, and types are defined recursively.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"record"</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"Post"</span><span class="fu">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"namespace"</span><span class="fu">:</span> <span class="st">"com.example.blog"</span><span class="fu">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"doc"</span><span class="fu">:</span> <span class="st">"A blog post."</span><span class="fu">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"fields"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"text"</span><span class="fu">,</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"doc"</span><span class="fu">:</span> <span class="st">"Post body, maximum 3000 characters."</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"createdAt"</span><span class="fu">,</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"long"</span><span class="fu">,</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"logicalType"</span><span class="fu">:</span> <span class="st">"timestamp-millis"</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"tags"</span><span class="fu">,</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"type"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"array"</span><span class="fu">,</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"items"</span><span class="fu">:</span> <span class="st">"string"</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"default"</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Avro’s top-level construct is a <strong>record</strong> with a list of <strong>fields</strong>. The <code>type</code> is either a primitive name (<code>"string"</code>) or a nested type definition. Avro’s <code>logicalType</code> mechanism layers semantic meaning—here, a timestamp interpretation—on top of a physical primitive (<code>long</code>). The <code>default</code> on <code>tags</code> makes the field optional in the sense that a message without it is still schema-valid.</p>
+</section>
+<section id="typescript" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="typescript"><span class="header-section-number">2.3.2</span> TypeScript</h3>
+<p>TypeScript interfaces are schema-like artifacts even though TypeScript is a programming language rather than a dedicated schema language. They’re the de facto contract layer for JavaScript ecosystems, and many tools (Zod, io-ts, TypeBox) treat them as first-class schema targets.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">/** A blog post. */</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">interface</span> Post {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">/** Post body, maximum 3000 characters. */</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  text<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="dt">string</span><span class="op">;</span> <span class="co">// ISO 8601 date-time</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  tags<span class="op">?:</span> <span class="dt">string</span>[]<span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The top-level construct is an <strong>interface</strong> with named <strong>members</strong>. Types are TypeScript’s own type expressions. The <code>?</code> suffix marks a member as optional (the TypeScript analog of “not required”). Comments carry the constraint information that the type system itself cannot express—<code>maxLength</code> and <code>maxItems</code> have no native representation in a TypeScript interface, though they can be encoded via branded types or validation library schemas.</p>
+</section>
+<section id="openapi" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="openapi"><span class="header-section-number">2.3.3</span> OpenAPI</h3>
+<p>OpenAPI 3.1 is the dominant standard for describing REST APIs. A schema appears in two places: in the <strong>path item</strong> (describing the operation) and in the <strong>components</strong> section (defining reusable types). Here is the path for creating a post, plus the schema component it references.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paths</span><span class="kw">:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">/posts</span><span class="kw">:</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">post</span><span class="kw">:</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">summary</span><span class="kw">:</span><span class="at"> Create a blog post</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">requestBody</span><span class="kw">:</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">content</span><span class="kw">:</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">application/json</span><span class="kw">:</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">schema</span><span class="kw">:</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">$ref</span><span class="kw">:</span><span class="at"> </span><span class="st">'#/components/schemas/Post'</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">responses</span><span class="kw">:</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">'201'</span><span class="kw">:</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Post created</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu">components</span><span class="kw">:</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">schemas</span><span class="kw">:</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">Post</span><span class="kw">:</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> object</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> text</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> createdAt</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">properties</span><span class="kw">:</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">type</span><span class="kw">:</span><span class="at"> string</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">maxLength</span><span class="kw">:</span><span class="at"> </span><span class="dv">3000</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">createdAt</span><span class="kw">:</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">type</span><span class="kw">:</span><span class="at"> string</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">format</span><span class="kw">:</span><span class="at"> date-time</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">tags</span><span class="kw">:</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">type</span><span class="kw">:</span><span class="at"> array</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">items</span><span class="kw">:</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">type</span><span class="kw">:</span><span class="at"> string</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">maxItems</span><span class="kw">:</span><span class="at"> </span><span class="dv">8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The schema portion of OpenAPI is essentially JSON Schema (OpenAPI 3.1 adopted the JSON Schema 2020-12 vocabulary), so the <code>components/schemas/Post</code> block looks identical to the JSON Schema example. What OpenAPI adds is the <strong>path layer</strong>: operations, HTTP methods, request bodies, and responses. The schema language describes shapes; the path layer describes the protocol contract around those shapes.</p>
+</section>
+<section id="xml-schema-definition-xsd" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="xml-schema-definition-xsd"><span class="header-section-number">2.3.4</span> XML Schema Definition (XSD)</h3>
+<p>XSD is the W3C schema language for XML documents. It predates JSON Schema by more than a decade and remains the dominant schema mechanism in enterprise integration, document-exchange standards, and SOAP-based web services.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="ot"> encoding=</span><span class="st">"UTF-8"</span><span class="fu">?&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xs:schema</span><span class="ot"> xmlns:xs=</span><span class="st">"http://www.w3.org/2001/XMLSchema"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ot">           targetNamespace=</span><span class="st">"https://example.com/blog"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ot">           xmlns:blog=</span><span class="st">"https://example.com/blog"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ot">           elementFormDefault=</span><span class="st">"qualified"</span>&gt;</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">xs:element</span><span class="ot"> name=</span><span class="st">"post"</span><span class="ot"> type=</span><span class="st">"blog:PostType"</span>/&gt;</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">xs:complexType</span><span class="ot"> name=</span><span class="st">"PostType"</span>&gt;</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">xs:sequence</span>&gt;</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xs:element</span><span class="ot"> name=</span><span class="st">"text"</span>&gt;</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">xs:simpleType</span>&gt;</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>          &lt;<span class="kw">xs:restriction</span><span class="ot"> base=</span><span class="st">"xs:string"</span>&gt;</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">xs:maxLength</span><span class="ot"> value=</span><span class="st">"3000"</span>/&gt;</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>          &lt;/<span class="kw">xs:restriction</span>&gt;</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">xs:simpleType</span>&gt;</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xs:element</span>&gt;</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xs:element</span><span class="ot"> name=</span><span class="st">"createdAt"</span><span class="ot"> type=</span><span class="st">"xs:dateTime"</span>/&gt;</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xs:element</span><span class="ot"> name=</span><span class="st">"tags"</span><span class="ot"> minOccurs=</span><span class="st">"0"</span>&gt;</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">xs:complexType</span>&gt;</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>          &lt;<span class="kw">xs:sequence</span>&gt;</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">xs:element</span><span class="ot"> name=</span><span class="st">"tag"</span><span class="ot"> type=</span><span class="st">"xs:string"</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="ot">                        minOccurs=</span><span class="st">"0"</span><span class="ot"> maxOccurs=</span><span class="st">"8"</span>/&gt;</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>          &lt;/<span class="kw">xs:sequence</span>&gt;</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">xs:complexType</span>&gt;</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xs:element</span>&gt;</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">xs:sequence</span>&gt;</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">xs:complexType</span>&gt;</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xs:schema</span>&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>XSD’s vocabulary is more elaborate than any of the formats above. The top-level construct is a <strong>complexType</strong> containing a <strong>sequence</strong> of <strong>elements</strong>. Constraints are expressed as <strong>restrictions</strong> on base types—note how <code>maxLength</code> requires nesting a <code>simpleType &gt; restriction</code> around the element type. Arrays are modeled as a containing element with repeated child elements (<code>maxOccurs="8"</code>), a fundamentally different representation from the <code>type: array</code> approach used by JSON-family formats. Namespaces pervade everything.</p>
+<p>The verbosity is not accidental. XSD was designed for document exchange between organizations, where precise, version-stable, toolchain-independent contracts matter more than developer ergonomics.</p>
+</section>
+</section>
+<section id="the-structural-rhyme" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="the-structural-rhyme"><span class="header-section-number">2.4</span> The Structural Rhyme</h2>
+<p>Step back and look at these nine representations side by side. Despite the syntactic differences, they share a common anatomy:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 19%">
-<col style="width: 15%">
-<col style="width: 16%">
-<col style="width: 17%">
-<col style="width: 15%">
-<col style="width: 18%">
+<col style="width: 11%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 10%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 10%">
+<col style="width: 13%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -692,6 +838,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th>SQL DDL</th>
 <th>GraphQL SDL</th>
 <th>ATProto Lexicon</th>
+<th>Avro</th>
+<th>TypeScript</th>
+<th>OpenAPI (schema)</th>
+<th>XSD</th>
 </tr>
 </thead>
 <tbody>
@@ -702,6 +852,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>table</td>
 <td>type</td>
 <td>record &gt; object</td>
+<td>record</td>
+<td>interface</td>
+<td>object</td>
+<td>complexType &gt; sequence</td>
 </tr>
 <tr class="even">
 <td>Named member</td>
@@ -710,6 +864,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>column</td>
 <td>field</td>
 <td>property</td>
+<td>field</td>
+<td>member</td>
+<td>property</td>
+<td>element</td>
 </tr>
 <tr class="odd">
 <td>Member type</td>
@@ -718,6 +876,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>data type</td>
 <td>return type</td>
 <td>type</td>
+<td>type</td>
+<td>type</td>
+<td>type</td>
+<td>type / simpleType</td>
 </tr>
 <tr class="even">
 <td>Required marker</td>
@@ -726,6 +888,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>NOT NULL</td>
 <td><code>!</code> suffix</td>
 <td>required[]</td>
+<td>(no default)</td>
+<td>(no <code>?</code>)</td>
+<td>required[]</td>
+<td>minOccurs=“1”</td>
 </tr>
 <tr class="odd">
 <td>Length constraint</td>
@@ -734,6 +900,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>VARCHAR(n)</td>
 <td>(external)</td>
 <td>maxLength</td>
+<td>(doc only)</td>
+<td>(doc only)</td>
+<td>maxLength</td>
+<td>xs:maxLength</td>
 </tr>
 <tr class="even">
 <td>List marker</td>
@@ -742,97 +912,105 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>ARRAY / table</td>
 <td><code>[T]</code> syntax</td>
 <td>type: array</td>
+<td>type: array</td>
+<td><code>T[]</code></td>
+<td>type: array</td>
+<td>maxOccurs &gt; 1</td>
 </tr>
 </tbody>
 </table>
 <p>Every row in that table describes the same structural idea wearing different clothes. A <strong>container</strong> holds <strong>named members</strong>. Each member has a <strong>type</strong>. Some members are <strong>required</strong>. Some have <strong>constraints</strong>.</p>
-<p>This isn’t a coincidence. These formats all describe the same kind of thing: structured data with named, typed components. The differences are real—SQL has foreign keys, Protobuf has field numbers, GraphQL has nullability as a type feature—but the similarities dominate.</p>
+<p>This isn’t a coincidence. These formats all describe the same kind of thing: structured data with named, typed components. The differences are real—SQL has foreign keys, Protobuf has field numbers, GraphQL has nullability as a type feature, XSD has namespace machinery—but the similarities dominate.</p>
 </section>
-<section id="building-schemas-with-panproto" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="building-schemas-with-panproto"><span class="header-section-number">2.4</span> Building Schemas with panproto</h2>
+<section id="building-schemas-with-panproto" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="building-schemas-with-panproto"><span class="header-section-number">2.5</span> Building Schemas with panproto</h2>
 <p>panproto takes this observation seriously. Instead of treating each schema language as a special case, it provides a single API that can target multiple protocols. You describe your intent once; panproto maps it to the target format’s native constructs.</p>
 <p>Here’s what that looks like in practice using the panproto TypeScript SDK.</p>
-<section id="atproto" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="atproto"><span class="header-section-number">2.4.1</span> ATProto</h3>
+<section id="atproto" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="atproto"><span class="header-section-number">2.5.1</span> ATProto</h3>
 <p>The ATProto schema builder produces a Lexicon-compatible record definition. The same blog post entity, expressed through panproto’s API:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-snippet="build-schema"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { Panproto } <span class="im">from</span> <span class="st">'@panproto/core'</span><span class="op">;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet init</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> panproto <span class="op">=</span> <span class="cf">await</span> Panproto<span class="op">.</span><span class="fu">init</span>()<span class="op">;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> atproto <span class="op">=</span> panproto<span class="op">.</span><span class="fu">protocol</span>(<span class="st">'atproto'</span>)<span class="op">;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet init</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet build-schema</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> postSchema <span class="op">=</span> atproto<span class="op">.</span><span class="fu">schema</span>()</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'record'</span><span class="op">,</span> { nsid<span class="op">:</span> <span class="st">'app.bsky.feed.post'</span> })</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'object'</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'post:body'</span><span class="op">,</span> <span class="st">'record-schema'</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'text'</span> })</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'createdAt'</span> })</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">constraint</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'maxLength'</span><span class="op">,</span> <span class="st">'3000'</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">constraint</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'maxGraphemes'</span><span class="op">,</span> <span class="st">'300'</span>)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">constraint</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'format'</span><span class="op">,</span> <span class="st">'datetime'</span>)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">build</span>()<span class="op">;</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet build-schema</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-snippet="build-schema"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { Panproto } <span class="im">from</span> <span class="st">'@panproto/core'</span><span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet init</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> panproto <span class="op">=</span> <span class="cf">await</span> Panproto<span class="op">.</span><span class="fu">init</span>()<span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> atproto <span class="op">=</span> panproto<span class="op">.</span><span class="fu">protocol</span>(<span class="st">'atproto'</span>)<span class="op">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet init</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet build-schema</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> postSchema <span class="op">=</span> atproto<span class="op">.</span><span class="fu">schema</span>()</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'record'</span><span class="op">,</span> { nsid<span class="op">:</span> <span class="st">'app.bsky.feed.post'</span> })</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'object'</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post'</span><span class="op">,</span> <span class="st">'post:body'</span><span class="op">,</span> <span class="st">'record-schema'</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'text'</span> })</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'post:body'</span><span class="op">,</span> <span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'prop'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'createdAt'</span> })</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">constraint</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'maxLength'</span><span class="op">,</span> <span class="st">'3000'</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">constraint</span>(<span class="st">'post:body.text'</span><span class="op">,</span> <span class="st">'maxGraphemes'</span><span class="op">,</span> <span class="st">'300'</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">constraint</span>(<span class="st">'post:body.createdAt'</span><span class="op">,</span> <span class="st">'format'</span><span class="op">,</span> <span class="st">'datetime'</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">build</span>()<span class="op">;</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet build-schema</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The builder API mirrors the structure we saw in the Lexicon JSON above, but you get type checking, autocompletion, and—crucially—the ability to compose schemas programmatically. You’re not concatenating JSON strings; you’re building a typed data structure.</p>
 </section>
-<section id="sql" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="sql"><span class="header-section-number">2.4.2</span> SQL</h3>
+<section id="sql" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="sql"><span class="header-section-number">2.5.2</span> SQL</h3>
 <p>The SQL schema builder targets DDL. Same entity, different protocol:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-snippet="build-schema"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { Panproto } <span class="im">from</span> <span class="st">'@panproto/core'</span><span class="op">;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> panproto <span class="op">=</span> <span class="cf">await</span> Panproto<span class="op">.</span><span class="fu">init</span>()<span class="op">;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet build-schema</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> sql <span class="op">=</span> panproto<span class="op">.</span><span class="fu">protocol</span>(<span class="st">'sql'</span>)<span class="op">;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> postTable <span class="op">=</span> sql<span class="op">.</span><span class="fu">schema</span>()</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'posts'</span><span class="op">,</span> <span class="st">'table'</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'posts.id'</span><span class="op">,</span> <span class="st">'integer'</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'posts.text'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'posts.created_at'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'posts'</span><span class="op">,</span> <span class="st">'posts.id'</span><span class="op">,</span> <span class="st">'column'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'id'</span> })</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'posts'</span><span class="op">,</span> <span class="st">'posts.text'</span><span class="op">,</span> <span class="st">'column'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'text'</span> })</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'posts'</span><span class="op">,</span> <span class="st">'posts.created_at'</span><span class="op">,</span> <span class="st">'column'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'created_at'</span> })</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">constraint</span>(<span class="st">'posts.text'</span><span class="op">,</span> <span class="st">'maxLength'</span><span class="op">,</span> <span class="st">'3000'</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">build</span>()<span class="op">;</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet build-schema</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-snippet="build-schema"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { Panproto } <span class="im">from</span> <span class="st">'@panproto/core'</span><span class="op">;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> panproto <span class="op">=</span> <span class="cf">await</span> Panproto<span class="op">.</span><span class="fu">init</span>()<span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">// start snippet build-schema</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> sql <span class="op">=</span> panproto<span class="op">.</span><span class="fu">protocol</span>(<span class="st">'sql'</span>)<span class="op">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> postTable <span class="op">=</span> sql<span class="op">.</span><span class="fu">schema</span>()</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'posts'</span><span class="op">,</span> <span class="st">'table'</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'posts.id'</span><span class="op">,</span> <span class="st">'integer'</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'posts.text'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">vertex</span>(<span class="st">'posts.created_at'</span><span class="op">,</span> <span class="st">'string'</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'posts'</span><span class="op">,</span> <span class="st">'posts.id'</span><span class="op">,</span> <span class="st">'column'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'id'</span> })</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'posts'</span><span class="op">,</span> <span class="st">'posts.text'</span><span class="op">,</span> <span class="st">'column'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'text'</span> })</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">edge</span>(<span class="st">'posts'</span><span class="op">,</span> <span class="st">'posts.created_at'</span><span class="op">,</span> <span class="st">'column'</span><span class="op">,</span> { name<span class="op">:</span> <span class="st">'created_at'</span> })</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">constraint</span>(<span class="st">'posts.text'</span><span class="op">,</span> <span class="st">'maxLength'</span><span class="op">,</span> <span class="st">'3000'</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">build</span>()<span class="op">;</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">// end snippet build-schema</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The API surface is deliberately similar. You’re still declaring a container with named, typed members. The builder knows about SQL-specific concepts (column types, constraints, defaults) just as the ATProto builder knows about Lexicon concepts (NSIDs, key strategies, grapheme limits).</p>
 </section>
-<section id="what-changed-what-didnt" class="level3" data-number="2.4.3">
-<h3 data-number="2.4.3" class="anchored" data-anchor-id="what-changed-what-didnt"><span class="header-section-number">2.4.3</span> What Changed, What Didn’t</h3>
+<section id="what-changed-what-didnt" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="what-changed-what-didnt"><span class="header-section-number">2.5.3</span> What Changed, What Didn’t</h3>
 <p>Compare the two code snippets. The <strong>structure</strong> is the same: create a builder, declare a container, add typed fields with constraints. The <strong>vocabulary</strong> differs: <code>record</code> vs.&nbsp;<code>table</code>, <code>property</code> vs.&nbsp;<code>column</code>, <code>maxGraphemes</code> vs. <code>VARCHAR</code>. And the <strong>output</strong> differs: one produces Lexicon JSON, the other produces SQL DDL.</p>
 <p>This is the core value proposition of panproto: you learn the pattern once, then apply it across protocols. When a new schema language appears (and new ones appear regularly), you don’t start from scratch—you map its concepts to the pattern you already know.</p>
 </section>
 </section>
-<section id="what-were-looking-at" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="what-were-looking-at"><span class="header-section-number">2.5</span> What We’re Looking At</h2>
+<section id="what-were-looking-at" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="what-were-looking-at"><span class="header-section-number">2.6</span> What We’re Looking At</h2>
 <p>Let’s name what we’ve been seeing, without getting formal yet.</p>
-<p>All five schema formats describe <strong>vertices</strong> connected by <strong>edges</strong>:</p>
+<p>All nine schema formats describe <strong>vertices</strong> connected by <strong>edges</strong>:</p>
 <ul>
 <li>In JSON Schema, the vertices are types (<code>object</code>, <code>string</code>, <code>array</code>) and the edges are properties linking an object to its field types.</li>
 <li>In Protobuf, the vertices are messages and scalar types, and the edges are fields.</li>
 <li>In SQL, the vertices are tables and data types, and the edges are columns (linking a table to the type of each column). Foreign keys add edges between tables.</li>
 <li>In GraphQL, the vertices are types and the edges are fields.</li>
 <li>In ATProto Lexicon, the vertices are records, objects, and primitive types, and the edges are properties.</li>
+<li>In Avro, the vertices are records, arrays, and primitive types, and the edges are fields. Logical types annotate a vertex without changing the graph structure.</li>
+<li>In TypeScript interfaces, the vertices are interfaces and primitive types, and the edges are members. Optional members (<code>?</code>) carry their own edge annotation.</li>
+<li>In OpenAPI, the schema layer is structurally identical to JSON Schema; the additional path layer introduces operation vertices whose edges point into the schema graph via <code>$ref</code>.</li>
+<li>In XSD, the vertices are complexTypes, simpleTypes, and built-in primitive types. The edges are element declarations within a sequence, and restrictions on simpleTypes add constraint annotations to edges.</li>
 </ul>
-<p>Sometimes the edges carry extra information: a field number in Protobuf, a <code>NOT NULL</code> constraint in SQL, a <code>maxLength</code> in JSON Schema and Lexicon. But the fundamental picture is the same: <strong>a graph of types connected by typed relationships</strong>.</p>
+<p>Sometimes the edges carry extra information: a field number in Protobuf, a <code>NOT NULL</code> constraint in SQL, a <code>maxLength</code> in JSON Schema and Lexicon, a <code>minOccurs</code>/<code>maxOccurs</code> pair in XSD. But the fundamental picture is the same: <strong>a graph of types connected by typed relationships</strong>.</p>
 <p>The differences between schema languages come down to:</p>
 <ol type="1">
-<li><strong>What kinds of vertices are allowed.</strong> SQL has tables and views. Protobuf has messages and enums. GraphQL has types, interfaces, unions, and enums.</li>
-<li><strong>What kinds of edges are allowed.</strong> SQL columns are different from Protobuf fields, which are different from GraphQL fields.</li>
-<li><strong>What constraints can be attached.</strong> JSON Schema has a rich constraint vocabulary (<code>maxLength</code>, <code>pattern</code>, <code>minimum</code>). Protobuf has almost none built in. SQL constraints are operational (they’re enforced at write time).</li>
+<li><strong>What kinds of vertices are allowed.</strong> SQL has tables and views. Protobuf has messages and enums. GraphQL has types, interfaces, unions, and enums. XSD has complexTypes, simpleTypes, and element declarations as first-class vertices.</li>
+<li><strong>What kinds of edges are allowed.</strong> SQL columns are different from Protobuf fields, which are different from GraphQL fields, which are different from XSD element declarations within a sequence.</li>
+<li><strong>What constraints can be attached.</strong> JSON Schema has a rich constraint vocabulary (<code>maxLength</code>, <code>pattern</code>, <code>minimum</code>). Protobuf has almost none built in. SQL constraints are operational (they’re enforced at write time). XSD has a structured restriction vocabulary that can express the same constraints as JSON Schema but requires significantly more nesting to do so.</li>
 </ol>
 <p>These are not superficial syntactic differences. They reflect genuine design choices about what each format is optimized for. But they are <strong>parametric</strong> differences—variations on a common structural theme, not fundamentally different kinds of things.</p>
 <p>That structural theme is what panproto is built on. The next chapter gives it a name.</p>
 </section>
-<section id="looking-ahead" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="looking-ahead"><span class="header-section-number">2.6</span> Looking Ahead</h2>
+<section id="looking-ahead" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="looking-ahead"><span class="header-section-number">2.7</span> Looking Ahead</h2>
 <p>We’ve established that schema languages share a common graph-like structure, and that panproto exploits this commonality. But we’ve been hand-waving about what “graph-like” means. The word “graph” is doing a lot of work, and it turns out that different schema languages need different <em>kinds</em> of graphs.</p>
 <p>In <a href="02-the-shape-of-schemas.html" class="quarto-xref"><span>Chapter 3</span></a>, we’ll make this precise. We’ll see that some schemas are plain directed graphs, others are multigraphs, and still others need hypergraphs. These aren’t just academic distinctions—they determine what operations are well-defined on a schema, and they explain why single-protocol tools can’t easily generalize.</p>
-<p>But first, take a moment to appreciate the view from here: five different schema languages, five different communities, five different ecosystems—all describing the same blog post, all using the same structural pattern. The fact that this works is not an accident. It’s a consequence of what schemas <em>are</em>, and understanding that is the goal of this tutorial.</p>
+<p>But first, take a moment to appreciate the view from here: nine different schema languages, nine different communities, nine different ecosystems—all describing the same blog post, all using the same structural pattern. And these nine are a sample: panproto’s full coverage spans 54 protocols, from serialization formats like MessagePack and CBOR to interface definition languages like Thrift and WSDL to domain-specific schema systems like FHIR and JSON-LD. The fact that a single structural account reaches across all of them is not an accident. It’s a consequence of what schemas <em>are</em>, and understanding that is the goal of this tutorial.</p>
 
 
 <!-- -->
@@ -1317,333 +1495,532 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Schemas Everywhere"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="an">id:</span><span class="co"> sec-schemas</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Schemas Everywhere</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>You already know what a schema is. You write them constantly—every time you</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>define a database table, declare a protobuf message, or sketch out a GraphQL</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>type. Schemas are the skeletons of structured data: they say what fields exist,</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>what types those fields carry, and (sometimes) what constraints hold.</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>What you might not have noticed is how *many* schema languages there are, and</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>how eerily similar they look once you squint past the syntax. This chapter makes</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>that observation concrete. We'll take a single, deliberately boring entity—a</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>blog post—and write its schema in five different formats. Then we'll show how</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>panproto can construct the same schema using its TypeScript SDK, regardless of</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>which protocol you're targeting.</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Running Example: A Blog Post</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>Our blog post has three fields:</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Field       <span class="pp">|</span> Type              <span class="pp">|</span> Required? <span class="pp">|</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------|-------------------|-----------|</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`text`</span>      <span class="pp">|</span> string            <span class="pp">|</span> yes       <span class="pp">|</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`createdAt`</span> <span class="pp">|</span> datetime (string) <span class="pp">|</span> yes       <span class="pp">|</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`tags`</span>      <span class="pp">|</span> array of strings  <span class="pp">|</span> no        <span class="pp">|</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>That's it. No nested objects, no foreign keys, no clever tricks. The point</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>isn't the complexity of the entity—it's the variety of ways we can describe it.</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Five Representations</span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="fu">### JSON Schema</span></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>JSON Schema is the lingua franca of HTTP APIs. You've seen it in OpenAPI specs,</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>in configuration file validators, and in editor autocompletion engines.</span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>  <span class="st">"$schema"</span><span class="op">:</span> <span class="st">"https://json-schema.org/draft/2020-12/schema"</span><span class="op">,</span></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">"$id"</span><span class="op">:</span> <span class="st">"https://example.com/schemas/post.json"</span><span class="op">,</span></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"type"</span><span class="op">:</span> <span class="st">"object"</span><span class="op">,</span></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"required"</span><span class="op">:</span> [<span class="st">"text"</span><span class="op">,</span> <span class="st">"createdAt"</span>]<span class="op">,</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"properties"</span><span class="op">:</span> {</span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span><span class="op">:</span> {</span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>      <span class="st">"maxLength"</span><span class="op">:</span> <span class="dv">3000</span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"createdAt"</span><span class="op">:</span> {</span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span></span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>      <span class="st">"format"</span><span class="op">:</span> <span class="st">"date-time"</span></span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tags"</span><span class="op">:</span> {</span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> <span class="st">"array"</span><span class="op">,</span></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>      <span class="st">"items"</span><span class="op">:</span> {</span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span></span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>      <span class="st">"maxItems"</span><span class="op">:</span> <span class="dv">8</span></span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>A few things to note: the top-level construct is an **object** with named</span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>**properties**. Each property has a **type**. Some properties appear in the</span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>**required** array. Additional constraints like <span class="in">`maxLength`</span> and <span class="in">`maxItems`</span> sit</span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>alongside the type declarations.</span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### Protocol Buffers</span></span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>Protobuf takes a different approach. Where JSON Schema is declarative and</span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>JSON-native, Protobuf is a compiled IDL designed for efficient binary</span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>serialization.</span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a><span class="in">```protobuf</span></span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a><span class="in">syntax = "proto3";</span></span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a><span class="in">package example.blog;</span></span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a><span class="in">import "google/protobuf/timestamp.proto";</span></span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="in">message Post {</span></span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a><span class="in">  string text = 1;</span></span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a><span class="in">  google.protobuf.Timestamp created_at = 2;</span></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a><span class="in">  repeated string tags = 3;</span></span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>The top-level construct is a **message** with numbered **fields**. Each field</span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>has a **type** and a **field number** (used for wire encoding). The <span class="in">`repeated`</span></span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>keyword marks <span class="in">`tags`</span> as a list. There's no direct equivalent of <span class="in">`required`</span> in</span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>proto3—all fields have default values.</span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>Notice what's missing compared to JSON Schema: no <span class="in">`maxLength`</span>, no <span class="in">`maxItems`</span>.</span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>Protobuf doesn't have a built-in constraint language. If you want validation,</span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>you reach for something like <span class="in">`protoc-gen-validate`</span> or Buf's <span class="in">`protovalidate`</span>.</span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a><span class="fu">### SQL DDL</span></span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>SQL's Data Definition Language is the oldest schema language most developers</span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>encounter. It predates JSON, Protobuf, and GraphQL by decades.</span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a><span class="in">```sql</span></span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> posts (</span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>    id          <span class="dt">BIGINT</span> GENERATED ALWAYS <span class="kw">AS</span> IDENTITY <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>    <span class="dt">text</span>        <span class="dt">VARCHAR</span>(<span class="dv">3000</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>    created_at  TIMESTAMPTZ     <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="fu">now</span>(),</span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>    tags        <span class="dt">TEXT</span>[]</span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>);</span>
-<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>Here the top-level construct is a **table** with named **columns**. Each column</span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>has a **data type** and optional **constraints** (<span class="in">`NOT NULL`</span>, <span class="in">`PRIMARY KEY`</span>,</span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a><span class="in">`DEFAULT`</span>). The <span class="in">`TEXT[]`</span> type for tags is PostgreSQL's array syntax—other</span>
-<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>databases handle this differently (a separate <span class="in">`post_tags`</span> join table, for</span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>instance).</span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>SQL brings something the previous two formats lack: a notion of **identity**</span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>(<span class="in">`PRIMARY KEY`</span>) and **defaults** (<span class="in">`DEFAULT now()`</span>). These aren't just</span>
-<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>descriptions of shape—they're operational semantics baked into the schema.</span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a><span class="fu">### GraphQL SDL</span></span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>GraphQL's Schema Definition Language is designed for API surfaces. It describes</span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>what a client can query, not how data is stored.</span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a><span class="in">```graphql</span></span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a><span class="in">"""A blog post."""</span></span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="in">type Post {</span></span>
-<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="in">  text: String!</span></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a><span class="in">  createdAt: DateTime!</span></span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a><span class="in">  tags: [String!]</span></span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a>The top-level construct is a **type** with named **fields**. Each field has a</span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>**return type**. The <span class="in">`!`</span> suffix means non-nullable (GraphQL's version of</span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="in">`required`</span>). <span class="in">`[String!]`</span> means "a nullable list of non-nullable strings"—note</span>
-<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>how nullability is part of the type system, not a separate constraint.</span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a>GraphQL doesn't have <span class="in">`maxLength`</span> either. Validation happens in resolvers or</span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a>directives, not in the SDL itself.</span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### ATProto Lexicon</span></span>
-<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a>ATProto (the protocol behind Bluesky) uses Lexicon, a JSON-based schema</span>
-<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a>language that borrows from JSON Schema but adds protocol-specific concepts like</span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>NSIDs and record types.</span>
-<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
-<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lexicon"</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
-<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>  <span class="st">"id"</span><span class="op">:</span> <span class="st">"com.example.blog.post"</span><span class="op">,</span></span>
-<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>  <span class="st">"defs"</span><span class="op">:</span> {</span>
-<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>    <span class="st">"main"</span><span class="op">:</span> {</span>
-<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> <span class="st">"record"</span><span class="op">,</span></span>
-<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a>      <span class="st">"description"</span><span class="op">:</span> <span class="st">"A blog post."</span><span class="op">,</span></span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>      <span class="st">"key"</span><span class="op">:</span> <span class="st">"tid"</span><span class="op">,</span></span>
-<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a>      <span class="st">"record"</span><span class="op">:</span> {</span>
-<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>        <span class="st">"type"</span><span class="op">:</span> <span class="st">"object"</span><span class="op">,</span></span>
-<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a>        <span class="st">"required"</span><span class="op">:</span> [<span class="st">"text"</span><span class="op">,</span> <span class="st">"createdAt"</span>]<span class="op">,</span></span>
-<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>        <span class="st">"properties"</span><span class="op">:</span> {</span>
-<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a>          <span class="st">"text"</span><span class="op">:</span> {</span>
-<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>            <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span></span>
-<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>            <span class="st">"maxLength"</span><span class="op">:</span> <span class="dv">3000</span><span class="op">,</span></span>
-<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>            <span class="st">"maxGraphemes"</span><span class="op">:</span> <span class="dv">300</span></span>
-<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>          }<span class="op">,</span></span>
-<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a>          <span class="st">"createdAt"</span><span class="op">:</span> {</span>
-<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a>            <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span></span>
-<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>            <span class="st">"format"</span><span class="op">:</span> <span class="st">"datetime"</span></span>
-<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>          }<span class="op">,</span></span>
-<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a>          <span class="st">"tags"</span><span class="op">:</span> {</span>
-<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a>            <span class="st">"type"</span><span class="op">:</span> <span class="st">"array"</span><span class="op">,</span></span>
-<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>            <span class="st">"items"</span><span class="op">:</span> {</span>
-<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a>              <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span></span>
-<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a>            }<span class="op">,</span></span>
-<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a>            <span class="st">"maxLength"</span><span class="op">:</span> <span class="dv">8</span></span>
-<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>          }</span>
-<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a>Lexicon looks a lot like JSON Schema, and that's intentional—it was designed to</span>
-<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>be familiar. But notice the differences: there's a **record** wrapper with a</span>
-<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a><span class="in">`key`</span> strategy (<span class="in">`tid`</span> means "timestamp-based ID"). The NSID</span>
-<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a>(<span class="in">`com.example.blog.post`</span>) serves as both an identifier and a namespace.</span>
-<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a><span class="in">`maxGraphemes`</span> is an ATProto-specific constraint that counts Unicode grapheme</span>
-<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a>clusters rather than code points.</span>
-<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Structural Rhyme</span></span>
-<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a>Step back and look at these five representations side by side. Despite the</span>
-<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a>syntactic differences, they share a common anatomy:</span>
-<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Concept           <span class="pp">|</span> JSON Schema   <span class="pp">|</span> Protobuf       <span class="pp">|</span> SQL DDL         <span class="pp">|</span> GraphQL SDL   <span class="pp">|</span> ATProto Lexicon  <span class="pp">|</span></span>
-<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------------|---------------|----------------|-----------------|---------------|------------------|</span></span>
-<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Container         <span class="pp">|</span> object        <span class="pp">|</span> message        <span class="pp">|</span> table           <span class="pp">|</span> type          <span class="pp">|</span> record &gt; object  <span class="pp">|</span></span>
-<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Named member      <span class="pp">|</span> property      <span class="pp">|</span> field          <span class="pp">|</span> column          <span class="pp">|</span> field         <span class="pp">|</span> property         <span class="pp">|</span></span>
-<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Member type       <span class="pp">|</span> type          <span class="pp">|</span> type           <span class="pp">|</span> data type       <span class="pp">|</span> return type   <span class="pp">|</span> type             <span class="pp">|</span></span>
-<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Required marker   <span class="pp">|</span> required[]    <span class="pp">|</span> (always set)   <span class="pp">|</span> NOT NULL        <span class="pp">|</span> <span class="in">`!`</span> suffix    <span class="pp">|</span> required[]       <span class="pp">|</span></span>
-<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Length constraint  <span class="pp">|</span> maxLength     <span class="pp">|</span> (external)     <span class="pp">|</span> VARCHAR(n)      <span class="pp">|</span> (external)    <span class="pp">|</span> maxLength        <span class="pp">|</span></span>
-<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> List marker       <span class="pp">|</span> type: array   <span class="pp">|</span> repeated       <span class="pp">|</span> ARRAY / table   <span class="pp">|</span> <span class="in">`[T]`</span> syntax  <span class="pp">|</span> type: array      <span class="pp">|</span></span>
-<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a>Every row in that table describes the same structural idea wearing different</span>
-<span id="cb8-212"><a href="#cb8-212" aria-hidden="true" tabindex="-1"></a>clothes. A **container** holds **named members**. Each member has a **type**.</span>
-<span id="cb8-213"><a href="#cb8-213" aria-hidden="true" tabindex="-1"></a>Some members are **required**. Some have **constraints**.</span>
-<span id="cb8-214"><a href="#cb8-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-215"><a href="#cb8-215" aria-hidden="true" tabindex="-1"></a>This isn't a coincidence. These formats all describe the same kind of thing:</span>
-<span id="cb8-216"><a href="#cb8-216" aria-hidden="true" tabindex="-1"></a>structured data with named, typed components. The differences are real—SQL has</span>
-<span id="cb8-217"><a href="#cb8-217" aria-hidden="true" tabindex="-1"></a>foreign keys, Protobuf has field numbers, GraphQL has nullability as a type</span>
-<span id="cb8-218"><a href="#cb8-218" aria-hidden="true" tabindex="-1"></a>feature—but the similarities dominate.</span>
-<span id="cb8-219"><a href="#cb8-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-221"><a href="#cb8-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## Building Schemas with panproto</span></span>
-<span id="cb8-222"><a href="#cb8-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-223"><a href="#cb8-223" aria-hidden="true" tabindex="-1"></a>panproto takes this observation seriously. Instead of treating each schema</span>
-<span id="cb8-224"><a href="#cb8-224" aria-hidden="true" tabindex="-1"></a>language as a special case, it provides a single API that can target multiple</span>
-<span id="cb8-225"><a href="#cb8-225" aria-hidden="true" tabindex="-1"></a>protocols. You describe your intent once; panproto maps it to the target</span>
-<span id="cb8-226"><a href="#cb8-226" aria-hidden="true" tabindex="-1"></a>format's native constructs.</span>
-<span id="cb8-227"><a href="#cb8-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-228"><a href="#cb8-228" aria-hidden="true" tabindex="-1"></a>Here's what that looks like in practice using the panproto TypeScript SDK.</span>
-<span id="cb8-229"><a href="#cb8-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-230"><a href="#cb8-230" aria-hidden="true" tabindex="-1"></a><span class="fu">### ATProto</span></span>
-<span id="cb8-231"><a href="#cb8-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-232"><a href="#cb8-232" aria-hidden="true" tabindex="-1"></a>The ATProto schema builder produces a Lexicon-compatible record definition.</span>
-<span id="cb8-233"><a href="#cb8-233" aria-hidden="true" tabindex="-1"></a>The same blog post entity, expressed through panproto's API:</span>
-<span id="cb8-234"><a href="#cb8-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-235"><a href="#cb8-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{.typescript include="../code/ts/01-atproto-schema.ts" snippet="build-schema"}</span></span>
-<span id="cb8-236"><a href="#cb8-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-237"><a href="#cb8-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-238"><a href="#cb8-238" aria-hidden="true" tabindex="-1"></a>The builder API mirrors the structure we saw in the Lexicon JSON above, but you</span>
-<span id="cb8-239"><a href="#cb8-239" aria-hidden="true" tabindex="-1"></a>get type checking, autocompletion, and—crucially—the ability to compose schemas</span>
-<span id="cb8-240"><a href="#cb8-240" aria-hidden="true" tabindex="-1"></a>programmatically. You're not concatenating JSON strings; you're building a typed</span>
-<span id="cb8-241"><a href="#cb8-241" aria-hidden="true" tabindex="-1"></a>data structure.</span>
-<span id="cb8-242"><a href="#cb8-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-243"><a href="#cb8-243" aria-hidden="true" tabindex="-1"></a><span class="fu">### SQL</span></span>
-<span id="cb8-244"><a href="#cb8-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-245"><a href="#cb8-245" aria-hidden="true" tabindex="-1"></a>The SQL schema builder targets DDL. Same entity, different protocol:</span>
-<span id="cb8-246"><a href="#cb8-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-247"><a href="#cb8-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{.typescript include="../code/ts/01-sql-schema.ts" snippet="build-schema"}</span></span>
-<span id="cb8-248"><a href="#cb8-248" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb8-249"><a href="#cb8-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-250"><a href="#cb8-250" aria-hidden="true" tabindex="-1"></a>The API surface is deliberately similar. You're still declaring a container with</span>
-<span id="cb8-251"><a href="#cb8-251" aria-hidden="true" tabindex="-1"></a>named, typed members. The builder knows about SQL-specific concepts (column</span>
-<span id="cb8-252"><a href="#cb8-252" aria-hidden="true" tabindex="-1"></a>types, constraints, defaults) just as the ATProto builder knows about Lexicon</span>
-<span id="cb8-253"><a href="#cb8-253" aria-hidden="true" tabindex="-1"></a>concepts (NSIDs, key strategies, grapheme limits).</span>
-<span id="cb8-254"><a href="#cb8-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-255"><a href="#cb8-255" aria-hidden="true" tabindex="-1"></a><span class="fu">### What Changed, What Didn't</span></span>
-<span id="cb8-256"><a href="#cb8-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-257"><a href="#cb8-257" aria-hidden="true" tabindex="-1"></a>Compare the two code snippets. The **structure** is the same: create a builder,</span>
-<span id="cb8-258"><a href="#cb8-258" aria-hidden="true" tabindex="-1"></a>declare a container, add typed fields with constraints. The **vocabulary**</span>
-<span id="cb8-259"><a href="#cb8-259" aria-hidden="true" tabindex="-1"></a>differs: <span class="in">`record`</span> vs. <span class="in">`table`</span>, <span class="in">`property`</span> vs. <span class="in">`column`</span>, <span class="in">`maxGraphemes`</span> vs.</span>
-<span id="cb8-260"><a href="#cb8-260" aria-hidden="true" tabindex="-1"></a><span class="in">`VARCHAR`</span>. And the **output** differs: one produces Lexicon JSON, the other</span>
-<span id="cb8-261"><a href="#cb8-261" aria-hidden="true" tabindex="-1"></a>produces SQL DDL.</span>
-<span id="cb8-262"><a href="#cb8-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-263"><a href="#cb8-263" aria-hidden="true" tabindex="-1"></a>This is the core value proposition of panproto: you learn the pattern once, then</span>
-<span id="cb8-264"><a href="#cb8-264" aria-hidden="true" tabindex="-1"></a>apply it across protocols. When a new schema language appears (and new ones</span>
-<span id="cb8-265"><a href="#cb8-265" aria-hidden="true" tabindex="-1"></a>appear regularly), you don't start from scratch—you map its concepts to the</span>
-<span id="cb8-266"><a href="#cb8-266" aria-hidden="true" tabindex="-1"></a>pattern you already know.</span>
-<span id="cb8-267"><a href="#cb8-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-268"><a href="#cb8-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-269"><a href="#cb8-269" aria-hidden="true" tabindex="-1"></a><span class="fu">## What We're Looking At</span></span>
-<span id="cb8-270"><a href="#cb8-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-271"><a href="#cb8-271" aria-hidden="true" tabindex="-1"></a>Let's name what we've been seeing, without getting formal yet.</span>
-<span id="cb8-272"><a href="#cb8-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-273"><a href="#cb8-273" aria-hidden="true" tabindex="-1"></a>All five schema formats describe **vertices** connected by **edges**:</span>
-<span id="cb8-274"><a href="#cb8-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-275"><a href="#cb8-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In JSON Schema, the vertices are types (<span class="in">`object`</span>, <span class="in">`string`</span>, <span class="in">`array`</span>) and the</span>
-<span id="cb8-276"><a href="#cb8-276" aria-hidden="true" tabindex="-1"></a>  edges are properties linking an object to its field types.</span>
-<span id="cb8-277"><a href="#cb8-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In Protobuf, the vertices are messages and scalar types, and the edges are</span>
-<span id="cb8-278"><a href="#cb8-278" aria-hidden="true" tabindex="-1"></a>  fields.</span>
-<span id="cb8-279"><a href="#cb8-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In SQL, the vertices are tables and data types, and the edges are columns</span>
-<span id="cb8-280"><a href="#cb8-280" aria-hidden="true" tabindex="-1"></a>  (linking a table to the type of each column). Foreign keys add edges between</span>
-<span id="cb8-281"><a href="#cb8-281" aria-hidden="true" tabindex="-1"></a>  tables.</span>
-<span id="cb8-282"><a href="#cb8-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In GraphQL, the vertices are types and the edges are fields.</span>
-<span id="cb8-283"><a href="#cb8-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In ATProto Lexicon, the vertices are records, objects, and primitive types,</span>
-<span id="cb8-284"><a href="#cb8-284" aria-hidden="true" tabindex="-1"></a>  and the edges are properties.</span>
-<span id="cb8-285"><a href="#cb8-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-286"><a href="#cb8-286" aria-hidden="true" tabindex="-1"></a>Sometimes the edges carry extra information: a field number in Protobuf, a</span>
-<span id="cb8-287"><a href="#cb8-287" aria-hidden="true" tabindex="-1"></a><span class="in">`NOT NULL`</span> constraint in SQL, a <span class="in">`maxLength`</span> in JSON Schema and Lexicon. But the</span>
-<span id="cb8-288"><a href="#cb8-288" aria-hidden="true" tabindex="-1"></a>fundamental picture is the same: **a graph of types connected by typed</span>
-<span id="cb8-289"><a href="#cb8-289" aria-hidden="true" tabindex="-1"></a>relationships**.</span>
-<span id="cb8-290"><a href="#cb8-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-291"><a href="#cb8-291" aria-hidden="true" tabindex="-1"></a>The differences between schema languages come down to:</span>
-<span id="cb8-292"><a href="#cb8-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-293"><a href="#cb8-293" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**What kinds of vertices are allowed.** SQL has tables and views. Protobuf</span>
-<span id="cb8-294"><a href="#cb8-294" aria-hidden="true" tabindex="-1"></a>   has messages and enums. GraphQL has types, interfaces, unions, and enums.</span>
-<span id="cb8-295"><a href="#cb8-295" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**What kinds of edges are allowed.** SQL columns are different from Protobuf</span>
-<span id="cb8-296"><a href="#cb8-296" aria-hidden="true" tabindex="-1"></a>   fields, which are different from GraphQL fields.</span>
-<span id="cb8-297"><a href="#cb8-297" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**What constraints can be attached.** JSON Schema has a rich constraint</span>
-<span id="cb8-298"><a href="#cb8-298" aria-hidden="true" tabindex="-1"></a>   vocabulary (<span class="in">`maxLength`</span>, <span class="in">`pattern`</span>, <span class="in">`minimum`</span>). Protobuf has almost none</span>
-<span id="cb8-299"><a href="#cb8-299" aria-hidden="true" tabindex="-1"></a>   built in. SQL constraints are operational (they're enforced at write time).</span>
-<span id="cb8-300"><a href="#cb8-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-301"><a href="#cb8-301" aria-hidden="true" tabindex="-1"></a>These are not superficial syntactic differences. They reflect genuine design</span>
-<span id="cb8-302"><a href="#cb8-302" aria-hidden="true" tabindex="-1"></a>choices about what each format is optimized for. But they are **parametric**</span>
-<span id="cb8-303"><a href="#cb8-303" aria-hidden="true" tabindex="-1"></a>differences—variations on a common structural theme, not fundamentally different</span>
-<span id="cb8-304"><a href="#cb8-304" aria-hidden="true" tabindex="-1"></a>kinds of things.</span>
-<span id="cb8-305"><a href="#cb8-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-306"><a href="#cb8-306" aria-hidden="true" tabindex="-1"></a>That structural theme is what panproto is built on. The next chapter gives it a</span>
-<span id="cb8-307"><a href="#cb8-307" aria-hidden="true" tabindex="-1"></a>name.</span>
-<span id="cb8-308"><a href="#cb8-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-309"><a href="#cb8-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-310"><a href="#cb8-310" aria-hidden="true" tabindex="-1"></a><span class="fu">## Looking Ahead</span></span>
-<span id="cb8-311"><a href="#cb8-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-312"><a href="#cb8-312" aria-hidden="true" tabindex="-1"></a>We've established that schema languages share a common graph-like structure,</span>
-<span id="cb8-313"><a href="#cb8-313" aria-hidden="true" tabindex="-1"></a>and that panproto exploits this commonality. But we've been hand-waving about</span>
-<span id="cb8-314"><a href="#cb8-314" aria-hidden="true" tabindex="-1"></a>what "graph-like" means. The word "graph" is doing a lot of work, and it turns</span>
-<span id="cb8-315"><a href="#cb8-315" aria-hidden="true" tabindex="-1"></a>out that different schema languages need different *kinds* of graphs.</span>
-<span id="cb8-316"><a href="#cb8-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-317"><a href="#cb8-317" aria-hidden="true" tabindex="-1"></a>In @sec-shape-of-schemas, we'll make this precise. We'll see that some schemas</span>
-<span id="cb8-318"><a href="#cb8-318" aria-hidden="true" tabindex="-1"></a>are plain directed graphs, others are multigraphs, and still others need</span>
-<span id="cb8-319"><a href="#cb8-319" aria-hidden="true" tabindex="-1"></a>hypergraphs. These aren't just academic distinctions—they determine what</span>
-<span id="cb8-320"><a href="#cb8-320" aria-hidden="true" tabindex="-1"></a>operations are well-defined on a schema, and they explain why single-protocol</span>
-<span id="cb8-321"><a href="#cb8-321" aria-hidden="true" tabindex="-1"></a>tools can't easily generalize.</span>
-<span id="cb8-322"><a href="#cb8-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-323"><a href="#cb8-323" aria-hidden="true" tabindex="-1"></a>But first, take a moment to appreciate the view from here: five different schema</span>
-<span id="cb8-324"><a href="#cb8-324" aria-hidden="true" tabindex="-1"></a>languages, five different communities, five different ecosystems—all describing</span>
-<span id="cb8-325"><a href="#cb8-325" aria-hidden="true" tabindex="-1"></a>the same blog post, all using the same structural pattern. The fact that this</span>
-<span id="cb8-326"><a href="#cb8-326" aria-hidden="true" tabindex="-1"></a>works is not an accident. It's a consequence of what schemas *are*, and</span>
-<span id="cb8-327"><a href="#cb8-327" aria-hidden="true" tabindex="-1"></a>understanding that is the goal of this tutorial.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Schemas Everywhere"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="an">id:</span><span class="co"> sec-schemas</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Schemas Everywhere</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>You already know what a schema is. You write them constantly—every time you</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>define a database table, declare a protobuf message, or sketch out a GraphQL</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>type. Schemas are the skeletons of structured data: they say what fields exist,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>what types those fields carry, and (sometimes) what constraints hold.</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>What you might not have noticed is how *many* schema languages there are, and</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>how eerily similar they look once you squint past the syntax. This chapter makes</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>that observation concrete. We'll take a single, deliberately boring entity—a</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>blog post—and write its schema in nine different formats drawn from panproto's</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>coverage of 54 protocols. Then we'll show how panproto can construct the same</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>schema using its TypeScript SDK, regardless of which protocol you're targeting.</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Running Example: A Blog Post</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>Our blog post has three fields:</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Field       <span class="pp">|</span> Type              <span class="pp">|</span> Required? <span class="pp">|</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------------|-------------------|-----------|</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`text`</span>      <span class="pp">|</span> string            <span class="pp">|</span> yes       <span class="pp">|</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`createdAt`</span> <span class="pp">|</span> datetime (string) <span class="pp">|</span> yes       <span class="pp">|</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`tags`</span>      <span class="pp">|</span> array of strings  <span class="pp">|</span> no        <span class="pp">|</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>That's it. No nested objects, no foreign keys, no clever tricks. The point</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>isn't the complexity of the entity—it's the variety of ways we can describe it.</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Five Representations</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="fu">### JSON Schema</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>JSON Schema is the lingua franca of HTTP APIs. You've seen it in OpenAPI specs,</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>in configuration file validators, and in editor autocompletion engines.</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>  <span class="st">"$schema"</span><span class="op">:</span> <span class="st">"https://json-schema.org/draft/2020-12/schema"</span><span class="op">,</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">"$id"</span><span class="op">:</span> <span class="st">"https://example.com/schemas/post.json"</span><span class="op">,</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"type"</span><span class="op">:</span> <span class="st">"object"</span><span class="op">,</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"required"</span><span class="op">:</span> [<span class="st">"text"</span><span class="op">,</span> <span class="st">"createdAt"</span>]<span class="op">,</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"properties"</span><span class="op">:</span> {</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span><span class="op">:</span> {</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>      <span class="st">"maxLength"</span><span class="op">:</span> <span class="dv">3000</span></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"createdAt"</span><span class="op">:</span> {</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>      <span class="st">"format"</span><span class="op">:</span> <span class="st">"date-time"</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tags"</span><span class="op">:</span> {</span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> <span class="st">"array"</span><span class="op">,</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>      <span class="st">"items"</span><span class="op">:</span> {</span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a>      <span class="st">"maxItems"</span><span class="op">:</span> <span class="dv">8</span></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>A few things to note: the top-level construct is an **object** with named</span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>**properties**. Each property has a **type**. Some properties appear in the</span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>**required** array. Additional constraints like <span class="in">`maxLength`</span> and <span class="in">`maxItems`</span> sit</span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>alongside the type declarations.</span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### Protocol Buffers</span></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>Protobuf takes a different approach. Where JSON Schema is declarative and</span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>JSON-native, Protobuf is a compiled IDL designed for efficient binary</span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>serialization.</span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="in">```protobuf</span></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="in">syntax = "proto3";</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="in">package example.blog;</span></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="in">import "google/protobuf/timestamp.proto";</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a><span class="in">message Post {</span></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="in">  string text = 1;</span></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a><span class="in">  google.protobuf.Timestamp created_at = 2;</span></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="in">  repeated string tags = 3;</span></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>The top-level construct is a **message** with numbered **fields**. Each field</span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>has a **type** and a **field number** (used for wire encoding). The <span class="in">`repeated`</span></span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a>keyword marks <span class="in">`tags`</span> as a list. There's no direct equivalent of <span class="in">`required`</span> in</span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>proto3—all fields have default values.</span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>Notice what's missing compared to JSON Schema: no <span class="in">`maxLength`</span>, no <span class="in">`maxItems`</span>.</span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>Protobuf doesn't have a built-in constraint language. If you want validation,</span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a>you reach for something like <span class="in">`protoc-gen-validate`</span> or Buf's <span class="in">`protovalidate`</span>.</span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a><span class="fu">### SQL DDL</span></span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>SQL's Data Definition Language is the oldest schema language most developers</span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>encounter. It predates JSON, Protobuf, and GraphQL by decades.</span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a><span class="in">```sql</span></span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> posts (</span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a>    id          <span class="dt">BIGINT</span> GENERATED ALWAYS <span class="kw">AS</span> IDENTITY <span class="kw">PRIMARY</span> <span class="kw">KEY</span>,</span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a>    <span class="dt">text</span>        <span class="dt">VARCHAR</span>(<span class="dv">3000</span>)   <span class="kw">NOT</span> <span class="kw">NULL</span>,</span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>    created_at  TIMESTAMPTZ     <span class="kw">NOT</span> <span class="kw">NULL</span> <span class="kw">DEFAULT</span> <span class="fu">now</span>(),</span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>    tags        <span class="dt">TEXT</span>[]</span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>Here the top-level construct is a **table** with named **columns**. Each column</span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a>has a **data type** and optional **constraints** (<span class="in">`NOT NULL`</span>, <span class="in">`PRIMARY KEY`</span>,</span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a><span class="in">`DEFAULT`</span>). The <span class="in">`TEXT[]`</span> type for tags is PostgreSQL's array syntax—other</span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>databases handle this differently (a separate <span class="in">`post_tags`</span> join table, for</span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>instance).</span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a>SQL brings something the previous two formats lack: a notion of **identity**</span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a>(<span class="in">`PRIMARY KEY`</span>) and **defaults** (<span class="in">`DEFAULT now()`</span>). These aren't just</span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>descriptions of shape—they're operational semantics baked into the schema.</span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a><span class="fu">### GraphQL SDL</span></span>
+<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a>GraphQL's Schema Definition Language is designed for API surfaces. It describes</span>
+<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a>what a client can query, not how data is stored.</span>
+<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a><span class="in">```graphql</span></span>
+<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a><span class="in">"""A blog post."""</span></span>
+<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a><span class="in">type Post {</span></span>
+<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a><span class="in">  text: String!</span></span>
+<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a><span class="in">  createdAt: DateTime!</span></span>
+<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a><span class="in">  tags: [String!]</span></span>
+<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a>The top-level construct is a **type** with named **fields**. Each field has a</span>
+<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a>**return type**. The <span class="in">`!`</span> suffix means non-nullable (GraphQL's version of</span>
+<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a><span class="in">`required`</span>). <span class="in">`[String!]`</span> means "a nullable list of non-nullable strings"—note</span>
+<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a>how nullability is part of the type system, not a separate constraint.</span>
+<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a>GraphQL doesn't have <span class="in">`maxLength`</span> either. Validation happens in resolvers or</span>
+<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>directives, not in the SDL itself.</span>
+<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a><span class="fu">### ATProto Lexicon</span></span>
+<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a>ATProto (the protocol behind Bluesky) uses Lexicon, a JSON-based schema</span>
+<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>language that borrows from JSON Schema but adds protocol-specific concepts like</span>
+<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>NSIDs and record types.</span>
+<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a>  <span class="st">"lexicon"</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>  <span class="st">"id"</span><span class="op">:</span> <span class="st">"com.example.blog.post"</span><span class="op">,</span></span>
+<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a>  <span class="st">"defs"</span><span class="op">:</span> {</span>
+<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a>    <span class="st">"main"</span><span class="op">:</span> {</span>
+<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> <span class="st">"record"</span><span class="op">,</span></span>
+<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a>      <span class="st">"description"</span><span class="op">:</span> <span class="st">"A blog post."</span><span class="op">,</span></span>
+<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a>      <span class="st">"key"</span><span class="op">:</span> <span class="st">"tid"</span><span class="op">,</span></span>
+<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a>      <span class="st">"record"</span><span class="op">:</span> {</span>
+<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a>        <span class="st">"type"</span><span class="op">:</span> <span class="st">"object"</span><span class="op">,</span></span>
+<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a>        <span class="st">"required"</span><span class="op">:</span> [<span class="st">"text"</span><span class="op">,</span> <span class="st">"createdAt"</span>]<span class="op">,</span></span>
+<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a>        <span class="st">"properties"</span><span class="op">:</span> {</span>
+<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a>          <span class="st">"text"</span><span class="op">:</span> {</span>
+<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a>            <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span></span>
+<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>            <span class="st">"maxLength"</span><span class="op">:</span> <span class="dv">3000</span><span class="op">,</span></span>
+<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a>            <span class="st">"maxGraphemes"</span><span class="op">:</span> <span class="dv">300</span></span>
+<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>          }<span class="op">,</span></span>
+<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>          <span class="st">"createdAt"</span><span class="op">:</span> {</span>
+<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>            <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span></span>
+<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a>            <span class="st">"format"</span><span class="op">:</span> <span class="st">"datetime"</span></span>
+<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a>          }<span class="op">,</span></span>
+<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a>          <span class="st">"tags"</span><span class="op">:</span> {</span>
+<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>            <span class="st">"type"</span><span class="op">:</span> <span class="st">"array"</span><span class="op">,</span></span>
+<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a>            <span class="st">"items"</span><span class="op">:</span> {</span>
+<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a>              <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span></span>
+<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>            }<span class="op">,</span></span>
+<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a>            <span class="st">"maxLength"</span><span class="op">:</span> <span class="dv">8</span></span>
+<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a>Lexicon looks a lot like JSON Schema, and that's intentional—it was designed to</span>
+<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a>be familiar. But notice the differences: there's a **record** wrapper with a</span>
+<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a><span class="in">`key`</span> strategy (<span class="in">`tid`</span> means "timestamp-based ID"). The NSID</span>
+<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a>(<span class="in">`com.example.blog.post`</span>) serves as both an identifier and a namespace.</span>
+<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a><span class="in">`maxGraphemes`</span> is an ATProto-specific constraint that counts Unicode grapheme</span>
+<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a>clusters rather than code points.</span>
+<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Beyond Five: The Full Spectrum</span></span>
+<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>Five formats illustrate the pattern, but panproto covers 54 protocols. To</span>
+<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>give a sense of the breadth, here are four more representations of the same</span>
+<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a>blog post—drawn from serialization, type system, API specification, and</span>
+<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a>document-exchange traditions respectively.</span>
+<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a><span class="fu">### Avro</span></span>
+<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a>Apache Avro is the schema language of the Hadoop ecosystem and a common choice</span>
+<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a>for Kafka message contracts. Schemas are themselves JSON documents, and types</span>
+<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a>are defined recursively.</span>
+<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a>  <span class="st">"type"</span><span class="op">:</span> <span class="st">"record"</span><span class="op">,</span></span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>  <span class="st">"name"</span><span class="op">:</span> <span class="st">"Post"</span><span class="op">,</span></span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>  <span class="st">"namespace"</span><span class="op">:</span> <span class="st">"com.example.blog"</span><span class="op">,</span></span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>  <span class="st">"doc"</span><span class="op">:</span> <span class="st">"A blog post."</span><span class="op">,</span></span>
+<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a>  <span class="st">"fields"</span><span class="op">:</span> [</span>
+<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a>      <span class="st">"name"</span><span class="op">:</span> <span class="st">"text"</span><span class="op">,</span></span>
+<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> <span class="st">"string"</span><span class="op">,</span></span>
+<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a>      <span class="st">"doc"</span><span class="op">:</span> <span class="st">"Post body, maximum 3000 characters."</span></span>
+<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a>      <span class="st">"name"</span><span class="op">:</span> <span class="st">"createdAt"</span><span class="op">,</span></span>
+<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> {</span>
+<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>        <span class="st">"type"</span><span class="op">:</span> <span class="st">"long"</span><span class="op">,</span></span>
+<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a>        <span class="st">"logicalType"</span><span class="op">:</span> <span class="st">"timestamp-millis"</span></span>
+<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a>      <span class="st">"name"</span><span class="op">:</span> <span class="st">"tags"</span><span class="op">,</span></span>
+<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a>      <span class="st">"type"</span><span class="op">:</span> {</span>
+<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a>        <span class="st">"type"</span><span class="op">:</span> <span class="st">"array"</span><span class="op">,</span></span>
+<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a>        <span class="st">"items"</span><span class="op">:</span> <span class="st">"string"</span></span>
+<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a>      <span class="st">"default"</span><span class="op">:</span> []</span>
+<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a>Avro's top-level construct is a **record** with a list of **fields**. The</span>
+<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="in">`type`</span> is either a primitive name (<span class="in">`"string"`</span>) or a nested type definition.</span>
+<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a>Avro's <span class="in">`logicalType`</span> mechanism layers semantic meaning—here, a timestamp</span>
+<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a>interpretation—on top of a physical primitive (<span class="in">`long`</span>). The <span class="in">`default`</span> on</span>
+<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a><span class="in">`tags`</span> makes the field optional in the sense that a message without it is still</span>
+<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a>schema-valid.</span>
+<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a><span class="fu">### TypeScript</span></span>
+<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a>TypeScript interfaces are schema-like artifacts even though TypeScript is a</span>
+<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a>programming language rather than a dedicated schema language. They're the</span>
+<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a>de facto contract layer for JavaScript ecosystems, and many tools (Zod, io-ts,</span>
+<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a>TypeBox) treat them as first-class schema targets.</span>
+<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a><span class="in">```typescript</span></span>
+<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a><span class="co">/** A blog post. */</span></span>
+<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">interface</span> Post {</span>
+<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a>  <span class="co">/** Post body, maximum 3000 characters. */</span></span>
+<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a>  text<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb12-260"><a href="#cb12-260" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="dt">string</span><span class="op">;</span> <span class="co">// ISO 8601 date-time</span></span>
+<span id="cb12-261"><a href="#cb12-261" aria-hidden="true" tabindex="-1"></a>  tags<span class="op">?:</span> <span class="dt">string</span>[]<span class="op">;</span></span>
+<span id="cb12-262"><a href="#cb12-262" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-263"><a href="#cb12-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-264"><a href="#cb12-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-265"><a href="#cb12-265" aria-hidden="true" tabindex="-1"></a>The top-level construct is an **interface** with named **members**. Types are</span>
+<span id="cb12-266"><a href="#cb12-266" aria-hidden="true" tabindex="-1"></a>TypeScript's own type expressions. The <span class="in">`?`</span> suffix marks a member as optional</span>
+<span id="cb12-267"><a href="#cb12-267" aria-hidden="true" tabindex="-1"></a>(the TypeScript analog of "not required"). Comments carry the constraint</span>
+<span id="cb12-268"><a href="#cb12-268" aria-hidden="true" tabindex="-1"></a>information that the type system itself cannot express—<span class="in">`maxLength`</span> and</span>
+<span id="cb12-269"><a href="#cb12-269" aria-hidden="true" tabindex="-1"></a><span class="in">`maxItems`</span> have no native representation in a TypeScript interface, though they</span>
+<span id="cb12-270"><a href="#cb12-270" aria-hidden="true" tabindex="-1"></a>can be encoded via branded types or validation library schemas.</span>
+<span id="cb12-271"><a href="#cb12-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-272"><a href="#cb12-272" aria-hidden="true" tabindex="-1"></a><span class="fu">### OpenAPI</span></span>
+<span id="cb12-273"><a href="#cb12-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-274"><a href="#cb12-274" aria-hidden="true" tabindex="-1"></a>OpenAPI 3.1 is the dominant standard for describing REST APIs. A schema</span>
+<span id="cb12-275"><a href="#cb12-275" aria-hidden="true" tabindex="-1"></a>appears in two places: in the **path item** (describing the operation) and in</span>
+<span id="cb12-276"><a href="#cb12-276" aria-hidden="true" tabindex="-1"></a>the **components** section (defining reusable types). Here is the path for</span>
+<span id="cb12-277"><a href="#cb12-277" aria-hidden="true" tabindex="-1"></a>creating a post, plus the schema component it references.</span>
+<span id="cb12-278"><a href="#cb12-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-279"><a href="#cb12-279" aria-hidden="true" tabindex="-1"></a><span class="in">```yaml</span></span>
+<span id="cb12-280"><a href="#cb12-280" aria-hidden="true" tabindex="-1"></a><span class="fu">paths</span><span class="kw">:</span></span>
+<span id="cb12-281"><a href="#cb12-281" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">/posts</span><span class="kw">:</span></span>
+<span id="cb12-282"><a href="#cb12-282" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">post</span><span class="kw">:</span></span>
+<span id="cb12-283"><a href="#cb12-283" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">summary</span><span class="kw">:</span><span class="at"> Create a blog post</span></span>
+<span id="cb12-284"><a href="#cb12-284" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">requestBody</span><span class="kw">:</span></span>
+<span id="cb12-285"><a href="#cb12-285" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">required</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb12-286"><a href="#cb12-286" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">content</span><span class="kw">:</span></span>
+<span id="cb12-287"><a href="#cb12-287" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">application/json</span><span class="kw">:</span></span>
+<span id="cb12-288"><a href="#cb12-288" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">schema</span><span class="kw">:</span></span>
+<span id="cb12-289"><a href="#cb12-289" aria-hidden="true" tabindex="-1"></a><span class="at">              </span><span class="fu">$ref</span><span class="kw">:</span><span class="at"> </span><span class="st">'#/components/schemas/Post'</span></span>
+<span id="cb12-290"><a href="#cb12-290" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">responses</span><span class="kw">:</span></span>
+<span id="cb12-291"><a href="#cb12-291" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">'201'</span><span class="kw">:</span></span>
+<span id="cb12-292"><a href="#cb12-292" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">description</span><span class="kw">:</span><span class="at"> Post created</span></span>
+<span id="cb12-293"><a href="#cb12-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-294"><a href="#cb12-294" aria-hidden="true" tabindex="-1"></a><span class="fu">components</span><span class="kw">:</span></span>
+<span id="cb12-295"><a href="#cb12-295" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">schemas</span><span class="kw">:</span></span>
+<span id="cb12-296"><a href="#cb12-296" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">Post</span><span class="kw">:</span></span>
+<span id="cb12-297"><a href="#cb12-297" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">type</span><span class="kw">:</span><span class="at"> object</span></span>
+<span id="cb12-298"><a href="#cb12-298" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">required</span><span class="kw">:</span></span>
+<span id="cb12-299"><a href="#cb12-299" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span>text</span>
+<span id="cb12-300"><a href="#cb12-300" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span>createdAt</span>
+<span id="cb12-301"><a href="#cb12-301" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">properties</span><span class="kw">:</span></span>
+<span id="cb12-302"><a href="#cb12-302" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span></span>
+<span id="cb12-303"><a href="#cb12-303" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">type</span><span class="kw">:</span><span class="at"> string</span></span>
+<span id="cb12-304"><a href="#cb12-304" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">maxLength</span><span class="kw">:</span><span class="at"> </span><span class="dv">3000</span></span>
+<span id="cb12-305"><a href="#cb12-305" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">createdAt</span><span class="kw">:</span></span>
+<span id="cb12-306"><a href="#cb12-306" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">type</span><span class="kw">:</span><span class="at"> string</span></span>
+<span id="cb12-307"><a href="#cb12-307" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">format</span><span class="kw">:</span><span class="at"> date-time</span></span>
+<span id="cb12-308"><a href="#cb12-308" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">tags</span><span class="kw">:</span></span>
+<span id="cb12-309"><a href="#cb12-309" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">type</span><span class="kw">:</span><span class="at"> array</span></span>
+<span id="cb12-310"><a href="#cb12-310" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">items</span><span class="kw">:</span></span>
+<span id="cb12-311"><a href="#cb12-311" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">type</span><span class="kw">:</span><span class="at"> string</span></span>
+<span id="cb12-312"><a href="#cb12-312" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">maxItems</span><span class="kw">:</span><span class="at"> </span><span class="dv">8</span></span>
+<span id="cb12-313"><a href="#cb12-313" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-314"><a href="#cb12-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-315"><a href="#cb12-315" aria-hidden="true" tabindex="-1"></a>The schema portion of OpenAPI is essentially JSON Schema (OpenAPI 3.1 adopted</span>
+<span id="cb12-316"><a href="#cb12-316" aria-hidden="true" tabindex="-1"></a>the JSON Schema 2020-12 vocabulary), so the <span class="in">`components/schemas/Post`</span> block</span>
+<span id="cb12-317"><a href="#cb12-317" aria-hidden="true" tabindex="-1"></a>looks identical to the JSON Schema example. What OpenAPI adds is the **path</span>
+<span id="cb12-318"><a href="#cb12-318" aria-hidden="true" tabindex="-1"></a>layer**: operations, HTTP methods, request bodies, and responses. The schema</span>
+<span id="cb12-319"><a href="#cb12-319" aria-hidden="true" tabindex="-1"></a>language describes shapes; the path layer describes the protocol contract around</span>
+<span id="cb12-320"><a href="#cb12-320" aria-hidden="true" tabindex="-1"></a>those shapes.</span>
+<span id="cb12-321"><a href="#cb12-321" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-322"><a href="#cb12-322" aria-hidden="true" tabindex="-1"></a><span class="fu">### XML Schema Definition (XSD)</span></span>
+<span id="cb12-323"><a href="#cb12-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-324"><a href="#cb12-324" aria-hidden="true" tabindex="-1"></a>XSD is the W3C schema language for XML documents. It predates JSON Schema by</span>
+<span id="cb12-325"><a href="#cb12-325" aria-hidden="true" tabindex="-1"></a>more than a decade and remains the dominant schema mechanism in enterprise</span>
+<span id="cb12-326"><a href="#cb12-326" aria-hidden="true" tabindex="-1"></a>integration, document-exchange standards, and SOAP-based web services.</span>
+<span id="cb12-327"><a href="#cb12-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-328"><a href="#cb12-328" aria-hidden="true" tabindex="-1"></a><span class="in">```xml</span></span>
+<span id="cb12-329"><a href="#cb12-329" aria-hidden="true" tabindex="-1"></a><span class="fu">&lt;?xml</span><span class="ot"> version=</span><span class="st">"1.0"</span><span class="ot"> encoding=</span><span class="st">"UTF-8"</span><span class="fu">?&gt;</span></span>
+<span id="cb12-330"><a href="#cb12-330" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">xs:schema</span><span class="ot"> xmlns:xs=</span><span class="st">"http://www.w3.org/2001/XMLSchema"</span></span>
+<span id="cb12-331"><a href="#cb12-331" aria-hidden="true" tabindex="-1"></a><span class="ot">           targetNamespace=</span><span class="st">"https://example.com/blog"</span></span>
+<span id="cb12-332"><a href="#cb12-332" aria-hidden="true" tabindex="-1"></a><span class="ot">           xmlns:blog=</span><span class="st">"https://example.com/blog"</span></span>
+<span id="cb12-333"><a href="#cb12-333" aria-hidden="true" tabindex="-1"></a><span class="ot">           elementFormDefault=</span><span class="st">"qualified"</span>&gt;</span>
+<span id="cb12-334"><a href="#cb12-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-335"><a href="#cb12-335" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">xs:element</span><span class="ot"> name=</span><span class="st">"post"</span><span class="ot"> type=</span><span class="st">"blog:PostType"</span>/&gt;</span>
+<span id="cb12-336"><a href="#cb12-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-337"><a href="#cb12-337" aria-hidden="true" tabindex="-1"></a>  &lt;<span class="kw">xs:complexType</span><span class="ot"> name=</span><span class="st">"PostType"</span>&gt;</span>
+<span id="cb12-338"><a href="#cb12-338" aria-hidden="true" tabindex="-1"></a>    &lt;<span class="kw">xs:sequence</span>&gt;</span>
+<span id="cb12-339"><a href="#cb12-339" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xs:element</span><span class="ot"> name=</span><span class="st">"text"</span>&gt;</span>
+<span id="cb12-340"><a href="#cb12-340" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">xs:simpleType</span>&gt;</span>
+<span id="cb12-341"><a href="#cb12-341" aria-hidden="true" tabindex="-1"></a>          &lt;<span class="kw">xs:restriction</span><span class="ot"> base=</span><span class="st">"xs:string"</span>&gt;</span>
+<span id="cb12-342"><a href="#cb12-342" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">xs:maxLength</span><span class="ot"> value=</span><span class="st">"3000"</span>/&gt;</span>
+<span id="cb12-343"><a href="#cb12-343" aria-hidden="true" tabindex="-1"></a>          &lt;/<span class="kw">xs:restriction</span>&gt;</span>
+<span id="cb12-344"><a href="#cb12-344" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">xs:simpleType</span>&gt;</span>
+<span id="cb12-345"><a href="#cb12-345" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xs:element</span>&gt;</span>
+<span id="cb12-346"><a href="#cb12-346" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xs:element</span><span class="ot"> name=</span><span class="st">"createdAt"</span><span class="ot"> type=</span><span class="st">"xs:dateTime"</span>/&gt;</span>
+<span id="cb12-347"><a href="#cb12-347" aria-hidden="true" tabindex="-1"></a>      &lt;<span class="kw">xs:element</span><span class="ot"> name=</span><span class="st">"tags"</span><span class="ot"> minOccurs=</span><span class="st">"0"</span>&gt;</span>
+<span id="cb12-348"><a href="#cb12-348" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">xs:complexType</span>&gt;</span>
+<span id="cb12-349"><a href="#cb12-349" aria-hidden="true" tabindex="-1"></a>          &lt;<span class="kw">xs:sequence</span>&gt;</span>
+<span id="cb12-350"><a href="#cb12-350" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">xs:element</span><span class="ot"> name=</span><span class="st">"tag"</span><span class="ot"> type=</span><span class="st">"xs:string"</span></span>
+<span id="cb12-351"><a href="#cb12-351" aria-hidden="true" tabindex="-1"></a><span class="ot">                        minOccurs=</span><span class="st">"0"</span><span class="ot"> maxOccurs=</span><span class="st">"8"</span>/&gt;</span>
+<span id="cb12-352"><a href="#cb12-352" aria-hidden="true" tabindex="-1"></a>          &lt;/<span class="kw">xs:sequence</span>&gt;</span>
+<span id="cb12-353"><a href="#cb12-353" aria-hidden="true" tabindex="-1"></a>        &lt;/<span class="kw">xs:complexType</span>&gt;</span>
+<span id="cb12-354"><a href="#cb12-354" aria-hidden="true" tabindex="-1"></a>      &lt;/<span class="kw">xs:element</span>&gt;</span>
+<span id="cb12-355"><a href="#cb12-355" aria-hidden="true" tabindex="-1"></a>    &lt;/<span class="kw">xs:sequence</span>&gt;</span>
+<span id="cb12-356"><a href="#cb12-356" aria-hidden="true" tabindex="-1"></a>  &lt;/<span class="kw">xs:complexType</span>&gt;</span>
+<span id="cb12-357"><a href="#cb12-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-358"><a href="#cb12-358" aria-hidden="true" tabindex="-1"></a>&lt;/<span class="kw">xs:schema</span>&gt;</span>
+<span id="cb12-359"><a href="#cb12-359" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-360"><a href="#cb12-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-361"><a href="#cb12-361" aria-hidden="true" tabindex="-1"></a>XSD's vocabulary is more elaborate than any of the formats above. The</span>
+<span id="cb12-362"><a href="#cb12-362" aria-hidden="true" tabindex="-1"></a>top-level construct is a **complexType** containing a **sequence** of</span>
+<span id="cb12-363"><a href="#cb12-363" aria-hidden="true" tabindex="-1"></a>**elements**. Constraints are expressed as **restrictions** on base types—note</span>
+<span id="cb12-364"><a href="#cb12-364" aria-hidden="true" tabindex="-1"></a>how <span class="in">`maxLength`</span> requires nesting a <span class="in">`simpleType &gt; restriction`</span> around the</span>
+<span id="cb12-365"><a href="#cb12-365" aria-hidden="true" tabindex="-1"></a>element type. Arrays are modeled as a containing element with repeated child</span>
+<span id="cb12-366"><a href="#cb12-366" aria-hidden="true" tabindex="-1"></a>elements (<span class="in">`maxOccurs="8"`</span>), a fundamentally different representation from the</span>
+<span id="cb12-367"><a href="#cb12-367" aria-hidden="true" tabindex="-1"></a><span class="in">`type: array`</span> approach used by JSON-family formats. Namespaces pervade</span>
+<span id="cb12-368"><a href="#cb12-368" aria-hidden="true" tabindex="-1"></a>everything.</span>
+<span id="cb12-369"><a href="#cb12-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-370"><a href="#cb12-370" aria-hidden="true" tabindex="-1"></a>The verbosity is not accidental. XSD was designed for document exchange</span>
+<span id="cb12-371"><a href="#cb12-371" aria-hidden="true" tabindex="-1"></a>between organizations, where precise, version-stable, toolchain-independent</span>
+<span id="cb12-372"><a href="#cb12-372" aria-hidden="true" tabindex="-1"></a>contracts matter more than developer ergonomics.</span>
+<span id="cb12-373"><a href="#cb12-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-374"><a href="#cb12-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-375"><a href="#cb12-375" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Structural Rhyme</span></span>
+<span id="cb12-376"><a href="#cb12-376" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-377"><a href="#cb12-377" aria-hidden="true" tabindex="-1"></a>Step back and look at these nine representations side by side. Despite the</span>
+<span id="cb12-378"><a href="#cb12-378" aria-hidden="true" tabindex="-1"></a>syntactic differences, they share a common anatomy:</span>
+<span id="cb12-379"><a href="#cb12-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-380"><a href="#cb12-380" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Concept            <span class="pp">|</span> JSON Schema   <span class="pp">|</span> Protobuf       <span class="pp">|</span> SQL DDL         <span class="pp">|</span> GraphQL SDL   <span class="pp">|</span> ATProto Lexicon  <span class="pp">|</span> Avro          <span class="pp">|</span> TypeScript    <span class="pp">|</span> OpenAPI (schema) <span class="pp">|</span> XSD                    <span class="pp">|</span></span>
+<span id="cb12-381"><a href="#cb12-381" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------------------|---------------|----------------|-----------------|---------------|------------------|---------------|---------------|------------------|------------------------|</span></span>
+<span id="cb12-382"><a href="#cb12-382" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Container          <span class="pp">|</span> object        <span class="pp">|</span> message        <span class="pp">|</span> table           <span class="pp">|</span> type          <span class="pp">|</span> record &gt; object  <span class="pp">|</span> record        <span class="pp">|</span> interface     <span class="pp">|</span> object           <span class="pp">|</span> complexType &gt; sequence <span class="pp">|</span></span>
+<span id="cb12-383"><a href="#cb12-383" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Named member       <span class="pp">|</span> property      <span class="pp">|</span> field          <span class="pp">|</span> column          <span class="pp">|</span> field         <span class="pp">|</span> property         <span class="pp">|</span> field         <span class="pp">|</span> member        <span class="pp">|</span> property         <span class="pp">|</span> element                <span class="pp">|</span></span>
+<span id="cb12-384"><a href="#cb12-384" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Member type        <span class="pp">|</span> type          <span class="pp">|</span> type           <span class="pp">|</span> data type       <span class="pp">|</span> return type   <span class="pp">|</span> type             <span class="pp">|</span> type          <span class="pp">|</span> type          <span class="pp">|</span> type             <span class="pp">|</span> type / simpleType      <span class="pp">|</span></span>
+<span id="cb12-385"><a href="#cb12-385" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Required marker    <span class="pp">|</span> required[]    <span class="pp">|</span> (always set)   <span class="pp">|</span> NOT NULL        <span class="pp">|</span> <span class="in">`!`</span> suffix    <span class="pp">|</span> required[]       <span class="pp">|</span> (no default)  <span class="pp">|</span> (no <span class="in">`?`</span>)      <span class="pp">|</span> required[]       <span class="pp">|</span> minOccurs="1"          <span class="pp">|</span></span>
+<span id="cb12-386"><a href="#cb12-386" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Length constraint  <span class="pp">|</span> maxLength     <span class="pp">|</span> (external)     <span class="pp">|</span> VARCHAR(n)      <span class="pp">|</span> (external)    <span class="pp">|</span> maxLength        <span class="pp">|</span> (doc only)    <span class="pp">|</span> (doc only)    <span class="pp">|</span> maxLength        <span class="pp">|</span> xs:maxLength           <span class="pp">|</span></span>
+<span id="cb12-387"><a href="#cb12-387" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> List marker        <span class="pp">|</span> type: array   <span class="pp">|</span> repeated       <span class="pp">|</span> ARRAY / table   <span class="pp">|</span> <span class="in">`[T]`</span> syntax  <span class="pp">|</span> type: array      <span class="pp">|</span> type: array   <span class="pp">|</span> <span class="in">`T[]`</span>         <span class="pp">|</span> type: array      <span class="pp">|</span> maxOccurs &gt; 1          <span class="pp">|</span></span>
+<span id="cb12-388"><a href="#cb12-388" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-389"><a href="#cb12-389" aria-hidden="true" tabindex="-1"></a>Every row in that table describes the same structural idea wearing different</span>
+<span id="cb12-390"><a href="#cb12-390" aria-hidden="true" tabindex="-1"></a>clothes. A **container** holds **named members**. Each member has a **type**.</span>
+<span id="cb12-391"><a href="#cb12-391" aria-hidden="true" tabindex="-1"></a>Some members are **required**. Some have **constraints**.</span>
+<span id="cb12-392"><a href="#cb12-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-393"><a href="#cb12-393" aria-hidden="true" tabindex="-1"></a>This isn't a coincidence. These formats all describe the same kind of thing:</span>
+<span id="cb12-394"><a href="#cb12-394" aria-hidden="true" tabindex="-1"></a>structured data with named, typed components. The differences are real—SQL has</span>
+<span id="cb12-395"><a href="#cb12-395" aria-hidden="true" tabindex="-1"></a>foreign keys, Protobuf has field numbers, GraphQL has nullability as a type</span>
+<span id="cb12-396"><a href="#cb12-396" aria-hidden="true" tabindex="-1"></a>feature, XSD has namespace machinery—but the similarities dominate.</span>
+<span id="cb12-397"><a href="#cb12-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-398"><a href="#cb12-398" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-399"><a href="#cb12-399" aria-hidden="true" tabindex="-1"></a><span class="fu">## Building Schemas with panproto</span></span>
+<span id="cb12-400"><a href="#cb12-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-401"><a href="#cb12-401" aria-hidden="true" tabindex="-1"></a>panproto takes this observation seriously. Instead of treating each schema</span>
+<span id="cb12-402"><a href="#cb12-402" aria-hidden="true" tabindex="-1"></a>language as a special case, it provides a single API that can target multiple</span>
+<span id="cb12-403"><a href="#cb12-403" aria-hidden="true" tabindex="-1"></a>protocols. You describe your intent once; panproto maps it to the target</span>
+<span id="cb12-404"><a href="#cb12-404" aria-hidden="true" tabindex="-1"></a>format's native constructs.</span>
+<span id="cb12-405"><a href="#cb12-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-406"><a href="#cb12-406" aria-hidden="true" tabindex="-1"></a>Here's what that looks like in practice using the panproto TypeScript SDK.</span>
+<span id="cb12-407"><a href="#cb12-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-408"><a href="#cb12-408" aria-hidden="true" tabindex="-1"></a><span class="fu">### ATProto</span></span>
+<span id="cb12-409"><a href="#cb12-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-410"><a href="#cb12-410" aria-hidden="true" tabindex="-1"></a>The ATProto schema builder produces a Lexicon-compatible record definition.</span>
+<span id="cb12-411"><a href="#cb12-411" aria-hidden="true" tabindex="-1"></a>The same blog post entity, expressed through panproto's API:</span>
+<span id="cb12-412"><a href="#cb12-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-413"><a href="#cb12-413" aria-hidden="true" tabindex="-1"></a><span class="in">```{.typescript include="../code/ts/01-atproto-schema.ts" snippet="build-schema"}</span></span>
+<span id="cb12-414"><a href="#cb12-414" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-415"><a href="#cb12-415" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-416"><a href="#cb12-416" aria-hidden="true" tabindex="-1"></a>The builder API mirrors the structure we saw in the Lexicon JSON above, but you</span>
+<span id="cb12-417"><a href="#cb12-417" aria-hidden="true" tabindex="-1"></a>get type checking, autocompletion, and—crucially—the ability to compose schemas</span>
+<span id="cb12-418"><a href="#cb12-418" aria-hidden="true" tabindex="-1"></a>programmatically. You're not concatenating JSON strings; you're building a typed</span>
+<span id="cb12-419"><a href="#cb12-419" aria-hidden="true" tabindex="-1"></a>data structure.</span>
+<span id="cb12-420"><a href="#cb12-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-421"><a href="#cb12-421" aria-hidden="true" tabindex="-1"></a><span class="fu">### SQL</span></span>
+<span id="cb12-422"><a href="#cb12-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-423"><a href="#cb12-423" aria-hidden="true" tabindex="-1"></a>The SQL schema builder targets DDL. Same entity, different protocol:</span>
+<span id="cb12-424"><a href="#cb12-424" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-425"><a href="#cb12-425" aria-hidden="true" tabindex="-1"></a><span class="in">```{.typescript include="../code/ts/01-sql-schema.ts" snippet="build-schema"}</span></span>
+<span id="cb12-426"><a href="#cb12-426" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb12-427"><a href="#cb12-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-428"><a href="#cb12-428" aria-hidden="true" tabindex="-1"></a>The API surface is deliberately similar. You're still declaring a container with</span>
+<span id="cb12-429"><a href="#cb12-429" aria-hidden="true" tabindex="-1"></a>named, typed members. The builder knows about SQL-specific concepts (column</span>
+<span id="cb12-430"><a href="#cb12-430" aria-hidden="true" tabindex="-1"></a>types, constraints, defaults) just as the ATProto builder knows about Lexicon</span>
+<span id="cb12-431"><a href="#cb12-431" aria-hidden="true" tabindex="-1"></a>concepts (NSIDs, key strategies, grapheme limits).</span>
+<span id="cb12-432"><a href="#cb12-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-433"><a href="#cb12-433" aria-hidden="true" tabindex="-1"></a><span class="fu">### What Changed, What Didn't</span></span>
+<span id="cb12-434"><a href="#cb12-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-435"><a href="#cb12-435" aria-hidden="true" tabindex="-1"></a>Compare the two code snippets. The **structure** is the same: create a builder,</span>
+<span id="cb12-436"><a href="#cb12-436" aria-hidden="true" tabindex="-1"></a>declare a container, add typed fields with constraints. The **vocabulary**</span>
+<span id="cb12-437"><a href="#cb12-437" aria-hidden="true" tabindex="-1"></a>differs: <span class="in">`record`</span> vs. <span class="in">`table`</span>, <span class="in">`property`</span> vs. <span class="in">`column`</span>, <span class="in">`maxGraphemes`</span> vs.</span>
+<span id="cb12-438"><a href="#cb12-438" aria-hidden="true" tabindex="-1"></a><span class="in">`VARCHAR`</span>. And the **output** differs: one produces Lexicon JSON, the other</span>
+<span id="cb12-439"><a href="#cb12-439" aria-hidden="true" tabindex="-1"></a>produces SQL DDL.</span>
+<span id="cb12-440"><a href="#cb12-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-441"><a href="#cb12-441" aria-hidden="true" tabindex="-1"></a>This is the core value proposition of panproto: you learn the pattern once, then</span>
+<span id="cb12-442"><a href="#cb12-442" aria-hidden="true" tabindex="-1"></a>apply it across protocols. When a new schema language appears (and new ones</span>
+<span id="cb12-443"><a href="#cb12-443" aria-hidden="true" tabindex="-1"></a>appear regularly), you don't start from scratch—you map its concepts to the</span>
+<span id="cb12-444"><a href="#cb12-444" aria-hidden="true" tabindex="-1"></a>pattern you already know.</span>
+<span id="cb12-445"><a href="#cb12-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-446"><a href="#cb12-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-447"><a href="#cb12-447" aria-hidden="true" tabindex="-1"></a><span class="fu">## What We're Looking At</span></span>
+<span id="cb12-448"><a href="#cb12-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-449"><a href="#cb12-449" aria-hidden="true" tabindex="-1"></a>Let's name what we've been seeing, without getting formal yet.</span>
+<span id="cb12-450"><a href="#cb12-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-451"><a href="#cb12-451" aria-hidden="true" tabindex="-1"></a>All nine schema formats describe **vertices** connected by **edges**:</span>
+<span id="cb12-452"><a href="#cb12-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-453"><a href="#cb12-453" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In JSON Schema, the vertices are types (<span class="in">`object`</span>, <span class="in">`string`</span>, <span class="in">`array`</span>) and the</span>
+<span id="cb12-454"><a href="#cb12-454" aria-hidden="true" tabindex="-1"></a>  edges are properties linking an object to its field types.</span>
+<span id="cb12-455"><a href="#cb12-455" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In Protobuf, the vertices are messages and scalar types, and the edges are</span>
+<span id="cb12-456"><a href="#cb12-456" aria-hidden="true" tabindex="-1"></a>  fields.</span>
+<span id="cb12-457"><a href="#cb12-457" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In SQL, the vertices are tables and data types, and the edges are columns</span>
+<span id="cb12-458"><a href="#cb12-458" aria-hidden="true" tabindex="-1"></a>  (linking a table to the type of each column). Foreign keys add edges between</span>
+<span id="cb12-459"><a href="#cb12-459" aria-hidden="true" tabindex="-1"></a>  tables.</span>
+<span id="cb12-460"><a href="#cb12-460" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In GraphQL, the vertices are types and the edges are fields.</span>
+<span id="cb12-461"><a href="#cb12-461" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In ATProto Lexicon, the vertices are records, objects, and primitive types,</span>
+<span id="cb12-462"><a href="#cb12-462" aria-hidden="true" tabindex="-1"></a>  and the edges are properties.</span>
+<span id="cb12-463"><a href="#cb12-463" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In Avro, the vertices are records, arrays, and primitive types, and the edges</span>
+<span id="cb12-464"><a href="#cb12-464" aria-hidden="true" tabindex="-1"></a>  are fields. Logical types annotate a vertex without changing the graph</span>
+<span id="cb12-465"><a href="#cb12-465" aria-hidden="true" tabindex="-1"></a>  structure.</span>
+<span id="cb12-466"><a href="#cb12-466" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In TypeScript interfaces, the vertices are interfaces and primitive types, and</span>
+<span id="cb12-467"><a href="#cb12-467" aria-hidden="true" tabindex="-1"></a>  the edges are members. Optional members (<span class="in">`?`</span>) carry their own edge annotation.</span>
+<span id="cb12-468"><a href="#cb12-468" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In OpenAPI, the schema layer is structurally identical to JSON Schema; the</span>
+<span id="cb12-469"><a href="#cb12-469" aria-hidden="true" tabindex="-1"></a>  additional path layer introduces operation vertices whose edges point into the</span>
+<span id="cb12-470"><a href="#cb12-470" aria-hidden="true" tabindex="-1"></a>  schema graph via <span class="in">`$ref`</span>.</span>
+<span id="cb12-471"><a href="#cb12-471" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In XSD, the vertices are complexTypes, simpleTypes, and built-in primitive</span>
+<span id="cb12-472"><a href="#cb12-472" aria-hidden="true" tabindex="-1"></a>  types. The edges are element declarations within a sequence, and restrictions</span>
+<span id="cb12-473"><a href="#cb12-473" aria-hidden="true" tabindex="-1"></a>  on simpleTypes add constraint annotations to edges.</span>
+<span id="cb12-474"><a href="#cb12-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-475"><a href="#cb12-475" aria-hidden="true" tabindex="-1"></a>Sometimes the edges carry extra information: a field number in Protobuf, a</span>
+<span id="cb12-476"><a href="#cb12-476" aria-hidden="true" tabindex="-1"></a><span class="in">`NOT NULL`</span> constraint in SQL, a <span class="in">`maxLength`</span> in JSON Schema and Lexicon, a</span>
+<span id="cb12-477"><a href="#cb12-477" aria-hidden="true" tabindex="-1"></a><span class="in">`minOccurs`</span>/<span class="in">`maxOccurs`</span> pair in XSD. But the</span>
+<span id="cb12-478"><a href="#cb12-478" aria-hidden="true" tabindex="-1"></a>fundamental picture is the same: **a graph of types connected by typed</span>
+<span id="cb12-479"><a href="#cb12-479" aria-hidden="true" tabindex="-1"></a>relationships**.</span>
+<span id="cb12-480"><a href="#cb12-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-481"><a href="#cb12-481" aria-hidden="true" tabindex="-1"></a>The differences between schema languages come down to:</span>
+<span id="cb12-482"><a href="#cb12-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-483"><a href="#cb12-483" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**What kinds of vertices are allowed.** SQL has tables and views. Protobuf</span>
+<span id="cb12-484"><a href="#cb12-484" aria-hidden="true" tabindex="-1"></a>   has messages and enums. GraphQL has types, interfaces, unions, and enums.</span>
+<span id="cb12-485"><a href="#cb12-485" aria-hidden="true" tabindex="-1"></a>   XSD has complexTypes, simpleTypes, and element declarations as first-class</span>
+<span id="cb12-486"><a href="#cb12-486" aria-hidden="true" tabindex="-1"></a>   vertices.</span>
+<span id="cb12-487"><a href="#cb12-487" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**What kinds of edges are allowed.** SQL columns are different from Protobuf</span>
+<span id="cb12-488"><a href="#cb12-488" aria-hidden="true" tabindex="-1"></a>   fields, which are different from GraphQL fields, which are different from XSD</span>
+<span id="cb12-489"><a href="#cb12-489" aria-hidden="true" tabindex="-1"></a>   element declarations within a sequence.</span>
+<span id="cb12-490"><a href="#cb12-490" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**What constraints can be attached.** JSON Schema has a rich constraint</span>
+<span id="cb12-491"><a href="#cb12-491" aria-hidden="true" tabindex="-1"></a>   vocabulary (<span class="in">`maxLength`</span>, <span class="in">`pattern`</span>, <span class="in">`minimum`</span>). Protobuf has almost none</span>
+<span id="cb12-492"><a href="#cb12-492" aria-hidden="true" tabindex="-1"></a>   built in. SQL constraints are operational (they're enforced at write time).</span>
+<span id="cb12-493"><a href="#cb12-493" aria-hidden="true" tabindex="-1"></a>   XSD has a structured restriction vocabulary that can express the same</span>
+<span id="cb12-494"><a href="#cb12-494" aria-hidden="true" tabindex="-1"></a>   constraints as JSON Schema but requires significantly more nesting to do so.</span>
+<span id="cb12-495"><a href="#cb12-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-496"><a href="#cb12-496" aria-hidden="true" tabindex="-1"></a>These are not superficial syntactic differences. They reflect genuine design</span>
+<span id="cb12-497"><a href="#cb12-497" aria-hidden="true" tabindex="-1"></a>choices about what each format is optimized for. But they are **parametric**</span>
+<span id="cb12-498"><a href="#cb12-498" aria-hidden="true" tabindex="-1"></a>differences—variations on a common structural theme, not fundamentally different</span>
+<span id="cb12-499"><a href="#cb12-499" aria-hidden="true" tabindex="-1"></a>kinds of things.</span>
+<span id="cb12-500"><a href="#cb12-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-501"><a href="#cb12-501" aria-hidden="true" tabindex="-1"></a>That structural theme is what panproto is built on. The next chapter gives it a</span>
+<span id="cb12-502"><a href="#cb12-502" aria-hidden="true" tabindex="-1"></a>name.</span>
+<span id="cb12-503"><a href="#cb12-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-504"><a href="#cb12-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-505"><a href="#cb12-505" aria-hidden="true" tabindex="-1"></a><span class="fu">## Looking Ahead</span></span>
+<span id="cb12-506"><a href="#cb12-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-507"><a href="#cb12-507" aria-hidden="true" tabindex="-1"></a>We've established that schema languages share a common graph-like structure,</span>
+<span id="cb12-508"><a href="#cb12-508" aria-hidden="true" tabindex="-1"></a>and that panproto exploits this commonality. But we've been hand-waving about</span>
+<span id="cb12-509"><a href="#cb12-509" aria-hidden="true" tabindex="-1"></a>what "graph-like" means. The word "graph" is doing a lot of work, and it turns</span>
+<span id="cb12-510"><a href="#cb12-510" aria-hidden="true" tabindex="-1"></a>out that different schema languages need different *kinds* of graphs.</span>
+<span id="cb12-511"><a href="#cb12-511" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-512"><a href="#cb12-512" aria-hidden="true" tabindex="-1"></a>In @sec-shape-of-schemas, we'll make this precise. We'll see that some schemas</span>
+<span id="cb12-513"><a href="#cb12-513" aria-hidden="true" tabindex="-1"></a>are plain directed graphs, others are multigraphs, and still others need</span>
+<span id="cb12-514"><a href="#cb12-514" aria-hidden="true" tabindex="-1"></a>hypergraphs. These aren't just academic distinctions—they determine what</span>
+<span id="cb12-515"><a href="#cb12-515" aria-hidden="true" tabindex="-1"></a>operations are well-defined on a schema, and they explain why single-protocol</span>
+<span id="cb12-516"><a href="#cb12-516" aria-hidden="true" tabindex="-1"></a>tools can't easily generalize.</span>
+<span id="cb12-517"><a href="#cb12-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-518"><a href="#cb12-518" aria-hidden="true" tabindex="-1"></a>But first, take a moment to appreciate the view from here: nine different schema</span>
+<span id="cb12-519"><a href="#cb12-519" aria-hidden="true" tabindex="-1"></a>languages, nine different communities, nine different ecosystems—all describing</span>
+<span id="cb12-520"><a href="#cb12-520" aria-hidden="true" tabindex="-1"></a>the same blog post, all using the same structural pattern. And these nine are a</span>
+<span id="cb12-521"><a href="#cb12-521" aria-hidden="true" tabindex="-1"></a>sample: panproto's full coverage spans 54 protocols, from serialization formats</span>
+<span id="cb12-522"><a href="#cb12-522" aria-hidden="true" tabindex="-1"></a>like MessagePack and CBOR to interface definition languages like Thrift and</span>
+<span id="cb12-523"><a href="#cb12-523" aria-hidden="true" tabindex="-1"></a>WSDL to domain-specific schema systems like FHIR and JSON-LD. The fact that a</span>
+<span id="cb12-524"><a href="#cb12-524" aria-hidden="true" tabindex="-1"></a>single structural account reaches across all of them is not an accident. It's a</span>
+<span id="cb12-525"><a href="#cb12-525" aria-hidden="true" tabindex="-1"></a>consequence of what schemas *are*, and understanding that is the goal of this</span>
+<span id="cb12-526"><a href="#cb12-526" aria-hidden="true" tabindex="-1"></a>tutorial.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
