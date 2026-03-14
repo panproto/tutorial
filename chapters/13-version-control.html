@@ -507,9 +507,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#the-git-analogy" id="toc-the-git-analogy" class="nav-link active" data-scroll-target="#the-git-analogy"><span class="header-section-number">13.1</span> The Git Analogy</a></li>
   <li><a href="#quick-start" id="toc-quick-start" class="nav-link" data-scroll-target="#quick-start"><span class="header-section-number">13.2</span> Quick Start</a></li>
   <li><a href="#the-object-store" id="toc-the-object-store" class="nav-link" data-scroll-target="#the-object-store"><span class="header-section-number">13.3</span> The Object Store</a></li>
-  <li><a href="#structural-merge" id="toc-structural-merge" class="nav-link" data-scroll-target="#structural-merge"><span class="header-section-number">13.4</span> Structural Merge</a></li>
-  <li><a href="#lifting-data-through-history" id="toc-lifting-data-through-history" class="nav-link" data-scroll-target="#lifting-data-through-history"><span class="header-section-number">13.5</span> Lifting Data Through History</a></li>
-  <li><a href="#full-command-reference" id="toc-full-command-reference" class="nav-link" data-scroll-target="#full-command-reference"><span class="header-section-number">13.6</span> Full Command Reference</a></li>
+  <li><a href="#command-reference" id="toc-command-reference" class="nav-link" data-scroll-target="#command-reference"><span class="header-section-number">13.4</span> Command Reference</a>
+  <ul class="collapse">
+  <li><a href="#schema-init" id="toc-schema-init" class="nav-link" data-scroll-target="#schema-init"><span class="header-section-number">13.4.1</span> <code>schema init</code></a></li>
+  <li><a href="#schema-add" id="toc-schema-add" class="nav-link" data-scroll-target="#schema-add"><span class="header-section-number">13.4.2</span> <code>schema add</code></a></li>
+  <li><a href="#schema-commit" id="toc-schema-commit" class="nav-link" data-scroll-target="#schema-commit"><span class="header-section-number">13.4.3</span> <code>schema commit</code></a></li>
+  <li><a href="#schema-status" id="toc-schema-status" class="nav-link" data-scroll-target="#schema-status"><span class="header-section-number">13.4.4</span> <code>schema status</code></a></li>
+  <li><a href="#schema-log" id="toc-schema-log" class="nav-link" data-scroll-target="#schema-log"><span class="header-section-number">13.4.5</span> <code>schema log</code></a></li>
+  <li><a href="#schema-diff" id="toc-schema-diff" class="nav-link" data-scroll-target="#schema-diff"><span class="header-section-number">13.4.6</span> <code>schema diff</code></a></li>
+  <li><a href="#schema-show" id="toc-schema-show" class="nav-link" data-scroll-target="#schema-show"><span class="header-section-number">13.4.7</span> <code>schema show</code></a></li>
+  <li><a href="#schema-branch" id="toc-schema-branch" class="nav-link" data-scroll-target="#schema-branch"><span class="header-section-number">13.4.8</span> <code>schema branch</code></a></li>
+  <li><a href="#schema-tag" id="toc-schema-tag" class="nav-link" data-scroll-target="#schema-tag"><span class="header-section-number">13.4.9</span> <code>schema tag</code></a></li>
+  <li><a href="#schema-checkout" id="toc-schema-checkout" class="nav-link" data-scroll-target="#schema-checkout"><span class="header-section-number">13.4.10</span> <code>schema checkout</code></a></li>
+  <li><a href="#schema-merge" id="toc-schema-merge" class="nav-link" data-scroll-target="#schema-merge"><span class="header-section-number">13.4.11</span> <code>schema merge</code></a></li>
+  <li><a href="#schema-rebase" id="toc-schema-rebase" class="nav-link" data-scroll-target="#schema-rebase"><span class="header-section-number">13.4.12</span> <code>schema rebase</code></a></li>
+  <li><a href="#schema-cherry-pick" id="toc-schema-cherry-pick" class="nav-link" data-scroll-target="#schema-cherry-pick"><span class="header-section-number">13.4.13</span> <code>schema cherry-pick</code></a></li>
+  <li><a href="#schema-reset" id="toc-schema-reset" class="nav-link" data-scroll-target="#schema-reset"><span class="header-section-number">13.4.14</span> <code>schema reset</code></a></li>
+  <li><a href="#schema-stash" id="toc-schema-stash" class="nav-link" data-scroll-target="#schema-stash"><span class="header-section-number">13.4.15</span> <code>schema stash</code></a></li>
+  <li><a href="#schema-reflog" id="toc-schema-reflog" class="nav-link" data-scroll-target="#schema-reflog"><span class="header-section-number">13.4.16</span> <code>schema reflog</code></a></li>
+  <li><a href="#schema-bisect" id="toc-schema-bisect" class="nav-link" data-scroll-target="#schema-bisect"><span class="header-section-number">13.4.17</span> <code>schema bisect</code></a></li>
+  <li><a href="#schema-blame" id="toc-schema-blame" class="nav-link" data-scroll-target="#schema-blame"><span class="header-section-number">13.4.18</span> <code>schema blame</code></a></li>
+  <li><a href="#schema-lift" id="toc-schema-lift" class="nav-link" data-scroll-target="#schema-lift"><span class="header-section-number">13.4.19</span> <code>schema lift</code></a></li>
+  <li><a href="#schema-gc" id="toc-schema-gc" class="nav-link" data-scroll-target="#schema-gc"><span class="header-section-number">13.4.20</span> <code>schema gc</code></a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/13-version-control.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -581,24 +601,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="quick-start" class="level2" data-number="13.2">
 <h2 data-number="13.2" class="anchored" data-anchor-id="quick-start"><span class="header-section-number">13.2</span> Quick Start</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a schema repository</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> init</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage and commit a schema</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema.json</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"initial ATProto schema"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a branch for a feature</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch add-verification</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout add-verification</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Evolve the schema</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema-v2.json</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"add verification status field"</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge back</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout main</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> merge add-verification</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> init</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema.json</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"initial ATProto schema"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch add-verification</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout add-verification</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema-v2.json</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"add verification status field"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout main</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> merge add-verification</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="the-object-store" class="level2" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="the-object-store"><span class="header-section-number">13.3</span> The Object Store</h2>
@@ -610,120 +623,145 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   HEAD                              # current branch
   logs/                             # reflog (audit trail)</code></pre>
 </section>
-<section id="structural-merge" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="structural-merge"><span class="header-section-number">13.4</span> Structural Merge</h2>
-<p>When two branches evolve a schema independently, panproto computes a three-way merge:</p>
-<ol type="1">
-<li>Find the merge base (lowest common ancestor in the DAG)</li>
-<li>Compute <code>diff(base, ours)</code> and <code>diff(base, theirs)</code></li>
-<li>Apply all non-conflicting changes from both sides</li>
-<li>Flag overlapping modifications as conflicts</li>
-</ol>
-<p>Conflicts are structural, not textual. A <code>BothModifiedVertex</code> conflict means both branches changed the same vertex’s kind in incompatible ways. A <code>RemovedVariant</code> conflict means a coproduct variant was removed, which would make existing tagged data ill-typed. These are things a textual merge cannot detect.</p>
+<section id="command-reference" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="command-reference"><span class="header-section-number">13.4</span> Command Reference</h2>
+<section id="schema-init" class="level3" data-number="13.4.1">
+<h3 data-number="13.4.1" class="anchored" data-anchor-id="schema-init"><span class="header-section-number">13.4.1</span> <code>schema init</code></h3>
+<p>Creates a <code>.panproto/</code> directory with the object store, refs, and HEAD pointing to <code>main</code>.</p>
+<p>In git, <code>init</code> creates <code>.git/</code> for tracking arbitrary files. Here it creates <code>.panproto/</code> for tracking a single schema and its evolution. There is no working tree in the git sense; the repository tracks one schema at a time, not a directory of files.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> init</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> init my-project</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="lifting-data-through-history" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="lifting-data-through-history"><span class="header-section-number">13.5</span> Lifting Data Through History</h2>
-<p>The <code>lift</code> command migrates actual instance data through any path in the version DAG:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Migrate a record from v1 to v3</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> lift record.json v1.0 v3.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This composes the migrations along the path <code>v1 → v2 → v3</code> into a single migration, then applies the functorial lift. The commutativity guarantee ensures you get the same result regardless of which path you take through the DAG.</p>
+<section id="schema-add" class="level3" data-number="13.4.2">
+<h3 data-number="13.4.2" class="anchored" data-anchor-id="schema-add"><span class="header-section-number">13.4.2</span> <code>schema add</code></h3>
+<p>Stages a schema for the next commit. Loads the schema JSON, computes a structural diff against the current HEAD’s schema, auto-derives a migration (the graph morphism mapping surviving vertices and edges), and validates the migration via the existence checker.</p>
+<p>In git, <code>add</code> stages file contents for commit. Here it stages a <em>schema graph</em> and simultaneously computes and validates the <em>migration morphism</em> that transforms the old schema into the new one. If the diff involves vertex renames or edge contractions that cannot be auto-derived, you can supply an explicit migration file with <code>--migration</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema.json</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema.json <span class="at">--migration</span> explicit-migration.json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="full-command-reference" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="full-command-reference"><span class="header-section-number">13.6</span> Full Command Reference</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Command</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>schema init</code></td>
-<td>Initialize repository</td>
-</tr>
-<tr class="even">
-<td><code>schema add &lt;schema&gt;</code></td>
-<td>Stage a schema</td>
-</tr>
-<tr class="odd">
-<td><code>schema commit -m "msg"</code></td>
-<td>Commit staged changes</td>
-</tr>
-<tr class="even">
-<td><code>schema status</code></td>
-<td>Show working state</td>
-</tr>
-<tr class="odd">
-<td><code>schema log</code></td>
-<td>Walk commit history</td>
-</tr>
-<tr class="even">
-<td><code>schema diff &lt;old&gt; &lt;new&gt;</code></td>
-<td>Schema diff</td>
-</tr>
-<tr class="odd">
-<td><code>schema show &lt;ref&gt;</code></td>
-<td>Inspect an object</td>
-</tr>
-<tr class="even">
-<td><code>schema branch [name]</code></td>
-<td>Create/list branches</td>
-</tr>
-<tr class="odd">
-<td><code>schema tag [name]</code></td>
-<td>Create/list tags</td>
-</tr>
-<tr class="even">
-<td><code>schema checkout &lt;ref&gt;</code></td>
-<td>Switch branch</td>
-</tr>
-<tr class="odd">
-<td><code>schema merge &lt;branch&gt;</code></td>
-<td>Three-way merge</td>
-</tr>
-<tr class="even">
-<td><code>schema rebase &lt;onto&gt;</code></td>
-<td>Replay commits</td>
-</tr>
-<tr class="odd">
-<td><code>schema cherry-pick &lt;commit&gt;</code></td>
-<td>Apply single commit</td>
-</tr>
-<tr class="even">
-<td><code>schema reset [--soft\|--mixed\|--hard]</code></td>
-<td>Move HEAD</td>
-</tr>
-<tr class="odd">
-<td><code>schema stash [push\|pop\|list]</code></td>
-<td>Save/restore state</td>
-</tr>
-<tr class="even">
-<td><code>schema reflog</code></td>
-<td>Audit trail</td>
-</tr>
-<tr class="odd">
-<td><code>schema bisect &lt;good&gt; &lt;bad&gt;</code></td>
-<td>Find breaking commit</td>
-</tr>
-<tr class="even">
-<td><code>schema blame --element-type vertex &lt;id&gt;</code></td>
-<td>Attribution</td>
-</tr>
-<tr class="odd">
-<td><code>schema lift &lt;record&gt; &lt;from&gt; &lt;to&gt;</code></td>
-<td>Migrate data</td>
-</tr>
-<tr class="even">
-<td><code>schema gc</code></td>
-<td>Garbage collect</td>
-</tr>
-</tbody>
-</table>
+<section id="schema-commit" class="level3" data-number="13.4.3">
+<h3 data-number="13.4.3" class="anchored" data-anchor-id="schema-commit"><span class="header-section-number">13.4.3</span> <code>schema commit</code></h3>
+<p>Creates a commit from the staged schema. The commit object stores the schema’s content hash, the migration’s content hash, parent commit IDs, and metadata. Advances the current branch ref and appends a reflog entry.</p>
+<p>In git, a commit snapshots the entire working tree. Here a commit snapshots a single schema graph and the morphism that produced it from its parent. Every commit carries enough information to migrate instance data forward or backward.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"add verification status field"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-status" class="level3" data-number="13.4.4">
+<h3 data-number="13.4.4" class="anchored" data-anchor-id="schema-status"><span class="header-section-number">13.4.4</span> <code>schema status</code></h3>
+<p>Shows the current HEAD (branch name or detached commit ID) and whether anything is staged.</p>
+</section>
+<section id="schema-log" class="level3" data-number="13.4.5">
+<h3 data-number="13.4.5" class="anchored" data-anchor-id="schema-log"><span class="header-section-number">13.4.5</span> <code>schema log</code></h3>
+<p>Walks the commit DAG from HEAD backwards, printing each commit’s ID, author, timestamp, message, and schema hash. For merge commits, shows all parent IDs.</p>
+<p>In git, <code>log</code> shows file-level changes. Here it shows schema-level evolution: which vertices and edges were added, removed, or modified at each step.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> log</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> log <span class="at">-n</span> 5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-diff" class="level3" data-number="13.4.6">
+<h3 data-number="13.4.6" class="anchored" data-anchor-id="schema-diff"><span class="header-section-number">13.4.6</span> <code>schema diff</code></h3>
+<p>Computes a structural diff between two schema files. Reports added and removed vertices and edges, kind changes, constraint changes, variant changes, ordering changes, and usage mode changes.</p>
+<p>Git’s diff operates on lines of text. This diff operates on the schema graph: it knows that adding a vertex is different from adding an edge, that tightening a constraint is different from relaxing one, and that removing a coproduct variant is a type error while removing an optional field is merely lossy.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> diff old-schema.json new-schema.json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-show" class="level3" data-number="13.4.7">
+<h3 data-number="13.4.7" class="anchored" data-anchor-id="schema-show"><span class="header-section-number">13.4.7</span> <code>schema show</code></h3>
+<p>Inspects any object in the store by ref name or object ID. For commits, shows the schema ID, parent IDs, migration ID, protocol, author, and message. For schemas, shows vertex and edge counts. For migrations, shows the vertex and edge mapping counts.</p>
+<p>Git’s <code>show</code> displays file contents and diffs. This <code>show</code> displays the internal structure of content-addressed schema objects.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> show main</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> show v1.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-branch" class="level3" data-number="13.4.8">
+<h3 data-number="13.4.8" class="anchored" data-anchor-id="schema-branch"><span class="header-section-number">13.4.8</span> <code>schema branch</code></h3>
+<p>Creates, lists, or deletes branches. Branches are lightweight pointers to commit IDs, exactly as in git. With no arguments, lists all branches and marks the current one.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch feature</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch <span class="at">-d</span> feature</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-tag" class="level3" data-number="13.4.9">
+<h3 data-number="13.4.9" class="anchored" data-anchor-id="schema-tag"><span class="header-section-number">13.4.9</span> <code>schema tag</code></h3>
+<p>Creates, lists, or deletes tags. Tags are immutable pointers to commits, typically used for schema releases.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> tag v1.0</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> tag <span class="at">-d</span> v1.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-checkout" class="level3" data-number="13.4.10">
+<h3 data-number="13.4.10" class="anchored" data-anchor-id="schema-checkout"><span class="header-section-number">13.4.10</span> <code>schema checkout</code></h3>
+<p>Switches HEAD to the named branch, or detaches HEAD at a specific commit. In git, checkout also updates the working tree; here it updates which schema version HEAD points to.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout feature</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-merge" class="level3" data-number="13.4.11">
+<h3 data-number="13.4.11" class="anchored" data-anchor-id="schema-merge"><span class="header-section-number">13.4.11</span> <code>schema merge</code></h3>
+<p>Merges a branch into the current branch. Finds the merge base (lowest common ancestor), computes diffs from the base to both tips, and applies all non-conflicting changes.</p>
+<p>This is where panproto diverges most from git. Git’s merge operates on lines of text and produces conflict markers when the same lines were edited. panproto’s merge operates on the schema graph and produces typed conflicts: <code>BothModifiedVertex</code> (both branches changed the same vertex’s kind differently), <code>BothModifiedConstraint</code> (both changed the same constraint value), <code>DeleteModifyVertex</code> (one branch deleted a vertex the other modified), <code>RemovedVariant</code> (a coproduct variant was dropped, making existing data ill-typed), or <code>LinearityTightened</code> (an edge’s usage mode became more restrictive). If there are no conflicts, the merge is auto-committed. If there are, the conflicts are reported with their structural types.</p>
+<p>Fast-forward merges work as in git: if one side is an ancestor of the other, the ref is simply moved forward.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> merge feature</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-rebase" class="level3" data-number="13.4.12">
+<h3 data-number="13.4.12" class="anchored" data-anchor-id="schema-rebase"><span class="header-section-number">13.4.12</span> <code>schema rebase</code></h3>
+<p>Replays the current branch’s commits onto another branch. Finds the merge base, collects all commits from the base to HEAD, then replays each one on top of the target via three-way merge. If any step conflicts, the rebase stops with an error.</p>
+<p>The mechanics are the same as git rebase, but each replay step uses structural three-way merge rather than textual merge. This means a rebase can detect schema-level conflicts (like incompatible kind changes) that git rebase would miss.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> rebase main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-cherry-pick" class="level3" data-number="13.4.13">
+<h3 data-number="13.4.13" class="anchored" data-anchor-id="schema-cherry-pick"><span class="header-section-number">13.4.13</span> <code>schema cherry-pick</code></h3>
+<p>Applies a single commit’s schema change to the current branch. Extracts the diff between the commit and its parent, then three-way merges it onto HEAD using the parent as the base.</p>
+<p>Same idea as git cherry-pick, but the “diff” being applied is a schema graph morphism, not a text patch.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> cherry-pick abc1234...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-reset" class="level3" data-number="13.4.14">
+<h3 data-number="13.4.14" class="anchored" data-anchor-id="schema-reset"><span class="header-section-number">13.4.14</span> <code>schema reset</code></h3>
+<p>Moves HEAD to a different commit. Three modes, matching git:</p>
+<ul>
+<li><code>--soft</code>: moves the ref only; the index is unchanged</li>
+<li><code>--mixed</code> (default): moves the ref and clears the index</li>
+<li><code>--hard</code>: moves the ref, clears the index, and overwrites the working schema</li>
+</ul>
+<p>All modes append a reflog entry, so the old position is recoverable.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> reset <span class="at">--soft</span> v1.0</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> reset <span class="at">--hard</span> HEAD~3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-stash" class="level3" data-number="13.4.15">
+<h3 data-number="13.4.15" class="anchored" data-anchor-id="schema-stash"><span class="header-section-number">13.4.15</span> <code>schema stash</code></h3>
+<p>Saves the current staged schema to a stash stack and clears the index. <code>pop</code> restores the most recent stash. <code>list</code> shows all entries. <code>drop</code> discards the top entry.</p>
+<p>In git, stash saves uncommitted working tree changes. Here it saves the staged schema so you can switch branches without committing.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> stash push <span class="at">-m</span> <span class="st">"work in progress"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> stash pop</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> stash list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-reflog" class="level3" data-number="13.4.16">
+<h3 data-number="13.4.16" class="anchored" data-anchor-id="schema-reflog"><span class="header-section-number">13.4.16</span> <code>schema reflog</code></h3>
+<p>Shows the history of mutations to a ref. Every commit, merge, checkout, reset, rebase, and cherry-pick appends an entry recording the old and new ref values. This is the recovery mechanism: if a reset or rebase moves HEAD past a commit you need, the reflog still has the old ID.</p>
+<p>Works identically to git reflog.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> reflog</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> reflog main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-bisect" class="level3" data-number="13.4.17">
+<h3 data-number="13.4.17" class="anchored" data-anchor-id="schema-bisect"><span class="header-section-number">13.4.17</span> <code>schema bisect</code></h3>
+<p>Binary search for the commit that introduced a breaking change. Given a known-good and known-bad commit, bisect finds the path between them and presents the midpoint for testing. You report whether the midpoint is good or bad, and it narrows the range. Converges in O(log n) steps.</p>
+<p>Git bisect tests whether code compiles or a test passes. Here you can test whether a schema change introduced a breaking change, a validation failure, or any other property you care about.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> bisect v1.0 HEAD</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-blame" class="level3" data-number="13.4.18">
+<h3 data-number="13.4.18" class="anchored" data-anchor-id="schema-blame"><span class="header-section-number">13.4.18</span> <code>schema blame</code></h3>
+<p>Shows which commit introduced a specific schema element: a vertex, an edge, or a constraint. Walks the DAG backwards from HEAD, comparing each commit’s schema to its parent’s, and returns the commit where the element first appeared or was last modified.</p>
+<p>Git blame operates on lines of text in a file. This blame operates on structural elements of a schema graph. You can ask “who added the <code>user_status</code> vertex?” or “when was the <code>maxLength</code> constraint on <code>text</code> changed?”</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> blame <span class="at">--element-type</span> vertex user_status</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> blame <span class="at">--element-type</span> constraint <span class="st">"text:maxLength"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-lift" class="level3" data-number="13.4.19">
+<h3 data-number="13.4.19" class="anchored" data-anchor-id="schema-lift"><span class="header-section-number">13.4.19</span> <code>schema lift</code></h3>
+<p>Migrates instance data from one schema version to another. Finds the path between two refs in the DAG, composes all migrations along the path into a single morphism, and applies the functorial lift to the record.</p>
+<p>This has no git equivalent. Git tracks file history but cannot transform file <em>contents</em> based on structural changes. panproto can, because migrations are graph morphisms with a well-defined action on instance data. The commutativity guarantee ensures the result is the same regardless of which path you take through the DAG.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> lift <span class="at">--migration</span> mig.json <span class="at">--src-schema</span> v1.json <span class="at">--tgt-schema</span> v2.json record.json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="schema-gc" class="level3" data-number="13.4.20">
+<h3 data-number="13.4.20" class="anchored" data-anchor-id="schema-gc"><span class="header-section-number">13.4.20</span> <code>schema gc</code></h3>
+<p>Marks all objects reachable from branches, tags, stash, and HEAD, then deletes everything else. Safe to run at any time.</p>
+<p>Works like git gc but simpler: there are no packfiles or loose object optimization. Objects are either reachable or deleted.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> gc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 <!-- -->
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1203,106 +1241,260 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Schematic Version Control {#sec-version-control}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Schemas evolve. Fields get added, types change, constraints tighten. When multiple teams develop against the same schema, their changes diverge and eventually need merging. The <span class="in">`schema`</span> CLI provides git-style version control for this process, except that instead of tracking text it tracks mathematical structure.</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Git Analogy</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Git concept <span class="pp">|</span> panproto equivalent <span class="pp">|</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Blob (file content) <span class="pp">|</span> Schema (graph structure) <span class="pp">|</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Diff/patch <span class="pp">|</span> Migration (graph morphism) <span class="pp">|</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Three-way merge <span class="pp">|</span> Colimit (pushout of schemas) <span class="pp">|</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Content-addressing (SHA) <span class="pp">|</span> Content-addressing (blake3) <span class="pp">|</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Commit DAG <span class="pp">|</span> Schema evolution DAG <span class="pp">|</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Branch <span class="pp">|</span> Named pointer to a schema version <span class="pp">|</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Conflict <span class="pp">|</span> Structural incompatibility <span class="pp">|</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>The important difference: git merges text and hopes the result compiles. panproto merges structure and guarantees data integrity.</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick Start</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a schema repository</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> init</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage and commit a schema</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema.json</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"initial ATProto schema"</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a branch for a feature</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch add-verification</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout add-verification</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Evolve the schema</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema-v2.json</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"add verification status field"</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge back</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout main</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> merge add-verification</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Object Store</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>Every schema, migration, and commit is identified by a blake3 hash of its canonical form. Two schemas with the same structure produce the same hash, even if they were created independently by different teams on different continents. Identity comes from structure, not naming.</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="in">.panproto/</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="in">  objects/&lt;hex[0..2]&gt;/&lt;hex[2..]&gt;   # content-addressed objects</span></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="in">  refs/heads/main                   # branch pointers</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="in">  refs/tags/v1.0                    # tag pointers</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="in">  HEAD                              # current branch</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="in">  logs/                             # reflog (audit trail)</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="fu">## Structural Merge</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>When two branches evolve a schema independently, panproto computes a three-way merge:</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Find the merge base (lowest common ancestor in the DAG)</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Compute <span class="in">`diff(base, ours)`</span> and <span class="in">`diff(base, theirs)`</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Apply all non-conflicting changes from both sides</span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Flag overlapping modifications as conflicts</span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>Conflicts are structural, not textual. A <span class="in">`BothModifiedVertex`</span> conflict means both branches changed the same vertex's kind in incompatible ways. A <span class="in">`RemovedVariant`</span> conflict means a coproduct variant was removed, which would make existing tagged data ill-typed. These are things a textual merge cannot detect.</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Lifting Data Through History</span></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>The <span class="in">`lift`</span> command migrates actual instance data through any path in the version DAG:</span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Migrate a record from v1 to v3</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> lift record.json v1.0 v3.0</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>This composes the migrations along the path <span class="in">`v1 → v2 → v3`</span> into a single migration, then applies the functorial lift. The commutativity guarantee ensures you get the same result regardless of which path you take through the DAG.</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## Full Command Reference</span></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Command <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema init`</span> <span class="pp">|</span> Initialize repository <span class="pp">|</span></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema add &lt;schema&gt;`</span> <span class="pp">|</span> Stage a schema <span class="pp">|</span></span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema commit -m "msg"`</span> <span class="pp">|</span> Commit staged changes <span class="pp">|</span></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema status`</span> <span class="pp">|</span> Show working state <span class="pp">|</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema log`</span> <span class="pp">|</span> Walk commit history <span class="pp">|</span></span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema diff &lt;old&gt; &lt;new&gt;`</span> <span class="pp">|</span> Schema diff <span class="pp">|</span></span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema show &lt;ref&gt;`</span> <span class="pp">|</span> Inspect an object <span class="pp">|</span></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema branch [name]`</span> <span class="pp">|</span> Create/list branches <span class="pp">|</span></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema tag [name]`</span> <span class="pp">|</span> Create/list tags <span class="pp">|</span></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema checkout &lt;ref&gt;`</span> <span class="pp">|</span> Switch branch <span class="pp">|</span></span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema merge &lt;branch&gt;`</span> <span class="pp">|</span> Three-way merge <span class="pp">|</span></span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema rebase &lt;onto&gt;`</span> <span class="pp">|</span> Replay commits <span class="pp">|</span></span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema cherry-pick &lt;commit&gt;`</span> <span class="pp">|</span> Apply single commit <span class="pp">|</span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema reset [--soft\|--mixed\|--hard]`</span> <span class="pp">|</span> Move HEAD <span class="pp">|</span></span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema stash [push\|pop\|list]`</span> <span class="pp">|</span> Save/restore state <span class="pp">|</span></span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema reflog`</span> <span class="pp">|</span> Audit trail <span class="pp">|</span></span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema bisect &lt;good&gt; &lt;bad&gt;`</span> <span class="pp">|</span> Find breaking commit <span class="pp">|</span></span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema blame --element-type vertex &lt;id&gt;`</span> <span class="pp">|</span> Attribution <span class="pp">|</span></span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema lift &lt;record&gt; &lt;from&gt; &lt;to&gt;`</span> <span class="pp">|</span> Migrate data <span class="pp">|</span></span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema gc`</span> <span class="pp">|</span> Garbage collect <span class="pp">|</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Schematic Version Control {#sec-version-control}</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>Schemas evolve. Fields get added, types change, constraints tighten. When multiple teams develop against the same schema, their changes diverge and eventually need merging. The <span class="in">`schema`</span> CLI provides git-style version control for this process, except that instead of tracking text it tracks mathematical structure.</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Git Analogy</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Git concept <span class="pp">|</span> panproto equivalent <span class="pp">|</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Blob (file content) <span class="pp">|</span> Schema (graph structure) <span class="pp">|</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Diff/patch <span class="pp">|</span> Migration (graph morphism) <span class="pp">|</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Three-way merge <span class="pp">|</span> Colimit (pushout of schemas) <span class="pp">|</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Content-addressing (SHA) <span class="pp">|</span> Content-addressing (blake3) <span class="pp">|</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Commit DAG <span class="pp">|</span> Schema evolution DAG <span class="pp">|</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Branch <span class="pp">|</span> Named pointer to a schema version <span class="pp">|</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Conflict <span class="pp">|</span> Structural incompatibility <span class="pp">|</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>The important difference: git merges text and hopes the result compiles. panproto merges structure and guarantees data integrity.</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick Start</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> init</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema.json</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"initial ATProto schema"</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch add-verification</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout add-verification</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema-v2.json</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"add verification status field"</span></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout main</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> merge add-verification</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Object Store</span></span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>Every schema, migration, and commit is identified by a blake3 hash of its canonical form. Two schemas with the same structure produce the same hash, even if they were created independently by different teams on different continents. Identity comes from structure, not naming.</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a><span class="in">.panproto/</span></span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a><span class="in">  objects/&lt;hex[0..2]&gt;/&lt;hex[2..]&gt;   # content-addressed objects</span></span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a><span class="in">  refs/heads/main                   # branch pointers</span></span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a><span class="in">  refs/tags/v1.0                    # tag pointers</span></span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a><span class="in">  HEAD                              # current branch</span></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a><span class="in">  logs/                             # reflog (audit trail)</span></span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a><span class="fu">## Command Reference</span></span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema init`</span></span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a>Creates a <span class="in">`.panproto/`</span> directory with the object store, refs, and HEAD pointing to <span class="in">`main`</span>.</span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>In git, <span class="in">`init`</span> creates <span class="in">`.git/`</span> for tracking arbitrary files. Here it creates <span class="in">`.panproto/`</span> for tracking a single schema and its evolution. There is no working tree in the git sense; the repository tracks one schema at a time, not a directory of files.</span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> init</span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> init my-project</span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema add`</span></span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a>Stages a schema for the next commit. Loads the schema JSON, computes a structural diff against the current HEAD's schema, auto-derives a migration (the graph morphism mapping surviving vertices and edges), and validates the migration via the existence checker.</span>
+<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a>In git, <span class="in">`add`</span> stages file contents for commit. Here it stages a *schema graph* and simultaneously computes and validates the *migration morphism* that transforms the old schema into the new one. If the diff involves vertex renames or edge contractions that cannot be auto-derived, you can supply an explicit migration file with <span class="in">`--migration`</span>.</span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema.json</span>
+<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema.json <span class="at">--migration</span> explicit-migration.json</span>
+<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema commit`</span></span>
+<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a>Creates a commit from the staged schema. The commit object stores the schema's content hash, the migration's content hash, parent commit IDs, and metadata. Advances the current branch ref and appends a reflog entry.</span>
+<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a>In git, a commit snapshots the entire working tree. Here a commit snapshots a single schema graph and the morphism that produced it from its parent. Every commit carries enough information to migrate instance data forward or backward.</span>
+<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"add verification status field"</span></span>
+<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema status`</span></span>
+<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a>Shows the current HEAD (branch name or detached commit ID) and whether anything is staged.</span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema log`</span></span>
+<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a>Walks the commit DAG from HEAD backwards, printing each commit's ID, author, timestamp, message, and schema hash. For merge commits, shows all parent IDs.</span>
+<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a>In git, <span class="in">`log`</span> shows file-level changes. Here it shows schema-level evolution: which vertices and edges were added, removed, or modified at each step.</span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> log</span>
+<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> log <span class="at">-n</span> 5</span>
+<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema diff`</span></span>
+<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a>Computes a structural diff between two schema files. Reports added and removed vertices and edges, kind changes, constraint changes, variant changes, ordering changes, and usage mode changes.</span>
+<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a>Git's diff operates on lines of text. This diff operates on the schema graph: it knows that adding a vertex is different from adding an edge, that tightening a constraint is different from relaxing one, and that removing a coproduct variant is a type error while removing an optional field is merely lossy.</span>
+<span id="cb22-102"><a href="#cb22-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-103"><a href="#cb22-103" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> diff old-schema.json new-schema.json</span>
+<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema show`</span></span>
+<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a>Inspects any object in the store by ref name or object ID. For commits, shows the schema ID, parent IDs, migration ID, protocol, author, and message. For schemas, shows vertex and edge counts. For migrations, shows the vertex and edge mapping counts.</span>
+<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a>Git's <span class="in">`show`</span> displays file contents and diffs. This <span class="in">`show`</span> displays the internal structure of content-addressed schema objects.</span>
+<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> show main</span>
+<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> show v1.0</span>
+<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema branch`</span></span>
+<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a>Creates, lists, or deletes branches. Branches are lightweight pointers to commit IDs, exactly as in git. With no arguments, lists all branches and marks the current one.</span>
+<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch</span>
+<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch feature</span>
+<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch <span class="at">-d</span> feature</span>
+<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema tag`</span></span>
+<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a>Creates, lists, or deletes tags. Tags are immutable pointers to commits, typically used for schema releases.</span>
+<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> tag v1.0</span>
+<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> tag <span class="at">-d</span> v1.0</span>
+<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema checkout`</span></span>
+<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a>Switches HEAD to the named branch, or detaches HEAD at a specific commit. In git, checkout also updates the working tree; here it updates which schema version HEAD points to.</span>
+<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout feature</span>
+<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema merge`</span></span>
+<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a>Merges a branch into the current branch. Finds the merge base (lowest common ancestor), computes diffs from the base to both tips, and applies all non-conflicting changes.</span>
+<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a>This is where panproto diverges most from git. Git's merge operates on lines of text and produces conflict markers when the same lines were edited. panproto's merge operates on the schema graph and produces typed conflicts: <span class="in">`BothModifiedVertex`</span> (both branches changed the same vertex's kind differently), <span class="in">`BothModifiedConstraint`</span> (both changed the same constraint value), <span class="in">`DeleteModifyVertex`</span> (one branch deleted a vertex the other modified), <span class="in">`RemovedVariant`</span> (a coproduct variant was dropped, making existing data ill-typed), or <span class="in">`LinearityTightened`</span> (an edge's usage mode became more restrictive). If there are no conflicts, the merge is auto-committed. If there are, the conflicts are reported with their structural types.</span>
+<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a>Fast-forward merges work as in git: if one side is an ancestor of the other, the ref is simply moved forward.</span>
+<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> merge feature</span>
+<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema rebase`</span></span>
+<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a>Replays the current branch's commits onto another branch. Finds the merge base, collects all commits from the base to HEAD, then replays each one on top of the target via three-way merge. If any step conflicts, the rebase stops with an error.</span>
+<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a>The mechanics are the same as git rebase, but each replay step uses structural three-way merge rather than textual merge. This means a rebase can detect schema-level conflicts (like incompatible kind changes) that git rebase would miss.</span>
+<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> rebase main</span>
+<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema cherry-pick`</span></span>
+<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a>Applies a single commit's schema change to the current branch. Extracts the diff between the commit and its parent, then three-way merges it onto HEAD using the parent as the base.</span>
+<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a>Same idea as git cherry-pick, but the "diff" being applied is a schema graph morphism, not a text patch.</span>
+<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> cherry-pick abc1234...</span>
+<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema reset`</span></span>
+<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a>Moves HEAD to a different commit. Three modes, matching git:</span>
+<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`--soft`</span>: moves the ref only; the index is unchanged</span>
+<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`--mixed`</span> (default): moves the ref and clears the index</span>
+<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`--hard`</span>: moves the ref, clears the index, and overwrites the working schema</span>
+<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a>All modes append a reflog entry, so the old position is recoverable.</span>
+<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> reset <span class="at">--soft</span> v1.0</span>
+<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> reset <span class="at">--hard</span> HEAD~3</span>
+<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema stash`</span></span>
+<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a>Saves the current staged schema to a stash stack and clears the index. <span class="in">`pop`</span> restores the most recent stash. <span class="in">`list`</span> shows all entries. <span class="in">`drop`</span> discards the top entry.</span>
+<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a>In git, stash saves uncommitted working tree changes. Here it saves the staged schema so you can switch branches without committing.</span>
+<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> stash push <span class="at">-m</span> <span class="st">"work in progress"</span></span>
+<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> stash pop</span>
+<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> stash list</span>
+<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema reflog`</span></span>
+<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a>Shows the history of mutations to a ref. Every commit, merge, checkout, reset, rebase, and cherry-pick appends an entry recording the old and new ref values. This is the recovery mechanism: if a reset or rebase moves HEAD past a commit you need, the reflog still has the old ID.</span>
+<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a>Works identically to git reflog.</span>
+<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> reflog</span>
+<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> reflog main</span>
+<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema bisect`</span></span>
+<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a>Binary search for the commit that introduced a breaking change. Given a known-good and known-bad commit, bisect finds the path between them and presents the midpoint for testing. You report whether the midpoint is good or bad, and it narrows the range. Converges in O(log n) steps.</span>
+<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a>Git bisect tests whether code compiles or a test passes. Here you can test whether a schema change introduced a breaking change, a validation failure, or any other property you care about.</span>
+<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> bisect v1.0 HEAD</span>
+<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema blame`</span></span>
+<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>Shows which commit introduced a specific schema element: a vertex, an edge, or a constraint. Walks the DAG backwards from HEAD, comparing each commit's schema to its parent's, and returns the commit where the element first appeared or was last modified.</span>
+<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>Git blame operates on lines of text in a file. This blame operates on structural elements of a schema graph. You can ask "who added the <span class="in">`user_status`</span> vertex?" or "when was the <span class="in">`maxLength`</span> constraint on <span class="in">`text`</span> changed?"</span>
+<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> blame <span class="at">--element-type</span> vertex user_status</span>
+<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> blame <span class="at">--element-type</span> constraint <span class="st">"text:maxLength"</span></span>
+<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema lift`</span></span>
+<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a>Migrates instance data from one schema version to another. Finds the path between two refs in the DAG, composes all migrations along the path into a single morphism, and applies the functorial lift to the record.</span>
+<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a>This has no git equivalent. Git tracks file history but cannot transform file *contents* based on structural changes. panproto can, because migrations are graph morphisms with a well-defined action on instance data. The commutativity guarantee ensures the result is the same regardless of which path you take through the DAG.</span>
+<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> lift <span class="at">--migration</span> mig.json <span class="at">--src-schema</span> v1.json <span class="at">--tgt-schema</span> v2.json record.json</span>
+<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a><span class="fu">### `schema gc`</span></span>
+<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a>Marks all objects reachable from branches, tags, stash, and HEAD, then deletes everything else. Safe to run at any time.</span>
+<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a>Works like git gc but simpler: there are no packfiles or loose object optimization. Objects are either reachable or deleted.</span>
+<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> gc</span>
+<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
