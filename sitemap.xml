@@ -2,78 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://panproto.github.io/tutorial/index.html</loc>
-    <lastmod>2026-03-14T16:32:46.581Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.483Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/01-schemas-everywhere.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/02-the-shape-of-schemas.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/03-what-is-a-theory.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/04-protocols-as-parameters.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/05-migration-by-hand.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/06-when-migrations-exist.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/07-lifting-data.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/08-lenses.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/09-breaking-changes.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/10-building-your-own-protocol.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/11-self-description.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/12-format-conversion.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.482Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/13-version-control.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.482Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/chapters/14-building-blocks.html</loc>
-    <lastmod>2026-03-14T16:32:46.580Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.482Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/appendices/A-category-theory-cheatsheet.html</loc>
-    <lastmod>2026-03-14T16:32:46.578Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.480Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/appendices/B-api-reference.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/appendices/C-guide-to-the-literature.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
   <url>
     <loc>https://panproto.github.io/tutorial/appendices/D-protocol-catalog.html</loc>
-    <lastmod>2026-03-14T16:32:46.579Z</lastmod>
+    <lastmod>2026-03-14T17:41:59.481Z</lastmod>
   </url>
 </urlset>
