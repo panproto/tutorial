@@ -883,7 +883,7 @@ Compatibility: BREAKING
 <section id="sec-diff-report" class="level2" data-number="9.6">
 <h2 data-number="9.6" class="anchored" data-anchor-id="sec-diff-report"><span class="header-section-number">9.6</span> The diff report</h2>
 <p>panproto produces a human-readable diff report that combines the structural diff with the compatibility classification. The report is designed for code review: a developer should be able to read it and understand both <em>what</em> changed and <em>whether it is safe</em>.</p>
-<pre><code>panproto diff v1/schema.json v2/schema.json
+<pre><code>schema diff v1/schema.json v2/schema.json
 
 Schema: app.bsky.feed.defs#threadViewPost
 
@@ -936,15 +936,15 @@ Recommendation: Safe to deploy if consumers update before producers.</code></pre
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check compatibility</span></span>
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>          panproto diff /tmp/old-schema.json schemas/schema.json</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>          schema diff /tmp/old-schema.json schemas/schema.json</span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Block breaking changes</span></span>
 <span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>          panproto check \</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>          schema check \</span>
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>            --src /tmp/old-schema.json \</span>
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>            --tgt schemas/schema.json \</span>
 <span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>            --level backward-compatible</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The <code>panproto check</code> command accepts a <code>--level</code> flag:</p>
+<p>The <code>schema check</code> command accepts a <code>--level</code> flag:</p>
 <ul>
 <li><code>--level fully-compatible</code>: Fail unless the change is fully compatible in both directions.</li>
 <li><code>--level backward-compatible</code>: Fail unless at least a forward migration exists (the default).</li>
@@ -955,19 +955,19 @@ Recommendation: Safe to deploy if consumers update before producers.</code></pre
 <h3 data-number="9.7.2" class="anchored" data-anchor-id="cli-usage"><span class="header-section-number">9.7.2</span> CLI usage</h3>
 <p>For local development, the same commands work without CI:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the diff and classification</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">panproto</span> diff old-schema.json new-schema.json</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> diff old-schema.json new-schema.json</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check against a specific compatibility level (exit code 0 = pass, 1 = fail)</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">panproto</span> check <span class="at">--src</span> old-schema.json <span class="at">--tgt</span> new-schema.json <span class="at">--level</span> backward-compatible</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> check <span class="at">--src</span> old-schema.json <span class="at">--tgt</span> new-schema.json <span class="at">--level</span> backward-compatible</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Output as JSON for programmatic consumption</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">panproto</span> diff old-schema.json new-schema.json <span class="at">--format</span> json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> diff old-schema.json new-schema.json <span class="at">--format</span> json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="schema-registry-integration" class="level3" data-number="9.7.3">
 <h3 data-number="9.7.3" class="anchored" data-anchor-id="schema-registry-integration"><span class="header-section-number">9.7.3</span> Schema registry integration</h3>
 <p>For teams that use a schema registry, panproto can check compatibility against the latest registered version:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check against the latest version in the registry</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">panproto</span> check <span class="dt">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> check <span class="dt">\</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--src</span> <span class="st">"registry://app.bsky.feed.defs#threadViewPost@latest"</span> <span class="dt">\</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--tgt</span> schemas/schema.json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This integrates with the registry’s version history, so you always check against what is actually deployed rather than what is on the main branch.</p>
@@ -1055,7 +1055,7 @@ Recommendation: Safe to deploy if consumers update before producers.</code></pre
 <li><strong>Lenses</strong> (<a href="08-lenses.html" class="quarto-xref"><span>Chapter 8</span></a>) make the migration bidirectional.</li>
 <li><strong>The compatibility classifier</strong> (this chapter) decides whether the change is safe to deploy.</li>
 </ol>
-<p>The classifier is the user-facing endpoint of the theory. A developer does not need to understand polynomial functors or pushout complements to use <code>panproto check</code>. They see a clear verdict—fully compatible, backward compatible, or breaking—backed by a proof-strength guarantee from the underlying mathematics.</p>
+<p>The classifier is the user-facing endpoint of the theory. A developer does not need to understand polynomial functors or pushout complements to use <code>schema check</code>. They see a clear verdict—fully compatible, backward compatible, or breaking—backed by a proof-strength guarantee from the underlying mathematics.</p>
 <p>This is the design philosophy of panproto: the theory is deep, but the interface is simple. The complexity lives in the library, not in the developer’s head.</p>
 </section>
 <section id="further-reading" class="level2" data-number="9.11">
@@ -1796,7 +1796,7 @@ Lack, Stephen, and Paweł Sobociński. 2005. <span>“Adhesive and Quasiadhesive
 <span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a>panproto produces a human-readable diff report that combines the structural diff with the compatibility classification. The report is designed for code review: a developer should be able to read it and understand both *what* changed and *whether it is safe*.</span>
 <span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="in">panproto diff v1/schema.json v2/schema.json</span></span>
+<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a><span class="in">schema diff v1/schema.json v2/schema.json</span></span>
 <span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a><span class="in">Schema: app.bsky.feed.defs#threadViewPost</span></span>
 <span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a></span>
@@ -1854,17 +1854,17 @@ Lack, Stephen, and Paweł Sobociński. 2005. <span>“Adhesive and Quasiadhesive
 <span id="cb10-299"><a href="#cb10-299" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-300"><a href="#cb10-300" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check compatibility</span></span>
 <span id="cb10-301"><a href="#cb10-301" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a>          panproto diff /tmp/old-schema.json schemas/schema.json</span>
+<span id="cb10-302"><a href="#cb10-302" aria-hidden="true" tabindex="-1"></a>          schema diff /tmp/old-schema.json schemas/schema.json</span>
 <span id="cb10-303"><a href="#cb10-303" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-304"><a href="#cb10-304" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Block breaking changes</span></span>
 <span id="cb10-305"><a href="#cb10-305" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a>          panproto check \</span>
+<span id="cb10-306"><a href="#cb10-306" aria-hidden="true" tabindex="-1"></a>          schema check \</span>
 <span id="cb10-307"><a href="#cb10-307" aria-hidden="true" tabindex="-1"></a>            --src /tmp/old-schema.json \</span>
 <span id="cb10-308"><a href="#cb10-308" aria-hidden="true" tabindex="-1"></a>            --tgt schemas/schema.json \</span>
 <span id="cb10-309"><a href="#cb10-309" aria-hidden="true" tabindex="-1"></a>            --level backward-compatible</span>
 <span id="cb10-310"><a href="#cb10-310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-311"><a href="#cb10-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-312"><a href="#cb10-312" aria-hidden="true" tabindex="-1"></a>The <span class="in">`panproto check`</span> command accepts a <span class="in">`--level`</span> flag:</span>
+<span id="cb10-312"><a href="#cb10-312" aria-hidden="true" tabindex="-1"></a>The <span class="in">`schema check`</span> command accepts a <span class="in">`--level`</span> flag:</span>
 <span id="cb10-313"><a href="#cb10-313" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-314"><a href="#cb10-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`--level fully-compatible`</span>: Fail unless the change is fully compatible in both directions.</span>
 <span id="cb10-315"><a href="#cb10-315" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`--level backward-compatible`</span>: Fail unless at least a forward migration exists (the default).</span>
@@ -1876,13 +1876,13 @@ Lack, Stephen, and Paweł Sobociński. 2005. <span>“Adhesive and Quasiadhesive
 <span id="cb10-321"><a href="#cb10-321" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-322"><a href="#cb10-322" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
 <span id="cb10-323"><a href="#cb10-323" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the diff and classification</span></span>
-<span id="cb10-324"><a href="#cb10-324" aria-hidden="true" tabindex="-1"></a><span class="ex">panproto</span> diff old-schema.json new-schema.json</span>
+<span id="cb10-324"><a href="#cb10-324" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> diff old-schema.json new-schema.json</span>
 <span id="cb10-325"><a href="#cb10-325" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-326"><a href="#cb10-326" aria-hidden="true" tabindex="-1"></a><span class="co"># Check against a specific compatibility level (exit code 0 = pass, 1 = fail)</span></span>
-<span id="cb10-327"><a href="#cb10-327" aria-hidden="true" tabindex="-1"></a><span class="ex">panproto</span> check <span class="at">--src</span> old-schema.json <span class="at">--tgt</span> new-schema.json <span class="at">--level</span> backward-compatible</span>
+<span id="cb10-327"><a href="#cb10-327" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> check <span class="at">--src</span> old-schema.json <span class="at">--tgt</span> new-schema.json <span class="at">--level</span> backward-compatible</span>
 <span id="cb10-328"><a href="#cb10-328" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-329"><a href="#cb10-329" aria-hidden="true" tabindex="-1"></a><span class="co"># Output as JSON for programmatic consumption</span></span>
-<span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a><span class="ex">panproto</span> diff old-schema.json new-schema.json <span class="at">--format</span> json</span>
+<span id="cb10-330"><a href="#cb10-330" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> diff old-schema.json new-schema.json <span class="at">--format</span> json</span>
 <span id="cb10-331"><a href="#cb10-331" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb10-332"><a href="#cb10-332" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-333"><a href="#cb10-333" aria-hidden="true" tabindex="-1"></a><span class="fu">### Schema registry integration</span></span>
@@ -1891,7 +1891,7 @@ Lack, Stephen, and Paweł Sobociński. 2005. <span>“Adhesive and Quasiadhesive
 <span id="cb10-336"><a href="#cb10-336" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-337"><a href="#cb10-337" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
 <span id="cb10-338"><a href="#cb10-338" aria-hidden="true" tabindex="-1"></a><span class="co"># Check against the latest version in the registry</span></span>
-<span id="cb10-339"><a href="#cb10-339" aria-hidden="true" tabindex="-1"></a><span class="ex">panproto</span> check <span class="dt">\</span></span>
+<span id="cb10-339"><a href="#cb10-339" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> check <span class="dt">\</span></span>
 <span id="cb10-340"><a href="#cb10-340" aria-hidden="true" tabindex="-1"></a>  <span class="at">--src</span> <span class="st">"registry://app.bsky.feed.defs#threadViewPost@latest"</span> <span class="dt">\</span></span>
 <span id="cb10-341"><a href="#cb10-341" aria-hidden="true" tabindex="-1"></a>  <span class="at">--tgt</span> schemas/schema.json</span>
 <span id="cb10-342"><a href="#cb10-342" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
@@ -1974,7 +1974,7 @@ Lack, Stephen, and Paweł Sobociński. 2005. <span>“Adhesive and Quasiadhesive
 <span id="cb10-419"><a href="#cb10-419" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Lenses** (@sec-lenses) make the migration bidirectional.</span>
 <span id="cb10-420"><a href="#cb10-420" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**The compatibility classifier** (this chapter) decides whether the change is safe to deploy.</span>
 <span id="cb10-421"><a href="#cb10-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-422"><a href="#cb10-422" aria-hidden="true" tabindex="-1"></a>The classifier is the user-facing endpoint of the theory. A developer does not need to understand polynomial functors or pushout complements to use <span class="in">`panproto check`</span>. They see a clear verdict—fully compatible, backward compatible, or breaking—backed by a proof-strength guarantee from the underlying mathematics.</span>
+<span id="cb10-422"><a href="#cb10-422" aria-hidden="true" tabindex="-1"></a>The classifier is the user-facing endpoint of the theory. A developer does not need to understand polynomial functors or pushout complements to use <span class="in">`schema check`</span>. They see a clear verdict—fully compatible, backward compatible, or breaking—backed by a proof-strength guarantee from the underlying mathematics.</span>
 <span id="cb10-423"><a href="#cb10-423" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-424"><a href="#cb10-424" aria-hidden="true" tabindex="-1"></a>This is the design philosophy of panproto: the theory is deep, but the interface is simple. The complexity lives in the library, not in the developer's head.</span>
 <span id="cb10-425"><a href="#cb10-425" aria-hidden="true" tabindex="-1"></a></span>
