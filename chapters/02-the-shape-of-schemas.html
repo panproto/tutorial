@@ -468,6 +468,18 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Format Conversion</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-version-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Schematic Version Control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-building-blocks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -482,25 +494,25 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/D-protocol-catalog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
   </div>
 </li>
       </ul>
@@ -932,7 +944,7 @@ Figure&nbsp;3.3: A SQL schema with a foreign key represented as a hypergraph. Th
 </tbody>
 </table>
 <p>Notice that no schema language we’ve examined requires only a simple directed graph. The moment you allow two fields of the same type (which is… always), you need at least a multigraph. SQL’s and Cassandra’s compound keys push the requirement to hypergraphs. XML/XSD’s element-attribute duality introduces a meta-level that requires annotations beyond ordinary constraints.</p>
-<p>These ten protocols are a representative sample. panproto organizes its full set of 54 protocols into 5 theory groups based on the graph structure they require—from Group C (simple multigraphs, e.g.&nbsp;Protobuf, Avro, Thrift) through Group E (multigraphs with constraint and metadata layers, e.g.&nbsp;XML/XSD, HTML). The taxonomy extends uniformly to all 54 protocols; see <span class="quarto-unresolved-ref">?sec-protocol-catalog</span> for the complete catalog with theory group assignments.</p>
+<p>These ten protocols are a representative sample. panproto organizes its full set of 76 protocols into 6 theory groups based on the graph structure they require—from Group C (simple multigraphs, e.g.&nbsp;Protobuf, Avro, Thrift) through Group E (multigraphs with constraint and metadata layers, e.g.&nbsp;XML/XSD, HTML). The taxonomy extends uniformly to all 76 protocols; see <a href="../appendices/D-protocol-catalog.html" class="quarto-xref"><span>Chapter 18</span></a> for the complete catalog with theory group assignments.</p>
 <p>This taxonomy explains a pattern you’ve probably noticed in the ecosystem: schema tools tend to be protocol-specific. <strong>Buf</strong> is excellent for Protobuf. <strong>Atlas</strong> is excellent for SQL. <strong>GraphQL Code Generator</strong> is excellent for GraphQL. But none of them generalize across protocols.</p>
 </section>
 <section id="why-single-protocol-tools-cant-generalize" class="level2" data-number="3.6">
@@ -1809,10 +1821,10 @@ Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Informa
 <span id="cb4-338"><a href="#cb4-338" aria-hidden="true" tabindex="-1"></a>meta-level that requires annotations beyond ordinary constraints.</span>
 <span id="cb4-339"><a href="#cb4-339" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-340"><a href="#cb4-340" aria-hidden="true" tabindex="-1"></a>These ten protocols are a representative sample. panproto organizes its full</span>
-<span id="cb4-341"><a href="#cb4-341" aria-hidden="true" tabindex="-1"></a>set of 54 protocols into 5 theory groups based on the graph structure they</span>
+<span id="cb4-341"><a href="#cb4-341" aria-hidden="true" tabindex="-1"></a>set of 76 protocols into 6 theory groups based on the graph structure they</span>
 <span id="cb4-342"><a href="#cb4-342" aria-hidden="true" tabindex="-1"></a>require—from Group C (simple multigraphs, e.g. Protobuf, Avro, Thrift) through</span>
 <span id="cb4-343"><a href="#cb4-343" aria-hidden="true" tabindex="-1"></a>Group E (multigraphs with constraint and metadata layers, e.g. XML/XSD, HTML).</span>
-<span id="cb4-344"><a href="#cb4-344" aria-hidden="true" tabindex="-1"></a>The taxonomy extends uniformly to all 54 protocols; see</span>
+<span id="cb4-344"><a href="#cb4-344" aria-hidden="true" tabindex="-1"></a>The taxonomy extends uniformly to all 76 protocols; see</span>
 <span id="cb4-345"><a href="#cb4-345" aria-hidden="true" tabindex="-1"></a>@sec-protocol-catalog for the complete catalog with theory group assignments.</span>
 <span id="cb4-346"><a href="#cb4-346" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-347"><a href="#cb4-347" aria-hidden="true" tabindex="-1"></a>This taxonomy explains a pattern you've probably noticed in the ecosystem:</span>

@@ -497,6 +497,18 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Format Conversion</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-version-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Schematic Version Control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-building-blocks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -511,25 +523,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/D-protocol-catalog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
   </div>
 </li>
       </ul>
@@ -588,7 +600,7 @@ window.Quarto = {
 </header>
 
 
-<p>So far we have worked with protocols that panproto ships out of the box—54 protocols across 9 categories—serialization, data schemas, APIs, databases, type systems, web/document formats, data science, domain-specific, and configuration. But panproto is not a fixed catalog. It is a toolkit for building schema languages, and the mechanism for doing so is the <em>colimit</em> of theories.</p>
+<p>So far we have worked with protocols that panproto ships out of the box—76 protocols across 9 categories—serialization, data schemas, APIs, databases, type systems, web/document formats, data science, domain-specific, and configuration. But panproto is not a fixed catalog. It is a toolkit for building schema languages, and the mechanism for doing so is the <em>colimit</em> of theories.</p>
 <p>This chapter shows how to define a new protocol from scratch by composing reusable component theories, and how the full machinery—migrations, existence checking, diff, lifting—comes along for free.</p>
 <section id="colimits-pushouts-of-theories" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="colimits-pushouts-of-theories"><span class="header-section-number">10.1</span> Colimits (Pushouts) of Theories</h2>
@@ -807,11 +819,11 @@ Note
 </div>
 <section id="all-protocols-as-colimits" class="level3" data-number="10.3.1">
 <h3 data-number="10.3.1" class="anchored" data-anchor-id="all-protocols-as-colimits"><span class="header-section-number">10.3.1</span> All Protocols as Colimits</h3>
-<p>Every one of panproto’s 54 built-in protocols falls into one of five theory groups, determined by which component theories its colimit requires. The table below summarizes the groups; the instance theory column names the theory used to represent data (instances) for schemas in that group.</p>
+<p>Every one of panproto’s 76 built-in protocols falls into one of six theory groups, determined by which component theories its colimit requires. The table below summarizes the groups; the instance theory column names the theory used to represent data (instances) for schemas in that group.</p>
 <div id="tbl-protocol-groups" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-protocol-groups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;10.1: The five theory groups organising panproto’s 54 built-in protocols.
+Table&nbsp;10.1: The six theory groups organising panproto’s 76 built-in protocols.
 </figcaption>
 <div aria-describedby="tbl-protocol-groups-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -836,14 +848,14 @@ Table&nbsp;10.1: The five theory groups organising panproto’s 54 built-in prot
 <td>A</td>
 <td>colimit(ThGraph, ThConstraint, ThMulti)</td>
 <td>ThWType</td>
-<td>20</td>
+<td>30</td>
 <td>ATProto, JSON Schema, OpenAPI, FHIR</td>
 </tr>
 <tr class="even">
 <td>B</td>
 <td>colimit(ThHypergraph, ThConstraint)</td>
 <td>ThFunctor</td>
-<td>8</td>
+<td>11</td>
 <td>SQL, Cassandra, Parquet, CSV</td>
 </tr>
 <tr class="odd">
@@ -857,15 +869,22 @@ Table&nbsp;10.1: The five theory groups organising panproto’s 54 built-in prot
 <td>D</td>
 <td>colimit(ThGraph, ThConstraint, ThMulti, ThInterface)</td>
 <td>ThWType</td>
-<td>12</td>
+<td>16</td>
 <td>GraphQL, TypeScript, Python, Java</td>
 </tr>
 <tr class="odd">
 <td>E</td>
 <td>colimit(ThGraph, ThConstraint, ThMulti)</td>
 <td>colimit(ThWType, ThMeta)</td>
-<td>6</td>
-<td>XML/XSD, HTML, CSS, Neo4j</td>
+<td>9</td>
+<td>XML/XSD, HTML, CSS</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td>colimit(ThGraph, ThConstraint, ThMulti)</td>
+<td>ThGraphInstance</td>
+<td>1</td>
+<td>Neo4j</td>
 </tr>
 </tbody>
 </table>
@@ -873,7 +892,7 @@ Table&nbsp;10.1: The five theory groups organising panproto’s 54 built-in prot
 </figure>
 </div>
 <p>Group membership determines which generic algorithms apply and how cross-group migrations are constructed—for instance, migrating from a Group C protocol (Protobuf) to a Group A protocol (JSON Schema) requires a theory morphism that embeds the simpler <code>ThSimpleGraph</code> into the richer <code>colimit(ThGraph, ThConstraint, ThMulti)</code>. The migration morphism itself remains the same kind of graph homomorphism described throughout this tutorial.</p>
-<p>See <span class="quarto-unresolved-ref">?sec-protocol-catalog</span> for the complete catalog of all 54 protocols with their theory group assignments.</p>
+<p>See <a href="../appendices/D-protocol-catalog.html" class="quarto-xref"><span>Chapter 18</span></a> for the complete catalog of all 76 protocols with their theory group assignments.</p>
 </section>
 </section>
 <section id="summary" class="level2" data-number="10.4">
@@ -1377,7 +1396,7 @@ Lynch, Owen, Kris Brown, James Fairbanks, and Evan Patterson. 2024. <span>“<sp
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Building Your Own Protocol</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>So far we have worked with protocols that panproto ships out of the box—54 protocols across 9 categories—serialization, data schemas, APIs, databases, type systems, web/document formats, data science, domain-specific, and configuration. But panproto is not a fixed catalog. It is a toolkit for building schema languages, and the mechanism for doing so is the *colimit* of theories.</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>So far we have worked with protocols that panproto ships out of the box—76 protocols across 9 categories—serialization, data schemas, APIs, databases, type systems, web/document formats, data science, domain-specific, and configuration. But panproto is not a fixed catalog. It is a toolkit for building schema languages, and the mechanism for doing so is the *colimit* of theories.</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>This chapter shows how to define a new protocol from scratch by composing reusable component theories, and how the full machinery—migrations, existence checking, diff, lifting—comes along for free.</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -1506,40 +1525,41 @@ Lynch, Owen, Kris Brown, James Fairbanks, and Evan Patterson. 2024. <span>“<sp
 <span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a><span class="fu">### All Protocols as Colimits</span></span>
 <span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>Every one of panproto's 54 built-in protocols falls into one of five theory</span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>Every one of panproto's 76 built-in protocols falls into one of six theory</span>
 <span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>groups, determined by which component theories its colimit requires. The table</span>
 <span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>below summarizes the groups; the instance theory column names the theory used</span>
 <span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>to represent data (instances) for schemas in that group.</span>
 <span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Theory Group <span class="pp">|</span> Schema Theory <span class="pp">|</span> Instance Theory <span class="pp">|</span> Protocol Count <span class="pp">|</span> Examples <span class="pp">|</span></span>
 <span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|---|</span></span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A <span class="pp">|</span> colimit(ThGraph, ThConstraint, ThMulti) <span class="pp">|</span> ThWType <span class="pp">|</span> 20 <span class="pp">|</span> ATProto, JSON Schema, OpenAPI, FHIR <span class="pp">|</span></span>
-<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> B <span class="pp">|</span> colimit(ThHypergraph, ThConstraint) <span class="pp">|</span> ThFunctor <span class="pp">|</span> 8 <span class="pp">|</span> SQL, Cassandra, Parquet, CSV <span class="pp">|</span></span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A <span class="pp">|</span> colimit(ThGraph, ThConstraint, ThMulti) <span class="pp">|</span> ThWType <span class="pp">|</span> 30 <span class="pp">|</span> ATProto, JSON Schema, OpenAPI, FHIR <span class="pp">|</span></span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> B <span class="pp">|</span> colimit(ThHypergraph, ThConstraint) <span class="pp">|</span> ThFunctor <span class="pp">|</span> 11 <span class="pp">|</span> SQL, Cassandra, Parquet, CSV <span class="pp">|</span></span>
 <span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> C <span class="pp">|</span> colimit(ThSimpleGraph, ThConstraint) <span class="pp">|</span> ThFlat <span class="pp">|</span> 9 <span class="pp">|</span> Protobuf, Avro, Thrift, HCL <span class="pp">|</span></span>
-<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> D <span class="pp">|</span> colimit(ThGraph, ThConstraint, ThMulti, ThInterface) <span class="pp">|</span> ThWType <span class="pp">|</span> 12 <span class="pp">|</span> GraphQL, TypeScript, Python, Java <span class="pp">|</span></span>
-<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> E <span class="pp">|</span> colimit(ThGraph, ThConstraint, ThMulti) <span class="pp">|</span> colimit(ThWType, ThMeta) <span class="pp">|</span> 6 <span class="pp">|</span> XML/XSD, HTML, CSS, Neo4j <span class="pp">|</span></span>
-<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a>: The five theory groups organising panproto's 54 built-in protocols. {#tbl-protocol-groups}</span>
-<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a>Group membership determines which generic algorithms apply and how cross-group</span>
-<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a>migrations are constructed—for instance, migrating from a Group C protocol</span>
-<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>(Protobuf) to a Group A protocol (JSON Schema) requires a theory morphism that</span>
-<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a>embeds the simpler <span class="in">`ThSimpleGraph`</span> into the richer</span>
-<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a><span class="in">`colimit(ThGraph, ThConstraint, ThMulti)`</span>. The migration morphism itself</span>
-<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>remains the same kind of graph homomorphism described throughout this tutorial.</span>
-<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a>See @sec-protocol-catalog for the complete catalog of all 54 protocols with</span>
-<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>their theory group assignments.</span>
-<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a>Defining a new protocol in panproto is not an act of implementing a plugin or writing an adapter. It is an act of *specifying a theory*, typically by composing existing theories via colimits. The colimit merges shared structure, the theory morphisms track provenance, and the generic engine provides migrations, diffs, existence checking, and lifting—all derived from the mathematics.</span>
-<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a>This is what it means for panproto to be *protocol-parametric*: the protocol is a parameter, and changing it requires no changes to the engine.</span>
-<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a><span class="fu">### Further Reading</span></span>
-<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>The theory of colimits in the context of generalized algebraic theories is developed in @cartmell1986. The computational algorithm for colimits of GAT presentations, which panproto's implementation follows, is described in @lynch2024.</span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> D <span class="pp">|</span> colimit(ThGraph, ThConstraint, ThMulti, ThInterface) <span class="pp">|</span> ThWType <span class="pp">|</span> 16 <span class="pp">|</span> GraphQL, TypeScript, Python, Java <span class="pp">|</span></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> E <span class="pp">|</span> colimit(ThGraph, ThConstraint, ThMulti) <span class="pp">|</span> colimit(ThWType, ThMeta) <span class="pp">|</span> 9 <span class="pp">|</span> XML/XSD, HTML, CSS <span class="pp">|</span></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> F <span class="pp">|</span> colimit(ThGraph, ThConstraint, ThMulti) <span class="pp">|</span> ThGraphInstance <span class="pp">|</span> 1 <span class="pp">|</span> Neo4j <span class="pp">|</span></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-148"><a href="#cb8-148" aria-hidden="true" tabindex="-1"></a>: The six theory groups organising panproto's 76 built-in protocols. {#tbl-protocol-groups}</span>
+<span id="cb8-149"><a href="#cb8-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a>Group membership determines which generic algorithms apply and how cross-group</span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>migrations are constructed—for instance, migrating from a Group C protocol</span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a>(Protobuf) to a Group A protocol (JSON Schema) requires a theory morphism that</span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>embeds the simpler <span class="in">`ThSimpleGraph`</span> into the richer</span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a><span class="in">`colimit(ThGraph, ThConstraint, ThMulti)`</span>. The migration morphism itself</span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a>remains the same kind of graph homomorphism described throughout this tutorial.</span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a>See @sec-protocol-catalog for the complete catalog of all 76 protocols with</span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a>their theory group assignments.</span>
+<span id="cb8-159"><a href="#cb8-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-160"><a href="#cb8-160" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a>Defining a new protocol in panproto is not an act of implementing a plugin or writing an adapter. It is an act of *specifying a theory*, typically by composing existing theories via colimits. The colimit merges shared structure, the theory morphisms track provenance, and the generic engine provides migrations, diffs, existence checking, and lifting—all derived from the mathematics.</span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a>This is what it means for panproto to be *protocol-parametric*: the protocol is a parameter, and changing it requires no changes to the engine.</span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a><span class="fu">### Further Reading</span></span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>The theory of colimits in the context of generalized algebraic theories is developed in @cartmell1986. The computational algorithm for colimits of GAT presentations, which panproto's implementation follows, is described in @lynch2024.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

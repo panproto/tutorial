@@ -445,6 +445,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Format Conversion</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-version-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Schematic Version Control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-building-blocks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -459,25 +471,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/D-protocol-catalog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
   </div>
 </li>
       </ul>
@@ -549,7 +561,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="schemas-everywhere" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Schemas Everywhere</h1>
 <p>You already know what a schema is. You write them constantly—every time you define a database table, declare a protobuf message, or sketch out a GraphQL type. Schemas are the skeletons of structured data: they say what fields exist, what types those fields carry, and (sometimes) what constraints hold.</p>
-<p>What you might not have noticed is how <em>many</em> schema languages there are, and how eerily similar they look once you squint past the syntax. This chapter makes that observation concrete. We’ll take a single, deliberately boring entity—a blog post—and write its schema in nine different formats drawn from panproto’s coverage of 54 protocols. Then we’ll show how panproto can construct the same schema using its TypeScript SDK, regardless of which protocol you’re targeting.</p>
+<p>What you might not have noticed is how <em>many</em> schema languages there are, and how eerily similar they look once you squint past the syntax. This chapter makes that observation concrete. We’ll take a single, deliberately boring entity—a blog post—and write its schema in nine different formats drawn from panproto’s coverage of 76 protocols. Then we’ll show how panproto can construct the same schema using its TypeScript SDK, regardless of which protocol you’re targeting.</p>
 <section id="the-running-example-a-blog-post" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="the-running-example-a-blog-post"><span class="header-section-number">2.1</span> The Running Example: A Blog Post</h2>
 <p>Our blog post has three fields:</p>
@@ -693,7 +705,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="beyond-five-the-full-spectrum" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="beyond-five-the-full-spectrum"><span class="header-section-number">2.3</span> Beyond Five: The Full Spectrum</h2>
-<p>Five formats illustrate the pattern, but panproto covers 54 protocols. To give a sense of the breadth, here are four more representations of the same blog post—drawn from serialization, type system, API specification, and document-exchange traditions respectively.</p>
+<p>Five formats illustrate the pattern, but panproto covers 76 protocols. To give a sense of the breadth, here are four more representations of the same blog post—drawn from serialization, type system, API specification, and document-exchange traditions respectively.</p>
 <section id="avro" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="avro"><span class="header-section-number">2.3.1</span> Avro</h3>
 <p>Apache Avro is the schema language of the Hadoop ecosystem and a common choice for Kafka message contracts. Schemas are themselves JSON documents, and types are defined recursively.</p>
@@ -1010,7 +1022,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2.7" class="anchored" data-anchor-id="looking-ahead"><span class="header-section-number">2.7</span> Looking Ahead</h2>
 <p>We’ve established that schema languages share a common graph-like structure, and that panproto exploits this commonality. But we’ve been hand-waving about what “graph-like” means. The word “graph” is doing a lot of work, and it turns out that different schema languages need different <em>kinds</em> of graphs.</p>
 <p>In <a href="02-the-shape-of-schemas.html" class="quarto-xref"><span>Chapter 3</span></a>, we’ll make this precise. We’ll see that some schemas are plain directed graphs, others are multigraphs, and still others need hypergraphs. These aren’t just academic distinctions—they determine what operations are well-defined on a schema, and they explain why single-protocol tools can’t easily generalize.</p>
-<p>But first, take a moment to appreciate the view from here: nine different schema languages, nine different communities, nine different ecosystems—all describing the same blog post, all using the same structural pattern. And these nine are a sample: panproto’s full coverage spans 54 protocols, from serialization formats like MessagePack and CBOR to interface definition languages like Thrift and WSDL to domain-specific schema systems like FHIR and JSON-LD. The fact that a single structural account reaches across all of them is not an accident. It’s a consequence of what schemas <em>are</em>, and understanding that is the goal of this tutorial.</p>
+<p>But first, take a moment to appreciate the view from here: nine different schema languages, nine different communities, nine different ecosystems—all describing the same blog post, all using the same structural pattern. And these nine are a sample: panproto’s full coverage spans 76 protocols, from serialization formats like MessagePack and CBOR to interface definition languages like Thrift and WSDL to domain-specific schema systems like FHIR and JSON-LD. The fact that a single structural account reaches across all of them is not an accident. It’s a consequence of what schemas <em>are</em>, and understanding that is the goal of this tutorial.</p>
 
 
 <!-- -->
@@ -1511,7 +1523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>how eerily similar they look once you squint past the syntax. This chapter makes</span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>that observation concrete. We'll take a single, deliberately boring entity—a</span>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>blog post—and write its schema in nine different formats drawn from panproto's</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>coverage of 54 protocols. Then we'll show how panproto can construct the same</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>coverage of 76 protocols. Then we'll show how panproto can construct the same</span>
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>schema using its TypeScript SDK, regardless of which protocol you're targeting.</span>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Running Example: A Blog Post</span></span>
@@ -1693,7 +1705,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Beyond Five: The Full Spectrum</span></span>
 <span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>Five formats illustrate the pattern, but panproto covers 54 protocols. To</span>
+<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>Five formats illustrate the pattern, but panproto covers 76 protocols. To</span>
 <span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>give a sense of the breadth, here are four more representations of the same</span>
 <span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a>blog post—drawn from serialization, type system, API specification, and</span>
 <span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a>document-exchange traditions respectively.</span>
@@ -2015,7 +2027,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-518"><a href="#cb12-518" aria-hidden="true" tabindex="-1"></a>But first, take a moment to appreciate the view from here: nine different schema</span>
 <span id="cb12-519"><a href="#cb12-519" aria-hidden="true" tabindex="-1"></a>languages, nine different communities, nine different ecosystems—all describing</span>
 <span id="cb12-520"><a href="#cb12-520" aria-hidden="true" tabindex="-1"></a>the same blog post, all using the same structural pattern. And these nine are a</span>
-<span id="cb12-521"><a href="#cb12-521" aria-hidden="true" tabindex="-1"></a>sample: panproto's full coverage spans 54 protocols, from serialization formats</span>
+<span id="cb12-521"><a href="#cb12-521" aria-hidden="true" tabindex="-1"></a>sample: panproto's full coverage spans 76 protocols, from serialization formats</span>
 <span id="cb12-522"><a href="#cb12-522" aria-hidden="true" tabindex="-1"></a>like MessagePack and CBOR to interface definition languages like Thrift and</span>
 <span id="cb12-523"><a href="#cb12-523" aria-hidden="true" tabindex="-1"></a>WSDL to domain-specific schema systems like FHIR and JSON-LD. The fact that a</span>
 <span id="cb12-524"><a href="#cb12-524" aria-hidden="true" tabindex="-1"></a>single structural account reaches across all of them is not an accident. It's a</span>

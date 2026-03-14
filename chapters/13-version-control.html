@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>15&nbsp; Category Theory Cheatsheet – panproto: Universal Schema Migration</title>
+<title>13&nbsp; Schematic Version Control – panproto: Universal Schema Migration</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -55,26 +55,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -84,8 +65,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../appendices/B-api-reference.html" rel="next">
-<link href="../chapters/14-building-blocks.html" rel="prev">
+<link href="../chapters/14-building-blocks.html" rel="next">
+<link href="../chapters/12-format-conversion.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -129,35 +110,6 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -333,7 +285,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/10-building-your-own-protocol.html">Advanced</a></li><li class="breadcrumb-item"><a href="../chapters/13-version-control.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Schematic Version Control</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -495,7 +447,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/13-version-control.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/13-version-control.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Schematic Version Control</span></span></a>
   </div>
 </li>
@@ -518,7 +470,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link active">
+  <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
   </div>
 </li>
@@ -552,27 +504,22 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#category" id="toc-category" class="nav-link active" data-scroll-target="#category"><span class="header-section-number">15.1</span> Category</a></li>
-  <li><a href="#functor" id="toc-functor" class="nav-link" data-scroll-target="#functor"><span class="header-section-number">15.2</span> Functor</a></li>
-  <li><a href="#natural-transformation" id="toc-natural-transformation" class="nav-link" data-scroll-target="#natural-transformation"><span class="header-section-number">15.3</span> Natural Transformation</a></li>
-  <li><a href="#limit" id="toc-limit" class="nav-link" data-scroll-target="#limit"><span class="header-section-number">15.4</span> Limit</a></li>
-  <li><a href="#colimit" id="toc-colimit" class="nav-link" data-scroll-target="#colimit"><span class="header-section-number">15.5</span> Colimit</a></li>
-  <li><a href="#pushout" id="toc-pushout" class="nav-link" data-scroll-target="#pushout"><span class="header-section-number">15.6</span> Pushout</a></li>
-  <li><a href="#adjunction" id="toc-adjunction" class="nav-link" data-scroll-target="#adjunction"><span class="header-section-number">15.7</span> Adjunction</a></li>
-  <li><a href="#kan-extension" id="toc-kan-extension" class="nav-link" data-scroll-target="#kan-extension"><span class="header-section-number">15.8</span> Kan Extension</a></li>
-  <li><a href="#fibration" id="toc-fibration" class="nav-link" data-scroll-target="#fibration"><span class="header-section-number">15.9</span> Fibration</a></li>
-  <li><a href="#initial-algebra" id="toc-initial-algebra" class="nav-link" data-scroll-target="#initial-algebra"><span class="header-section-number">15.10</span> Initial Algebra</a></li>
-  <li><a href="#polynomial-functor" id="toc-polynomial-functor" class="nav-link" data-scroll-target="#polynomial-functor"><span class="header-section-number">15.11</span> Polynomial Functor</a></li>
+  <li><a href="#the-git-analogy" id="toc-the-git-analogy" class="nav-link active" data-scroll-target="#the-git-analogy"><span class="header-section-number">13.1</span> The Git Analogy</a></li>
+  <li><a href="#quick-start" id="toc-quick-start" class="nav-link" data-scroll-target="#quick-start"><span class="header-section-number">13.2</span> Quick Start</a></li>
+  <li><a href="#the-object-store" id="toc-the-object-store" class="nav-link" data-scroll-target="#the-object-store"><span class="header-section-number">13.3</span> The Object Store</a></li>
+  <li><a href="#structural-merge" id="toc-structural-merge" class="nav-link" data-scroll-target="#structural-merge"><span class="header-section-number">13.4</span> Structural Merge</a></li>
+  <li><a href="#lifting-data-through-history" id="toc-lifting-data-through-history" class="nav-link" data-scroll-target="#lifting-data-through-history"><span class="header-section-number">13.5</span> Lifting Data Through History</a></li>
+  <li><a href="#full-command-reference" id="toc-full-command-reference" class="nav-link" data-scroll-target="#full-command-reference"><span class="header-section-number">13.6</span> Full Command Reference</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/appendices/A-category-theory-cheatsheet.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/13-version-control.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/10-building-your-own-protocol.html">Advanced</a></li><li class="breadcrumb-item"><a href="../chapters/13-version-control.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Schematic Version Control</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-version-control" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Schematic Version Control</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -589,85 +536,194 @@ window.Quarto = {
 </header>
 
 
-<p>A quick reference for the categorical concepts that appear in this tutorial. Each entry gives a one-sentence definition, where it shows up in panproto, and a pointer to the literature.</p>
-<section id="category" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="category"><span class="header-section-number">15.1</span> Category</h2>
-<p>A collection of objects and morphisms (arrows between objects) equipped with composition and identities, satisfying associativity and unit laws.</p>
-<p><strong>In panproto</strong>: The category <strong>GAT</strong> has theories as objects and theory morphisms as arrows. The category <strong>Mod(T)</strong> has models of a theory <span class="math inline">\(T\)</span> as objects and model homomorphisms as arrows. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 1)</span>.</p>
+<p>Schemas evolve. Fields get added, types change, constraints tighten. When multiple teams develop against the same schema, their changes diverge and eventually need merging. The <code>schema</code> CLI provides git-style version control for this process, except that instead of tracking text it tracks mathematical structure.</p>
+<section id="the-git-analogy" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="the-git-analogy"><span class="header-section-number">13.1</span> The Git Analogy</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Git concept</th>
+<th>panproto equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Blob (file content)</td>
+<td>Schema (graph structure)</td>
+</tr>
+<tr class="even">
+<td>Diff/patch</td>
+<td>Migration (graph morphism)</td>
+</tr>
+<tr class="odd">
+<td>Three-way merge</td>
+<td>Colimit (pushout of schemas)</td>
+</tr>
+<tr class="even">
+<td>Content-addressing (SHA)</td>
+<td>Content-addressing (blake3)</td>
+</tr>
+<tr class="odd">
+<td>Commit DAG</td>
+<td>Schema evolution DAG</td>
+</tr>
+<tr class="even">
+<td>Branch</td>
+<td>Named pointer to a schema version</td>
+</tr>
+<tr class="odd">
+<td>Conflict</td>
+<td>Structural incompatibility</td>
+</tr>
+</tbody>
+</table>
+<p>The important difference: git merges text and hopes the result compiles. panproto merges structure and guarantees data integrity.</p>
 </section>
-<section id="functor" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="functor"><span class="header-section-number">15.2</span> Functor</h2>
-<p>A structure-preserving map between categories: it sends objects to objects and morphisms to morphisms, preserving composition and identities.</p>
-<p><strong>In panproto</strong>: A theory morphism <span class="math inline">\(F: T_1 \to T_2\)</span> induces a functor <span class="math inline">\(F^*: \mathbf{Mod}(T_2) \to \mathbf{Mod}(T_1)\)</span> that pulls back models. This is the <code>restrict</code> operation—data migration in the reverse direction. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 1)</span>.</p>
+<section id="quick-start" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="quick-start"><span class="header-section-number">13.2</span> Quick Start</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a schema repository</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> init</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage and commit a schema</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema.json</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"initial ATProto schema"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a branch for a feature</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch add-verification</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout add-verification</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Evolve the schema</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema-v2.json</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"add verification status field"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge back</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout main</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> merge add-verification</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="natural-transformation" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="natural-transformation"><span class="header-section-number">15.3</span> Natural Transformation</h2>
-<p>A family of morphisms between two functors that commutes with the functors’ action on morphisms.</p>
-<p><strong>In panproto</strong>: Natural transformations between migration functors correspond to systematic ways of transforming one migration strategy into another. They ensure that different migration paths yield compatible results. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 2)</span>.</p>
+<section id="the-object-store" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="the-object-store"><span class="header-section-number">13.3</span> The Object Store</h2>
+<p>Every schema, migration, and commit is identified by a blake3 hash of its canonical form. Two schemas with the same structure produce the same hash, even if they were created independently by different teams on different continents. Identity comes from structure, not naming.</p>
+<pre><code>.panproto/
+  objects/&lt;hex[0..2]&gt;/&lt;hex[2..]&gt;   # content-addressed objects
+  refs/heads/main                   # branch pointers
+  refs/tags/v1.0                    # tag pointers
+  HEAD                              # current branch
+  logs/                             # reflog (audit trail)</code></pre>
 </section>
-<section id="limit" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="limit"><span class="header-section-number">15.4</span> Limit</h2>
-<p>A universal cone over a diagram—the “most general” object that maps into every object in the diagram compatibly.</p>
-<p><strong>In panproto</strong>: Products (a special case of limits) appear when combining independent schemas. The limit construction ensures no information is lost. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 5)</span>.</p>
+<section id="structural-merge" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="structural-merge"><span class="header-section-number">13.4</span> Structural Merge</h2>
+<p>When two branches evolve a schema independently, panproto computes a three-way merge:</p>
+<ol type="1">
+<li>Find the merge base (lowest common ancestor in the DAG)</li>
+<li>Compute <code>diff(base, ours)</code> and <code>diff(base, theirs)</code></li>
+<li>Apply all non-conflicting changes from both sides</li>
+<li>Flag overlapping modifications as conflicts</li>
+</ol>
+<p>Conflicts are structural, not textual. A <code>BothModifiedVertex</code> conflict means both branches changed the same vertex’s kind in incompatible ways. A <code>RemovedVariant</code> conflict means a coproduct variant was removed, which would make existing tagged data ill-typed. These are things a textual merge cannot detect.</p>
 </section>
-<section id="colimit" class="level2" data-number="15.5">
-<h2 data-number="15.5" class="anchored" data-anchor-id="colimit"><span class="header-section-number">15.5</span> Colimit</h2>
-<p>A universal cocone under a diagram—the “most general” object that every object in the diagram maps into, gluing shared parts together.</p>
-<p><strong>In panproto</strong>: Colimits of theories are how new protocols are defined. The pushout (a colimit of a span) merges two theories along a shared base. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 5)</span> and <span class="citation" data-cites="adamek1994">(<a href="#ref-adamek1994" role="doc-biblioref">Adámek and Rosický 1994</a>, Ch. 11)</span>.</p>
+<section id="lifting-data-through-history" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="lifting-data-through-history"><span class="header-section-number">13.5</span> Lifting Data Through History</h2>
+<p>The <code>lift</code> command migrates actual instance data through any path in the version DAG:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Migrate a record from v1 to v3</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> lift record.json v1.0 v3.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This composes the migrations along the path <code>v1 → v2 → v3</code> into a single migration, then applies the functorial lift. The commutativity guarantee ensures you get the same result regardless of which path you take through the DAG.</p>
 </section>
-<section id="pushout" class="level2" data-number="15.6">
-<h2 data-number="15.6" class="anchored" data-anchor-id="pushout"><span class="header-section-number">15.6</span> Pushout</h2>
-<p>The colimit of a span <span class="math inline">\(A \leftarrow S \rightarrow B\)</span>: the universal object that glues <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> together along their shared sub-object <span class="math inline">\(S\)</span>.</p>
-<p><strong>In panproto</strong>: <code>colimit(t1, t2, shared)</code> computes a pushout of theories. This is the primary mechanism for composing component theories into protocols. See <span class="citation" data-cites="barr1990">(<a href="#ref-barr1990" role="doc-biblioref">Barr and Wells 1990</a>, Ch. 9)</span>.</p>
-</section>
-<section id="adjunction" class="level2" data-number="15.7">
-<h2 data-number="15.7" class="anchored" data-anchor-id="adjunction"><span class="header-section-number">15.7</span> Adjunction</h2>
-<p>A pair of functors <span class="math inline">\(F \dashv G\)</span> between two categories such that <span class="math inline">\(\mathrm{Hom}(FA, B) \cong \mathrm{Hom}(A, GB)\)</span> naturally. The left adjoint <span class="math inline">\(F\)</span> freely constructs; the right adjoint <span class="math inline">\(G\)</span> forgets structure.</p>
-<p><strong>In panproto</strong>: The migration functors <span class="math inline">\(\Sigma_F \dashv \Delta_F \dashv \Pi_F\)</span> form adjoint triples. <span class="math inline">\(\Delta_F\)</span> (restrict) is the pullback; <span class="math inline">\(\Sigma_F\)</span> (left push) and <span class="math inline">\(\Pi_F\)</span> (right push) are its adjoints. These adjunctions guarantee the round-trip properties of lenses. See <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span> and <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 4)</span>.</p>
-</section>
-<section id="kan-extension" class="level2" data-number="15.8">
-<h2 data-number="15.8" class="anchored" data-anchor-id="kan-extension"><span class="header-section-number">15.8</span> Kan Extension</h2>
-<p>The universal way to extend a functor along another functor. Left and right Kan extensions generalize colimits and limits, respectively.</p>
-<p><strong>In panproto</strong>: The left and right pushforward operations (<span class="math inline">\(\Sigma_F\)</span> and <span class="math inline">\(\Pi_F\)</span>) are computed as left and right Kan extensions along the theory morphism <span class="math inline">\(F\)</span>. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 10)</span> and <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span>.</p>
-</section>
-<section id="fibration" class="level2" data-number="15.9">
-<h2 data-number="15.9" class="anchored" data-anchor-id="fibration"><span class="header-section-number">15.9</span> Fibration</h2>
-<p>A functor <span class="math inline">\(p: \mathcal{E} \to \mathcal{B}\)</span> with a lifting property: for every morphism in the base and object in the fiber above its codomain, there is a canonical “cartesian” lift.</p>
-<p><strong>In panproto</strong>: The projection from the category of all schemas (across all protocols) down to the category of theories is a fibration. Lifting along this fibration is what lets panproto migrate schemas when the underlying protocol theory changes. See <span class="citation" data-cites="barr1990">(<a href="#ref-barr1990" role="doc-biblioref">Barr and Wells 1990</a>, Ch. 12)</span>.</p>
-</section>
-<section id="initial-algebra" class="level2" data-number="15.10">
-<h2 data-number="15.10" class="anchored" data-anchor-id="initial-algebra"><span class="header-section-number">15.10</span> Initial Algebra</h2>
-<p>The least fixed point of an endofunctor: an algebra <span class="math inline">\(F(A) \to A\)</span> such that every other <span class="math inline">\(F\)</span>-algebra receives a unique homomorphism from it.</p>
-<p><strong>In panproto</strong>: W-types are initial algebras of polynomial functors. Recursive data structures (trees, nested records, lists) are modeled as W-types, and their migrations are derived from the universal property of initiality. See <span class="citation" data-cites="adamek1994">(<a href="#ref-adamek1994" role="doc-biblioref">Adámek and Rosický 1994</a>, Ch. 10)</span> and <span class="citation" data-cites="gambino2004">(<a href="#ref-gambino2004" role="doc-biblioref">Gambino and Hyland 2004</a>)</span>.</p>
-</section>
-<section id="polynomial-functor" class="level2" data-number="15.11">
-<h2 data-number="15.11" class="anchored" data-anchor-id="polynomial-functor"><span class="header-section-number">15.11</span> Polynomial Functor</h2>
-<p>An endofunctor built from sums, products, and exponentiation by a fixed set: <span class="math inline">\(P(X) = \sum_{a:A} X^{B(a)}\)</span>. Polynomial functors classify branching structures.</p>
-<p><strong>In panproto</strong>: Each schema determines a polynomial functor whose initial algebra is the type of well-founded data conforming to that schema. Migrations between schemas lift to maps between the corresponding polynomial functors. See <span class="citation" data-cites="gambino2004">(<a href="#ref-gambino2004" role="doc-biblioref">Gambino and Hyland 2004</a>)</span> and <span class="citation" data-cites="abbott2005">(<a href="#ref-abbott2005" role="doc-biblioref">Abbott et al. 2005</a>)</span>.</p>
+<section id="full-command-reference" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="full-command-reference"><span class="header-section-number">13.6</span> Full Command Reference</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>schema init</code></td>
+<td>Initialize repository</td>
+</tr>
+<tr class="even">
+<td><code>schema add &lt;schema&gt;</code></td>
+<td>Stage a schema</td>
+</tr>
+<tr class="odd">
+<td><code>schema commit -m "msg"</code></td>
+<td>Commit staged changes</td>
+</tr>
+<tr class="even">
+<td><code>schema status</code></td>
+<td>Show working state</td>
+</tr>
+<tr class="odd">
+<td><code>schema log</code></td>
+<td>Walk commit history</td>
+</tr>
+<tr class="even">
+<td><code>schema diff &lt;old&gt; &lt;new&gt;</code></td>
+<td>Schema diff</td>
+</tr>
+<tr class="odd">
+<td><code>schema show &lt;ref&gt;</code></td>
+<td>Inspect an object</td>
+</tr>
+<tr class="even">
+<td><code>schema branch [name]</code></td>
+<td>Create/list branches</td>
+</tr>
+<tr class="odd">
+<td><code>schema tag [name]</code></td>
+<td>Create/list tags</td>
+</tr>
+<tr class="even">
+<td><code>schema checkout &lt;ref&gt;</code></td>
+<td>Switch branch</td>
+</tr>
+<tr class="odd">
+<td><code>schema merge &lt;branch&gt;</code></td>
+<td>Three-way merge</td>
+</tr>
+<tr class="even">
+<td><code>schema rebase &lt;onto&gt;</code></td>
+<td>Replay commits</td>
+</tr>
+<tr class="odd">
+<td><code>schema cherry-pick &lt;commit&gt;</code></td>
+<td>Apply single commit</td>
+</tr>
+<tr class="even">
+<td><code>schema reset [--soft\|--mixed\|--hard]</code></td>
+<td>Move HEAD</td>
+</tr>
+<tr class="odd">
+<td><code>schema stash [push\|pop\|list]</code></td>
+<td>Save/restore state</td>
+</tr>
+<tr class="even">
+<td><code>schema reflog</code></td>
+<td>Audit trail</td>
+</tr>
+<tr class="odd">
+<td><code>schema bisect &lt;good&gt; &lt;bad&gt;</code></td>
+<td>Find breaking commit</td>
+</tr>
+<tr class="even">
+<td><code>schema blame --element-type vertex &lt;id&gt;</code></td>
+<td>Attribution</td>
+</tr>
+<tr class="odd">
+<td><code>schema lift &lt;record&gt; &lt;from&gt; &lt;to&gt;</code></td>
+<td>Migrate data</td>
+</tr>
+<tr class="even">
+<td><code>schema gc</code></td>
+<td>Garbage collect</td>
+</tr>
+</tbody>
+</table>
 
 
 <!-- -->
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-abbott2005" class="csl-entry" role="listitem">
-Abbott, Michael, Thorsten Altenkirch, and Neil Ghani. 2005. <span>“Containers: Constructing Strictly Positive Types.”</span> <em>Theoretical Computer Science</em> 342 (1): 3–27. <a href="https://doi.org/10.1016/j.tcs.2005.06.002">https://doi.org/10.1016/j.tcs.2005.06.002</a>.
-</div>
-<div id="ref-adamek1994" class="csl-entry" role="listitem">
-Adámek, Jiří, and Jiří Rosický. 1994. <em>Locally Presentable and Accessible Categories</em>. Vol. 189. London Mathematical Society Lecture Note Series. Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511600579">https://doi.org/10.1017/CBO9780511600579</a>.
-</div>
-<div id="ref-barr1990" class="csl-entry" role="listitem">
-Barr, Michael, and Charles Wells. 1990. <em>Category Theory for Computing Science</em>. Prentice Hall.
-</div>
-<div id="ref-gambino2004" class="csl-entry" role="listitem">
-Gambino, Nicola, and J. Martin E. Hyland. 2004. <span>“Wellfounded Trees and Dependent Polynomial Functors.”</span> <em>Types for Proofs and Programs (TYPES 2003)</em>, Lecture notes in computer science, vol. 3085: 210–25. <a href="https://doi.org/10.1007/978-3-540-24849-1_14">https://doi.org/10.1007/978-3-540-24849-1_14</a>.
-</div>
-<div id="ref-maclane1998" class="csl-entry" role="listitem">
-Mac Lane, Saunders. 1998. <em>Categories for the Working Mathematician</em>. 2nd ed. Vol. 5. Graduate Texts in Mathematics. Springer. <a href="https://doi.org/10.1007/978-1-4757-4721-8">https://doi.org/10.1007/978-1-4757-4721-8</a>.
-</div>
-<div id="ref-spivak2012" class="csl-entry" role="listitem">
-Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Information and Computation</em> 217: 31–51. <a href="https://doi.org/10.1016/j.ic.2012.05.001">https://doi.org/10.1016/j.ic.2012.05.001</a>.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -1137,89 +1193,120 @@ Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Informa
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/14-building-blocks.html" class="pagination-link" aria-label="The Building-Block Landscape">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></span>
+      <a href="../chapters/12-format-conversion.html" class="pagination-link" aria-label="Format Conversion">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Format Conversion</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../appendices/B-api-reference.html" class="pagination-link" aria-label="API Reference">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">API Reference</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/14-building-blocks.html" class="pagination-link" aria-label="The Building-Block Landscape">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Category Theory Cheatsheet {.appendix}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>A quick reference for the categorical concepts that appear in this tutorial. Each entry gives a one-sentence definition, where it shows up in panproto, and a pointer to the literature.</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Category</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>A collection of objects and morphisms (arrows between objects) equipped with composition and identities, satisfying associativity and unit laws.</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>**In panproto**: The category **GAT** has theories as objects and theory morphisms as arrows. The category **Mod(T)** has models of a theory $T$ as objects and model homomorphisms as arrows. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 1</span><span class="co">]</span>.</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Functor</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>A structure-preserving map between categories: it sends objects to objects and morphisms to morphisms, preserving composition and identities.</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>**In panproto**: A theory morphism $F: T_1 \to T_2$ induces a functor $F^*: \mathbf{Mod}(T_2) \to \mathbf{Mod}(T_1)$ that pulls back models. This is the <span class="in">`restrict`</span> operation—data migration in the reverse direction. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 1</span><span class="co">]</span>.</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Natural Transformation</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>A family of morphisms between two functors that commutes with the functors' action on morphisms.</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>**In panproto**: Natural transformations between migration functors correspond to systematic ways of transforming one migration strategy into another. They ensure that different migration paths yield compatible results. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 2</span><span class="co">]</span>.</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limit</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>A universal cone over a diagram—the "most general" object that maps into every object in the diagram compatibly.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>**In panproto**: Products (a special case of limits) appear when combining independent schemas. The limit construction ensures no information is lost. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 5</span><span class="co">]</span>.</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Colimit</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>A universal cocone under a diagram—the "most general" object that every object in the diagram maps into, gluing shared parts together.</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>**In panproto**: Colimits of theories are how new protocols are defined. The pushout (a colimit of a span) merges two theories along a shared base. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 5</span><span class="co">]</span> and <span class="co">[</span><span class="ot">@adamek1994, Ch. 11</span><span class="co">]</span>.</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pushout</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>The colimit of a span $A \leftarrow S \rightarrow B$: the universal object that glues $A$ and $B$ together along their shared sub-object $S$.</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>**In panproto**: <span class="in">`colimit(t1, t2, shared)`</span> computes a pushout of theories. This is the primary mechanism for composing component theories into protocols. See <span class="co">[</span><span class="ot">@barr1990, Ch. 9</span><span class="co">]</span>.</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adjunction</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>A pair of functors $F \dashv G$ between two categories such that $\mathrm{Hom}(FA, B) \cong \mathrm{Hom}(A, GB)$ naturally. The left adjoint $F$ freely constructs; the right adjoint $G$ forgets structure.</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>**In panproto**: The migration functors $\Sigma_F \dashv \Delta_F \dashv \Pi_F$ form adjoint triples. $\Delta_F$ (restrict) is the pullback; $\Sigma_F$ (left push) and $\Pi_F$ (right push) are its adjoints. These adjunctions guarantee the round-trip properties of lenses. See <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span> and <span class="co">[</span><span class="ot">@maclane1998, Ch. 4</span><span class="co">]</span>.</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Kan Extension</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>The universal way to extend a functor along another functor. Left and right Kan extensions generalize colimits and limits, respectively.</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>**In panproto**: The left and right pushforward operations ($\Sigma_F$ and $\Pi_F$) are computed as left and right Kan extensions along the theory morphism $F$. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 10</span><span class="co">]</span> and <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span>.</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fibration</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>A functor $p: \mathcal{E} \to \mathcal{B}$ with a lifting property: for every morphism in the base and object in the fiber above its codomain, there is a canonical "cartesian" lift.</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>**In panproto**: The projection from the category of all schemas (across all protocols) down to the category of theories is a fibration. Lifting along this fibration is what lets panproto migrate schemas when the underlying protocol theory changes. See <span class="co">[</span><span class="ot">@barr1990, Ch. 12</span><span class="co">]</span>.</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## Initial Algebra</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>The least fixed point of an endofunctor: an algebra $F(A) \to A$ such that every other $F$-algebra receives a unique homomorphism from it.</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>**In panproto**: W-types are initial algebras of polynomial functors. Recursive data structures (trees, nested records, lists) are modeled as W-types, and their migrations are derived from the universal property of initiality. See <span class="co">[</span><span class="ot">@adamek1994, Ch. 10</span><span class="co">]</span> and <span class="co">[</span><span class="ot">@gambino2004</span><span class="co">]</span>.</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Polynomial Functor</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>An endofunctor built from sums, products, and exponentiation by a fixed set: $P(X) = \sum_{a:A} X^{B(a)}$. Polynomial functors classify branching structures.</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>**In panproto**: Each schema determines a polynomial functor whose initial algebra is the type of well-founded data conforming to that schema. Migrations between schemas lift to maps between the corresponding polynomial functors. See <span class="co">[</span><span class="ot">@gambino2004</span><span class="co">]</span> and <span class="co">[</span><span class="ot">@abbott2005</span><span class="co">]</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Schematic Version Control {#sec-version-control}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Schemas evolve. Fields get added, types change, constraints tighten. When multiple teams develop against the same schema, their changes diverge and eventually need merging. The <span class="in">`schema`</span> CLI provides git-style version control for this process, except that instead of tracking text it tracks mathematical structure.</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Git Analogy</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Git concept <span class="pp">|</span> panproto equivalent <span class="pp">|</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Blob (file content) <span class="pp">|</span> Schema (graph structure) <span class="pp">|</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Diff/patch <span class="pp">|</span> Migration (graph morphism) <span class="pp">|</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Three-way merge <span class="pp">|</span> Colimit (pushout of schemas) <span class="pp">|</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Content-addressing (SHA) <span class="pp">|</span> Content-addressing (blake3) <span class="pp">|</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Commit DAG <span class="pp">|</span> Schema evolution DAG <span class="pp">|</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Branch <span class="pp">|</span> Named pointer to a schema version <span class="pp">|</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Conflict <span class="pp">|</span> Structural incompatibility <span class="pp">|</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>The important difference: git merges text and hopes the result compiles. panproto merges structure and guarantees data integrity.</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick Start</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a schema repository</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> init</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage and commit a schema</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema.json</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"initial ATProto schema"</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a branch for a feature</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> branch add-verification</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout add-verification</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Evolve the schema</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> add schema-v2.json</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> commit <span class="at">-m</span> <span class="st">"add verification status field"</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge back</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> checkout main</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> merge add-verification</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Object Store</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>Every schema, migration, and commit is identified by a blake3 hash of its canonical form. Two schemas with the same structure produce the same hash, even if they were created independently by different teams on different continents. Identity comes from structure, not naming.</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="in">.panproto/</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="in">  objects/&lt;hex[0..2]&gt;/&lt;hex[2..]&gt;   # content-addressed objects</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="in">  refs/heads/main                   # branch pointers</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="in">  refs/tags/v1.0                    # tag pointers</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="in">  HEAD                              # current branch</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="in">  logs/                             # reflog (audit trail)</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="fu">## Structural Merge</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>When two branches evolve a schema independently, panproto computes a three-way merge:</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Find the merge base (lowest common ancestor in the DAG)</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Compute <span class="in">`diff(base, ours)`</span> and <span class="in">`diff(base, theirs)`</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Apply all non-conflicting changes from both sides</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Flag overlapping modifications as conflicts</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>Conflicts are structural, not textual. A <span class="in">`BothModifiedVertex`</span> conflict means both branches changed the same vertex's kind in incompatible ways. A <span class="in">`RemovedVariant`</span> conflict means a coproduct variant was removed, which would make existing tagged data ill-typed. These are things a textual merge cannot detect.</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a><span class="fu">## Lifting Data Through History</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>The <span class="in">`lift`</span> command migrates actual instance data through any path in the version DAG:</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Migrate a record from v1 to v3</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="ex">schema</span> lift record.json v1.0 v3.0</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>This composes the migrations along the path <span class="in">`v1 → v2 → v3`</span> into a single migration, then applies the functorial lift. The commutativity guarantee ensures you get the same result regardless of which path you take through the DAG.</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## Full Command Reference</span></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Command <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema init`</span> <span class="pp">|</span> Initialize repository <span class="pp">|</span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema add &lt;schema&gt;`</span> <span class="pp">|</span> Stage a schema <span class="pp">|</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema commit -m "msg"`</span> <span class="pp">|</span> Commit staged changes <span class="pp">|</span></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema status`</span> <span class="pp">|</span> Show working state <span class="pp">|</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema log`</span> <span class="pp">|</span> Walk commit history <span class="pp">|</span></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema diff &lt;old&gt; &lt;new&gt;`</span> <span class="pp">|</span> Schema diff <span class="pp">|</span></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema show &lt;ref&gt;`</span> <span class="pp">|</span> Inspect an object <span class="pp">|</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema branch [name]`</span> <span class="pp">|</span> Create/list branches <span class="pp">|</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema tag [name]`</span> <span class="pp">|</span> Create/list tags <span class="pp">|</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema checkout &lt;ref&gt;`</span> <span class="pp">|</span> Switch branch <span class="pp">|</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema merge &lt;branch&gt;`</span> <span class="pp">|</span> Three-way merge <span class="pp">|</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema rebase &lt;onto&gt;`</span> <span class="pp">|</span> Replay commits <span class="pp">|</span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema cherry-pick &lt;commit&gt;`</span> <span class="pp">|</span> Apply single commit <span class="pp">|</span></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema reset [--soft\|--mixed\|--hard]`</span> <span class="pp">|</span> Move HEAD <span class="pp">|</span></span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema stash [push\|pop\|list]`</span> <span class="pp">|</span> Save/restore state <span class="pp">|</span></span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema reflog`</span> <span class="pp">|</span> Audit trail <span class="pp">|</span></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema bisect &lt;good&gt; &lt;bad&gt;`</span> <span class="pp">|</span> Find breaking commit <span class="pp">|</span></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema blame --element-type vertex &lt;id&gt;`</span> <span class="pp">|</span> Attribution <span class="pp">|</span></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema lift &lt;record&gt; &lt;from&gt; &lt;to&gt;`</span> <span class="pp">|</span> Migrate data <span class="pp">|</span></span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`schema gc`</span> <span class="pp">|</span> Garbage collect <span class="pp">|</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/appendices/A-category-theory-cheatsheet.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/13-version-control.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

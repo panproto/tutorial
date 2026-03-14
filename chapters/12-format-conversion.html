@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../appendices/A-category-theory-cheatsheet.html" rel="next">
+<link href="../chapters/13-version-control.html" rel="next">
 <link href="../chapters/11-self-description.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -449,6 +449,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Format Conversion</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-version-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Schematic Version Control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-building-blocks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -463,25 +475,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/B-api-reference.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">API Reference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/C-guide-to-the-literature.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Guide to the Literature</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../appendices/D-protocol-catalog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Protocol Catalog</span></span></a>
   </div>
 </li>
       </ul>
@@ -605,7 +617,7 @@ Figure&nbsp;13.1: The format conversion pipeline. Every protocol has both a pars
 <p><strong>Schema graph.</strong> The universal intermediate representation is the same Schema graph that panproto uses for everything else—diffs, migrations, lens derivation, breaking-change detection. It is not a separate format invented for conversion; it is the standard representation, which is why the rest of the panproto machinery can be applied to it between the parse and emit steps.</p>
 <p><strong>Migrate / transform.</strong> This stage is optional. You can apply a panproto migration to the Schema graph between parse and emit—for example, to rename a field, flatten a nested type, or restructure a hierarchy. This is the stage where the cross-format conversion acquires the full power of panproto’s migration engine. Without this stage, the pipeline is a direct format translation; with it, the pipeline can simultaneously translate and transform.</p>
 <p><strong>Emit.</strong> The <code>emit_*</code> function for a protocol walks the Schema graph and produces native schema notation. The emit step is responsible for mapping the protocol-neutral representation back to the target format’s specific constructs—assigning field numbers, choosing appropriate type names, generating the correct syntax.</p>
-<p>Every one of panproto’s 54 built-in protocols has both a parse and an emit function. This means every pair of protocols is connected by a potential conversion path through the shared Schema graph.</p>
+<p>Every one of panproto’s 76 built-in protocols has both a parse and an emit function. This means every pair of protocols is connected by a potential conversion path through the shared Schema graph.</p>
 </section>
 <section id="cross-protocol-examples" class="level2" data-number="13.3">
 <h2 data-number="13.3" class="anchored" data-anchor-id="cross-protocol-examples"><span class="header-section-number">13.3</span> Cross-Protocol Examples</h2>
@@ -782,7 +794,7 @@ Figure&nbsp;13.1: The format conversion pipeline. Every protocol has both a pars
 </section>
 <section id="sec-theory-groups" class="level2" data-number="13.5">
 <h2 data-number="13.5" class="anchored" data-anchor-id="sec-theory-groups"><span class="header-section-number">13.5</span> The Theory Group Advantage</h2>
-<p>The heuristic of “structural comparability” has a precise underpinning in panproto’s architecture. As established in <span class="quarto-unresolved-ref">?sec-protocols</span>, every protocol is characterized by a pair of theories: a schema theory and an instance theory. Protocols whose schema theories are closely related will have higher-fidelity conversions.</p>
+<p>The heuristic of “structural comparability” has a precise underpinning in panproto’s architecture. As established in <a href="04-protocols-as-parameters.html" class="quarto-xref"><span>Chapter 4</span></a>, every protocol is characterized by a pair of theories: a schema theory and an instance theory. Protocols whose schema theories are closely related will have higher-fidelity conversions.</p>
 <p>panproto’s built-in protocols cluster into five <strong>theory groups</strong> based on their schema and instance theories:</p>
 <div id="tbl-theory-groups" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -951,7 +963,7 @@ Table&nbsp;13.2: Structural comparison between pandoc and panproto.
 <h2 data-number="13.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">13.7</span> Summary</h2>
 <ul>
 <li><p>panproto is to schemas what pandoc is to documents: it converts between formats using a universal intermediate representation, the Schema graph.</p></li>
-<li><p>Every protocol ships with a <code>parse_*</code> function (source format → Schema graph) and an <code>emit_*</code> function (Schema graph → target format). All 54 built-in protocols support both directions.</p></li>
+<li><p>Every protocol ships with a <code>parse_*</code> function (source format → Schema graph) and an <code>emit_*</code> function (Schema graph → target format). All 76 built-in protocols support both directions.</p></li>
 <li><p>The <strong>conversion pipeline</strong> is: <code>parse_*()</code> → Schema graph → (optional migration) → <code>emit_*()</code>. The optional migration step allows simultaneous format conversion and structural transformation.</p></li>
 <li><p><strong>Round-trip fidelity</strong> depends on what the source and target formats share structurally. Information that fits in the Schema graph survives; information that does not—hyperedges in a format without hyperedge support, constraint keywords in a format without a constraint vocabulary—is dropped.</p></li>
 <li><p><strong>Theory groups</strong> make fidelity precise. Protocols sharing the same schema and instance theory (same group) convert with structural losslessness. Cross-group conversions involve structural mismatches: Group B (SQL, hypergraph) to Group C (Protobuf, multigraph) loses hyperedge structure; Group C to Group E (Parquet, functor instances) faces an instance-theory mismatch.</p></li>
@@ -1437,8 +1449,8 @@ Table&nbsp;13.2: Structural comparison between pandoc and panproto.
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../appendices/A-category-theory-cheatsheet.html" class="pagination-link" aria-label="Category Theory Cheatsheet">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/13-version-control.html" class="pagination-link" aria-label="Schematic Version Control">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Schematic Version Control</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
@@ -1521,7 +1533,7 @@ Table&nbsp;13.2: Structural comparison between pandoc and panproto.
 <span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>**Emit.** The <span class="in">`emit_*`</span> function for a protocol walks the Schema graph and produces native schema notation. The emit step is responsible for mapping the protocol-neutral representation back to the target format's specific constructs—assigning field numbers, choosing appropriate type names, generating the correct syntax.</span>
 <span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>Every one of panproto's 54 built-in protocols has both a parse and an emit function. This means every pair of protocols is connected by a potential conversion path through the shared Schema graph.</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>Every one of panproto's 76 built-in protocols has both a parse and an emit function. This means every pair of protocols is connected by a potential conversion path through the shared Schema graph.</span>
 <span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cross-Protocol Examples</span></span>
@@ -1769,7 +1781,7 @@ Table&nbsp;13.2: Structural comparison between pandoc and panproto.
 <span id="cb7-329"><a href="#cb7-329" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-330"><a href="#cb7-330" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>panproto is to schemas what pandoc is to documents: it converts between formats using a universal intermediate representation, the Schema graph.</span>
 <span id="cb7-331"><a href="#cb7-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-332"><a href="#cb7-332" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Every protocol ships with a <span class="in">`parse_*`</span> function (source format → Schema graph) and an <span class="in">`emit_*`</span> function (Schema graph → target format). All 54 built-in protocols support both directions.</span>
+<span id="cb7-332"><a href="#cb7-332" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Every protocol ships with a <span class="in">`parse_*`</span> function (source format → Schema graph) and an <span class="in">`emit_*`</span> function (Schema graph → target format). All 76 built-in protocols support both directions.</span>
 <span id="cb7-333"><a href="#cb7-333" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-334"><a href="#cb7-334" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **conversion pipeline** is: <span class="in">`parse_*()`</span> → Schema graph → (optional migration) → <span class="in">`emit_*()`</span>. The optional migration step allows simultaneous format conversion and structural transformation.</span>
 <span id="cb7-335"><a href="#cb7-335" aria-hidden="true" tabindex="-1"></a></span>

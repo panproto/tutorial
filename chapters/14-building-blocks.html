@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>15&nbsp; Category Theory Cheatsheet – panproto: Universal Schema Migration</title>
+<title>14&nbsp; The Building-Block Landscape – panproto: Universal Schema Migration</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -84,8 +84,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../appendices/B-api-reference.html" rel="next">
-<link href="../chapters/14-building-blocks.html" rel="prev">
+<link href="../appendices/A-category-theory-cheatsheet.html" rel="next">
+<link href="../chapters/13-version-control.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -129,35 +129,6 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -333,7 +304,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/10-building-your-own-protocol.html">Advanced</a></li><li class="breadcrumb-item"><a href="../chapters/14-building-blocks.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -501,7 +472,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/14-building-blocks.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/14-building-blocks.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></span></a>
   </div>
 </li>
@@ -518,7 +489,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link active">
+  <a href="../appendices/A-category-theory-cheatsheet.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span></a>
   </div>
 </li>
@@ -552,27 +523,27 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#category" id="toc-category" class="nav-link active" data-scroll-target="#category"><span class="header-section-number">15.1</span> Category</a></li>
-  <li><a href="#functor" id="toc-functor" class="nav-link" data-scroll-target="#functor"><span class="header-section-number">15.2</span> Functor</a></li>
-  <li><a href="#natural-transformation" id="toc-natural-transformation" class="nav-link" data-scroll-target="#natural-transformation"><span class="header-section-number">15.3</span> Natural Transformation</a></li>
-  <li><a href="#limit" id="toc-limit" class="nav-link" data-scroll-target="#limit"><span class="header-section-number">15.4</span> Limit</a></li>
-  <li><a href="#colimit" id="toc-colimit" class="nav-link" data-scroll-target="#colimit"><span class="header-section-number">15.5</span> Colimit</a></li>
-  <li><a href="#pushout" id="toc-pushout" class="nav-link" data-scroll-target="#pushout"><span class="header-section-number">15.6</span> Pushout</a></li>
-  <li><a href="#adjunction" id="toc-adjunction" class="nav-link" data-scroll-target="#adjunction"><span class="header-section-number">15.7</span> Adjunction</a></li>
-  <li><a href="#kan-extension" id="toc-kan-extension" class="nav-link" data-scroll-target="#kan-extension"><span class="header-section-number">15.8</span> Kan Extension</a></li>
-  <li><a href="#fibration" id="toc-fibration" class="nav-link" data-scroll-target="#fibration"><span class="header-section-number">15.9</span> Fibration</a></li>
-  <li><a href="#initial-algebra" id="toc-initial-algebra" class="nav-link" data-scroll-target="#initial-algebra"><span class="header-section-number">15.10</span> Initial Algebra</a></li>
-  <li><a href="#polynomial-functor" id="toc-polynomial-functor" class="nav-link" data-scroll-target="#polynomial-functor"><span class="header-section-number">15.11</span> Polynomial Functor</a></li>
+  <li><a href="#the-structure-validation-boundary" id="toc-the-structure-validation-boundary" class="nav-link active" data-scroll-target="#the-structure-validation-boundary"><span class="header-section-number">14.1</span> The Structure-Validation Boundary</a></li>
+  <li><a href="#schema-side-theories-18" id="toc-schema-side-theories-18" class="nav-link" data-scroll-target="#schema-side-theories-18"><span class="header-section-number">14.2</span> Schema-Side Theories (18)</a>
+  <ul class="collapse">
+  <li><a href="#graph-shapes-6" id="toc-graph-shapes-6" class="nav-link" data-scroll-target="#graph-shapes-6"><span class="header-section-number">14.2.1</span> Graph Shapes (6)</a></li>
+  <li><a href="#modifiers-8" id="toc-modifiers-8" class="nav-link" data-scroll-target="#modifiers-8"><span class="header-section-number">14.2.2</span> Modifiers (8)</a></li>
+  <li><a href="#structural-4" id="toc-structural-4" class="nav-link" data-scroll-target="#structural-4"><span class="header-section-number">14.2.3</span> Structural (4)</a></li>
+  </ul></li>
+  <li><a href="#instance-side-theories-6" id="toc-instance-side-theories-6" class="nav-link" data-scroll-target="#instance-side-theories-6"><span class="header-section-number">14.3</span> Instance-Side Theories (6)</a></li>
+  <li><a href="#architectural-theories-3" id="toc-architectural-theories-3" class="nav-link" data-scroll-target="#architectural-theories-3"><span class="header-section-number">14.4</span> Architectural Theories (3)</a></li>
+  <li><a href="#the-6-theory-groups" id="toc-the-6-theory-groups" class="nav-link" data-scroll-target="#the-6-theory-groups"><span class="header-section-number">14.5</span> The 6 Theory Groups</a></li>
+  <li><a href="#equations-as-structural-invariants" id="toc-equations-as-structural-invariants" class="nav-link" data-scroll-target="#equations-as-structural-invariants"><span class="header-section-number">14.6</span> Equations as Structural Invariants</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/appendices/A-category-theory-cheatsheet.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/14-building-blocks.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html">Appendices</a></li><li class="breadcrumb-item"><a href="../appendices/A-category-theory-cheatsheet.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/10-building-your-own-protocol.html">Advanced</a></li><li class="breadcrumb-item"><a href="../chapters/14-building-blocks.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-building-blocks" class="quarto-section-identifier"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -589,83 +560,365 @@ window.Quarto = {
 </header>
 
 
-<p>A quick reference for the categorical concepts that appear in this tutorial. Each entry gives a one-sentence definition, where it shows up in panproto, and a pointer to the literature.</p>
-<section id="category" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="category"><span class="header-section-number">15.1</span> Category</h2>
-<p>A collection of objects and morphisms (arrows between objects) equipped with composition and identities, satisfying associativity and unit laws.</p>
-<p><strong>In panproto</strong>: The category <strong>GAT</strong> has theories as objects and theory morphisms as arrows. The category <strong>Mod(T)</strong> has models of a theory <span class="math inline">\(T\)</span> as objects and model homomorphisms as arrows. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 1)</span>.</p>
+<p>panproto’s 76 protocol definitions are composed from 27 building-block theories via colimit. Each building block captures a structural distinction that affects migration correctness: whether collections are ordered, whether types form coproducts, whether references are recursive, whether edges are linear. This chapter catalogs all 27 and explains when each is needed.</p>
+<section id="the-structure-validation-boundary" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="the-structure-validation-boundary"><span class="header-section-number">14.1</span> The Structure-Validation Boundary</h2>
+<p>Some schema properties are algebraically natural, expressible as GAT sorts, operations, and equations. Others are irreducibly computational: cardinality bounds, regex patterns, format constraints. The distinction matters because algebraic properties compose cleanly through colimits and migrations, while validation properties must be checked imperatively.</p>
+<p><strong>Structural (expressible in GATs):</strong></p>
+<ul>
+<li>Edge uniqueness: dependent sort <code>Edge(s: Vertex, t: Vertex)</code> in ThSimpleGraph</li>
+<li>Optionality: section/retraction with equation in ThPartial</li>
+<li>Recursive types: fold-unfold law in ThRecursion</li>
+<li>Sum types: variant retraction with equation in ThCoproduct</li>
+<li>Causality: dependent sort <code>Before(e1, e2)</code> with composition in ThCausal</li>
+<li>Reflexivity: identity edges with equations in ThReflexiveGraph</li>
+<li>Symmetry: involution with equations in ThSymmetricGraph</li>
+</ul>
+<p><strong>Validation (requires ThConstraint):</strong></p>
+<ul>
+<li><code>maxLength</code>, <code>minLength</code>: arithmetic</li>
+<li><code>pattern</code>: regex</li>
+<li><code>minimum</code>, <code>maximum</code>: ordered field arithmetic</li>
+<li><code>format</code> (date-time, email, URI): domain-specific</li>
+</ul>
+<p>The mechanism for lifting properties into structure is Cartmell’s property-to-structure move <span class="citation" data-cites="cartmell1986">(<a href="#ref-cartmell1986" role="doc-biblioref">Cartmell 1986</a>)</span>. A conditional property like injectivity (“if <code>f(a) = f(b)</code> then <code>a = b</code>”) cannot be stated as an unconditional GAT equation. But you can add a retraction operation <code>r</code> with the unconditional equation <code>r(f(a)) = a</code>, which encodes injectivity as algebraic structure rather than as a logical property. This is why GATs have dependent sorts.</p>
 </section>
-<section id="functor" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="functor"><span class="header-section-number">15.2</span> Functor</h2>
-<p>A structure-preserving map between categories: it sends objects to objects and morphisms to morphisms, preserving composition and identities.</p>
-<p><strong>In panproto</strong>: A theory morphism <span class="math inline">\(F: T_1 \to T_2\)</span> induces a functor <span class="math inline">\(F^*: \mathbf{Mod}(T_2) \to \mathbf{Mod}(T_1)\)</span> that pulls back models. This is the <code>restrict</code> operation—data migration in the reverse direction. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 1)</span>.</p>
+<section id="schema-side-theories-18" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="schema-side-theories-18"><span class="header-section-number">14.2</span> Schema-Side Theories (18)</h2>
+<section id="graph-shapes-6" class="level3" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="graph-shapes-6"><span class="header-section-number">14.2.1</span> Graph Shapes (6)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Theory</th>
+<th>Sorts</th>
+<th>Equations</th>
+<th>Captures</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ThGraph</td>
+<td>Vertex, Edge</td>
+<td></td>
+<td>Directed binary relationships</td>
+</tr>
+<tr class="even">
+<td>ThSimpleGraph</td>
+<td>Vertex, Edge(s,t)</td>
+<td></td>
+<td>Edge uniqueness via dependent sort</td>
+</tr>
+<tr class="odd">
+<td>ThHypergraph</td>
+<td>Vertex, HyperEdge, Label</td>
+<td></td>
+<td>N-ary relationships</td>
+</tr>
+<tr class="even">
+<td>ThReflexiveGraph</td>
+<td>Vertex, Edge</td>
+<td>src(id(v))=v, tgt(id(v))=v</td>
+<td>Identity/default morphisms</td>
+</tr>
+<tr class="odd">
+<td>ThSymmetricGraph</td>
+<td>Vertex, Edge</td>
+<td>src(inv(e))=tgt(e), tgt(inv(e))=src(e), inv(inv(e))=e</td>
+<td>Undirected relationships</td>
+</tr>
+<tr class="even">
+<td>ThPetriNet</td>
+<td>Place, Transition, Token</td>
+<td></td>
+<td>Concurrent structure</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="natural-transformation" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="natural-transformation"><span class="header-section-number">15.3</span> Natural Transformation</h2>
-<p>A family of morphisms between two functors that commutes with the functors’ action on morphisms.</p>
-<p><strong>In panproto</strong>: Natural transformations between migration functors correspond to systematic ways of transforming one migration strategy into another. They ensure that different migration paths yield compatible results. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 2)</span>.</p>
+<section id="modifiers-8" class="level3" data-number="14.2.2">
+<h3 data-number="14.2.2" class="anchored" data-anchor-id="modifiers-8"><span class="header-section-number">14.2.2</span> Modifiers (8)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Theory</th>
+<th>Sorts</th>
+<th>Equations</th>
+<th>Captures</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ThConstraint</td>
+<td>Vertex, Constraint(v)</td>
+<td></td>
+<td>Validation constraints</td>
+</tr>
+<tr class="even">
+<td>ThMulti</td>
+<td>Vertex, Edge, EdgeLabel</td>
+<td></td>
+<td>Parallel edges</td>
+</tr>
+<tr class="odd">
+<td>ThInterface</td>
+<td>Vertex, Interface</td>
+<td></td>
+<td>Subtyping/polymorphism</td>
+</tr>
+<tr class="even">
+<td>ThOrder</td>
+<td>Edge, Position</td>
+<td></td>
+<td>Ordered collections</td>
+</tr>
+<tr class="odd">
+<td>ThCoproduct</td>
+<td>Vertex, Variant, Tag</td>
+<td>variant_of(injection(v))=v</td>
+<td>Sum types/unions</td>
+</tr>
+<tr class="even">
+<td>ThRecursion</td>
+<td>Vertex, Mu</td>
+<td>unfold(fold(v))=v</td>
+<td>Recursive types</td>
+</tr>
+<tr class="odd">
+<td>ThPartial</td>
+<td>Vertex, Defined</td>
+<td>defined(witness(d))=d</td>
+<td>Optionality as structure</td>
+</tr>
+<tr class="even">
+<td>ThLinear</td>
+<td>Edge, Usage</td>
+<td></td>
+<td>Use-counting (linear/affine)</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="limit" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="limit"><span class="header-section-number">15.4</span> Limit</h2>
-<p>A universal cone over a diagram—the “most general” object that maps into every object in the diagram compatibly.</p>
-<p><strong>In panproto</strong>: Products (a special case of limits) appear when combining independent schemas. The limit construction ensures no information is lost. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 5)</span>.</p>
+<section id="structural-4" class="level3" data-number="14.2.3">
+<h3 data-number="14.2.3" class="anchored" data-anchor-id="structural-4"><span class="header-section-number">14.2.3</span> Structural (4)</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Theory</th>
+<th>Sorts</th>
+<th>Equations</th>
+<th>Captures</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ThNominal</td>
+<td>Vertex, Name</td>
+<td></td>
+<td>Nominal identity</td>
+</tr>
+<tr class="even">
+<td>ThSpan</td>
+<td>Vertex, Span</td>
+<td></td>
+<td>Diffs/correspondences</td>
+</tr>
+<tr class="odd">
+<td>ThCospan</td>
+<td>Vertex, Apex</td>
+<td></td>
+<td>Merge targets</td>
+</tr>
+<tr class="even">
+<td>ThOperad</td>
+<td>Color, MOperation</td>
+<td></td>
+<td>Fan-in aggregation</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="colimit" class="level2" data-number="15.5">
-<h2 data-number="15.5" class="anchored" data-anchor-id="colimit"><span class="header-section-number">15.5</span> Colimit</h2>
-<p>A universal cocone under a diagram—the “most general” object that every object in the diagram maps into, gluing shared parts together.</p>
-<p><strong>In panproto</strong>: Colimits of theories are how new protocols are defined. The pushout (a colimit of a span) merges two theories along a shared base. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 5)</span> and <span class="citation" data-cites="adamek1994">(<a href="#ref-adamek1994" role="doc-biblioref">Adámek and Rosický 1994</a>, Ch. 11)</span>.</p>
 </section>
-<section id="pushout" class="level2" data-number="15.6">
-<h2 data-number="15.6" class="anchored" data-anchor-id="pushout"><span class="header-section-number">15.6</span> Pushout</h2>
-<p>The colimit of a span <span class="math inline">\(A \leftarrow S \rightarrow B\)</span>: the universal object that glues <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> together along their shared sub-object <span class="math inline">\(S\)</span>.</p>
-<p><strong>In panproto</strong>: <code>colimit(t1, t2, shared)</code> computes a pushout of theories. This is the primary mechanism for composing component theories into protocols. See <span class="citation" data-cites="barr1990">(<a href="#ref-barr1990" role="doc-biblioref">Barr and Wells 1990</a>, Ch. 9)</span>.</p>
+<section id="instance-side-theories-6" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="instance-side-theories-6"><span class="header-section-number">14.3</span> Instance-Side Theories (6)</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Theory</th>
+<th>Sorts</th>
+<th>Equations</th>
+<th>Captures</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ThWType</td>
+<td>Node, Arc, Value</td>
+<td></td>
+<td>Tree-shaped data</td>
+</tr>
+<tr class="even">
+<td>ThFunctor</td>
+<td>Table, Row, ForeignKey</td>
+<td></td>
+<td>Relational/tabular data</td>
+</tr>
+<tr class="odd">
+<td>ThFlat</td>
+<td>Node, Field, Value</td>
+<td></td>
+<td>Key-value data</td>
+</tr>
+<tr class="even">
+<td>ThGraphInstance</td>
+<td>IVertex, IEdge, Value, Vertex, Edge</td>
+<td></td>
+<td>Graph-shaped data (most general)</td>
+</tr>
+<tr class="odd">
+<td>ThAnnotation</td>
+<td>Vertex, Annotation, AnnotationKey, Value</td>
+<td></td>
+<td>Out-of-band metadata</td>
+</tr>
+<tr class="even">
+<td>ThCausal</td>
+<td>Event, Timestamp, Before(e1,e2)</td>
+<td></td>
+<td>Causal/temporal ordering</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="adjunction" class="level2" data-number="15.7">
-<h2 data-number="15.7" class="anchored" data-anchor-id="adjunction"><span class="header-section-number">15.7</span> Adjunction</h2>
-<p>A pair of functors <span class="math inline">\(F \dashv G\)</span> between two categories such that <span class="math inline">\(\mathrm{Hom}(FA, B) \cong \mathrm{Hom}(A, GB)\)</span> naturally. The left adjoint <span class="math inline">\(F\)</span> freely constructs; the right adjoint <span class="math inline">\(G\)</span> forgets structure.</p>
-<p><strong>In panproto</strong>: The migration functors <span class="math inline">\(\Sigma_F \dashv \Delta_F \dashv \Pi_F\)</span> form adjoint triples. <span class="math inline">\(\Delta_F\)</span> (restrict) is the pullback; <span class="math inline">\(\Sigma_F\)</span> (left push) and <span class="math inline">\(\Pi_F\)</span> (right push) are its adjoints. These adjunctions guarantee the round-trip properties of lenses. See <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span> and <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 4)</span>.</p>
+<section id="architectural-theories-3" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="architectural-theories-3"><span class="header-section-number">14.4</span> Architectural Theories (3)</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Theory</th>
+<th>Sorts</th>
+<th>Captures</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ThTracedMonoidal</td>
+<td>Wire, Box</td>
+<td>Feedback/recursion creation</td>
+</tr>
+<tr class="even">
+<td>ThSimplicial</td>
+<td>Simplex, Face, Degeneracy</td>
+<td>Layered/filtered data</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="kan-extension" class="level2" data-number="15.8">
-<h2 data-number="15.8" class="anchored" data-anchor-id="kan-extension"><span class="header-section-number">15.8</span> Kan Extension</h2>
-<p>The universal way to extend a functor along another functor. Left and right Kan extensions generalize colimits and limits, respectively.</p>
-<p><strong>In panproto</strong>: The left and right pushforward operations (<span class="math inline">\(\Sigma_F\)</span> and <span class="math inline">\(\Pi_F\)</span>) are computed as left and right Kan extensions along the theory morphism <span class="math inline">\(F\)</span>. See <span class="citation" data-cites="maclane1998">(<a href="#ref-maclane1998" role="doc-biblioref">Mac Lane 1998</a>, Ch. 10)</span> and <span class="citation" data-cites="spivak2012">(<a href="#ref-spivak2012" role="doc-biblioref">Spivak 2012</a>)</span>.</p>
+<section id="the-6-theory-groups" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="the-6-theory-groups"><span class="header-section-number">14.5</span> The 6 Theory Groups</h2>
+<p>Protocols compose building blocks via colimit into theory groups:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Group</th>
+<th>Schema</th>
+<th>Instance</th>
+<th>Count</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>colimit(Graph, Constraint, Multi)</td>
+<td>WType</td>
+<td>30</td>
+<td>ATProto, JSON Schema, OpenAPI</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>colimit(Hypergraph, Constraint)</td>
+<td>Functor</td>
+<td>11</td>
+<td>SQL, Cassandra, Parquet</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>colimit(SimpleGraph, Constraint)</td>
+<td>Flat</td>
+<td>9</td>
+<td>Protobuf, Avro, Thrift</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>colimit(Graph, Constraint, Multi, Interface)</td>
+<td>WType</td>
+<td>16</td>
+<td>GraphQL, TypeScript, Rust</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td>colimit(Graph, Constraint, Multi)</td>
+<td>colimit(WType, Meta)</td>
+<td>9</td>
+<td>XML, HTML, CSS</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td>colimit(Graph, Constraint, Multi)</td>
+<td>GraphInstance</td>
+<td>1</td>
+<td>Neo4j</td>
+</tr>
+</tbody>
+</table>
+<p>Each protocol opts into additional theories (ThOrder, ThCoproduct, etc.) by composing them into its schema theory via colimit.</p>
 </section>
-<section id="fibration" class="level2" data-number="15.9">
-<h2 data-number="15.9" class="anchored" data-anchor-id="fibration"><span class="header-section-number">15.9</span> Fibration</h2>
-<p>A functor <span class="math inline">\(p: \mathcal{E} \to \mathcal{B}\)</span> with a lifting property: for every morphism in the base and object in the fiber above its codomain, there is a canonical “cartesian” lift.</p>
-<p><strong>In panproto</strong>: The projection from the category of all schemas (across all protocols) down to the category of theories is a fibration. Lifting along this fibration is what lets panproto migrate schemas when the underlying protocol theory changes. See <span class="citation" data-cites="barr1990">(<a href="#ref-barr1990" role="doc-biblioref">Barr and Wells 1990</a>, Ch. 12)</span>.</p>
-</section>
-<section id="initial-algebra" class="level2" data-number="15.10">
-<h2 data-number="15.10" class="anchored" data-anchor-id="initial-algebra"><span class="header-section-number">15.10</span> Initial Algebra</h2>
-<p>The least fixed point of an endofunctor: an algebra <span class="math inline">\(F(A) \to A\)</span> such that every other <span class="math inline">\(F\)</span>-algebra receives a unique homomorphism from it.</p>
-<p><strong>In panproto</strong>: W-types are initial algebras of polynomial functors. Recursive data structures (trees, nested records, lists) are modeled as W-types, and their migrations are derived from the universal property of initiality. See <span class="citation" data-cites="adamek1994">(<a href="#ref-adamek1994" role="doc-biblioref">Adámek and Rosický 1994</a>, Ch. 10)</span> and <span class="citation" data-cites="gambino2004">(<a href="#ref-gambino2004" role="doc-biblioref">Gambino and Hyland 2004</a>)</span>.</p>
-</section>
-<section id="polynomial-functor" class="level2" data-number="15.11">
-<h2 data-number="15.11" class="anchored" data-anchor-id="polynomial-functor"><span class="header-section-number">15.11</span> Polynomial Functor</h2>
-<p>An endofunctor built from sums, products, and exponentiation by a fixed set: <span class="math inline">\(P(X) = \sum_{a:A} X^{B(a)}\)</span>. Polynomial functors classify branching structures.</p>
-<p><strong>In panproto</strong>: Each schema determines a polynomial functor whose initial algebra is the type of well-founded data conforming to that schema. Migrations between schemas lift to maps between the corresponding polynomial functors. See <span class="citation" data-cites="gambino2004">(<a href="#ref-gambino2004" role="doc-biblioref">Gambino and Hyland 2004</a>)</span> and <span class="citation" data-cites="abbott2005">(<a href="#ref-abbott2005" role="doc-biblioref">Abbott et al. 2005</a>)</span>.</p>
+<section id="equations-as-structural-invariants" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="equations-as-structural-invariants"><span class="header-section-number">14.6</span> Equations as Structural Invariants</h2>
+<p>Only 6 of the 27 theories have equations. Each has been type-checked against the theory’s sort declarations.</p>
+<p><strong>ThRecursion</strong>: <code>unfold(fold(v)) = v</code></p>
+<p><code>fold(v)</code> has sort Mu (since fold: Vertex → Mu). <code>unfold(fold(v))</code> has sort Vertex (since unfold: Mu → Vertex). The right side <code>v</code> also has sort Vertex. Both sides match.</p>
+<p><strong>ThReflexiveGraph</strong>: <code>src(id(v)) = v</code> and <code>tgt(id(v)) = v</code></p>
+<p><code>id(v)</code> has sort Edge (since id: Vertex → Edge). <code>src(id(v))</code> has sort Vertex (since src: Edge → Vertex). The right side <code>v</code> also has sort Vertex. Both sides match. Same reasoning for <code>tgt</code>.</p>
+<p><strong>ThSymmetricGraph</strong>: three equations</p>
+<p><code>src(inv(e)) = tgt(e)</code>: both sides have sort Vertex. <code>tgt(inv(e)) = src(e)</code>: both sides have sort Vertex. <code>inv(inv(e)) = e</code>: both sides have sort Edge.</p>
+<p><strong>ThCoproduct</strong>: <code>variant_of(injection(v)) = v</code></p>
+<p><code>injection(v)</code> has sort Vertex (since injection: Variant → Vertex). <code>variant_of(injection(v))</code> has sort Variant (since variant_of: Vertex → Variant). The right side <code>v</code> also has sort Variant. Both sides match.</p>
+<p><strong>ThPartial</strong>: <code>defined(witness(d)) = d</code></p>
+<p><code>witness(d)</code> has sort Vertex (since witness: Defined → Vertex). <code>defined(witness(d))</code> has sort Defined (since defined: Vertex → Defined). The right side <code>d</code> also has sort Defined. Both sides match.</p>
 
 
 <!-- -->
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-abbott2005" class="csl-entry" role="listitem">
-Abbott, Michael, Thorsten Altenkirch, and Neil Ghani. 2005. <span>“Containers: Constructing Strictly Positive Types.”</span> <em>Theoretical Computer Science</em> 342 (1): 3–27. <a href="https://doi.org/10.1016/j.tcs.2005.06.002">https://doi.org/10.1016/j.tcs.2005.06.002</a>.
-</div>
-<div id="ref-adamek1994" class="csl-entry" role="listitem">
-Adámek, Jiří, and Jiří Rosický. 1994. <em>Locally Presentable and Accessible Categories</em>. Vol. 189. London Mathematical Society Lecture Note Series. Cambridge University Press. <a href="https://doi.org/10.1017/CBO9780511600579">https://doi.org/10.1017/CBO9780511600579</a>.
-</div>
-<div id="ref-barr1990" class="csl-entry" role="listitem">
-Barr, Michael, and Charles Wells. 1990. <em>Category Theory for Computing Science</em>. Prentice Hall.
-</div>
-<div id="ref-gambino2004" class="csl-entry" role="listitem">
-Gambino, Nicola, and J. Martin E. Hyland. 2004. <span>“Wellfounded Trees and Dependent Polynomial Functors.”</span> <em>Types for Proofs and Programs (TYPES 2003)</em>, Lecture notes in computer science, vol. 3085: 210–25. <a href="https://doi.org/10.1007/978-3-540-24849-1_14">https://doi.org/10.1007/978-3-540-24849-1_14</a>.
-</div>
-<div id="ref-maclane1998" class="csl-entry" role="listitem">
-Mac Lane, Saunders. 1998. <em>Categories for the Working Mathematician</em>. 2nd ed. Vol. 5. Graduate Texts in Mathematics. Springer. <a href="https://doi.org/10.1007/978-1-4757-4721-8">https://doi.org/10.1007/978-1-4757-4721-8</a>.
-</div>
-<div id="ref-spivak2012" class="csl-entry" role="listitem">
-Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Information and Computation</em> 217: 31–51. <a href="https://doi.org/10.1016/j.ic.2012.05.001">https://doi.org/10.1016/j.ic.2012.05.001</a>.
+<div id="ref-cartmell1986" class="csl-entry" role="listitem">
+Cartmell, John. 1986. <span>“Generalised Algebraic Theories and Contextual Categories.”</span> <em>Annals of Pure and Applied Logic</em> 32: 209–43. <a href="https://doi.org/10.1016/0168-0072(86)90053-9">https://doi.org/10.1016/0168-0072(86)90053-9</a>.
 </div>
 </div>
 </section>
@@ -1137,89 +1390,138 @@ Spivak, David I. 2012. <span>“Functorial Data Migration.”</span> <em>Informa
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/14-building-blocks.html" class="pagination-link" aria-label="The Building-Block Landscape">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">The Building-Block Landscape</span></span>
+      <a href="../chapters/13-version-control.html" class="pagination-link" aria-label="Schematic Version Control">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Schematic Version Control</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../appendices/B-api-reference.html" class="pagination-link" aria-label="API Reference">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">API Reference</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../appendices/A-category-theory-cheatsheet.html" class="pagination-link" aria-label="Category Theory Cheatsheet">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Category Theory Cheatsheet</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Category Theory Cheatsheet {.appendix}</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># The Building-Block Landscape {#sec-building-blocks}</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>A quick reference for the categorical concepts that appear in this tutorial. Each entry gives a one-sentence definition, where it shows up in panproto, and a pointer to the literature.</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>panproto's 76 protocol definitions are composed from 27 building-block theories via colimit. Each building block captures a structural distinction that affects migration correctness: whether collections are ordered, whether types form coproducts, whether references are recursive, whether edges are linear. This chapter catalogs all 27 and explains when each is needed.</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Category</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Structure-Validation Boundary</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>A collection of objects and morphisms (arrows between objects) equipped with composition and identities, satisfying associativity and unit laws.</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Some schema properties are algebraically natural, expressible as GAT sorts, operations, and equations. Others are irreducibly computational: cardinality bounds, regex patterns, format constraints. The distinction matters because algebraic properties compose cleanly through colimits and migrations, while validation properties must be checked imperatively.</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>**In panproto**: The category **GAT** has theories as objects and theory morphisms as arrows. The category **Mod(T)** has models of a theory $T$ as objects and model homomorphisms as arrows. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 1</span><span class="co">]</span>.</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>**Structural (expressible in GATs):**</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Functor</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>A structure-preserving map between categories: it sends objects to objects and morphisms to morphisms, preserving composition and identities.</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>**In panproto**: A theory morphism $F: T_1 \to T_2$ induces a functor $F^*: \mathbf{Mod}(T_2) \to \mathbf{Mod}(T_1)$ that pulls back models. This is the <span class="in">`restrict`</span> operation—data migration in the reverse direction. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 1</span><span class="co">]</span>.</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">## Natural Transformation</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Edge uniqueness: dependent sort <span class="in">`Edge(s: Vertex, t: Vertex)`</span> in ThSimpleGraph</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Optionality: section/retraction with equation in ThPartial</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Recursive types: fold-unfold law in ThRecursion</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sum types: variant retraction with equation in ThCoproduct</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Causality: dependent sort <span class="in">`Before(e1, e2)`</span> with composition in ThCausal</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reflexivity: identity edges with equations in ThReflexiveGraph</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Symmetry: involution with equations in ThSymmetricGraph</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>A family of morphisms between two functors that commutes with the functors' action on morphisms.</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>**Validation (requires ThConstraint):**</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>**In panproto**: Natural transformations between migration functors correspond to systematic ways of transforming one migration strategy into another. They ensure that different migration paths yield compatible results. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 2</span><span class="co">]</span>.</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limit</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>A universal cone over a diagram—the "most general" object that maps into every object in the diagram compatibly.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>**In panproto**: Products (a special case of limits) appear when combining independent schemas. The limit construction ensures no information is lost. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 5</span><span class="co">]</span>.</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Colimit</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>A universal cocone under a diagram—the "most general" object that every object in the diagram maps into, gluing shared parts together.</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>**In panproto**: Colimits of theories are how new protocols are defined. The pushout (a colimit of a span) merges two theories along a shared base. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 5</span><span class="co">]</span> and <span class="co">[</span><span class="ot">@adamek1994, Ch. 11</span><span class="co">]</span>.</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pushout</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>The colimit of a span $A \leftarrow S \rightarrow B$: the universal object that glues $A$ and $B$ together along their shared sub-object $S$.</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>**In panproto**: <span class="in">`colimit(t1, t2, shared)`</span> computes a pushout of theories. This is the primary mechanism for composing component theories into protocols. See <span class="co">[</span><span class="ot">@barr1990, Ch. 9</span><span class="co">]</span>.</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`maxLength`</span>, <span class="in">`minLength`</span>: arithmetic</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`pattern`</span>: regex</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`minimum`</span>, <span class="in">`maximum`</span>: ordered field arithmetic</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`format`</span> (date-time, email, URI): domain-specific</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>The mechanism for lifting properties into structure is Cartmell's property-to-structure move <span class="co">[</span><span class="ot">@cartmell1986</span><span class="co">]</span>. A conditional property like injectivity ("if <span class="in">`f(a) = f(b)`</span> then <span class="in">`a = b`</span>") cannot be stated as an unconditional GAT equation. But you can add a retraction operation <span class="in">`r`</span> with the unconditional equation <span class="in">`r(f(a)) = a`</span>, which encodes injectivity as algebraic structure rather than as a logical property. This is why GATs have dependent sorts.</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Schema-Side Theories (18)</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">### Graph Shapes (6)</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Theory <span class="pp">|</span> Sorts <span class="pp">|</span> Equations <span class="pp">|</span> Captures <span class="pp">|</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThGraph <span class="pp">|</span> Vertex, Edge <span class="pp">|</span> <span class="pp">|</span> Directed binary relationships <span class="pp">|</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThSimpleGraph <span class="pp">|</span> Vertex, Edge(s,t) <span class="pp">|</span> <span class="pp">|</span> Edge uniqueness via dependent sort <span class="pp">|</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThHypergraph <span class="pp">|</span> Vertex, HyperEdge, Label <span class="pp">|</span> <span class="pp">|</span> N-ary relationships <span class="pp">|</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThReflexiveGraph <span class="pp">|</span> Vertex, Edge <span class="pp">|</span> src(id(v))=v, tgt(id(v))=v <span class="pp">|</span> Identity/default morphisms <span class="pp">|</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThSymmetricGraph <span class="pp">|</span> Vertex, Edge <span class="pp">|</span> src(inv(e))=tgt(e), tgt(inv(e))=src(e), inv(inv(e))=e <span class="pp">|</span> Undirected relationships <span class="pp">|</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThPetriNet <span class="pp">|</span> Place, Transition, Token <span class="pp">|</span> <span class="pp">|</span> Concurrent structure <span class="pp">|</span></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Adjunction</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### Modifiers (8)</span></span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>A pair of functors $F \dashv G$ between two categories such that $\mathrm{Hom}(FA, B) \cong \mathrm{Hom}(A, GB)$ naturally. The left adjoint $F$ freely constructs; the right adjoint $G$ forgets structure.</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>**In panproto**: The migration functors $\Sigma_F \dashv \Delta_F \dashv \Pi_F$ form adjoint triples. $\Delta_F$ (restrict) is the pullback; $\Sigma_F$ (left push) and $\Pi_F$ (right push) are its adjoints. These adjunctions guarantee the round-trip properties of lenses. See <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span> and <span class="co">[</span><span class="ot">@maclane1998, Ch. 4</span><span class="co">]</span>.</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Kan Extension</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>The universal way to extend a functor along another functor. Left and right Kan extensions generalize colimits and limits, respectively.</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>**In panproto**: The left and right pushforward operations ($\Sigma_F$ and $\Pi_F$) are computed as left and right Kan extensions along the theory morphism $F$. See <span class="co">[</span><span class="ot">@maclane1998, Ch. 10</span><span class="co">]</span> and <span class="co">[</span><span class="ot">@spivak2012</span><span class="co">]</span>.</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fibration</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>A functor $p: \mathcal{E} \to \mathcal{B}$ with a lifting property: for every morphism in the base and object in the fiber above its codomain, there is a canonical "cartesian" lift.</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>**In panproto**: The projection from the category of all schemas (across all protocols) down to the category of theories is a fibration. Lifting along this fibration is what lets panproto migrate schemas when the underlying protocol theory changes. See <span class="co">[</span><span class="ot">@barr1990, Ch. 12</span><span class="co">]</span>.</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## Initial Algebra</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>The least fixed point of an endofunctor: an algebra $F(A) \to A$ such that every other $F$-algebra receives a unique homomorphism from it.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Theory <span class="pp">|</span> Sorts <span class="pp">|</span> Equations <span class="pp">|</span> Captures <span class="pp">|</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThConstraint <span class="pp">|</span> Vertex, Constraint(v) <span class="pp">|</span> <span class="pp">|</span> Validation constraints <span class="pp">|</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThMulti <span class="pp">|</span> Vertex, Edge, EdgeLabel <span class="pp">|</span> <span class="pp">|</span> Parallel edges <span class="pp">|</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThInterface <span class="pp">|</span> Vertex, Interface <span class="pp">|</span> <span class="pp">|</span> Subtyping/polymorphism <span class="pp">|</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThOrder <span class="pp">|</span> Edge, Position <span class="pp">|</span> <span class="pp">|</span> Ordered collections <span class="pp">|</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThCoproduct <span class="pp">|</span> Vertex, Variant, Tag <span class="pp">|</span> variant_of(injection(v))=v <span class="pp">|</span> Sum types/unions <span class="pp">|</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThRecursion <span class="pp">|</span> Vertex, Mu <span class="pp">|</span> unfold(fold(v))=v <span class="pp">|</span> Recursive types <span class="pp">|</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThPartial <span class="pp">|</span> Vertex, Defined <span class="pp">|</span> defined(witness(d))=d <span class="pp">|</span> Optionality as structure <span class="pp">|</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThLinear <span class="pp">|</span> Edge, Usage <span class="pp">|</span> <span class="pp">|</span> Use-counting (linear/affine) <span class="pp">|</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="fu">### Structural (4)</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Theory <span class="pp">|</span> Sorts <span class="pp">|</span> Equations <span class="pp">|</span> Captures <span class="pp">|</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThNominal <span class="pp">|</span> Vertex, Name <span class="pp">|</span> <span class="pp">|</span> Nominal identity <span class="pp">|</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThSpan <span class="pp">|</span> Vertex, Span <span class="pp">|</span> <span class="pp">|</span> Diffs/correspondences <span class="pp">|</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThCospan <span class="pp">|</span> Vertex, Apex <span class="pp">|</span> <span class="pp">|</span> Merge targets <span class="pp">|</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThOperad <span class="pp">|</span> Color, MOperation <span class="pp">|</span> <span class="pp">|</span> Fan-in aggregation <span class="pp">|</span></span>
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>**In panproto**: W-types are initial algebras of polynomial functors. Recursive data structures (trees, nested records, lists) are modeled as W-types, and their migrations are derived from the universal property of initiality. See <span class="co">[</span><span class="ot">@adamek1994, Ch. 10</span><span class="co">]</span> and <span class="co">[</span><span class="ot">@gambino2004</span><span class="co">]</span>.</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## Instance-Side Theories (6)</span></span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## Polynomial Functor</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>An endofunctor built from sums, products, and exponentiation by a fixed set: $P(X) = \sum_{a:A} X^{B(a)}$. Polynomial functors classify branching structures.</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>**In panproto**: Each schema determines a polynomial functor whose initial algebra is the type of well-founded data conforming to that schema. Migrations between schemas lift to maps between the corresponding polynomial functors. See <span class="co">[</span><span class="ot">@gambino2004</span><span class="co">]</span> and <span class="co">[</span><span class="ot">@abbott2005</span><span class="co">]</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Theory <span class="pp">|</span> Sorts <span class="pp">|</span> Equations <span class="pp">|</span> Captures <span class="pp">|</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThWType <span class="pp">|</span> Node, Arc, Value <span class="pp">|</span> <span class="pp">|</span> Tree-shaped data <span class="pp">|</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThFunctor <span class="pp">|</span> Table, Row, ForeignKey <span class="pp">|</span> <span class="pp">|</span> Relational/tabular data <span class="pp">|</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThFlat <span class="pp">|</span> Node, Field, Value <span class="pp">|</span> <span class="pp">|</span> Key-value data <span class="pp">|</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThGraphInstance <span class="pp">|</span> IVertex, IEdge, Value, Vertex, Edge <span class="pp">|</span> <span class="pp">|</span> Graph-shaped data (most general) <span class="pp">|</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThAnnotation <span class="pp">|</span> Vertex, Annotation, AnnotationKey, Value <span class="pp">|</span> <span class="pp">|</span> Out-of-band metadata <span class="pp">|</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThCausal <span class="pp">|</span> Event, Timestamp, Before(e1,e2) <span class="pp">|</span> <span class="pp">|</span> Causal/temporal ordering <span class="pp">|</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="fu">## Architectural Theories (3)</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Theory <span class="pp">|</span> Sorts <span class="pp">|</span> Captures <span class="pp">|</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThTracedMonoidal <span class="pp">|</span> Wire, Box <span class="pp">|</span> Feedback/recursion creation <span class="pp">|</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> ThSimplicial <span class="pp">|</span> Simplex, Face, Degeneracy <span class="pp">|</span> Layered/filtered data <span class="pp">|</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## The 6 Theory Groups</span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>Protocols compose building blocks via colimit into theory groups:</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Group <span class="pp">|</span> Schema <span class="pp">|</span> Instance <span class="pp">|</span> Count <span class="pp">|</span> Examples <span class="pp">|</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|---|</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> A <span class="pp">|</span> colimit(Graph, Constraint, Multi) <span class="pp">|</span> WType <span class="pp">|</span> 30 <span class="pp">|</span> ATProto, JSON Schema, OpenAPI <span class="pp">|</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> B <span class="pp">|</span> colimit(Hypergraph, Constraint) <span class="pp">|</span> Functor <span class="pp">|</span> 11 <span class="pp">|</span> SQL, Cassandra, Parquet <span class="pp">|</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> C <span class="pp">|</span> colimit(SimpleGraph, Constraint) <span class="pp">|</span> Flat <span class="pp">|</span> 9 <span class="pp">|</span> Protobuf, Avro, Thrift <span class="pp">|</span></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> D <span class="pp">|</span> colimit(Graph, Constraint, Multi, Interface) <span class="pp">|</span> WType <span class="pp">|</span> 16 <span class="pp">|</span> GraphQL, TypeScript, Rust <span class="pp">|</span></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> E <span class="pp">|</span> colimit(Graph, Constraint, Multi) <span class="pp">|</span> colimit(WType, Meta) <span class="pp">|</span> 9 <span class="pp">|</span> XML, HTML, CSS <span class="pp">|</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> F <span class="pp">|</span> colimit(Graph, Constraint, Multi) <span class="pp">|</span> GraphInstance <span class="pp">|</span> 1 <span class="pp">|</span> Neo4j <span class="pp">|</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>Each protocol opts into additional theories (ThOrder, ThCoproduct, etc.) by composing them into its schema theory via colimit.</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## Equations as Structural Invariants</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>Only 6 of the 27 theories have equations. Each has been type-checked against the theory's sort declarations.</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>**ThRecursion**: <span class="in">`unfold(fold(v)) = v`</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a><span class="in">`fold(v)`</span> has sort Mu (since fold: Vertex → Mu). <span class="in">`unfold(fold(v))`</span> has sort Vertex (since unfold: Mu → Vertex). The right side <span class="in">`v`</span> also has sort Vertex. Both sides match.</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>**ThReflexiveGraph**: <span class="in">`src(id(v)) = v`</span> and <span class="in">`tgt(id(v)) = v`</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="in">`id(v)`</span> has sort Edge (since id: Vertex → Edge). <span class="in">`src(id(v))`</span> has sort Vertex (since src: Edge → Vertex). The right side <span class="in">`v`</span> also has sort Vertex. Both sides match. Same reasoning for <span class="in">`tgt`</span>.</span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>**ThSymmetricGraph**: three equations</span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="in">`src(inv(e)) = tgt(e)`</span>: both sides have sort Vertex. <span class="in">`tgt(inv(e)) = src(e)`</span>: both sides have sort Vertex. <span class="in">`inv(inv(e)) = e`</span>: both sides have sort Edge.</span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>**ThCoproduct**: <span class="in">`variant_of(injection(v)) = v`</span></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="in">`injection(v)`</span> has sort Vertex (since injection: Variant → Vertex). <span class="in">`variant_of(injection(v))`</span> has sort Variant (since variant_of: Vertex → Variant). The right side <span class="in">`v`</span> also has sort Variant. Both sides match.</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>**ThPartial**: <span class="in">`defined(witness(d)) = d`</span></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a><span class="in">`witness(d)`</span> has sort Vertex (since witness: Defined → Vertex). <span class="in">`defined(witness(d))`</span> has sort Defined (since defined: Vertex → Defined). The right side <span class="in">`d`</span> also has sort Defined. Both sides match.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/appendices/A-category-theory-cheatsheet.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/panproto/panproto/edit/main/tutorial/chapters/14-building-blocks.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/panproto/panproto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
